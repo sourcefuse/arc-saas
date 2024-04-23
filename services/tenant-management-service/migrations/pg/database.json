@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "TENANT-MGMT-SERVICE_DB_HOST"
+      },
+      "port": {
+        "ENV": "TENANT-MGMT-SERVICE_DB_PORT"
+      },
+      "user": {
+        "ENV": "TENANT-MGMT-SERVICE_DB_USER"
+      },
+      "password": {
+        "ENV": "TENANT-MGMT-SERVICE_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "TENANT-MGMT-SERVICE_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+}

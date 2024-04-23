@@ -1,0 +1,4498 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "tenant-mgmt-service",
+    "version": "1.0.0",
+    "description": "tenant-mgmt-service",
+    "contact": {
+      "name": "akshatdubeysf",
+      "email": "akshat.dubey@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/contacts/count": {
+      "get": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "count",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10211   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "contacts.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Contact>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ContactController.count"
+      }
+    },
+    "/contacts/{id}": {
+      "put": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10209   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "ContactController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10209   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "ContactController.updateById"
+      },
+      "get": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "findById",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10211   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contacts.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ContactController.findById"
+      },
+      "delete": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10210   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ContactController.deleteById"
+      }
+    },
+    "/contacts": {
+      "post": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "create",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10208   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewContact"
+              }
+            }
+          }
+        },
+        "operationId": "ContactController.create"
+      },
+      "patch": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10209   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "contacts.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Contact>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactPartial"
+              }
+            }
+          }
+        },
+        "operationId": "ContactController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "ContactController",
+        "x-operation-name": "find",
+        "tags": [
+          "ContactController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Contact model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10211   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contacts.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ContactController.find"
+      }
+    },
+    "/invoices/count": {
+      "get": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "count",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10215   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "invoices.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Invoice>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "InvoiceController.count"
+      }
+    },
+    "/invoices/{id}": {
+      "put": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invoice PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10213   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Invoice"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "InvoiceController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invoice PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10213   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoicePartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "InvoiceController.updateById"
+      },
+      "get": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "findById",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10215   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/invoices.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "InvoiceController.findById"
+      },
+      "delete": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invoice DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10214   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "InvoiceController.deleteById"
+      }
+    },
+    "/invoices": {
+      "post": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "create",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10212   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewInvoice"
+              }
+            }
+          }
+        },
+        "operationId": "InvoiceController.create"
+      },
+      "patch": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10213   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "invoices.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Invoice>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoicePartial"
+              }
+            }
+          }
+        },
+        "operationId": "InvoiceController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "InvoiceController",
+        "x-operation-name": "find",
+        "tags": [
+          "InvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Invoice model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10215   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/invoices.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "InvoiceController.find"
+      }
+    },
+    "/leads/count": {
+      "get": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "count",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lead model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10203   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "leads.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Lead>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "LeadController.count"
+      }
+    },
+    "/leads/{id}/tenants": {
+      "post": {
+        "x-controller-name": "LeadTenantController",
+        "x-operation-name": "tenantFromLead",
+        "tags": [
+          "LeadTenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantOnboardDto"
+              }
+            }
+          }
+        },
+        "operationId": "LeadTenantController.tenantFromLead"
+      }
+    },
+    "/leads/{id}/verify": {
+      "post": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "validateLead",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A response with token for the verified lead",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyLeadResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "LeadController.validateLead"
+      }
+    },
+    "/leads/{id}": {
+      "put": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Lead PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10201   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "LeadController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Lead PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lead"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10201   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "LeadController.updateById"
+      },
+      "get": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "findById",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lead model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lead"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10203   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/leads.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "LeadController.findById"
+      },
+      "delete": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Lead DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10202   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "LeadController.deleteById"
+      }
+    },
+    "/leads": {
+      "post": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "create",
+        "tags": [
+          "LeadController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lead model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lead"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLeadDTO"
+              }
+            }
+          }
+        },
+        "operationId": "LeadController.create"
+      },
+      "patch": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lead PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lead"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10201   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "leads.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Lead>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadPartial"
+              }
+            }
+          }
+        },
+        "operationId": "LeadController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "LeadController",
+        "x-operation-name": "find",
+        "tags": [
+          "LeadController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Lead model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LeadWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10203   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/leads.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "LeadController.find"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "PingController.ping"
+      }
+    },
+    "/tenants/count": {
+      "get": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "count",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10207   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "tenants.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Tenant>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TenantController.count"
+      }
+    },
+    "/tenants/{id}/provision": {
+      "post": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "provision",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Provisioning success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10216   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProvisionDTO"
+              }
+            }
+          }
+        },
+        "operationId": "TenantController.provision"
+      }
+    },
+    "/tenants/{id}": {
+      "put": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tenant PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10205   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tenant"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "TenantController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tenant PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10205   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "TenantController.updateById"
+      },
+      "get": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "findById",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10207   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tenants.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TenantController.findById"
+      },
+      "delete": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tenant DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10206   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "TenantController.deleteById"
+      }
+    },
+    "/tenants": {
+      "post": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "create",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10204   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewTenantOnboarding"
+              }
+            }
+          }
+        },
+        "operationId": "TenantController.create"
+      },
+      "patch": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant PATCH success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10205   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "tenants.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Tenant>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantPartial"
+              }
+            }
+          }
+        },
+        "operationId": "TenantController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "find",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Tenant model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TenantWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 10207   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tenants.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TenantController.find"
+      }
+    },
+    "/webhook": {
+      "post": {
+        "x-controller-name": "WebhookController",
+        "x-operation-name": "webhook",
+        "tags": [
+          "WebhookController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Webhook success"
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookDTO"
+              }
+            }
+          }
+        },
+        "operationId": "WebhookController.webhook"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Home Page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "WebhookDTO": {
+        "title": "WebhookDTO",
+        "type": "object",
+        "description": "(tsType: WebhookDTO, schemaOptions: { title: 'WebhookDTO' })",
+        "properties": {
+          "initiatorId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "initiatorId",
+          "data",
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "WebhookDTO"
+      },
+      "Tenant": {
+        "title": "Tenant",
+        "type": "object",
+        "description": "main model of the service that represents a tenant in the system, either pooled or siloed",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the tenant"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of a tenant, it can be - 0(active), 1(provisioning),2(deprovisioning),3(inactive)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "key": {
+            "type": "string",
+            "description": "a short string used to identify a tenant. This is also used as the namespace and subdomain for this particular tenant",
+            "pattern": "^[a-z0-9]+$",
+            "maxLength": 10
+          },
+          "spocUserId": {
+            "type": "string",
+            "description": "user id of the admin user who acts as a spoc for this tenant."
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "array of domains that are allowed for this tenant"
+            }
+          },
+          "leadId": {
+            "type": "string",
+            "description": "id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead."
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the tenant"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "key",
+          "domains"
+        ],
+        "additionalProperties": false
+      },
+      "NewTenantOnboarding": {
+        "title": "NewTenantOnboarding",
+        "type": "object",
+        "description": "model describing payload used to create and onboard a tenant (tsType: Omit<TenantOnboardDTO, >, schemaOptions: { title: 'NewTenantOnboarding', exclude: [] })",
+        "properties": {
+          "contact": {
+            "type": "object",
+            "description": "contacts belonging to a tenant (tsType: Omit<Contact, 'tenantId' | 'id'>, schemaOptions: { exclude: [ 'tenantId', 'id' ] })",
+            "title": "ContactExcluding_tenantId-id_",
+            "properties": {
+              "deleted": {
+                "type": "boolean"
+              },
+              "deletedOn": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "modifiedOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "modifiedBy": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string",
+                "description": "name of the contact of a tenant"
+              },
+              "email": {
+                "type": "string",
+                "description": "email id of the contact"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+              }
+            },
+            "required": [
+              "name",
+              "email",
+              "isPrimary"
+            ],
+            "additionalProperties": false
+          },
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "description": "address of the tenant owners"
+          },
+          "city": {
+            "type": "string",
+            "description": "city of the tenant owner"
+          },
+          "state": {
+            "type": "string",
+            "description": "state of the tenant owner"
+          },
+          "zip": {
+            "type": "string",
+            "description": "zip code of the tenant owner"
+          },
+          "country": {
+            "type": "string",
+            "description": "country of the tenant owner"
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+$",
+            "maxLength": 10
+          },
+          "domains": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "hostname"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "key",
+          "domains"
+        ],
+        "additionalProperties": false
+      },
+      "TenantOnboardDTO": {
+        "title": "TenantOnboardDTO",
+        "type": "object",
+        "description": "model describing payload used to create and onboard a tenant",
+        "properties": {
+          "contact": {
+            "type": "object",
+            "description": "contacts belonging to a tenant (tsType: Omit<Contact, 'tenantId' | 'id'>, schemaOptions: { exclude: [ 'tenantId', 'id' ] })",
+            "title": "ContactExcluding_tenantId-id_",
+            "properties": {
+              "deleted": {
+                "type": "boolean"
+              },
+              "deletedOn": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "modifiedOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "modifiedBy": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string",
+                "description": "name of the contact of a tenant"
+              },
+              "email": {
+                "type": "string",
+                "description": "email id of the contact"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+              }
+            },
+            "required": [
+              "name",
+              "email",
+              "isPrimary"
+            ],
+            "additionalProperties": false
+          },
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "description": "address of the tenant owners"
+          },
+          "city": {
+            "type": "string",
+            "description": "city of the tenant owner"
+          },
+          "state": {
+            "type": "string",
+            "description": "state of the tenant owner"
+          },
+          "zip": {
+            "type": "string",
+            "description": "zip code of the tenant owner"
+          },
+          "country": {
+            "type": "string",
+            "description": "country of the tenant owner"
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+$",
+            "maxLength": 10
+          },
+          "domains": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "hostname"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "key",
+          "domains"
+        ],
+        "additionalProperties": false
+      },
+      "ProvisionDTO": {
+        "title": "ProvisionDTO",
+        "type": "object",
+        "description": "model describing payload used to provision resources for a tenant (tsType: Omit<ProvisioningDTO, >, schemaOptions: { title: 'ProvisionDTO', exclude: [] })",
+        "properties": {
+          "subscriptionId": {
+            "type": "string"
+          },
+          "chargeId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProvisioningDTO": {
+        "title": "ProvisioningDTO",
+        "type": "object",
+        "description": "model describing payload used to provision resources for a tenant",
+        "properties": {
+          "subscriptionId": {
+            "type": "string"
+          },
+          "chargeId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactWithRelations": {
+        "title": "ContactWithRelations",
+        "type": "object",
+        "description": "contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the contact of a tenant"
+          },
+          "email": {
+            "type": "string",
+            "description": "email id of the contact"
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "tenant id this contact belongs to"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "name",
+          "email",
+          "isPrimary"
+        ],
+        "additionalProperties": false
+      },
+      "ResourceWithRelations": {
+        "title": "ResourceWithRelations",
+        "type": "object",
+        "description": "model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "description": "identifier for the resource in the external system it was provisioned"
+          },
+          "type": {
+            "type": "string",
+            "description": "type of the resource like storage, compute, etc"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "any type specific metadata of the resource like connection info, size, etc"
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "id of the tenant for which this resource is provisioned"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "externalIdentifier",
+          "type",
+          "metadata"
+        ],
+        "additionalProperties": false
+      },
+      "AddressWithRelations": {
+        "title": "AddressWithRelations",
+        "type": "object",
+        "description": "this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "description": "address of the company"
+          },
+          "city": {
+            "type": "string",
+            "description": "city of the company"
+          },
+          "state": {
+            "type": "string",
+            "description": "state of the company"
+          },
+          "zip": {
+            "type": "string",
+            "description": "zip code of the company"
+          },
+          "country": {
+            "type": "string",
+            "description": "country of the company"
+          }
+        },
+        "required": [
+          "country"
+        ],
+        "additionalProperties": false
+      },
+      "LeadWithRelations": {
+        "title": "LeadWithRelations",
+        "type": "object",
+        "description": "this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the lead"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "name of the lead's company"
+          },
+          "email": {
+            "type": "string",
+            "description": "email of the lead"
+          },
+          "isValidated": {
+            "type": "boolean",
+            "description": "whether the lead`s email has been validated or not"
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the lead"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantWithRelations"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "name",
+          "companyName",
+          "email",
+          "isValidated"
+        ],
+        "additionalProperties": false
+      },
+      "TenantWithRelations": {
+        "title": "TenantWithRelations",
+        "type": "object",
+        "description": "main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the tenant"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of a tenant, it can be - 0(active), 1(provisioning),2(deprovisioning),3(inactive)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "key": {
+            "type": "string",
+            "description": "a short string used to identify a tenant. This is also used as the namespace and subdomain for this particular tenant",
+            "pattern": "^[a-z0-9]+$",
+            "maxLength": 10
+          },
+          "spocUserId": {
+            "type": "string",
+            "description": "user id of the admin user who acts as a spoc for this tenant."
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "array of domains that are allowed for this tenant"
+            }
+          },
+          "leadId": {
+            "type": "string",
+            "description": "id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead."
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the tenant"
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactWithRelations"
+            }
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceWithRelations"
+            }
+          },
+          "lead": {
+            "$ref": "#/components/schemas/LeadWithRelations"
+          },
+          "foreignKey": {},
+          "address": {
+            "$ref": "#/components/schemas/AddressWithRelations"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "key",
+          "domains"
+        ],
+        "additionalProperties": false
+      },
+      "TenantPartial": {
+        "title": "TenantPartial",
+        "type": "object",
+        "description": "main model of the service that represents a tenant in the system, either pooled or siloed (tsType: Partial<Tenant>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the tenant"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of a tenant, it can be - 0(active), 1(provisioning),2(deprovisioning),3(inactive)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "key": {
+            "type": "string",
+            "description": "a short string used to identify a tenant. This is also used as the namespace and subdomain for this particular tenant",
+            "pattern": "^[a-z0-9]+$",
+            "maxLength": 10
+          },
+          "spocUserId": {
+            "type": "string",
+            "description": "user id of the admin user who acts as a spoc for this tenant."
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "array of domains that are allowed for this tenant"
+            }
+          },
+          "leadId": {
+            "type": "string",
+            "description": "id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead."
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the tenant"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Lead": {
+        "title": "Lead",
+        "type": "object",
+        "description": "this model represents a lead that could eventually be a tenant in the system",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the lead"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "name of the lead's company"
+          },
+          "email": {
+            "type": "string",
+            "description": "email of the lead"
+          },
+          "isValidated": {
+            "type": "boolean",
+            "description": "whether the lead`s email has been validated or not"
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the lead"
+          }
+        },
+        "required": [
+          "name",
+          "companyName",
+          "email",
+          "isValidated"
+        ],
+        "additionalProperties": false
+      },
+      "CreateLeadDTO": {
+        "title": "CreateLeadDTO",
+        "type": "object",
+        "description": "model describing payload used to create a lead (tsType: Omit<CreateLeadDTO, 'isValidated' | 'addressId' | 'id'>, schemaOptions: { title: 'CreateLeadDTO', exclude: [ 'isValidated', 'addressId', 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the lead"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "name of the lead's company"
+          },
+          "email": {
+            "type": "string",
+            "description": "email of the lead"
+          },
+          "address": {
+            "type": "object",
+            "description": "this model represents the address of a company or lead (tsType: @loopback/repository-json-schema#Optional<Omit<Address, 'id'>, 'country'>, schemaOptions: { exclude: [ 'id' ], optional: [ 'country' ] })",
+            "title": "AddressOptional_country_Excluding_id_",
+            "properties": {
+              "deleted": {
+                "type": "boolean"
+              },
+              "deletedOn": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "modifiedOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "modifiedBy": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string",
+                "description": "address of the company"
+              },
+              "city": {
+                "type": "string",
+                "description": "city of the company"
+              },
+              "state": {
+                "type": "string",
+                "description": "state of the company"
+              },
+              "zip": {
+                "type": "string",
+                "description": "zip code of the company"
+              },
+              "country": {
+                "type": "string",
+                "description": "country of the company"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "name",
+          "companyName",
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "VerifyLeadResponseDTO": {
+        "title": "VerifyLeadResponseDTO",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "token"
+        ],
+        "additionalProperties": false
+      },
+      "LeadPartial": {
+        "title": "LeadPartial",
+        "type": "object",
+        "description": "this model represents a lead that could eventually be a tenant in the system (tsType: Partial<Lead>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the lead"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "name of the lead's company"
+          },
+          "email": {
+            "type": "string",
+            "description": "email of the lead"
+          },
+          "isValidated": {
+            "type": "boolean",
+            "description": "whether the lead`s email has been validated or not"
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the lead"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TenantOnboardDto": {
+        "title": "TenantOnboardDto",
+        "type": "object",
+        "description": "model describing payload used to create and onboard a tenant (tsType: @loopback/repository-json-schema#Optional<Omit<TenantOnboardDTO, 'contact'>, 'name'>, schemaOptions: { title: 'TenantOnboardDto', exclude: [ 'contact' ], optional: [ 'name' ] })",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "description": "address of the tenant owners"
+          },
+          "city": {
+            "type": "string",
+            "description": "city of the tenant owner"
+          },
+          "state": {
+            "type": "string",
+            "description": "state of the tenant owner"
+          },
+          "zip": {
+            "type": "string",
+            "description": "zip code of the tenant owner"
+          },
+          "country": {
+            "type": "string",
+            "description": "country of the tenant owner"
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+$",
+            "maxLength": 10
+          },
+          "domains": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "hostname"
+            }
+          }
+        },
+        "required": [
+          "key",
+          "domains"
+        ],
+        "additionalProperties": false
+      },
+      "Invoice": {
+        "title": "Invoice",
+        "type": "object",
+        "description": "this model represents an invoice with the amount and period generated for a tenant in the system",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "start date for the period this invoice is generated for"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "end date for the period this invoice is generated for"
+          },
+          "amount": {
+            "type": "number",
+            "description": "total amount for the invoice"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "currency for the invoice"
+          },
+          "invoiceFile": {
+            "type": "string",
+            "description": "option reference to the generated file of the invoice"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "due date for the invoice"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
+            "enum": [
+              "PENDING",
+              "PAID",
+              "CANCELLED",
+              0,
+              1,
+              2
+            ]
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "id of the tenant this invoice is generated for"
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "amount",
+          "currencyCode",
+          "dueDate",
+          "status",
+          "tenantId"
+        ],
+        "additionalProperties": false
+      },
+      "NewInvoice": {
+        "title": "NewInvoice",
+        "type": "object",
+        "description": "this model represents an invoice with the amount and period generated for a tenant in the system (tsType: Omit<Invoice, 'id'>, schemaOptions: { title: 'NewInvoice', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "start date for the period this invoice is generated for"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "end date for the period this invoice is generated for"
+          },
+          "amount": {
+            "type": "number",
+            "description": "total amount for the invoice"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "currency for the invoice"
+          },
+          "invoiceFile": {
+            "type": "string",
+            "description": "option reference to the generated file of the invoice"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "due date for the invoice"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
+            "enum": [
+              "PENDING",
+              "PAID",
+              "CANCELLED",
+              0,
+              1,
+              2
+            ]
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "id of the tenant this invoice is generated for"
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "amount",
+          "currencyCode",
+          "dueDate",
+          "status",
+          "tenantId"
+        ],
+        "additionalProperties": false
+      },
+      "InvoiceWithRelations": {
+        "title": "InvoiceWithRelations",
+        "type": "object",
+        "description": "this model represents an invoice with the amount and period generated for a tenant in the system (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "start date for the period this invoice is generated for"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "end date for the period this invoice is generated for"
+          },
+          "amount": {
+            "type": "number",
+            "description": "total amount for the invoice"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "currency for the invoice"
+          },
+          "invoiceFile": {
+            "type": "string",
+            "description": "option reference to the generated file of the invoice"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "due date for the invoice"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
+            "enum": [
+              "PENDING",
+              "PAID",
+              "CANCELLED",
+              0,
+              1,
+              2
+            ]
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "id of the tenant this invoice is generated for"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "amount",
+          "currencyCode",
+          "dueDate",
+          "status",
+          "tenantId"
+        ],
+        "additionalProperties": false
+      },
+      "InvoicePartial": {
+        "title": "InvoicePartial",
+        "type": "object",
+        "description": "this model represents an invoice with the amount and period generated for a tenant in the system (tsType: Partial<Invoice>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "start date for the period this invoice is generated for"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "end date for the period this invoice is generated for"
+          },
+          "amount": {
+            "type": "number",
+            "description": "total amount for the invoice"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "currency for the invoice"
+          },
+          "invoiceFile": {
+            "type": "string",
+            "description": "option reference to the generated file of the invoice"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "due date for the invoice"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
+            "enum": [
+              "PENDING",
+              "PAID",
+              "CANCELLED",
+              0,
+              1,
+              2
+            ]
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "id of the tenant this invoice is generated for"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Contact": {
+        "title": "Contact",
+        "type": "object",
+        "description": "contacts belonging to a tenant",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the contact of a tenant"
+          },
+          "email": {
+            "type": "string",
+            "description": "email id of the contact"
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "tenant id this contact belongs to"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "isPrimary"
+        ],
+        "additionalProperties": false
+      },
+      "NewContact": {
+        "title": "NewContact",
+        "type": "object",
+        "description": "contacts belonging to a tenant (tsType: Omit<Contact, 'id'>, schemaOptions: { title: 'NewContact', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the contact of a tenant"
+          },
+          "email": {
+            "type": "string",
+            "description": "email id of the contact"
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "tenant id this contact belongs to"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "isPrimary"
+        ],
+        "additionalProperties": false
+      },
+      "ContactPartial": {
+        "title": "ContactPartial",
+        "type": "object",
+        "description": "contacts belonging to a tenant (tsType: Partial<Contact>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the contact of a tenant"
+          },
+          "email": {
+            "type": "string",
+            "description": "email id of the contact"
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "tenant id this contact belongs to"
+          }
+        },
+        "additionalProperties": false
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "contacts.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "contacts.ScopeFilter"
+      },
+      "contacts.IncludeFilter.Items": {
+        "title": "contacts.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "tenant"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/contacts.ScopeFilter"
+          }
+        }
+      },
+      "contacts.Filter": {
+        "type": "object",
+        "title": "contacts.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "boolean"
+                  },
+                  "isPrimary": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "email",
+                    "isPrimary",
+                    "tenantId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "contacts.Fields"
+          },
+          "include": {
+            "title": "contacts.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/contacts.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Contact>"
+      },
+      "contacts.Filter1": {
+        "type": "object",
+        "title": "contacts.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "contacts.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "boolean"
+                  },
+                  "isPrimary": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "email",
+                    "isPrimary",
+                    "tenantId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "contacts.Fields"
+          },
+          "include": {
+            "title": "contacts.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/contacts.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Contact>"
+      },
+      "invoices.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "invoices.ScopeFilter"
+      },
+      "invoices.IncludeFilter.Items": {
+        "title": "invoices.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "tenant"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/invoices.ScopeFilter"
+          }
+        }
+      },
+      "invoices.Filter": {
+        "type": "object",
+        "title": "invoices.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "startDate": {
+                    "type": "boolean"
+                  },
+                  "endDate": {
+                    "type": "boolean"
+                  },
+                  "amount": {
+                    "type": "boolean"
+                  },
+                  "currencyCode": {
+                    "type": "boolean"
+                  },
+                  "invoiceFile": {
+                    "type": "boolean"
+                  },
+                  "dueDate": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "startDate",
+                    "endDate",
+                    "amount",
+                    "currencyCode",
+                    "invoiceFile",
+                    "dueDate",
+                    "status",
+                    "tenantId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "invoices.Fields"
+          },
+          "include": {
+            "title": "invoices.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/invoices.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Invoice>"
+      },
+      "invoices.Filter1": {
+        "type": "object",
+        "title": "invoices.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "invoices.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "startDate": {
+                    "type": "boolean"
+                  },
+                  "endDate": {
+                    "type": "boolean"
+                  },
+                  "amount": {
+                    "type": "boolean"
+                  },
+                  "currencyCode": {
+                    "type": "boolean"
+                  },
+                  "invoiceFile": {
+                    "type": "boolean"
+                  },
+                  "dueDate": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "startDate",
+                    "endDate",
+                    "amount",
+                    "currencyCode",
+                    "invoiceFile",
+                    "dueDate",
+                    "status",
+                    "tenantId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "invoices.Fields"
+          },
+          "include": {
+            "title": "invoices.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/invoices.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Invoice>"
+      },
+      "leads.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "leads.ScopeFilter"
+      },
+      "leads.IncludeFilter.Items": {
+        "title": "leads.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "tenant",
+              "address"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/leads.ScopeFilter"
+          }
+        }
+      },
+      "leads.Filter": {
+        "type": "object",
+        "title": "leads.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "companyName": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "boolean"
+                  },
+                  "isValidated": {
+                    "type": "boolean"
+                  },
+                  "addressId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "companyName",
+                    "email",
+                    "isValidated",
+                    "addressId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "leads.Fields"
+          },
+          "include": {
+            "title": "leads.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/leads.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Lead>"
+      },
+      "leads.Filter1": {
+        "type": "object",
+        "title": "leads.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "leads.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "companyName": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "boolean"
+                  },
+                  "isValidated": {
+                    "type": "boolean"
+                  },
+                  "addressId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "companyName",
+                    "email",
+                    "isValidated",
+                    "addressId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "leads.Fields"
+          },
+          "include": {
+            "title": "leads.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/leads.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Lead>"
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "tenants.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "tenants.ScopeFilter"
+      },
+      "tenants.IncludeFilter.Items": {
+        "title": "tenants.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "contacts",
+              "resources",
+              "lead",
+              "address"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/tenants.ScopeFilter"
+          }
+        }
+      },
+      "tenants.Filter": {
+        "type": "object",
+        "title": "tenants.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "spocUserId": {
+                    "type": "boolean"
+                  },
+                  "domains": {
+                    "type": "boolean"
+                  },
+                  "leadId": {
+                    "type": "boolean"
+                  },
+                  "addressId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "status",
+                    "key",
+                    "spocUserId",
+                    "domains",
+                    "leadId",
+                    "addressId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "tenants.Fields"
+          },
+          "include": {
+            "title": "tenants.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/tenants.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Tenant>"
+      },
+      "tenants.Filter1": {
+        "type": "object",
+        "title": "tenants.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "tenants.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "spocUserId": {
+                    "type": "boolean"
+                  },
+                  "domains": {
+                    "type": "boolean"
+                  },
+                  "leadId": {
+                    "type": "boolean"
+                  },
+                  "addressId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "status",
+                    "key",
+                    "spocUserId",
+                    "domains",
+                    "leadId",
+                    "addressId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "tenants.Fields"
+          },
+          "include": {
+            "title": "tenants.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/tenants.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Tenant>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
