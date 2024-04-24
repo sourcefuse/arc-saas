@@ -10,7 +10,7 @@ A Microservice for handling tenant management operations. It provides -
 - lead creation and verification
 - Tenant Onboarding of both pooled and silo tenants
 - Billing and Invoicing
-- Provisioning of resources for silo tenants
+- Provisioning of resources for silo and pooled tenants
 
 ### work flow
 ![image](https://github.com/sourcefuse/arc-saas/assets/107617248/25cb5c15-30d6-4e3a-8a43-05cca121eeaf)
