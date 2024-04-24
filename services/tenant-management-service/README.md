@@ -385,7 +385,6 @@ The migrations required for this service can be copied from the service. You can
 ## Database Schema
 
 ![alt text](./docs/tenants.png)
-![Untitled (1)](https://github.com/sourcefuse/arc-saas/assets/107617248/4d6cbaff-3dbf-42db-8c0e-d7890db1f48c)
 
 
 The major tables in the schema are briefly described below -
