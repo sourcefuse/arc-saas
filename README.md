@@ -1,7 +1,6 @@
 <p align="center">
   <a href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" width="180" alt="ARC Logo" /></a>
 </p>
-![logo-dark-bg](https://github.com/sourcefuse/loopback4-microservice-catalog/assets/107617248/0b771713-d513-449e-b2cf-5fa2fecd0a93)
 
 <p align="center">
   ARC-SAAS by SourceFuse is an open-source framework for developing cloud-native multi-tenant enterprise applications, utilizing prebuilt microservices and standardized architectures for deployment on private and public clouds.
