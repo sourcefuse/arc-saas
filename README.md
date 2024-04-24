@@ -19,7 +19,7 @@ ARC SaaS architecture consists of two major layers at a high level
 
 ## Pre-built Micro-services
 
-There are currently 14 Microservices provided and actively maintained:
+There are currently 2 Microservices provided and actively maintained:
 
 1. [Tenant Management Service](services/tenant-management-service)
 2. [Subscription Service](services/subscription-service) 
