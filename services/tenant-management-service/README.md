@@ -19,7 +19,7 @@ A Microservice for handling tenant management operations. It provides -
 
 ## Installation
 
-Install Tenant Management using `npm`;
+Install Tenant Management Service using `npm`;
 
 ```sh
 $ [npm install | yarn add] @sourceloop/tenant-management-service
@@ -29,7 +29,7 @@ $ [npm install | yarn add] @sourceloop/tenant-management-service
 
 - Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
-- Install the authentication service
+- Install the tenant management service
   `npm i @sourceloop/tenant-management-service`
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
@@ -296,12 +296,12 @@ export class AuthenticationDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = "AuthDb";
+  static dataSourceName = TenantManagementDbSourceName;
   static readonly defaultConfig = config;
 
   constructor(
     // You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
-    @inject('datasources.config.authentication', {optional: true})
+    @inject(`datasources.config.${TenantManagementDbSourceName}`, {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);
