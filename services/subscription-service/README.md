@@ -7,9 +7,9 @@ This is the primary service of the control plane responsible for subscription an
 ## Overview
 
 A Microservice for handling subscription management operations. It provides -
-- plan creations and management
-- Add or Update Plan Items/Services/Resources to Plans
-- Billing Cycle handling
+- plan creations and management - plan includes plan tier - silo/pooled
+- Add or Update Plan Items/Services/Resources to Plans - plan items are the offerings to user with in the selected plan
+- Billing Cycle handling - Billing cycle includes start date and end date etc
 
 ## Installation
 

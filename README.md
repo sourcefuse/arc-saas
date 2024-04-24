@@ -1,135 +1,30 @@
-# arc-saas
+<p align="center">
+  <a href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" width="180" alt="ARC Logo" /></a>
+</p>
+![logo-dark-bg](https://github.com/sourcefuse/loopback4-microservice-catalog/assets/107617248/0b771713-d513-449e-b2cf-5fa2fecd0a93)
 
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+<p align="center">
+  ARC-SAAS by SourceFuse is an open-source framework for developing cloud-native multi-tenant enterprise applications, utilizing prebuilt microservices and standardized architectures for deployment on private and public clouds.
+</p>
 
-## Getting Started
 
-We develop all microservices in the same repository using monorepo concept. To setup the base of the project we are using [Lerna](https://github.com/lerna/lerna). Lerna is useful to manage monorepos.
 
-## Developing
+# ARC SAAS
 
-For development guidelines, refer [here](https://github.com/sourcefuse/biz-book-api/tree/master/DEVELOPING.md)
+ARC SaaS architecture consists of two major layers at a high level 
 
-## Commit message guidelines
+- Control Plane - The control plane is foundational to any multi-tenant SaaS model. ARC SaaS control plane will include those services that give consumers the ability to manage and operate their tenants through a single, unified experience. Within the control plane, we have 3-tier architecture supporting UI (or some CLI), API and data separately. The core services here represent the collection of services that are used to orchestrate multi-tenant experience. We’ve included some of the common examples of services that are typically part of the core. However, these core services could vary for each SaaS solution depending on the requirements. In the architecture diagram above, we have also shown a separate administration application UI. This represents the application (a web application, a command line interface, or an API) that might be used by a SaaS provider to manage their multi-tenant environment. Please note that the control plane and its services are not actually multi-tenant. These services are global to all tenants and are basically used to operate and manage tenants.
 
-A good commit message should describe what changed and why.
+- Application Plane - At the bottom of the diagram, we have represented the application plane of a SaaS environment. This is where the multi-tenant functionality of the actual application will reside. 
 
-Our commit messages are formatted according to
-[Conventional Commits](https://conventionalcommits.org/), we use
-[commitlint](https://github.com/marionebl/commitlint) to verify and enforce this
-convention. These rules lead to more readable messages that are easy to follow
-when looking through the project history. But also, we use the git commit
-messages to generate change logs when publishing new versions.
 
-### Commit Message Format
+## Pre-built Micro-services
 
-Each commit message consists of a **header**, a **body** and a **footer**. The
-header has a special format that includes a **type**, an optional **scope** and
-a **subject**:
+There are currently 14 Microservices provided and actively maintained:
 
-```text
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
-```
+1. [Tenant Management Service](services/tenant-management-service)
+2. [Subscription Service](services/subscription-service) 
 
-#### type
+## License
 
-The **type** must be one of the following:
-
-- **feat**: A new feature
-- **fix**: A bug fix
-- **docs**: Documentation only changes
-- **style**: Changes that do not affect the meaning of the code (white-space,
-  formatting, missing semi-colons, etc)
-- **refactor**: A code change that neither fixes a bug nor adds a feature
-- **perf**: A code change that improves performance
-- **test**: Adding missing or correcting existing tests
-- **build**: Changes that affect the build system or external dependencies
-- **ci**: Changes to our CI configuration files and scripts
-- **chore**: Changes to the auxiliary tools and libraries such as documentation
-  generation
-- **revert**: Reverts a previous commit
-
-#### scope
-
-The **scope** must be a list of one or more packages contained in this monorepo.
-Each scope name must match a directory name in
-[packages/](https://github.com/sourcefuse/biz-book-api/tree/master/packages),
-e.g. `core` or [services/](https://github.com/sourcefuse/biz-book-api/tree/master/services).
-
-_Note: If multiple packages are affected by a pull request, don't list the
-scopes as the commit linter currently only supports only one scope being listed
-at most._
-
-#### subject
-
-The **subject** contains succinct description of the change:
-
-- use the imperative, present tense: "change" not "changed" nor "changes"
-- don't capitalize first letter
-- no dot (.) at the end
-
-#### body
-
-The **body** provides more details, it should include the motivation for the
-change and contrast this with previous behavior.
-
-Just as in the subject, use the imperative, present tense: "change" not
-"changed" nor "changes"a
-
-Paragraphs or bullet points are ok (must not exceed 100 characters per line).
-Typically a hyphen or asterisk is used for the bullet, followed by a single
-space, with blank lines in between.
-
-#### references
-
-Its mandatory to add references to JIRA ticket you are resolving as part of the commit.
-
-#### footer (optional)
-
-The **footer** should contain any information about Breaking Changes introduced
-by this commit.
-
-This section must start with the upper case text `BREAKING CHANGE` followed by a
-colon (`:`) and a space (``). A description must be provided, describing what
-has changed and how to migrate from older versions.
-
-### Tools to help generate a commit message
-
-This repository has [commitizen](https://github.com/commitizen/cz-cli) support
-enabled. Commitizen can help you generate your commit messages automatically.
-
-And to use it, simply call `git commit`. The tool will help
-you generate a commit message that follows the above guidelines.
-
-## Releases
-
-We are using semantic versioning so, the release management and tagging is automated based on that.
-
-Since, we are using a monorepo with lerna, each microservice will have independent versioning and release. For identifying which services changed in any build cycle and deploy only those services using CI/CD pipeline, use the below commands in order.
-
-```sh
-lerna changed -p --toposort --loglevel silent
-```
-
-This will give modified services for selective deployment. This needs to be done at beginning of CD process. This will skip migrations. So that needs to be run everytime. `lerna run db:migrate` .
-
-Alternatively, We can also use `--since {commit-hash}` flag with `lerna run` command to let lerna know that execute the command only in the services which have changed since the commit hash provided.
-
-Command for releasing tags
-
-Pre-release
-
-```sh
-HUSKY_SKIP_HOOKS=1 lerna version --conventional-commits --conventional-prerelease
-```
-
-Release
-
-```sh
-HUSKY_SKIP_HOOKS=1 lerna version --conventional-commits --conventional-graduate
-```
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
