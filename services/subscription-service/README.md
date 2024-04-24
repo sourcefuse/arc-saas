@@ -187,5 +187,4 @@ export class AuthenticationDbDataSource
 The migrations required for this service can be copied from the service. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ## Database Schema
-
-![image](https://github.com/sourcefuse/arc-saas/assets/107617248/25cb5c15-30d6-4e3a-8a43-05cca121eeaf)
+![Screenshot from 2024-04-24 11-55-23](https://github.com/sourcefuse/arc-saas/assets/107617248/d780de95-61d9-4eda-9903-b16277813a6e)
