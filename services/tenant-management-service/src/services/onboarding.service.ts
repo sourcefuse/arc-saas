@@ -85,7 +85,7 @@ export class OnboardingService {
       }),
     );
     const key = await this.leadAuthenticator.triggerValidationMail(newLead); // triggered notification sunny
-    return {key, id: newLead.id};
+    return {key, id: newLead.id, email: newLead.email};
   }
 
   /**
