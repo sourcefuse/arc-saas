@@ -7,3 +7,4 @@ export * from './service.controller';
 export * from './resource.controller';
 export * from './billing-cycle.controller';
 export * from './currency.controller';
+export * from './plan-subscription.controller';
