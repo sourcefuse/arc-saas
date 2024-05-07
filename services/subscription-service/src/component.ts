@@ -31,7 +31,7 @@ import {
 import { LEAD_TOKEN_VERIFIER, SubscriptionServiceBindings } from './keys';
 import { ISubscriptionServiceConfig } from './types';
 import { BillingCycleRepository, CurrencyRepository, PlanItemRepository, PlanRepository, ResourceRepository, ServiceRepository, SubscriptionRepository } from './repositories';
-import { BillinCycleController, CurrencyController, HomePageController, PingController, PlanController, PlanItemController, ResourceController, ServiceController, SubscriptionController } from './controllers';
+import { BillinCycleController, CurrencyController, HomePageController, PingController, PlanController, PlanItemController, PlanSubscriptionController, ResourceController, ServiceController, SubscriptionController } from './controllers';
 import { BillingCycle, Currency, PlanItem, Plan, Resource, Service, Subscription } from './models';
   
   
@@ -96,7 +96,8 @@ import { BillingCycle, Currency, PlanItem, Plan, Resource, Service, Subscription
         PlanController,
         ResourceController,
         ServiceController,
-        SubscriptionController
+        SubscriptionController,
+        PlanSubscriptionController
       ];
     }
   
