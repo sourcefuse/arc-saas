@@ -149,7 +149,7 @@ export class ProvisioningWebhookHandler implements IWebhookHandler {
         {
           name: tenant.name,
           user: name,
-          link: `${process.env.APP_LOGIN_URL!}`,
+          link: payload.data.appPlaneUrl,
         },
         tempToken,
       );

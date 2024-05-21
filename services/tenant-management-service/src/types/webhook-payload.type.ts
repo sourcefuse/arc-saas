@@ -29,6 +29,7 @@ export type ResourceProvisionedWebhookPayload = {
   data: {
     status: WebhookStatus.SUCCESS | WebhookStatus.FAILURE;
     resources: AnyObject[];
+    appPlaneUrl: string;
   };
 };
 

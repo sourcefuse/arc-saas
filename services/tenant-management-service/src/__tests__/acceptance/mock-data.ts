@@ -151,6 +151,7 @@ export const mockWebhookPayload: WebhookPayload = {
         path: 'path',
       }),
     ],
+    appPlaneUrl: 'redirectUrl',
   },
 };
 
