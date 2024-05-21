@@ -74,7 +74,7 @@ export class ProvisioningService<T extends SubscriptionDTO>
         TENANT_NAME: this._sanitizeTenantName(tenant.name),
         KEY: tenant.key,
         TENANT_ADMIN_EMAIL: tenant.contacts?.[0]?.email,
-        USERNAME: tenant.name,
+        USERNAME: tenant.key,
         TENANT_DATA: JSON.stringify({
           name: tenant.name,
           key: tenant.key,
