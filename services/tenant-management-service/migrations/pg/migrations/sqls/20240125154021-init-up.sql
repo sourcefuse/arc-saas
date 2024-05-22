@@ -101,7 +101,7 @@ CREATE TABLE main.resources(
     deleted_on timestamptz,
     deleted_by uuid,
     CONSTRAINT pk_resources_id_1 PRIMARY KEY (id),
-    CONSTRAINT idx_resource_ext_id UNIQUE (external_identifier)
+    CONSTRAINT idx_resource_ext_id UNIQUE (external_identifier,tenant_id)
 );
 
 ALTER TABLE main.resources
