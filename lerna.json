@@ -1,6 +1,6 @@
 {
-  "packages": ["packages/*", "services/*", "facades/*"],
-  "command":{
+  "packages": ["services/*"],
+  "command": {
     "version": {
       "conventionalCommits": true,
       "message": "chore(release): publish"
