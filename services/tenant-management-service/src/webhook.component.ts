@@ -63,13 +63,23 @@ import {
 } from './repositories';
 import {WebhookVerifierProvider} from './interceptors';
 import {SystemUserProvider} from './providers';
-import {CryptoHelperService, NotificationService} from './services';
+import {
+  AWS_CODEBUILD_CLIENT,
+  CodebuildClientProvider,
+  CodeBuildService,
+  CryptoHelperService,
+  NotificationService,
+  OffBoardService,
+} from './services';
 import {
   DEFAULT_SIGNATURE_HEADER,
   DEFAULT_TIMESTAMP_HEADER,
   DEFAULT_TIMESTAMP_TOLERANCE,
 } from './utils';
-import {ProvisioningWebhookHandler} from './services/webhook';
+import {
+  OffBoardingWebhookHandler,
+  ProvisioningWebhookHandler,
+} from './services/webhook';
 
 export class WebhookTenantManagementServiceComponent implements Component {
   constructor(
@@ -140,7 +150,11 @@ export class WebhookTenantManagementServiceComponent implements Component {
       }),
       Binding.bind('services.NotificationService').toClass(NotificationService),
       createServiceBinding(ProvisioningWebhookHandler),
+      createServiceBinding(OffBoardingWebhookHandler),
+      createServiceBinding(OffBoardService),
       createServiceBinding(CryptoHelperService),
+      createServiceBinding(CodeBuildService),
+      Binding.bind(AWS_CODEBUILD_CLIENT).toProvider(CodebuildClientProvider),
     ];
     // this.services=[ProvisioningWebhookHandler,CryptoHelperService];
   }

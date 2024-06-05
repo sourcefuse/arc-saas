@@ -22,7 +22,8 @@ import {BindingScope} from '@loopback/context';
 import {AWS_CODEBUILD_CLIENT} from '../../services';
 import {CodeBuildClient, StartBuildCommand} from '@aws-sdk/client-codebuild';
 import {PlanTier} from '../../enums';
-import {PIPELINES} from '../../keys';
+import {OFFBOARDING_PIPELINES, PIPELINES} from '../../keys';
+import {OffBoard} from '../../enums/off-board.enum';
 
 describe('TenantController', () => {
   let app: TenantMgmtServiceApplication;
@@ -49,6 +50,10 @@ describe('TenantController', () => {
     app.bind(PIPELINES).to({
       [PlanTier.POOLED]: 'free-pipeline',
       [PlanTier.SILO]: '',
+    });
+    app.bind(OFFBOARDING_PIPELINES).to({
+      [OffBoard.POOLED]: 'free-offboard-pipeline',
+      [OffBoard.SILO]: '',
     });
     secretRepo = await getRepo(app, 'repositories.WebhookSecretRepository');
   });

@@ -3,8 +3,8 @@ import {Client, expect, sinon} from '@loopback/testlab';
 import {ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {createHmac, randomBytes} from 'crypto';
 import {TenantMgmtServiceApplication} from '../../application';
-import {TenantStatus} from '../../enums';
-import {WEBHOOK_CONFIG} from '../../keys';
+import {TenantStatus, WebhookType} from '../../enums';
+import {OFFBOARDING_PIPELINES, WEBHOOK_CONFIG} from '../../keys';
 import {
   ContactRepository,
   ResourceRepository,
@@ -12,8 +12,14 @@ import {
   WebhookSecretRepository,
 } from '../../repositories';
 import {ResourceData, WebhookConfig, WebhookPayload} from '../../types';
-import {mockContact, mockWebhookPayload, testTemplates} from './mock-data';
+import {
+  mockContact,
+  mockOffboardingWebhookPayload,
+  mockWebhookPayload,
+  testTemplates,
+} from './mock-data';
 import {getRepo, setupApplication} from './test-helper';
+import {OffBoard} from '../../enums/off-board.enum';
 
 describe('WebhookController', () => {
   let app: TenantMgmtServiceApplication;
@@ -24,6 +30,7 @@ describe('WebhookController', () => {
   let tenantRepo: TenantRepository;
   let contactRepo: ContactRepository;
   let webhookPayload: WebhookPayload;
+  let offboardWebhookPayload: WebhookPayload;
   const nonExistantTenant = 'non-existant-tenant';
   const notifStub = sinon.stub();
 
@@ -49,6 +56,10 @@ describe('WebhookController', () => {
       createNotification: notifStub,
       getTemplateByName: (name: string) => testTemplates[name],
     });
+    app.bind(OFFBOARDING_PIPELINES).to({
+      [OffBoard.POOLED]: 'free-offboard-pipeline',
+      [OffBoard.SILO]: '',
+    });
   });
 
   after(async () => {
@@ -62,10 +73,14 @@ describe('WebhookController', () => {
     notifStub.resolves();
     await resourceRepo.deleteAllHard();
     await tenantRepo.deleteAllHard();
-    const tenant = await seedTenant();
+    const {newTenant, newTenant2} = await seedTenant();
     webhookPayload = {
       ...mockWebhookPayload,
-      initiatorId: tenant.id,
+      initiatorId: newTenant.id,
+    };
+    offboardWebhookPayload = {
+      ...mockOffboardingWebhookPayload,
+      initiatorId: newTenant2.id,
     };
   });
 
@@ -155,6 +170,95 @@ describe('WebhookController', () => {
         .set(webhookConfig.timestampHeaderName, headers.timestamp)
         .send({...webhookPayload, type: 2})
         .expect(STATUS_CODE.UNPROCESSED_ENTITY);
+    });
+  });
+
+  describe('For Offboarding', () => {
+    it('should successfully call the webhook handler for a valid payload', async () => {
+      const headers = await buildHeaders(offboardWebhookPayload);
+      await client
+        .post('/webhook')
+        .set(webhookConfig.signatureHeaderName, headers.signature)
+        .set(webhookConfig.timestampHeaderName, headers.timestamp)
+        .send(offboardWebhookPayload)
+        .expect(STATUS_CODE.NO_CONTENT);
+
+      const tenant = await tenantRepo.findById(
+        offboardWebhookPayload.initiatorId,
+      );
+      expect(tenant.status).to.equal(TenantStatus.INACTIVE);
+
+      // should send an email to primary contact as well for successful provisioning
+      const calls = notifStub.getCalls();
+      expect(calls).to.have.length(1);
+      // extract and validate data from the email
+      const emailData = calls[0].args[2];
+      const receiver = calls[0].args[0];
+      expect(emailData.link).to.be.String();
+      expect(emailData.name).to.equal(tenant.name);
+      expect(emailData.user).to.equal(mockContact.firstName);
+      expect(receiver).to.equal(mockContact.email);
+
+      // verify the resource was deleted
+      const resources = await resourceRepo.find({
+        where: {
+          tenantId: offboardWebhookPayload.initiatorId,
+        },
+      });
+      expect(resources).to.have.length(0);
+    });
+
+    it('should successfully call the provisioning handler but skips mail for a valid payload but contact missing', async () => {
+      const headers = await buildHeaders(offboardWebhookPayload);
+      // delete contact to avoid sending email
+      await contactRepo.deleteAllHard();
+
+      await client
+        .post('/webhook')
+        .set(webhookConfig.signatureHeaderName, headers.signature)
+        .set(webhookConfig.timestampHeaderName, headers.timestamp)
+        .send(offboardWebhookPayload)
+        .expect(STATUS_CODE.NO_CONTENT);
+
+      const tenant = await tenantRepo.findById(
+        offboardWebhookPayload.initiatorId,
+      );
+      expect(tenant.status).to.equal(TenantStatus.INACTIVE);
+
+      // should throw an error if contact not found for the tenant
+      const calls = notifStub.getCalls();
+      expect(calls).to.have.length(0);
+      // extract and validate data from the email
+      sinon.assert.calledWith(
+        loggerSpy.error,
+        `No email found to notify tenant: ${tenant.id}`,
+      );
+    });
+
+    it('should return 401 if the initiator id is for tenant that does not exist', async () => {
+      const newPayload = {
+        ...offboardWebhookPayload,
+        initiatorId: nonExistantTenant,
+      };
+      const headers = await buildHeaders(newPayload);
+      await client
+        .post('/webhook')
+        .set(webhookConfig.signatureHeaderName, headers.signature)
+        .set(webhookConfig.timestampHeaderName, headers.timestamp)
+        .send(newPayload)
+        .expect(STATUS_CODE.UNAUTHORISED);
+
+      const resources = await resourceRepo.find({
+        where: {
+          tenantId: newPayload.initiatorId,
+        },
+      });
+
+      expect(resources).to.have.length(0);
+      const tenant = await tenantRepo.findById(
+        offboardWebhookPayload.initiatorId,
+      );
+      expect(tenant.status).to.equal(TenantStatus.OFFBOARDING);
     });
   });
 
@@ -276,6 +380,12 @@ describe('WebhookController', () => {
       key: 'test-tenant-key',
       domains: ['test.com'],
     });
+    const newTenant2 = await tenantRepo.create({
+      name: 'test-tenant-offboarding',
+      status: TenantStatus.OFFBOARDING,
+      key: 'test-tenant-key-offboarding',
+      domains: ['test-offboard.com'],
+    });
     await contactRepo.createAll([
       {
         ...mockContact,
@@ -283,7 +393,14 @@ describe('WebhookController', () => {
         tenantId: newTenant.id,
       },
     ]);
-    return newTenant;
+    await contactRepo.createAll([
+      {
+        ...mockContact,
+        isPrimary: true,
+        tenantId: newTenant2.id,
+      },
+    ]);
+    return {newTenant, newTenant2};
   }
 
   async function buildHeaders(payload: WebhookPayload, tmp?: number) {
@@ -296,10 +413,17 @@ describe('WebhookController', () => {
     const secretRepo = app.getSync<WebhookSecretRepository>(
       'repositories.WebhookSecretRepository',
     );
-    await secretRepo.set(context, {
-      secret,
-      context: payload.initiatorId,
-    });
+    if (payload.type === WebhookType.TENANT_OFFBOARDING) {
+      await secretRepo.set(`${context}:offboarding`, {
+        secret,
+        context: payload.initiatorId,
+      });
+    } else {
+      await secretRepo.set(context, {
+        secret,
+        context: payload.initiatorId,
+      });
+    }
     return {
       timestamp,
       signature,

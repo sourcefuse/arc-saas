@@ -7,7 +7,7 @@ import {
   inject,
   service,
 } from '@loopback/core';
-import {WebhookConfig, WebhookPayload} from '../types';
+import {SecretInfo, WebhookConfig, WebhookPayload} from '../types';
 import {HttpErrors, RequestContext} from '@loopback/rest';
 import {SYSTEM_USER, WEBHOOK_CONFIG} from '../keys';
 import {CryptoHelperService} from '../services';
@@ -16,6 +16,7 @@ import {WebhookSecretRepository} from '../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {timingSafeEqual} from 'crypto';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {WebhookType} from '../enums';
 
 export class WebhookVerifierProvider implements Provider<Interceptor> {
   constructor(
@@ -56,8 +57,15 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
       throw new HttpErrors.Unauthorized();
     }
     const initiatorId = value.initiatorId;
+    let secretInfo: SecretInfo;
+    if (value.type === WebhookType.TENANT_OFFBOARDING) {
+      secretInfo = await this.webhookSecretRepo.get(
+        `${initiatorId}:offboarding`,
+      );
+    } else {
+      secretInfo = await this.webhookSecretRepo.get(initiatorId);
+    }
 
-    const secretInfo = await this.webhookSecretRepo.get(initiatorId);
     if (!secretInfo) {
       this.logger.error('No secret found for this initiator');
       throw new HttpErrors.Unauthorized();

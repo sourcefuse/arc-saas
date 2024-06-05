@@ -152,6 +152,18 @@ export const mockWebhookPayload: WebhookPayload = {
       }),
     ],
     appPlaneUrl: 'redirectUrl',
+    tier: PlanTier.SILO,
+  },
+};
+
+export const mockOffboardingWebhookPayload: WebhookPayload = {
+  initiatorId: 'user-id-1',
+  type: WebhookType.TENANT_OFFBOARDING,
+  data: {
+    status: WebhookStatus.SUCCESS,
+    resources: [],
+    appPlaneUrl: '',
+    tier: PlanTier.SILO,
   },
 };
 

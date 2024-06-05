@@ -26,8 +26,14 @@ import {TenantRepository} from '../repositories/tenant.repository';
 import {SubscriptionDTO, Tenant, TenantOnboardDTO} from '../models';
 import {PermissionKey} from '../permissions';
 import {service} from '@loopback/core';
-import {OnboardingService, ProvisioningService} from '../services';
+import {
+  OffBoardService,
+  OnboardingService,
+  ProvisioningService,
+} from '../services';
 import {IProvisioningService} from '../types';
+import {TenantTierDTO} from '../models/dtos/tenant-tier-dto.model';
+import {TenantStatus} from '../enums';
 
 const basePath = '/tenants';
 
@@ -39,6 +45,8 @@ export class TenantController {
     private readonly onboarding: OnboardingService,
     @service(ProvisioningService)
     private readonly provisioningService: IProvisioningService<SubscriptionDTO>,
+    @service(OffBoardService)
+    private readonly offBoardingService: OffBoardService,
   ) {}
 
   @authorize({
@@ -105,6 +113,39 @@ export class TenantController {
       include: ['contacts', 'address'],
     });
     return this.provisioningService.provisionTenant(existing, dto);
+  }
+
+  @authorize({
+    permissions: [PermissionKey.OffBoardTenant],
+  })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @post(`${basePath}/{id}/off-board`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'offboarding success',
+      },
+    },
+  })
+  async offboard(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(TenantTierDTO, {
+            title: 'TenantTierDTO',
+          }),
+        },
+      },
+    })
+    dto: TenantTierDTO,
+    @param.path.string('id') id: string,
+  ): Promise<void> {
+    await this.tenantRepository.updateById(id, {
+      status: TenantStatus.OFFBOARDING,
+    });
+    return this.offBoardingService.offBoardTenant(id, dto);
   }
 
   @authorize({

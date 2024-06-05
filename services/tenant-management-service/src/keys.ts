@@ -33,6 +33,9 @@ export const LEAD_TOKEN_VERIFIER = BindingKey.create<
 export const PIPELINES = BindingKey.create<Record<string, string>>(
   'sf.tenant.pipelines',
 );
+export const OFFBOARDING_PIPELINES = BindingKey.create<Record<string, string>>(
+  'sf.tenant.offboarding.pipelines',
+);
 
 /**
  * Binding key for the system user.

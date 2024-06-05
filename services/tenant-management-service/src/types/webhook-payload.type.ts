@@ -1,6 +1,6 @@
 import {AnyObject} from '@loopback/repository';
 import {WebhookType} from '../enums/webhook-types.enum';
-import {NotificationType} from '../enums';
+import {NotificationType, PlanTier} from '../enums';
 
 export enum WebhookStatus {
   FAILURE,
@@ -22,7 +22,7 @@ export type ResourceProvisionedWebhookPayload = {
   /**
    * The type of the webhook.
    */
-  type: WebhookType.RESOURCES_PROVISIONED;
+  type: WebhookType;
   /**
    * The data of the webhook.
    */
@@ -30,8 +30,11 @@ export type ResourceProvisionedWebhookPayload = {
     status: WebhookStatus.SUCCESS | WebhookStatus.FAILURE;
     resources: AnyObject[];
     appPlaneUrl: string;
+    tier: PlanTier;
   };
 };
+
+export type SecretInfo = {secret: string; context: string};
 
 // export interface WebhookNotificationServiceType{
 //   send(email: string, type: NotificationType, data: WebNotifiactionDataType, token: string):Promise<void>
