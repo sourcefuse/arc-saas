@@ -77,9 +77,11 @@ import {
   InvoicePDFGenerator,
   LeadAuthenticator,
   NotificationService,
+  OffBoardService,
   OnboardingService,
   ProvisioningService,
 } from './services';
+import {OffBoardingWebhookHandler} from './services/webhook';
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -153,6 +155,8 @@ export class TenantManagementServiceComponent implements Component {
       Binding.bind(AWS_CODEBUILD_CLIENT).toProvider(CodebuildClientProvider),
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
+      createServiceBinding(OffBoardService),
+      createServiceBinding(OffBoardingWebhookHandler),
       createServiceBinding(LeadAuthenticator),
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),

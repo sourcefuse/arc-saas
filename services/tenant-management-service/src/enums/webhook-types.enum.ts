@@ -1,3 +1,4 @@
 export enum WebhookType {
   RESOURCES_PROVISIONED,
+  TENANT_OFFBOARDING,
 }

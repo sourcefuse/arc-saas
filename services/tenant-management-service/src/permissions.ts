@@ -5,6 +5,7 @@ export const PermissionKey = {
   ViewLead: '10203',
   CreateTenant: '10204',
   ProvisionTenant: '10216',
+  OffBoardTenant: '10217',
   UpdateTenant: '10205',
   DeleteTenant: '10206',
   ViewTenant: '10207',
@@ -17,7 +18,6 @@ export const PermissionKey = {
   DeleteInvoice: '10214',
   ViewInvoice: '10215',
   CreateNotification: '2',
-
   CreateSubscription: '7001',
   UpdateSubscription: '7002',
   ViewSubscription: '7004',
