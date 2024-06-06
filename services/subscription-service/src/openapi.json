@@ -5,8 +5,7 @@
     "version": "1.0.0",
     "description": "subscription-service",
     "contact": {
-      "name": "subhamjagurisf",
-      "email": "subham.jaguri@sourcefuse.com"
+      "name": "Sourcefuse"
     }
   },
   "paths": {
@@ -14,9 +13,7 @@
       "get": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "count",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -58,9 +55,7 @@
       "put": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -97,9 +92,7 @@
       "patch": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "updateById",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -136,9 +129,7 @@
       "get": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "findById",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -183,9 +174,7 @@
       "delete": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -214,9 +203,7 @@
       "post": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "create",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -249,9 +236,7 @@
       "patch": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -300,9 +285,7 @@
       "get": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "find",
-        "tags": [
-          "BillinCycleController"
-        ],
+        "tags": ["BillinCycleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -344,9 +327,7 @@
       "get": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "count",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -388,9 +369,7 @@
       "put": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -427,9 +406,7 @@
       "patch": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "updateById",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -466,9 +443,7 @@
       "get": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "findById",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -513,9 +488,7 @@
       "delete": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -544,9 +517,7 @@
       "post": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "create",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -579,9 +550,7 @@
       "patch": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -630,9 +599,7 @@
       "get": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "find",
-        "tags": [
-          "CurrencyController"
-        ],
+        "tags": ["CurrencyController"],
         "security": [
           {
             "HTTPBearer": []
@@ -674,9 +641,7 @@
       "get": {
         "x-controller-name": "PingController",
         "x-operation-name": "ping",
-        "tags": [
-          "PingController"
-        ],
+        "tags": ["PingController"],
         "responses": {
           "200": {
             "description": "Ping Response",
@@ -697,9 +662,7 @@
       "get": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "count",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -741,9 +704,7 @@
       "put": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -780,9 +741,7 @@
       "patch": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "updateById",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -819,9 +778,7 @@
       "get": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "findById",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -866,9 +823,7 @@
       "delete": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -897,9 +852,7 @@
       "post": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "create",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -932,9 +885,7 @@
       "patch": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -983,9 +934,7 @@
       "get": {
         "x-controller-name": "PlanItemController",
         "x-operation-name": "find",
-        "tags": [
-          "PlanItemController"
-        ],
+        "tags": ["PlanItemController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1027,9 +976,7 @@
       "get": {
         "x-controller-name": "PlanController",
         "x-operation-name": "count",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1071,9 +1018,7 @@
       "put": {
         "x-controller-name": "PlanController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1110,9 +1055,7 @@
       "patch": {
         "x-controller-name": "PlanController",
         "x-operation-name": "updateById",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1149,9 +1092,7 @@
       "get": {
         "x-controller-name": "PlanController",
         "x-operation-name": "findById",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1196,9 +1137,7 @@
       "delete": {
         "x-controller-name": "PlanController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1227,9 +1166,7 @@
       "post": {
         "x-controller-name": "PlanController",
         "x-operation-name": "create",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1262,9 +1199,7 @@
       "patch": {
         "x-controller-name": "PlanController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1313,9 +1248,7 @@
       "get": {
         "x-controller-name": "PlanController",
         "x-operation-name": "find",
-        "tags": [
-          "PlanController"
-        ],
+        "tags": ["PlanController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1357,9 +1290,7 @@
       "get": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "count",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1401,9 +1332,7 @@
       "put": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1440,9 +1369,7 @@
       "patch": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "updateById",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1479,9 +1406,7 @@
       "get": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "findById",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1526,9 +1451,7 @@
       "delete": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1557,9 +1480,7 @@
       "post": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "create",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1592,9 +1513,7 @@
       "patch": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1643,9 +1562,7 @@
       "get": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "find",
-        "tags": [
-          "ResourceController"
-        ],
+        "tags": ["ResourceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1687,9 +1604,7 @@
       "get": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "count",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1731,9 +1646,7 @@
       "put": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1770,9 +1683,7 @@
       "patch": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "updateById",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1809,9 +1720,7 @@
       "get": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "findById",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1856,9 +1765,7 @@
       "delete": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1887,9 +1794,7 @@
       "post": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "create",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1922,9 +1827,7 @@
       "patch": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1973,9 +1876,7 @@
       "get": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "find",
-        "tags": [
-          "ServiceController"
-        ],
+        "tags": ["ServiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2017,9 +1918,7 @@
       "get": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "count",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2061,9 +1960,7 @@
       "put": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2100,9 +1997,7 @@
       "patch": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "updateById",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2139,9 +2034,7 @@
       "get": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "findById",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2186,9 +2079,7 @@
       "delete": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2217,9 +2108,7 @@
       "post": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "create",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2252,9 +2141,7 @@
       "patch": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2303,9 +2190,7 @@
       "get": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "find",
-        "tags": [
-          "SubscriptionController"
-        ],
+        "tags": ["SubscriptionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -2347,9 +2232,7 @@
       "get": {
         "x-controller-name": "HomePageController",
         "x-operation-name": "homePage",
-        "tags": [
-          "HomePageController"
-        ],
+        "tags": ["HomePageController"],
         "responses": {
           "200": {
             "description": "Home Page",
@@ -2421,25 +2304,14 @@
           "status": {
             "type": "number",
             "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [0, 1, 2, 3, 4]
           },
           "planId": {
             "type": "string",
             "description": "plan id of the subscription"
           }
         },
-        "required": [
-          "subscriberId",
-          "startDate",
-          "endDate",
-          "status"
-        ],
+        "required": ["subscriberId", "startDate", "endDate", "status"],
         "additionalProperties": false
       },
       "NewSubscription": {
@@ -2485,25 +2357,14 @@
           "status": {
             "type": "number",
             "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [0, 1, 2, 3, 4]
           },
           "planId": {
             "type": "string",
             "description": "plan id of the subscription"
           }
         },
-        "required": [
-          "subscriberId",
-          "startDate",
-          "endDate",
-          "status"
-        ],
+        "required": ["subscriberId", "startDate", "endDate", "status"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Subscription, 'id'>"
       },
@@ -2562,11 +2423,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "name",
-          "planItemType",
-          "value"
-        ],
+        "required": ["name", "planItemType", "value"],
         "additionalProperties": false,
         "x-typescript-type": "PlanItemWithRelations"
       },
@@ -2617,11 +2474,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "cycleName",
-          "duration",
-          "durationUnit"
-        ],
+        "required": ["cycleName", "duration", "durationUnit"],
         "additionalProperties": false,
         "x-typescript-type": "BillingCycleWithRelations"
       },
@@ -2646,10 +2499,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "currencyCode",
-          "currencyName"
-        ],
+        "required": ["currencyCode", "currencyName"],
         "additionalProperties": false,
         "x-typescript-type": "CurrencyWithRelations"
       },
@@ -2698,10 +2548,7 @@
           "tier": {
             "type": "number",
             "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [
-              0,
-              1
-            ]
+            "enum": [0, 1]
           },
           "price": {
             "type": "number"
@@ -2730,12 +2577,7 @@
             "$ref": "#/components/schemas/CurrencyWithRelations"
           }
         },
-        "required": [
-          "name",
-          "description",
-          "tier",
-          "price"
-        ],
+        "required": ["name", "description", "tier", "price"],
         "additionalProperties": false,
         "x-typescript-type": "PlanWithRelations"
       },
@@ -2785,13 +2627,7 @@
           "status": {
             "type": "number",
             "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [0, 1, 2, 3, 4]
           },
           "planId": {
             "type": "string",
@@ -2802,12 +2638,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "subscriberId",
-          "startDate",
-          "endDate",
-          "status"
-        ],
+        "required": ["subscriberId", "startDate", "endDate", "status"],
         "additionalProperties": false,
         "x-typescript-type": "SubscriptionWithRelations"
       },
@@ -2857,13 +2688,7 @@
           "status": {
             "type": "number",
             "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [0, 1, 2, 3, 4]
           },
           "planId": {
             "type": "string",
@@ -2911,9 +2736,7 @@
             "description": "name of the service"
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "additionalProperties": false
       },
       "NewService": {
@@ -2952,9 +2775,7 @@
             "description": "name of the service"
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Service, 'id'>"
       },
@@ -2997,9 +2818,7 @@
             "description": "name of the service"
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "additionalProperties": false,
         "x-typescript-type": "ServiceWithRelations"
       },
@@ -3087,10 +2906,7 @@
             "description": "config of the resource"
           }
         },
-        "required": [
-          "name",
-          "config"
-        ],
+        "required": ["name", "config"],
         "additionalProperties": false
       },
       "NewResource": {
@@ -3133,10 +2949,7 @@
             "description": "config of the resource"
           }
         },
-        "required": [
-          "name",
-          "config"
-        ],
+        "required": ["name", "config"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Resource, 'id'>"
       },
@@ -3183,10 +2996,7 @@
             "description": "config of the resource"
           }
         },
-        "required": [
-          "name",
-          "config"
-        ],
+        "required": ["name", "config"],
         "additionalProperties": false,
         "x-typescript-type": "ResourceWithRelations"
       },
@@ -3280,10 +3090,7 @@
           "tier": {
             "type": "number",
             "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [
-              0,
-              1
-            ]
+            "enum": [0, 1]
           },
           "price": {
             "type": "number"
@@ -3299,12 +3106,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "description",
-          "tier",
-          "price"
-        ],
+        "required": ["name", "description", "tier", "price"],
         "additionalProperties": false
       },
       "NewPlan": {
@@ -3349,10 +3151,7 @@
           "tier": {
             "type": "number",
             "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [
-              0,
-              1
-            ]
+            "enum": [0, 1]
           },
           "price": {
             "type": "number"
@@ -3368,12 +3167,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "description",
-          "tier",
-          "price"
-        ],
+        "required": ["name", "description", "tier", "price"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Plan, 'id'>"
       },
@@ -3422,10 +3216,7 @@
           "tier": {
             "type": "number",
             "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [
-              0,
-              1
-            ]
+            "enum": [0, 1]
           },
           "price": {
             "type": "number"
@@ -3494,11 +3285,7 @@
             "description": "plan id of the plan item"
           }
         },
-        "required": [
-          "name",
-          "planItemType",
-          "value"
-        ],
+        "required": ["name", "planItemType", "value"],
         "additionalProperties": false
       },
       "NewPlanItem": {
@@ -3549,11 +3336,7 @@
             "description": "plan id of the plan item"
           }
         },
-        "required": [
-          "name",
-          "planItemType",
-          "value"
-        ],
+        "required": ["name", "planItemType", "value"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<PlanItem, 'id'>"
       },
@@ -3631,10 +3414,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "currencyCode",
-          "currencyName"
-        ],
+        "required": ["currencyCode", "currencyName"],
         "additionalProperties": false
       },
       "NewCurrency": {
@@ -3655,10 +3435,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "currencyCode",
-          "currencyName"
-        ],
+        "required": ["currencyCode", "currencyName"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Currency, 'id'>"
       },
@@ -3732,11 +3509,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "cycleName",
-          "duration",
-          "durationUnit"
-        ],
+        "required": ["cycleName", "duration", "durationUnit"],
         "additionalProperties": false
       },
       "NewBillingCycle": {
@@ -3783,11 +3556,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "cycleName",
-          "duration",
-          "durationUnit"
-        ],
+        "required": ["cycleName", "duration", "durationUnit"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<BillingCycle, 'id'>"
       },
@@ -4308,9 +4077,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "plan"
-            ]
+            "enum": ["plan"]
           },
           "scope": {
             "$ref": "#/components/schemas/plan_items.ScopeFilter"
@@ -4623,11 +4390,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "planItems",
-              "billingCycle",
-              "currency"
-            ]
+            "enum": ["planItems", "billingCycle", "currency"]
           },
           "scope": {
             "$ref": "#/components/schemas/plans.ScopeFilter"
@@ -5346,9 +5109,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "plan"
-            ]
+            "enum": ["plan"]
           },
           "scope": {
             "$ref": "#/components/schemas/subscriptions.ScopeFilter"

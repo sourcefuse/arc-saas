@@ -1,13 +1,14 @@
 {
-  "name": "arc-saas",
-  "description": "This is the root package and will never be served via a web server",
+  "name": "@sourceloop/arc-saas-root",
   "private": true,
   "scripts": {
     "prepare": "husky install",
+    "build": "npm run build --workspaces --if-present",
     "test": "lerna run test",
     "migrate": "npm run db:migrate --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
-    "docker:build": "concurrently -m 6 npm:docker:build:*"
+    "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
+    "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs",
+    "clean": "npm run clean --workspaces --if-present"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",

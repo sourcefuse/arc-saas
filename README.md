@@ -6,6 +6,32 @@
   With ARC SaaS, we’re introducing a pioneering SaaS factory model based control plane microservices and IaC modules that promises to revolutionize your SaaS journey.
 </p>
 
+<p align="center">
+<a href="https://sonarcloud.io/summary/new_code?id=sourcefuse_arc-saas" target="_blank">
+<img alt="Sonar Quality Gate" src="https://img.shields.io/sonar/quality_gate/sourcefuse_arc-saas?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge">
+</a>
+<a href="https://app.snyk.io/org/ashishkaushik/reporting?context[page]=issues-detail&project_target=%255B%2522sourcefuse%252Farc-saas%2522%255D&project_origin=%255B%2522github%2522%255D&issue_status=%255B%2522Open%2522%255D&issue_by=Severity&table_issues_detail_cols=SCORE%257CCVE%257CCWE%257CPROJECT%257CEXPLOIT%2520MATURITY%257CAUTO%2520FIXABLE%257CINTRODUCED%257CSNYK%2520PRODUCT&v=1">
+<img alt="Synk Status" src="https://img.shields.io/badge/SYNK_SECURITY-MONITORED-GREEN?style=for-the-badge">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/arc-saas?style=for-the-badge" alt="License" />
+</a>
+<a href="https://github.com/sourcefuse/arc-saas/graphs/contributors" target="_blank">
+  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/arc-saas?style=for-the-badge">
+</a>
+<!-- <a href="https://www.npmjs.com/~sourceloop" target="_blank">
+  <img alt="sourceloop core downloads" src="https://img.shields.io/npm/dm/@sourceloop/core?style=for-the-badge">
+</a> -->
+<!-- Will add once we publish this -->
+<a href="https://loopback.io/" target="_blank">
+  <img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen?style=for-the-badge" />
+</a>
+<a href="https://nestjs.com/" target="_blank">
+  <img alt="Pb Loopback" src="https://img.shields.io/badge/Compatible%20With-NestJS-brightgreen?style=for-the-badge" />
+</a>
+
+</p>
+
 # ARC SAAS
 
 ## What is ARC Saas

@@ -1,10 +1,18 @@
 {
-  "name": "subscription-service",
+  "name": "@sourceloop/subscription-service",
   "version": "0.0.1",
-  "description": "subscription-service",
+  "description": "Subscription management service for multi-tenant SaaS applications",
   "keywords": [
     "loopback-microservice",
-    "loopback"
+    "loopback",
+    "saas",
+    "subscription",
+    "subscription-management",
+    "subscription-service",
+    "control plane",
+    "multi-tenant",
+    "multi-tenant-saas",
+    "multi-tenancy"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,9 +52,9 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sourcefuse/arc-saas"
   },
-  "author": "subhamjagurisf<subham.jaguri@sourcefuse.com>",
+  "author": "Sourcefuse",
   "license": "MIT",
   "files": [
     "README.md",
@@ -94,5 +102,20 @@
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.21",
     "typescript": "~4.9.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/subscription-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }

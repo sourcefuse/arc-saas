@@ -1,6 +1,6 @@
 # Developing Microservices
 
-This document describes how to develop microservices living in loopback4-microservice-catalog monorepo.
+This document describes how to develop microservices living in arc-saa monorepo.
 
 - [Setting up development environment](#setting-up-development-environment)
 - [Setup Codebase](#setup-codebase)
@@ -36,37 +36,34 @@ Our monorepo comes with few preconfigured
 
 1. Open root folder of this repo in VS Code.
 2. Install lerna globally `npm i -g lerna`
-3. Run `lerna bootstrap`
-4. Run `npm i`
-5. Create .env files for all the micro service packages.
-6. Run DB migrations using `lerna run db:migrate`.
-7. Build all microservices in one go - `lerna run build`.
-8. Run `lerna run start` to start all the micro services in one go.
+3. Run `npm i`
+4. Create .env files for all the micro service packages.
+5. Run DB migrations using `lerna run db:migrate`.
+6. Build all microservices in one go run from root folder - `npm run build`.
 
 ## Building the project
 
 Whenever you pull updates from GitHub or switch between feature branches, make
 sure to updated installed dependencies in all monorepo packages. The following
-command will install npm dependencies for all packages and create symbolic links
-for intra-dependencies:
+command will install npm dependencies for all packages. After updating to npm workspaces, npm will manage all the symbolic links and inter-dependencies.
 
 ```sh
-lerna bootstrap
+npm install
 ```
-
-As part of `lerna bootstrap`, TypeScript project references are automatically
-updated for each package with in the monorepo.
 
 The next step is to compile all packages from TypeScript to JavaScript:
+Run the following command from root folder
 
 ```sh
-lerna run build
+npm run build
 ```
+
+The --if-present flag is added in the build script so npm will ignore workspaces missing target script
 
 To force a clean build:
 
 ```sh
-lerna clean && lerna run build
+rm -rf node_modules/ && npm install
 ```
 
 Please note that `npm run clean` removes `dist`, `*.tsbuildinfo`, and other
@@ -78,13 +75,6 @@ To build an individual package:
 cd <package-dir> // For example, cd `packages/core`.
 npm run build
 ```
-
-<!-- ### Using monorepo packages as dependencies
-
-The `/sandbox` directory in the monorepo can be used to utilize the source code
-as symbolically-linked dependencies. See the
-[README](https://github.com/strongloop/loopback-next/blob/master/sandbox/README.md)
-for usage instructions. -->
 
 ### Linting and formatting
 
@@ -115,16 +105,16 @@ lerna run lint:fix
 Use the following command to add or update dependency `dep` in a package `name`:
 
 ```sh
-$ npx lerna add --scope ${name} ${dep}
+npm install ${dep} -w ${name}
 ```
 
 For example:
 
 ```sh
-$ npx lerna add --scope @loopback/rest debug
+$ npm install @loopback/rest -w @sourceloop/subscription-service
 ```
 
-See [lerna add](https://github.com/lerna/lerna/blob/master/commands/add#readme)
+See [Add dependencies](https://docs.npmjs.com/cli/v8/using-npm/workspaces#adding-dependencies-to-a-workspace)
 for more details.
 
 ## File naming convention
@@ -220,10 +210,12 @@ src/__tests__/unit/application.unit.ts
    import * as dotenvExt from 'dotenv-extended';
    ```
 
+   Our catalog of microservices offers you multi reusable components, that you can explore [here](https://github.com/sourcefuse/loopback4-microservice-catalog). Here are the brief steps to explain that.
+
 9. **Add Sourceloop core** - Add @sourceloop/core as dependency to the module
 
    ```sh
-   lerna add @sourceloop/core --scope={service name}
+   npm istall @sourceloop/core -w ${service_name}
    ```
 
 In application.ts,
@@ -240,8 +232,8 @@ this.sequence(ServiceSequence);
 10. **Bearer Verifier** - Add bearer verifier to your service
 
 ```sh
-lerna add loopback4-authentication --scope={service name}
-lerna add loopback4-authorization --scope={service name}
+npm istall loopback4-authentication -w ${service_name}
+npm istall loopback4-authorization -w ${service_name}
 ```
 
 Add below to application.ts
@@ -294,8 +286,8 @@ Use BearerVerifierType.facade for facades.
     Install nyc for coverage reporting
 
     ```sh
-      lerna add -D @istanbuljs/nyc-config-typescript --scope={service name}
-      lerna add -D nyc --scope={service name}
+      npm istall @istanbuljs/nyc-config-typescript -w ${service_name}
+      npm istall nyc -w ${service_name}
     ```
 
     then add these in scripts of package.json
@@ -391,7 +383,13 @@ Replace value of token with your own user token generated in step 5 from sonar c
 
 Close and reopen VS Code.
 
-## Commit message guidelines
+## Commit Guidelines
+
+### Files to be Commited
+
+- When contributing to any of the services always commit the changes in `openapi.json` and `openapi.md` (they are automatically generated on every new build) or can be generated using `npm run openapi-spec`.
+
+### Commit Message Format
 
 A good commit message should describe what changed and why.
 
@@ -401,8 +399,6 @@ Our commit messages are formatted according to
 convention. These rules lead to more readable messages that are easy to follow
 when looking through the project history. But also, we use the git commit
 messages to generate change logs when publishing new versions.
-
-### Commit Message Format
 
 Each commit message consists of a **header**, a **body** and a **footer**. The
 header has a special format that includes a **type**, an optional **scope** and
@@ -437,9 +433,6 @@ The **type** must be one of the following:
 #### scope
 
 The **scope** must be a list of one or more packages contained in this monorepo.
-Each scope name must match a directory name in
-[packages/](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/packages),
-e.g. `core`.
 
 _Note: If multiple packages are affected by a pull request, don't list the
 scopes as the commit linter currently only supports only one scope being listed
