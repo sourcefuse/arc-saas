@@ -3,10 +3,18 @@
   "command": {
     "version": {
       "conventionalCommits": true,
-      "message": "chore(release): publish"
+      "message": "chore(release): publish",
+      "allowBranch": "master"
+    },
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore: publish release",
+      "allowBranch": "master",
+      "noPrivate": true,
+      "graphType": "all"
     },
     "run": {
-      "concurrency": 3
+      "concurrency": 1
     },
     "clean": {
       "loglevel": "silent",
@@ -15,5 +23,6 @@
     }
   },
   "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md"],
-  "version": "independent"
+  "version": "independent",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }

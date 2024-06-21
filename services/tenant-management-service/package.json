@@ -1,10 +1,18 @@
 {
-  "name": "tenant-management-service",
+  "name": "@sourceloop/ctrl-plane-tenant-management-service",
   "version": "0.0.1",
-  "description": "tenant-mgmt-service",
+  "description": "Tenant Management microservice for SaaS control plane",
   "keywords": [
     "loopback-microservice",
-    "loopback"
+    "loopback",
+    "saas",
+    "tenant",
+    "tenant-management",
+    "tenant-service",
+    "control-plane",
+    "multi-tenant",
+    "multi-tenant-saas",
+    "multi-tenancy"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -45,9 +53,9 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sourcefuse/arc-saas"
   },
-  "author": "akshatdubeysf<akshat.dubey@sourcefuse.com>",
+  "author": "Sourcefuse",
   "license": "MIT",
   "files": [
     "README.md",
@@ -103,5 +111,20 @@
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.21",
     "typescript": "~4.9.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/tenant-management-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }

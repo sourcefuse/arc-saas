@@ -5,8 +5,7 @@
     "version": "1.0.0",
     "description": "tenant-mgmt-service",
     "contact": {
-      "name": "akshatdubeysf",
-      "email": "akshat.dubey@sourcefuse.com"
+      "name": "Sourcefuse"
     }
   },
   "paths": {
@@ -14,9 +13,7 @@
       "get": {
         "x-controller-name": "ContactController",
         "x-operation-name": "count",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -58,9 +55,7 @@
       "put": {
         "x-controller-name": "ContactController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -97,9 +92,7 @@
       "patch": {
         "x-controller-name": "ContactController",
         "x-operation-name": "updateById",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -143,9 +136,7 @@
       "get": {
         "x-controller-name": "ContactController",
         "x-operation-name": "findById",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -190,9 +181,7 @@
       "delete": {
         "x-controller-name": "ContactController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -221,9 +210,7 @@
       "post": {
         "x-controller-name": "ContactController",
         "x-operation-name": "create",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -256,9 +243,7 @@
       "patch": {
         "x-controller-name": "ContactController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -307,9 +292,7 @@
       "get": {
         "x-controller-name": "ContactController",
         "x-operation-name": "find",
-        "tags": [
-          "ContactController"
-        ],
+        "tags": ["ContactController"],
         "security": [
           {
             "HTTPBearer": []
@@ -351,9 +334,7 @@
       "get": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "count",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -395,9 +376,7 @@
       "put": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -434,9 +413,7 @@
       "patch": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "updateById",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -480,9 +457,7 @@
       "get": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "findById",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -527,9 +502,7 @@
       "delete": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -558,9 +531,7 @@
       "post": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "create",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -593,9 +564,7 @@
       "patch": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -644,9 +613,7 @@
       "get": {
         "x-controller-name": "InvoiceController",
         "x-operation-name": "find",
-        "tags": [
-          "InvoiceController"
-        ],
+        "tags": ["InvoiceController"],
         "security": [
           {
             "HTTPBearer": []
@@ -688,9 +655,7 @@
       "get": {
         "x-controller-name": "LeadController",
         "x-operation-name": "count",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -732,9 +697,7 @@
       "post": {
         "x-controller-name": "LeadTenantController",
         "x-operation-name": "tenantFromLead",
-        "tags": [
-          "LeadTenantController"
-        ],
+        "tags": ["LeadTenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -779,9 +742,7 @@
       "post": {
         "x-controller-name": "LeadController",
         "x-operation-name": "validateLead",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -817,9 +778,7 @@
       "put": {
         "x-controller-name": "LeadController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -856,9 +815,7 @@
       "patch": {
         "x-controller-name": "LeadController",
         "x-operation-name": "updateById",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -902,9 +859,7 @@
       "get": {
         "x-controller-name": "LeadController",
         "x-operation-name": "findById",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -949,9 +904,7 @@
       "delete": {
         "x-controller-name": "LeadController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -980,9 +933,7 @@
       "post": {
         "x-controller-name": "LeadController",
         "x-operation-name": "create",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "responses": {
           "200": {
             "description": "Lead model instance",
@@ -1010,9 +961,7 @@
       "patch": {
         "x-controller-name": "LeadController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1061,9 +1010,7 @@
       "get": {
         "x-controller-name": "LeadController",
         "x-operation-name": "find",
-        "tags": [
-          "LeadController"
-        ],
+        "tags": ["LeadController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1105,9 +1052,7 @@
       "get": {
         "x-controller-name": "PingController",
         "x-operation-name": "ping",
-        "tags": [
-          "PingController"
-        ],
+        "tags": ["PingController"],
         "responses": {
           "200": {
             "description": "Ping Response",
@@ -1128,9 +1073,7 @@
       "get": {
         "x-controller-name": "TenantController",
         "x-operation-name": "count",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1172,9 +1115,7 @@
       "post": {
         "x-controller-name": "TenantController",
         "x-operation-name": "provision",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1212,9 +1153,7 @@
       "put": {
         "x-controller-name": "TenantController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1251,9 +1190,7 @@
       "patch": {
         "x-controller-name": "TenantController",
         "x-operation-name": "updateById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1297,9 +1234,7 @@
       "get": {
         "x-controller-name": "TenantController",
         "x-operation-name": "findById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1344,9 +1279,7 @@
       "delete": {
         "x-controller-name": "TenantController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1375,9 +1308,7 @@
       "post": {
         "x-controller-name": "TenantController",
         "x-operation-name": "create",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1410,9 +1341,7 @@
       "patch": {
         "x-controller-name": "TenantController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1461,9 +1390,7 @@
       "get": {
         "x-controller-name": "TenantController",
         "x-operation-name": "find",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1505,9 +1432,7 @@
       "post": {
         "x-controller-name": "WebhookController",
         "x-operation-name": "webhook",
-        "tags": [
-          "WebhookController"
-        ],
+        "tags": ["WebhookController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1535,9 +1460,7 @@
       "get": {
         "x-controller-name": "HomePageController",
         "x-operation-name": "homePage",
-        "tags": [
-          "HomePageController"
-        ],
+        "tags": ["HomePageController"],
         "responses": {
           "200": {
             "description": "Home Page",
@@ -1579,11 +1502,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "initiatorId",
-          "data",
-          "type"
-        ],
+        "required": ["initiatorId", "data", "type"],
         "additionalProperties": false,
         "x-typescript-type": "WebhookDTO"
       },
@@ -1628,14 +1547,7 @@
           "status": {
             "type": "number",
             "description": "status of a tenant, it can be - 0(active), 1(provisioning),2(deprovisioning),3(inactive)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
+            "enum": [0, 1, 2, 3, 4, 5]
           },
           "key": {
             "type": "string",
@@ -1663,12 +1575,7 @@
             "description": "id of the address of the tenant"
           }
         },
-        "required": [
-          "name",
-          "status",
-          "key",
-          "domains"
-        ],
+        "required": ["name", "status", "key", "domains"],
         "additionalProperties": false
       },
       "NewTenantOnboarding": {
@@ -1720,11 +1627,7 @@
                 "description": "boolean value denoting if the contact is a primary contact for it's tenant."
               }
             },
-            "required": [
-              "name",
-              "email",
-              "isPrimary"
-            ],
+            "required": ["name", "email", "isPrimary"],
             "additionalProperties": false
           },
           "name": {
@@ -1764,11 +1667,7 @@
             }
           }
         },
-        "required": [
-          "name",
-          "key",
-          "domains"
-        ],
+        "required": ["name", "key", "domains"],
         "additionalProperties": false
       },
       "TenantOnboardDTO": {
@@ -1820,11 +1719,7 @@
                 "description": "boolean value denoting if the contact is a primary contact for it's tenant."
               }
             },
-            "required": [
-              "name",
-              "email",
-              "isPrimary"
-            ],
+            "required": ["name", "email", "isPrimary"],
             "additionalProperties": false
           },
           "name": {
@@ -1864,11 +1759,7 @@
             }
           }
         },
-        "required": [
-          "name",
-          "key",
-          "domains"
-        ],
+        "required": ["name", "key", "domains"],
         "additionalProperties": false
       },
       "ProvisionDTO": {
@@ -1954,11 +1845,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "name",
-          "email",
-          "isPrimary"
-        ],
+        "required": ["name", "email", "isPrimary"],
         "additionalProperties": false
       },
       "ResourceWithRelations": {
@@ -2016,11 +1903,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "externalIdentifier",
-          "type",
-          "metadata"
-        ],
+        "required": ["externalIdentifier", "type", "metadata"],
         "additionalProperties": false
       },
       "AddressWithRelations": {
@@ -2078,9 +1961,7 @@
             "description": "country of the company"
           }
         },
-        "required": [
-          "country"
-        ],
+        "required": ["country"],
         "additionalProperties": false
       },
       "LeadWithRelations": {
@@ -2145,12 +2026,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "name",
-          "companyName",
-          "email",
-          "isValidated"
-        ],
+        "required": ["name", "companyName", "email", "isValidated"],
         "additionalProperties": false
       },
       "TenantWithRelations": {
@@ -2194,14 +2070,7 @@
           "status": {
             "type": "number",
             "description": "status of a tenant, it can be - 0(active), 1(provisioning),2(deprovisioning),3(inactive)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
+            "enum": [0, 1, 2, 3, 4, 5]
           },
           "key": {
             "type": "string",
@@ -2248,12 +2117,7 @@
             "$ref": "#/components/schemas/AddressWithRelations"
           }
         },
-        "required": [
-          "name",
-          "status",
-          "key",
-          "domains"
-        ],
+        "required": ["name", "status", "key", "domains"],
         "additionalProperties": false
       },
       "TenantPartial": {
@@ -2297,14 +2161,7 @@
           "status": {
             "type": "number",
             "description": "status of a tenant, it can be - 0(active), 1(provisioning),2(deprovisioning),3(inactive)",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
+            "enum": [0, 1, 2, 3, 4, 5]
           },
           "key": {
             "type": "string",
@@ -2389,12 +2246,7 @@
             "description": "id of the address of the lead"
           }
         },
-        "required": [
-          "name",
-          "companyName",
-          "email",
-          "isValidated"
-        ],
+        "required": ["name", "companyName", "email", "isValidated"],
         "additionalProperties": false
       },
       "CreateLeadDTO": {
@@ -2495,11 +2347,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "name",
-          "companyName",
-          "email"
-        ],
+        "required": ["name", "companyName", "email"],
         "additionalProperties": false
       },
       "VerifyLeadResponseDTO": {
@@ -2513,10 +2361,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "token"
-        ],
+        "required": ["id", "token"],
         "additionalProperties": false
       },
       "LeadPartial": {
@@ -2618,10 +2463,7 @@
             }
           }
         },
-        "required": [
-          "key",
-          "domains"
-        ],
+        "required": ["key", "domains"],
         "additionalProperties": false
       },
       "Invoice": {
@@ -2685,14 +2527,7 @@
           "status": {
             "type": "number",
             "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
-            "enum": [
-              "PENDING",
-              "PAID",
-              "CANCELLED",
-              0,
-              1,
-              2
-            ]
+            "enum": ["PENDING", "PAID", "CANCELLED", 0, 1, 2]
           },
           "tenantId": {
             "type": "string",
@@ -2768,14 +2603,7 @@
           "status": {
             "type": "number",
             "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
-            "enum": [
-              "PENDING",
-              "PAID",
-              "CANCELLED",
-              0,
-              1,
-              2
-            ]
+            "enum": ["PENDING", "PAID", "CANCELLED", 0, 1, 2]
           },
           "tenantId": {
             "type": "string",
@@ -2854,14 +2682,7 @@
           "status": {
             "type": "number",
             "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
-            "enum": [
-              "PENDING",
-              "PAID",
-              "CANCELLED",
-              0,
-              1,
-              2
-            ]
+            "enum": ["PENDING", "PAID", "CANCELLED", 0, 1, 2]
           },
           "tenantId": {
             "type": "string",
@@ -2944,14 +2765,7 @@
           "status": {
             "type": "number",
             "description": "status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)",
-            "enum": [
-              "PENDING",
-              "PAID",
-              "CANCELLED",
-              0,
-              1,
-              2
-            ]
+            "enum": ["PENDING", "PAID", "CANCELLED", 0, 1, 2]
           },
           "tenantId": {
             "type": "string",
@@ -3011,11 +2825,7 @@
             "description": "tenant id this contact belongs to"
           }
         },
-        "required": [
-          "name",
-          "email",
-          "isPrimary"
-        ],
+        "required": ["name", "email", "isPrimary"],
         "additionalProperties": false
       },
       "NewContact": {
@@ -3066,11 +2876,7 @@
             "description": "tenant id this contact belongs to"
           }
         },
-        "required": [
-          "name",
-          "email",
-          "isPrimary"
-        ],
+        "required": ["name", "email", "isPrimary"],
         "additionalProperties": false
       },
       "ContactPartial": {
@@ -3203,9 +3009,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "tenant"
-            ]
+            "enum": ["tenant"]
           },
           "scope": {
             "$ref": "#/components/schemas/contacts.ScopeFilter"
@@ -3518,9 +3322,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "tenant"
-            ]
+            "enum": ["tenant"]
           },
           "scope": {
             "$ref": "#/components/schemas/invoices.ScopeFilter"
@@ -3865,10 +3667,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "tenant",
-              "address"
-            ]
+            "enum": ["tenant", "address"]
           },
           "scope": {
             "$ref": "#/components/schemas/leads.ScopeFilter"
@@ -4213,12 +4012,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "contacts",
-              "resources",
-              "lead",
-              "address"
-            ]
+            "enum": ["contacts", "resources", "lead", "address"]
           },
           "scope": {
             "$ref": "#/components/schemas/tenants.ScopeFilter"
