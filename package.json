@@ -1,5 +1,5 @@
 {
-  "name": "@sourceloop/arc-saas-root",
+  "name": "arc-saas",
   "private": true,
   "scripts": {
     "prepare": "husky install",

@@ -1,7 +1,7 @@
 {
-  "name": "@sourceloop/subscription-service",
+  "name": "@sourceloop/ctrl-plane-subscription-service",
   "version": "0.0.1",
-  "description": "Subscription management service for multi-tenant SaaS applications",
+  "description": "Subscription management microservice for SaaS control plane",
   "keywords": [
     "loopback-microservice",
     "loopback",
@@ -9,7 +9,7 @@
     "subscription",
     "subscription-management",
     "subscription-service",
-    "control plane",
+    "control-plane",
     "multi-tenant",
     "multi-tenant-saas",
     "multi-tenancy"

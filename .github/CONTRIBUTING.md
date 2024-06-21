@@ -1,4 +1,4 @@
-# loopback4-microservice-catalog
+# ARC SaaS COntrol Plane
 
 ## Contributing
 
@@ -6,9 +6,9 @@ First off, thank you for considering contributing to the project. It's people li
 
 ### Where do I go from here ?
 
-If you've noticed a bug or have a question, [search the issue tracker](https://github.com/sourcefuse/loopback4-microservice-catalog/issues) to see if
+If you've noticed a bug or have a question, [search the issue tracker](https://github.com/sourcefuse/arc-saas/issues) to see if
 someone else in the community has already created a ticket. If not, go ahead and
-[make one](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/new/choose)!
+[make one](https://github.com/sourcefuse/arc-saas/issues/new/choose)!
 
 ### Fork & create a branch
 
@@ -18,16 +18,16 @@ create a branch with a descriptive name.
 A good branch name would be (where issue #325 is the ticket you're working on):
 
 ```sh
-git checkout -b 325-add-new-feature
+git checkout -b GH-111-new-feature
 ```
 
 ### Make a Pull Request
 
 At this point, you should switch back to your master branch and make sure it's
-up to date with loopback4-microservice-catalog's master branch:
+up to date with arc-saas's master branch:
 
 ```sh
-git remote add upstream git@github.com:sourcefuse/loopback4-microservice-catalog.git
+git remote add upstream git@github.com:sourcefuse/arc-saas.git
 git checkout master
 git pull upstream master
 ```
@@ -35,9 +35,9 @@ git pull upstream master
 Then update your feature branch from your local copy of master, and push it!
 
 ```sh
-git checkout 325-add-new-feature
+git checkout GH-111-new-feature
 git rebase master
-git push --set-upstream origin 325-add-new-feature
+git push --set-upstream origin GH-111-new-feature
 ```
 
 Finally, go to GitHub and [make a Pull Request](https://help.github.com/articles/creating-a-pull-request).
@@ -51,9 +51,9 @@ To learn more about rebasing in Git, there are a lot of [good][git rebasing]
 [resources][interactive rebase] but here's the suggested workflow:
 
 ```sh
-git checkout 325-add-new-feature
+git checkout GH-111-new-feature
 git pull --rebase upstream master
-git push --force-with-lease 325-add-new-feature
+git push --force-with-lease GH-111-new-feature
 ```
 
 [git rebasing]: http://git-scm.com/book/en/Git-Branching-Rebasing

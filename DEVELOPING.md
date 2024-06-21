@@ -210,8 +210,6 @@ src/__tests__/unit/application.unit.ts
    import * as dotenvExt from 'dotenv-extended';
    ```
 
-   Our catalog of microservices offers you multi reusable components, that you can explore [here](https://github.com/sourcefuse/loopback4-microservice-catalog). Here are the brief steps to explain that.
-
 9. **Add Sourceloop core** - Add @sourceloop/core as dependency to the module
 
    ```sh
@@ -332,6 +330,10 @@ this.html = this.html.replace(/\$\{basePath\}/g, process.env.BASE_PATH ?? '');
 ```
 
 Create home-page.controller.ts if not already there.
+
+## Catalog of microservices
+
+We also offer a catalog of microservices that has multi reusable components, that is a collection of pre-built microservices designed to accelerate the development timeline for enterprise projects. You can explore [here](https://github.com/sourcefuse/loopback4-microservice-catalog).
 
 ## How to upgrade to new LB4 dependencies
 
