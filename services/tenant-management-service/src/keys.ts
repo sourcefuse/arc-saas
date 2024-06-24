@@ -1,7 +1,9 @@
 import {VerifyFunction} from 'loopback4-authentication';
 import {
+  IPostWebhookHandlerService,
   ITenantManagementServiceConfig,
   LeadUser,
+  ResourceProvisionedWebhookPayload,
   WebhookConfig,
   WebhookNotificationServiceType,
 } from './types';
@@ -73,3 +75,7 @@ export const WebhookNotificationService =
   BindingKey.create<WebhookNotificationServiceType>(
     'sf.webhook.handler.notification.service',
   );
+
+export const PostWebhookHandlerServiceKey = BindingKey.create<
+  IPostWebhookHandlerService<ResourceProvisionedWebhookPayload>
+>('services.PostWebhookHandlerService');
