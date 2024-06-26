@@ -37,7 +37,7 @@ exports.up = function (db) {
 };
 
 exports.down = function (db) {
-  var filePath = path.join(
+  let filePath = path.join(
     __dirname,
     'sqls',
     '20240208115049-add-tier-column-to-plans-down.sql',

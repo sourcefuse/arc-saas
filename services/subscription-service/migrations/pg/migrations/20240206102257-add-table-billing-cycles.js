@@ -37,7 +37,7 @@ exports.up = function (db) {
 };
 
 exports.down = function (db) {
-  var filePath = path.join(
+  let filePath = path.join(
     __dirname,
     'sqls',
     '20240206102257-add-table-billing-cycles-down.sql',
