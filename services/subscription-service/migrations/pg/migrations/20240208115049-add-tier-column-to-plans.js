@@ -1,11 +1,11 @@
 'use strict';
 
-var dbm;
-var type;
-var seed;
-var fs = require('fs');
-var path = require('path');
-var Promise;
+let dbm;
+let type;
+let seed;
+let fs = require('fs');
+let path = require('path');
+let Promise;
 
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.
@@ -19,7 +19,7 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-  var filePath = path.join(
+  let filePath = path.join(
     __dirname,
     'sqls',
     '20240208115049-add-tier-column-to-plans-up.sql',

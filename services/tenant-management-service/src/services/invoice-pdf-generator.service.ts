@@ -1,6 +1,8 @@
 import pdfDocument from 'pdfkit';
 import fs from 'fs';
 import {Invoice} from '../models';
+const LARGE_SIZE = 16;
+const MEDIUM_SIZE = 12;
 
 export class InvoicePDFGenerator {
   constructor() {}
@@ -13,16 +15,22 @@ export class InvoicePDFGenerator {
     doc.pipe(writeStream);
 
     // Write invoice details to PDF
-    doc.fontSize(16).text('Invoice Details', {underline: true}).moveDown();
-    doc.fontSize(12).text(`Invoice ID: ${invoice.id}`).moveDown();
-    doc.fontSize(12).text(`Start Date: ${invoice.startDate}`).moveDown();
-    doc.fontSize(12).text(`End Date: ${invoice.endDate}`).moveDown();
     doc
-      .fontSize(12)
+      .fontSize(LARGE_SIZE)
+      .text('Invoice Details', {underline: true})
+      .moveDown();
+    doc.fontSize(MEDIUM_SIZE).text(`Invoice ID: ${invoice.id}`).moveDown();
+    doc
+      .fontSize(MEDIUM_SIZE)
+      .text(`Start Date: ${invoice.startDate}`)
+      .moveDown();
+    doc.fontSize(MEDIUM_SIZE).text(`End Date: ${invoice.endDate}`).moveDown();
+    doc
+      .fontSize(MEDIUM_SIZE)
       .text(`Amount: ${invoice.amount} ${invoice.currencyCode}`)
       .moveDown();
-    doc.fontSize(12).text(`Due Date: ${invoice.dueDate}`).moveDown();
-    doc.fontSize(12).text(`Status: ${invoice.status}`).moveDown();
+    doc.fontSize(MEDIUM_SIZE).text(`Due Date: ${invoice.dueDate}`).moveDown();
+    doc.fontSize(MEDIUM_SIZE).text(`Status: ${invoice.status}`).moveDown();
 
     // End PDF generation
     doc.end();
