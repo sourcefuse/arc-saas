@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import { SubscriptionDbSourceName } from '../../types';
 
 const config = {
   name: 'SubscriptionDB',

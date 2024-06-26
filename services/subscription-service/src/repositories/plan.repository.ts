@@ -14,7 +14,7 @@ import {
 import {PlanItemRepository} from './plan-item.repository';
 import {BillingCycleRepository} from './billing-cycle.repository';
 import {CurrencyRepository} from './currency.repository';
-import { SubscriptionDbSourceName } from '../types';
+import {SubscriptionDbSourceName} from '../types';
 
 export class PlanRepository extends DefaultUserModifyCrudRepository<
   Plan,
@@ -37,7 +37,8 @@ export class PlanRepository extends DefaultUserModifyCrudRepository<
   >;
 
   constructor(
-    @inject(`datasources.${SubscriptionDbSourceName}`) dataSource: juggler.DataSource,
+    @inject(`datasources.${SubscriptionDbSourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('PlanItemRepository')

@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 var dbm;
 var type;
 var seed;
-var fs = require("fs");
-var path = require("path");
+var fs = require('fs');
+var path = require('path');
 var Promise;
-var dotenv = require("dotenv");
-var dotenvExt = require("dotenv-extended");
+var dotenv = require('dotenv');
+var dotenvExt = require('dotenv-extended');
 
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.
@@ -20,7 +20,7 @@ exports.setup = function (options, seedLink) {
   Promise = options.Promise;
   dotenv.config();
   dotenvExt.load({
-    schema: ".env.example",
+    schema: '.env.example',
     errorOnMissing: true,
     includeProcessEnv: true,
   });
@@ -29,18 +29,21 @@ exports.setup = function (options, seedLink) {
 exports.up = function (db) {
   var filePath = path.join(
     __dirname,
-    "sqls",
-    "20240209122448-seed-data-up.sql"
+    'sqls',
+    '20240209122448-seed-data-up.sql',
   );
   return new Promise(function (resolve, reject) {
-    fs.readFile(filePath, { encoding: "utf-8" }, function (err, data) {
+    fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
       if (err) return reject(err);
-      console.log("received data: " + data);
+      console.log('received data: ' + data);
 
       resolve(data);
     });
   }).then(function (data) {
-    data = data.replaceAll("{{ADMIN_USER_TENANT_ID}}", process.env.ADMIN_USER_TENANT_ID);
+    data = data.replaceAll(
+      '{{ADMIN_USER_TENANT_ID}}',
+      process.env.ADMIN_USER_TENANT_ID,
+    );
     return db.runSql(data);
   });
 };
@@ -48,13 +51,13 @@ exports.up = function (db) {
 exports.down = function (db) {
   var filePath = path.join(
     __dirname,
-    "sqls",
-    "20240209122448-seed-data-down.sql"
+    'sqls',
+    '20240209122448-seed-data-down.sql',
   );
   return new Promise(function (resolve, reject) {
-    fs.readFile(filePath, { encoding: "utf-8" }, function (err, data) {
+    fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
       if (err) return reject(err);
-      console.log("received data: " + data);
+      console.log('received data: ' + data);
 
       resolve(data);
     });

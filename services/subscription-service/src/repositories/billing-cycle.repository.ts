@@ -5,8 +5,8 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import { juggler } from '@loopback/repository';
-import { SubscriptionDbSourceName } from '../types';
+import {juggler} from '@loopback/repository';
+import {SubscriptionDbSourceName} from '../types';
 
 export class BillingCycleRepository extends DefaultUserModifyCrudRepository<
   BillingCycle,
@@ -14,7 +14,8 @@ export class BillingCycleRepository extends DefaultUserModifyCrudRepository<
   BillingCycleRelations
 > {
   constructor(
-    @inject(`datasources.${SubscriptionDbSourceName}`) dataSource: juggler.DataSource,
+    @inject(`datasources.${SubscriptionDbSourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
