@@ -67,9 +67,3 @@ export class Contact extends UserModifiableEntity {
     super(data);
   }
 }
-
-export interface ContactRelations {
-  // describe navigational properties here
-}
-
-export type ContactWithRelations = Contact & ContactRelations;

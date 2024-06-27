@@ -18,7 +18,9 @@ export class LeadTokenVerifierProvider
       if (!response.token) {
         throw new HttpErrors.Unauthorized();
       }
+      //sonarignore:start
       const data = verify(response.token, process.env.JWT_SECRET!, {
+        //sonarignore:end
         issuer: process.env.JWT_ISSUER,
         algorithms: ['HS256'],
       }) as Object;

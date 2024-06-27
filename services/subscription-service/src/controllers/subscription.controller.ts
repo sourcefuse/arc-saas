@@ -31,6 +31,7 @@ import {SubscriptionStatus} from '../enums';
 
 const basePath = '/subscriptions';
 const DATE_FORMAT = 'YYYY-MM-DD';
+const description = 'Array of Subscription model instances';
 export class SubscriptionController {
   constructor(
     @repository(SubscriptionRepository)
@@ -131,7 +132,7 @@ export class SubscriptionController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Subscription model instances',
+        description,
         content: {
           'application/json': {
             schema: {
@@ -159,7 +160,7 @@ export class SubscriptionController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Subscription model instances',
+        description,
         content: {
           'application/json': {
             schema: {
@@ -216,7 +217,7 @@ export class SubscriptionController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Subscription model instances',
+        description,
         content: {
           'application/json': {
             schema: {

@@ -98,7 +98,9 @@ export class InvoiceController {
       // Update invoice record in the database to store the PDF file path
       await this.invoiceRepository.updateById(invoice.id, invoice);
     } catch (error) {
+      //sonarignore:start
       console.error('Error generating PDF:', error);
+      //sonarignore:end
       // Handle error appropriately
     }
   }

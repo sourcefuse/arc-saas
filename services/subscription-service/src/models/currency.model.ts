@@ -41,9 +41,3 @@ export class Currency extends Entity {
     super(data);
   }
 }
-
-export interface CurrencyRelations {
-  // describe navigational properties here
-}
-
-export type CurrencyWithRelations = Currency & CurrencyRelations;

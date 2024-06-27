@@ -1,5 +1,5 @@
 import {Getter, inject} from '@loopback/core';
-import {BillingCycle, BillingCycleRelations} from '../models';
+import {BillingCycle} from '../models';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -11,7 +11,7 @@ import {SubscriptionDbSourceName} from '../types';
 export class BillingCycleRepository extends DefaultUserModifyCrudRepository<
   BillingCycle,
   typeof BillingCycle.prototype.id,
-  BillingCycleRelations
+  {}
 > {
   constructor(
     @inject(`datasources.${SubscriptionDbSourceName}`)

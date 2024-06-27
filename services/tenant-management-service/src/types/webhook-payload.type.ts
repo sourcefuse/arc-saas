@@ -9,8 +9,9 @@ export enum WebhookStatus {
 /**
  * Represents the payload for a webhook.
  */
+//sonarignore:start this was intentional
 export type WebhookPayload = ResourceProvisionedWebhookPayload;
-
+//sonarignore:end
 /**
  * Represents the payload for a resource provisioned webhook.
  */
