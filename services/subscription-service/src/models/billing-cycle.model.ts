@@ -41,9 +41,3 @@ export class BillingCycle extends UserModifiableEntity {
     super(data);
   }
 }
-
-export interface BillingCycleRelations {
-  // describe navigational properties here
-}
-
-export type BillingCycleWithRelations = BillingCycle & BillingCycleRelations;
