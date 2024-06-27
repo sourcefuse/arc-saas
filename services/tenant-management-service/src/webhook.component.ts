@@ -142,7 +142,6 @@ export class WebhookTenantManagementServiceComponent implements Component {
       createServiceBinding(ProvisioningWebhookHandler),
       createServiceBinding(CryptoHelperService),
     ];
-    // this.services=[ProvisioningWebhookHandler,CryptoHelperService];
   }
 
   providers?: ProviderMap = {};

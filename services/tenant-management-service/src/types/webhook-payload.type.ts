@@ -33,10 +33,6 @@ export type ResourceProvisionedWebhookPayload = {
   };
 };
 
-// export interface WebhookNotificationServiceType{
-//   send(email: string, type: NotificationType, data: WebNotifiactionDataType, token: string):Promise<void>
-// }
-
 export interface WebhookNotificationServiceType {
   send<T>(
     email: string,

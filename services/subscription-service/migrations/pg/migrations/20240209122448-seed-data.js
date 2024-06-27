@@ -1,13 +1,13 @@
 'use strict';
 
-var dbm;
-var type;
-var seed;
-var fs = require('fs');
-var path = require('path');
-var Promise;
-var dotenv = require('dotenv');
-var dotenvExt = require('dotenv-extended');
+let dbm;
+let type;
+let seed;
+let fs = require('fs');
+let path = require('path');
+let Promise;
+let dotenv = require('dotenv');
+let dotenvExt = require('dotenv-extended');
 
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.
@@ -27,7 +27,7 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-  var filePath = path.join(
+  let filePath = path.join(
     __dirname,
     'sqls',
     '20240209122448-seed-data-up.sql',
@@ -49,7 +49,7 @@ exports.up = function (db) {
 };
 
 exports.down = function (db) {
-  var filePath = path.join(
+  let filePath = path.join(
     __dirname,
     'sqls',
     '20240209122448-seed-data-down.sql',
