@@ -34,7 +34,7 @@
 
 # ARC SAAS
 
-## What is ARC Saas
+## What is ARC SaaS
 
 We are thrilled to introduce our cutting-edge control plane, meticulously designed to simplify tenant onboarding, tenant subscription management and tenant provisioning based upon isolation levels, vis-a-vis, Silo, Pooled and Bridge. It also comes up with a configurable SaaS license tiers and plans, along with a streamlined billing processes. From seamless tenant management to robust monitoring and analytics, fortified security and compliance measures, and versatile API management, ARC SaaS will be your one stop solution for building a SaaS product faster than ever.
 
