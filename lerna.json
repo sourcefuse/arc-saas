@@ -1,5 +1,5 @@
 {
-  "packages": ["services/*"],
+  "packages": ["services/*", "packages/custom-sf-changelog/"],
   "command": {
     "version": {
       "conventionalCommits": true,
@@ -22,6 +22,7 @@
       "yes": true
     }
   },
+  "changelogPreset": "custom-sf-changelog",
   "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md"],
   "version": "independent",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"

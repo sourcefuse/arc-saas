@@ -16,7 +16,9 @@ export class CryptoHelperService {
    * @returns a signed JWT token.
    */
   generateTempToken<T extends object>(payload: T, expiry?: number) {
+    //sonarignore:start
     return sign(payload, process.env.JWT_SECRET!, {
+      //sonarignore:end
       issuer: process.env.JWT_ISSUER,
       algorithm: 'HS256',
       expiresIn: expiry ?? FIVE_SECONDS,

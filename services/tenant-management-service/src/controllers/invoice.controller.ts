@@ -48,7 +48,7 @@ export class InvoiceController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Invoice model instance',
+        description: 'Invoice model instance POST success',
         content: {
           [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Invoice)},
         },
@@ -81,11 +81,8 @@ export class InvoiceController {
   @get(`${basePath}/download`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Invoice model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Invoice)},
-        },
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Invoice download success',
       },
     },
   })
@@ -101,11 +98,11 @@ export class InvoiceController {
       // Update invoice record in the database to store the PDF file path
       await this.invoiceRepository.updateById(invoice.id, invoice);
     } catch (error) {
+      //sonarignore:start
       console.error('Error generating PDF:', error);
+      //sonarignore:end
       // Handle error appropriately
     }
-
-    return;
   }
 
   @authorize({
@@ -198,7 +195,7 @@ export class InvoiceController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Invoice model instance',
+        description: 'Invoice model instance success',
         content: {
           [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Invoice)},
         },

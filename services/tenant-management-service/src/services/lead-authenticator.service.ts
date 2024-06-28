@@ -53,20 +53,6 @@ export class LeadAuthenticator {
       +process.env.VALIDATION_TOKEN_EXPIRY!,
     );
     return randomKey;
-    // this.notificationService
-    //   .send(
-    //     lead.email,
-    //     NotificationType.ValidateLead,
-    //     {
-    //       appName: process.env.APP_NAME,
-    //       link: `${process.env.APP_VALIDATE_URL}/${lead.id}?code=${randomKey}`,
-    //     },
-    //     this._generateTempToken(lead, [
-    //       PermissionKey.CreateNotification,
-    //       PermissionKey.ViewNotificationTemplate,
-    //     ]),
-    //   )
-    //   .catch(e => this.logger.error(e));
   }
 
   /**

@@ -21,5 +21,4 @@ describe('HomePage', () => {
       .expect(STATUS_CODE.OK)
       .expect('Content-Type', /text\/html/);
   });
-
 });

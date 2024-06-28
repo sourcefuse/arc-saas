@@ -9,8 +9,9 @@ export enum WebhookStatus {
 /**
  * Represents the payload for a webhook.
  */
+//sonarignore:start this was intentional
 export type WebhookPayload = ResourceProvisionedWebhookPayload;
-
+//sonarignore:end
 /**
  * Represents the payload for a resource provisioned webhook.
  */
@@ -32,10 +33,6 @@ export type ResourceProvisionedWebhookPayload = {
     appPlaneUrl: string;
   };
 };
-
-// export interface WebhookNotificationServiceType{
-//   send(email: string, type: NotificationType, data: WebNotifiactionDataType, token: string):Promise<void>
-// }
 
 export interface WebhookNotificationServiceType {
   send<T>(

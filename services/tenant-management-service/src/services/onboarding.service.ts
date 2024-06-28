@@ -156,19 +156,19 @@ export class OnboardingService {
         ) {
           throw new HttpErrors.BadRequest('Address mismatch with Lead');
         }
+      } else if (dto.country) {
+        address = await this.addressRepository.create(
+          {
+            country: dto.country,
+            address: dto.address,
+            city: dto.city,
+            state: dto.state,
+            zip: dto.zip,
+          },
+          {transaction},
+        );
       } else {
-        if (dto.country) {
-          address = await this.addressRepository.create(
-            {
-              country: dto.country,
-              address: dto.address,
-              city: dto.city,
-              state: dto.state,
-              zip: dto.zip,
-            },
-            {transaction},
-          );
-        }
+        // Do Nothing
       }
       const tenant = await this.tenantRepository.create(
         {

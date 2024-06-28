@@ -6,14 +6,14 @@ import {
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 
-import {Contact, ContactRelations, Tenant} from '../models';
+import {Contact, Tenant} from '../models';
 import {TenantRepository} from './tenant.repository';
 import {TenantManagementDbSourceName} from '../types';
 
 export class ContactRepository extends DefaultTransactionalUserModifyRepository<
   Contact,
   typeof Contact.prototype.id,
-  ContactRelations
+  {}
 > {
   public readonly tenant: BelongsToAccessor<
     Tenant,

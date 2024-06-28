@@ -1,6 +1,6 @@
 {
   "name": "arc-saas",
-  "private": true,
+  "private": false,
   "scripts": {
     "prepare": "husky install",
     "build": "npm run build --workspaces --if-present",
@@ -14,16 +14,17 @@
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@commitlint/config-lerna-scopes": "^16.0.0",
+    "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "commitizen": "^4.2.4",
     "concurrently": "^8.2.2",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
     "husky": "^7.0.4",
-    "lerna": "^7.3.0",
-    "run-s": "^0.0.0"
+    "lerna": "^7.3.0"
   },
   "workspaces": [
-    "services/*"
+    "services/*",
+    "packages/custom-sf-changelog/"
   ],
   "overrides": {
     "@commitlint/config-lerna-scopes": {

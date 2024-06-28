@@ -9,7 +9,7 @@ import {RestApplication} from '@loopback/rest';
 import {Context} from '@loopback/context';
 import {AnyObject} from '@loopback/repository';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import { SubscriptionDataSource } from '../helpers/db.datasource';
+import {SubscriptionDataSource} from '../helpers/db.datasource';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({});
@@ -18,7 +18,6 @@ export async function setupApplication(): Promise<AppWithClient> {
   const app = new SubscriptionServiceApplication({
     rest: restConfig,
   });
-
 
   app.dataSource(SubscriptionDataSource);
 

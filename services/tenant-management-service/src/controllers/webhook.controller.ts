@@ -21,7 +21,7 @@ export class WebhookController<T extends WebhookPayload['data']> {
   ) {}
   @intercept(WEBHOOK_VERIFIER)
   @ratelimit(true, {
-    max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS!),
+    max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({

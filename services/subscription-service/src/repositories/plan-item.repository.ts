@@ -7,7 +7,7 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
 import {PlanRepository} from './plan.repository';
-import { SubscriptionDbSourceName } from '../types';
+import {SubscriptionDbSourceName} from '../types';
 
 export class PlanItemRepository extends DefaultUserModifyCrudRepository<
   PlanItem,
@@ -17,7 +17,8 @@ export class PlanItemRepository extends DefaultUserModifyCrudRepository<
   public readonly plan: BelongsToAccessor<Plan, typeof PlanItem.prototype.id>;
 
   constructor(
-    @inject(`datasources.${SubscriptionDbSourceName}`) dataSource: juggler.DataSource,
+    @inject(`datasources.${SubscriptionDbSourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('PlanRepository')

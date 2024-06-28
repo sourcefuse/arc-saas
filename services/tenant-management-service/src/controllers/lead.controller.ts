@@ -53,7 +53,7 @@ export class LeadController {
   ) {}
 
   @ratelimit(true, {
-    max: parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS!),
+    max: parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({

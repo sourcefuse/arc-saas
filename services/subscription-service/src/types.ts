@@ -22,6 +22,5 @@ export type LeadUserWithToken = {
   token: string;
 } & LeadUser;
 
-export const SubscriptionDbSourceName="SubscriptionDB";
+export const SubscriptionDbSourceName = 'SubscriptionDB';
 // sonarignore:end
-
