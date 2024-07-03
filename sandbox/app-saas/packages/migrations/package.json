@@ -1,0 +1,41 @@
+{
+  "name": "tatalx-ctrl-migrations",
+  "version": "1.0.0",
+  "description": "Package to handle Db migrations for all microservices DBs",
+  "main": "lib/migrations.js",
+  "scripts": {
+    "db:migrate": "run-s db:migrate:*",
+    "db:migrate-down": "run-s db:migrate-down:*",
+    "db:migrate-reset": "run-s db:migrate-reset:*",
+    "db:migrate:authentication-service": "db-migrate up --config 'authentication-service/database.json' -m 'authentication-service/migrations'",
+    "db:migrate-down:authentication-service": "db-migrate down --config 'authentication-service/database.json' -m 'authentication-service/migrations'",
+    "db:migrate-reset:authentication-service": "db-migrate reset --config 'authentication-service/database.json' -m 'authentication-service/migrations'",
+    "db:migrate:audit-service": "db-migrate up --config 'audit-service/database.json' -m 'audit-service/migrations'",
+    "db:migrate-down:audit-service": "db-migrate down --config 'audit-service/database.json' -m 'audit-service/migrations'",
+    "db:migrate-reset:audit-service": "db-migrate reset --config 'audit-service/database.json' -m 'audit-service/migrations'",
+    "db:migrate:notification-service": "db-migrate up --config 'notification-service/database.json' -m 'notification-service/migrations'",
+    "db:migrate-down:notification-service": "db-migrate down --config 'notification-service/database.json' -m 'notification-service/migrations'",
+    "db:migrate-reset:notification-service": "db-migrate reset --config 'notification-service/database.json' -m 'notification-service/migrations'",
+    "db:migrate:tenant-mgmt-service": "db-migrate up --config 'tenant-mgmt-service/database.json' -m 'tenant-mgmt-service/migrations'",
+    "db:migrate-down:tenant-mgmt-service": "db-migrate down --config 'tenant-mgmt-service/database.json' -m 'tenant-mgmt-service/migrations'",
+    "db:migrate-reset:tenant-mgmt-service": "db-migrate reset --config 'tenant-mgmt-service/database.json' -m 'tenant-mgmt-service/migrations'",
+    "db:migrate:subscription-service": "db-migrate up --config 'subscription-service/database.json' -m 'subscription-service/migrations'",
+    "db:migrate-down:subscription-service": "db-migrate down --config 'subscription-service/database.json' -m 'subscription-service/migrations'",
+    "db:migrate-reset:subscription-service": "db-migrate reset --config 'subscription-service/database.json' -m 'subscription-service/migrations'",
+    "docker:build": "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version ../../. -f ./Dockerfile",
+    "docker:push": "sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "db-migrate": "^1.0.0-beta.21",
+    "dotenv": "^16.0.3",
+    "dotenv-extended": "^2.9.0",
+    "kindof": "^2.0.0",
+    "db-migrate-pg": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "npm-run-all": "^4.1.5"
+  }
+}

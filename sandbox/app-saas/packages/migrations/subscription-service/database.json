@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "SUBSCRIPTION-SERVICE_DB_HOST"
+      },
+      "port": {
+        "ENV": "SUBSCRIPTION-SERVICE_DB_PORT"
+      },
+      "user": {
+        "ENV": "SUBSCRIPTION-SERVICE_DB_USER"
+      },
+      "password": {
+        "ENV": "SUBSCRIPTION-SERVICE_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "SUBSCRIPTION-SERVICE_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+}

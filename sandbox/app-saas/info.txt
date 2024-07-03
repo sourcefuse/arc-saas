@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: app-saas
+  annotations:
+    github.com/project-slug: Tyagi-Sunny/app-saas
+spec:
+  type: other
+  lifecycle: unknown
+  owner: sourcefuse
