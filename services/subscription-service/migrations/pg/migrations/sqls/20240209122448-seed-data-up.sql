@@ -26,21 +26,50 @@ INSERT INTO main."plans"("name", created_on, created_by, description, price, cur
             WHERE
                 cycle_name = 'MONTHLY'), 1);
 
-INSERT INTO main.plan_items(created_on, created_by, "name", plan_item_type, plan_id, value)
-    VALUES (CURRENT_TIMESTAMP, '123e4567-e89b-12d3-a456-426614174002', 'Database', 'database',(
-            SELECT
-                id
-            FROM
-                main."plans" pl
-            WHERE
-                pl.name = 'Standard'), '{"name": "RDS_POSTGRES_STORAGE", "value": 50}');
+INSERT INTO main.plan_items (created_on, created_by, "name", plan_item_type, plan_id, value)
+VALUES (
+    CURRENT_TIMESTAMP,
+    '123e4567-e89b-12d3-a456-426614174002',
+    'Database',
+    'database',
+    (
+        SELECT id
+        FROM main.plans pl
+        WHERE pl.name = 'Premium'
+    ),
+    '{
+        "service": {
+            "features": [
+                { "name": "video call", "enabled": true, "description": "High quality video calling", "maxParticipants": 100 }
+            ]
+        }
+    }'
+);
 
-INSERT INTO main.plan_items(created_on, created_by, "name", plan_item_type, plan_id, value)
-    VALUES (CURRENT_TIMESTAMP, '123e4567-e89b-12d3-a456-426614174002', 'Database', 'database',(
-            SELECT
-                id
-            FROM
-                main."plans" pl
-            WHERE
-                pl.name = 'Premium'), '{"name": "RDS_POSTGRES_STORAGE", "value": 100}');
+INSERT INTO main.plan_items (created_on, created_by, "name", plan_item_type, plan_id, value)
+VALUES (
+    CURRENT_TIMESTAMP,
+    '123e4567-e89b-12d3-a456-426614174002',
+    'Database',
+    'database',
+    (
+        SELECT id
+        FROM main.plans pl
+        WHERE pl.name = 'Premium'
+    ),
+    '{
+        "service": {
+            "features": [
+                { "name": "video call", "enabled": true, "description": "High quality video calling", "maxParticipants": 100 },
+                { "name": "chat", "enabled": true, "description": "Real-time text chat", "property4": "value" },
+                { "name": "recording", "enabled": false, "description": "Record meetings", "priority": 3, "storageLimit": "5GB" }
+            ]
+        }
+    }'
+);
+
+
+
+
+
 

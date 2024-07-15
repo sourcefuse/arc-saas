@@ -23,4 +23,13 @@ export type LeadUserWithToken = {
 } & LeadUser;
 
 export const SubscriptionDbSourceName = 'SubscriptionDB';
+
+export interface IFeature {
+  name: string;
+  enabled: boolean;
+  [key: string]: Object;
+}
+export interface IService {
+  [key: string]: string | {[subKey: string]: IFeature[]};
+}
 // sonarignore:end

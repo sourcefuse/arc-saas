@@ -5,3 +5,4 @@ export * from './service.model';
 export * from './resource.model';
 export * from './billing-cycle.model';
 export * from './currency.model';
+export * from './feature.model';

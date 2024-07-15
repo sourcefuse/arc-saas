@@ -117,4 +117,5 @@ export interface IPlanItem {
 export interface IValue {
   name: string;
   value: number | string | boolean;
+  serviceId: string;
 }
