@@ -15,6 +15,7 @@ import {
   extensionFor,
 } from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
+import {IEventConnector} from './types/i-event-connector.interface';
 
 export namespace TenantManagementServiceBindings {
   export const Config =
@@ -29,10 +30,6 @@ export namespace TenantManagementServiceBindings {
 export const LEAD_TOKEN_VERIFIER = BindingKey.create<
   VerifyFunction.BearerFn<LeadUser>
 >('sf.user.lead.verifier');
-
-export const PIPELINES = BindingKey.create<Record<string, string>>(
-  'sf.tenant.pipelines',
-);
 
 /**
  * Binding key for the system user.
@@ -73,3 +70,7 @@ export const WebhookNotificationService =
   BindingKey.create<WebhookNotificationServiceType>(
     'sf.webhook.handler.notification.service',
   );
+
+export const EventConnectorBinding = BindingKey.create<
+  IEventConnector<unknown>
+>('arc-saas.services.tenant-management.event-connector');

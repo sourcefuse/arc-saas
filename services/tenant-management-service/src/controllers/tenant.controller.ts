@@ -98,13 +98,17 @@ export class TenantController {
         },
       },
     })
-    dto: SubscriptionDTO,
+    subscription: SubscriptionDTO,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    const existing = await this.tenantRepository.findById(id, {
+    const tenantDetails = await this.tenantRepository.findById(id, {
       include: ['contacts', 'address'],
     });
-    return this.provisioningService.provisionTenant(existing, dto);
+
+    return this.provisioningService.provisionTenant(
+      tenantDetails,
+      subscription,
+    );
   }
 
   @authorize({

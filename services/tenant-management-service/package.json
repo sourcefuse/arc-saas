@@ -64,7 +64,6 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@aws-sdk/client-codebuild": "^3.504.0",
     "@loopback/boot": "^7.0.0",
     "@loopback/context": "^7.0.0",
     "@loopback/core": "^6.0.0",

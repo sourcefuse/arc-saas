@@ -19,10 +19,6 @@ import {
 import {getRepo, getToken, setupApplication} from './test-helper';
 import {ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {BindingScope} from '@loopback/context';
-import {AWS_CODEBUILD_CLIENT} from '../../services';
-import {CodeBuildClient, StartBuildCommand} from '@aws-sdk/client-codebuild';
-import {PlanTier} from '../../enums';
-import {PIPELINES} from '../../keys';
 
 describe('TenantController', () => {
   let app: TenantMgmtServiceApplication;
@@ -46,10 +42,6 @@ describe('TenantController', () => {
 
     const logger = app.getSync<ILogger>(LOGGER.LOGGER_INJECT);
     app.bind(LOGGER.LOGGER_INJECT).to(logger).inScope(BindingScope.SINGLETON);
-    app.bind(PIPELINES).to({
-      [PlanTier.POOLED]: 'free-pipeline',
-      [PlanTier.SILO]: '',
-    });
     secretRepo = await getRepo(app, 'repositories.WebhookSecretRepository');
   });
 
@@ -106,7 +98,7 @@ describe('TenantController', () => {
 
     const webhookSecret = await secretRepo.get(tenant.id);
     expect(webhookSecret).to.not.be.null();
-    expect(webhookSecret.context).to.eql('test-id');
+    expect(webhookSecret.context).to.not.undefined();
     expect(webhookSecret.secret).to.be.String();
   });
 
@@ -173,61 +165,13 @@ describe('TenantController', () => {
       .expect(STATUS_CODE.INTERNAL_SERVER_ERROR);
   });
 
-  it('invokes POST /tenants/{id}/provision but throws 500 for missing plan pipeline in a subscription', async () => {
-    const invalidSubscription = {
-      id: mockSubscriptionId,
-      plan: {
-        tier: PlanTier.SILO,
-      },
-    };
-    const token = getToken([
-      PermissionKey.CreateTenant,
-      PermissionKey.ProvisionTenant,
-    ]);
-    const {body: tenant} = await client
-      .post('/tenants')
-      .set('Authorization', token)
-      .send(mockTenantOnboardDTO)
-      .expect(STATUS_CODE.OK);
-
-    await client
-      .post(`/tenants/${tenant.id}/provision`)
-      .set('Authorization', token)
-      .send(invalidSubscription)
-      .expect(STATUS_CODE.INTERNAL_SERVER_ERROR);
-  });
-
-  it('invokes POST /tenants/{id}/provision but throws 500 for missing build id', async () => {
-    app.bind(AWS_CODEBUILD_CLIENT).to({
-      send: (cmd: StartBuildCommand) => {
-        return {
-          build: {},
-        };
-      },
-    } as unknown as CodeBuildClient);
-    const token = getToken([
-      PermissionKey.CreateTenant,
-      PermissionKey.ProvisionTenant,
-    ]);
-    const {body: tenant} = await client
-      .post('/tenants')
-      .set('Authorization', token)
-      .send({...mockTenantOnboardDTO, name: 'test2'})
-      .expect(STATUS_CODE.OK);
-
-    await client
-      .post(`/tenants/${tenant.id}/provision`)
-      .set('Authorization', token)
-      .send(mockSusbcription)
-      .expect(STATUS_CODE.INTERNAL_SERVER_ERROR);
-  });
-
   it('invokes GET /tenants with valid token', async () => {
     const token = getToken([PermissionKey.ViewTenant]);
     const {body} = await client
       .get('/tenants')
       .set('Authorization', token)
       .expect(STATUS_CODE.OK);
+    console.log(body);
     expect(body.length).to.eql(1);
     expect(body[0].name).to.eql(mockTenant.name);
   });

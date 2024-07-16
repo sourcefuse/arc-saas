@@ -10,16 +10,16 @@ import {MemoryStore} from 'express-rate-limit';
 import {sign} from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
-import {TenantMgmtServiceApplication} from '../..';
+import {EventConnectorBinding, TenantMgmtServiceApplication} from '../..';
 import {
   ContactRepository,
   ResourceRepository,
   TenantRepository,
 } from '../../repositories';
-import {AWS_CODEBUILD_CLIENT, NotificationService} from '../../services';
+import {NotificationService} from '../../services';
 import {Transaction} from '../fixtures';
-import {MOCK_CODEBUILD_CLIENT} from '../fixtures/mock-codebuild-client';
 import {DbDataSource, RedisDataSource} from '../helper/datasources';
+import {IEventConnector} from '../../types/i-event-connector.interface';
 
 export async function setupApplication(
   notifStub?: sinon.SinonStub,
@@ -45,7 +45,7 @@ export async function setupApplication(
   ResourceRepository.prototype.beginTransaction = async () => new Transaction();
 
   setUpRateLimitMemory(app);
-  app.bind(AWS_CODEBUILD_CLIENT).to(MOCK_CODEBUILD_CLIENT);
+  setupEventConnector(app);
 
   await app.boot();
 
@@ -84,6 +84,16 @@ function setUpEnv() {
 function setUpRateLimitMemory(app: RestApplication) {
   const store = new MemoryStore();
   app.bind(RateLimitSecurityBindings.DATASOURCEPROVIDER).to(store);
+}
+
+function setupEventConnector(app: RestApplication) {
+  class EventConnector implements IEventConnector<unknown> {
+    publish(event: unknown): Promise<void> {
+      return Promise.resolve();
+    }
+  }
+
+  app.bind(EventConnectorBinding).toClass(EventConnector);
 }
 
 export interface AppWithClient {
