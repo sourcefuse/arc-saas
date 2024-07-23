@@ -5,8 +5,10 @@
 import {
   Binding,
   Component,
+  Constructor,
   ControllerClass,
   CoreBindings,
+  createBindingFromClass,
   createServiceBinding,
   inject,
   ProviderMap,
@@ -29,6 +31,7 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
@@ -70,10 +73,8 @@ import {
 } from './repositories';
 import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
 import {
-  AWS_CODEBUILD_CLIENT,
-  CodebuildClientProvider,
-  CodeBuildService,
   CryptoHelperService,
+  EventConnector,
   InvoicePDFGenerator,
   LeadAuthenticator,
   NotificationService,
@@ -150,20 +151,20 @@ export class TenantManagementServiceComponent implements Component {
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
-      Binding.bind(AWS_CODEBUILD_CLIENT).toProvider(CodebuildClientProvider),
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
-      createServiceBinding(CodeBuildService),
       createServiceBinding(InvoicePDFGenerator),
     ];
+
+    this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
   }
 
   providers?: ProviderMap = {};
 
-  bindings?: Binding[] = [];
+  bindings: Binding[] = [];
 
   services?: ServiceOrProviderClass[];
 
@@ -205,5 +206,15 @@ export class TenantManagementServiceComponent implements Component {
       allowAlwaysPaths: ['/explorer'],
     });
     this.application.component(AuthorizationComponent);
+  }
+
+  private addClassBindingIfNotPresent<T>(key: string, cls: Constructor<T>) {
+    if (!this.application.isBound(key)) {
+      this.bindings.push(
+        createBindingFromClass(cls, {
+          key: key,
+        }),
+      );
+    }
   }
 }

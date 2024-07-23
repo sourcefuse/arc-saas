@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "orchestrator-service",
+    "version": "1.0.0",
+    "description": "ARC SaaS Orchestrator service",
+    "contact": {
+      "name": "SourceFuse"
+    }
+  },
+  "paths": {
+    "/events/{eventType}": {
+      "post": {
+        "x-controller-name": "EventController",
+        "x-operation-name": "handleEvent",
+        "tags": [
+          "EventController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return value of EventController.handleEvent"
+          }
+        },
+        "parameters": [
+          {
+            "name": "eventType",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "EventController.handleEvent"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return value of PingController.ping"
+          }
+        },
+        "operationId": "PingController.ping"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return value of HomePageController.homePage"
+          }
+        },
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
