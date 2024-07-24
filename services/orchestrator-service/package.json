@@ -50,6 +50,12 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@loopback/core": ">=6"
+  },
+  "devDependencies": {
     "@loopback/boot": "^7.0.3",
     "@loopback/context": "^7.0.3",
     "@loopback/core": "^6.1.0",
@@ -65,9 +71,6 @@
     "dotenv-extended": "^2.9.0",
     "swagger-stats": "^0.99.7",
     "symlink-resolver": "0.2.1",
-    "tslib": "^2.0.0"
-  },
-  "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@loopback/build": "^11.0.3",
     "@loopback/eslint-config": "^15.0.3",

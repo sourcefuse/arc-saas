@@ -1,5 +1,4 @@
 import {
-  Binding,
   Component,
   Constructor,
   ControllerClass,
@@ -10,6 +9,7 @@ import {
   ProviderMap,
   ServiceOrProviderClass,
 } from '@loopback/core';
+import {Binding} from '@loopback/context';
 import {OrchestratorServiceBindings} from './services/types';
 import {
   BuilderService,
