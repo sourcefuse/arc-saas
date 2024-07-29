@@ -171,7 +171,6 @@ describe('TenantController', () => {
       .get('/tenants')
       .set('Authorization', token)
       .expect(STATUS_CODE.OK);
-    console.log(body);
     expect(body.length).to.eql(1);
     expect(body[0].name).to.eql(mockTenant.name);
   });

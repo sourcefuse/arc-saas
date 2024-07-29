@@ -65,15 +65,19 @@ export class ProvisioningService<T extends SubscriptionDTO>
       throw new HttpErrors.InternalServerError();
     }
 
+    const context = randomUUID();
+
     await this.eventConnector.publish({
       type: EventTypes.TENANT_PROVISIONING,
       tenant: tenant,
       subscription: subscription,
+      secret: hmacSecret,
+      context: context,
     });
 
     await this.webhookSecretRepo.set(tenant.id, {
       secret: hmacSecret,
-      context: randomUUID(),
+      context: context,
     });
 
     await this.webhookSecretRepo.expire(
