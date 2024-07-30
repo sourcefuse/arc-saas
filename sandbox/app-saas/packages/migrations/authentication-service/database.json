@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "AUTHENTICATION-SERVICE_DB_HOST"
+      },
+      "port": {
+        "ENV": "AUTHENTICATION-SERVICE_DB_PORT"
+      },
+      "user": {
+        "ENV": "AUTHENTICATION-SERVICE_DB_USER"
+      },
+      "password": {
+        "ENV": "AUTHENTICATION-SERVICE_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "AUTHENTICATION-SERVICE_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+}
