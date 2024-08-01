@@ -59,6 +59,7 @@ import {
   Service,
   Subscription,
 } from './models';
+import {FeatureToggleServiceComponent} from '@sourceloop/feature-toggle-service';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
@@ -71,6 +72,10 @@ export class SubscriptionServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    /**Bind the feature toggle service to main the list of features */
+
+    this.application.component(FeatureToggleServiceComponent);
 
     this.application.api({
       openapi: '3.0.0',
