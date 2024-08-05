@@ -59,18 +59,28 @@ import {
   Service,
   Subscription,
 } from './models';
+import {
+  FeatureToggleBindings,
+  FeatureToggleServiceComponent,
+} from '@sourceloop/feature-toggle-service';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(SubscriptionServiceBindings.Config, {optional: true})
-    private readonly notifConfig?: ISubscriptionServiceConfig,
+    private readonly subscriptionConfig?: ISubscriptionServiceConfig,
   ) {
     this.providers = {};
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    /**Bind the feature toggle service to main the list of features */
+    this.application
+      .bind(FeatureToggleBindings.Config)
+      .to({bindControllers: true, useCustomSequence: true});
+    this.application.component(FeatureToggleServiceComponent);
 
     this.application.api({
       openapi: '3.0.0',
@@ -85,7 +95,7 @@ export class SubscriptionServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    if (!this.notifConfig?.useCustomSequence) {
+    if (!this.subscriptionConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence();
     }

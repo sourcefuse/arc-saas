@@ -31,6 +31,7 @@ module.exports = {
     {name: 'tenant-management'},
     {name: 'subscription-service'},
     {name: 'orchestrator-service'},
+    {name: 'all-services'},
   ],
 
   appendBranchNameToCommitMessage: false,
