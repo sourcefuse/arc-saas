@@ -1,4 +1,4 @@
-import {BindingKey} from '@loopback/core';
+import {BindingKey, Interceptor} from '@loopback/core';
 import {ISubscriptionServiceConfig} from './types';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {VerifyFunction} from 'loopback4-authentication';
@@ -9,6 +9,10 @@ export namespace SubscriptionServiceBindings {
     `${BINDING_PREFIX}.chat.config`,
   );
 }
+
+export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
+  'sf.webhook.verifier',
+);
 
 export const LEAD_TOKEN_VERIFIER = BindingKey.create<
   VerifyFunction.BearerFn<AnyObject>

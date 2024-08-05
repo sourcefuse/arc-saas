@@ -89,7 +89,8 @@
     "loopback4-authorization": "^7.0.2",
     "swagger-stats": "^0.99.5",
     "symlink-resolver": "0.2.1",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.2",
+    "local-billing":"file:/home/sunny.tyagi/Desktop/billing-package/packages/billing/local-billing-0.0.1.tgz"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
