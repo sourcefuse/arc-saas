@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.2.0 (2024-08-05)
+
+* feat(subscription-service): add feature toggle service (#37) ([12ebca9](https://github.com/sourcefuse/arc-saas/commit/12ebca9)), closes [#37](https://github.com/sourcefuse/arc-saas/issues/37) [#26](https://github.com/sourcefuse/arc-saas/issues/26) [#36](https://github.com/sourcefuse/arc-saas/issues/36)
+
+
+
+
+
 ## 0.1.0 (2024-06-27)
 
 * chore(ci-cd): change the folder name for workflows (#25) ([e3af5c5](https://github.com/sourcefuse/arc-saas/commit/e3af5c5)), closes [#25](https://github.com/sourcefuse/arc-saas/issues/25) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
