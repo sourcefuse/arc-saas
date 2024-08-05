@@ -86,7 +86,7 @@ export class TenantManagementServiceComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(TenantManagementServiceBindings.Config, {optional: true})
-    private readonly notifConfig?: ITenantManagementServiceConfig,
+    private readonly tenantMgmtConfig?: ITenantManagementServiceConfig,
   ) {
     this.providers = {};
 
@@ -106,7 +106,7 @@ export class TenantManagementServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    if (!this.notifConfig?.useCustomSequence) {
+    if (!this.tenantMgmtConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence();
     }

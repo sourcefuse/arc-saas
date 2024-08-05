@@ -1,5 +1,9 @@
 import {sign} from 'jsonwebtoken';
-import {SubscriptionServiceApplication} from '../..';
+import {
+  ApplicationConfig,
+  SubscriptionServiceBindings,
+  SubscriptionServiceComponent,
+} from '../..';
 import {
   createRestAppClient,
   givenHttpServerConfig,
@@ -7,17 +11,50 @@ import {
 } from '@loopback/testlab';
 import {RestApplication} from '@loopback/rest';
 import {Context} from '@loopback/context';
-import {AnyObject} from '@loopback/repository';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import {AnyObject, RepositoryMixin} from '@loopback/repository';
+import {
+  AuthenticationBindings,
+  AuthenticationComponent,
+} from 'loopback4-authentication';
 import {SubscriptionDataSource} from '../helpers/db.datasource';
+import {
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  ServiceSequence,
+} from '@sourceloop/core';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
+import {BootMixin} from '@loopback/boot';
+import path = require('path');
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({});
   setUpEnv();
 
-  const app = new SubscriptionServiceApplication({
+  const app = new TestSubscriptionServiceApplication({
     rest: restConfig,
   });
+  app.sequence(ServiceSequence);
+
+  // Mount authentication component for default sequence
+  app.component(AuthenticationComponent);
+  // Mount bearer verifier component
+  app.bind(BearerVerifierBindings.Config).to({
+    authServiceUrl: '',
+    type: BearerVerifierType.service,
+    useSymmetricEncryption: true,
+  } as BearerVerifierConfig);
+  app.component(BearerVerifierComponent);
+
+  // Mount authorization component for default sequence
+  app.bind(AuthorizationBindings.CONFIG).to({
+    allowAlwaysPaths: ['/explorer'],
+  });
+  app.component(AuthorizationComponent);
 
   app.dataSource(SubscriptionDataSource);
 
@@ -38,7 +75,7 @@ function setUpEnv() {
 }
 
 export interface AppWithClient {
-  app: SubscriptionServiceApplication;
+  app: TestSubscriptionServiceApplication;
   client: Client;
 }
 
@@ -61,4 +98,24 @@ export async function getRepo<T>(app: RestApplication, classString: string) {
     userTenantId: 'test',
   });
   return tempContext.getSync<T>(classString);
+}
+
+export class TestSubscriptionServiceApplication extends BootMixin(
+  RepositoryMixin(RestApplication),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    super(options);
+    this.static('/', path.join(__dirname, '../public'));
+    this.bind(SubscriptionServiceBindings.Config).to({useCustomSequence: true});
+    this.component(SubscriptionServiceComponent);
+
+    this.projectRoot = __dirname;
+    this.bootOptions = {
+      controllers: {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+      },
+    };
+  }
 }

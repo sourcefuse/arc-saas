@@ -1,5 +1,10 @@
-import {BindingScope, Context, CoreTags} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
+import {
+  ApplicationConfig,
+  BindingScope,
+  Context,
+  CoreTags,
+} from '@loopback/core';
+import {AnyObject, RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   Client,
@@ -8,9 +13,17 @@ import {
 } from '@loopback/testlab';
 import {MemoryStore} from 'express-rate-limit';
 import {sign} from 'jsonwebtoken';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import {
+  AuthenticationBindings,
+  AuthenticationComponent,
+} from 'loopback4-authentication';
 import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
-import {EventConnectorBinding, TenantMgmtServiceApplication} from '../..';
+import {
+  EventConnectorBinding,
+  TenantManagementServiceBindings,
+  TenantManagementServiceComponent,
+  WebhookTenantManagementServiceComponent,
+} from '../..';
 import {
   ContactRepository,
   ResourceRepository,
@@ -20,6 +33,19 @@ import {NotificationService} from '../../services';
 import {Transaction} from '../fixtures';
 import {DbDataSource, RedisDataSource} from '../helper/datasources';
 import {IEventConnector} from '../../types/i-event-connector.interface';
+import {BootMixin} from '@loopback/boot';
+import path from 'path';
+import {
+  ServiceSequence,
+  BearerVerifierBindings,
+  BearerVerifierType,
+  BearerVerifierConfig,
+  BearerVerifierComponent,
+} from '@sourceloop/core';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
 
 export async function setupApplication(
   notifStub?: sinon.SinonStub,
@@ -33,9 +59,26 @@ export async function setupApplication(
   });
   setUpEnv();
 
-  const app = new TenantMgmtServiceApplication({
+  const app = new TestTenantMgmtServiceApplication({
     rest: restConfig,
   });
+  app.sequence(ServiceSequence);
+
+  // Mount authentication component for default sequence
+  app.component(AuthenticationComponent);
+  // Mount bearer verifier component
+  app.bind(BearerVerifierBindings.Config).to({
+    authServiceUrl: '',
+    type: BearerVerifierType.service,
+    useSymmetricEncryption: true,
+  } as BearerVerifierConfig);
+  app.component(BearerVerifierComponent);
+
+  // Mount authorization component for default sequence
+  app.bind(AuthorizationBindings.CONFIG).to({
+    allowAlwaysPaths: ['/explorer'],
+  });
+  app.component(AuthorizationComponent);
 
   app.dataSource(DbDataSource);
   app.dataSource(RedisDataSource);
@@ -97,7 +140,7 @@ function setupEventConnector(app: RestApplication) {
 }
 
 export interface AppWithClient {
-  app: TenantMgmtServiceApplication;
+  app: TestTenantMgmtServiceApplication;
   client: Client;
 }
 
@@ -124,3 +167,25 @@ export async function getRepo<T>(app: RestApplication, classString: string) {
 }
 
 export const CLIENT_IP_HEADER = '1.1.1.1';
+
+export class TestTenantMgmtServiceApplication extends BootMixin(
+  RepositoryMixin(RestApplication),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    super(options);
+    this.static('/', path.join(__dirname, '../public'));
+    this.bind(TenantManagementServiceBindings.Config).to({
+      useCustomSequence: true,
+    });
+    this.component(TenantManagementServiceComponent);
+    this.component(WebhookTenantManagementServiceComponent);
+    this.projectRoot = __dirname;
+    this.bootOptions = {
+      controllers: {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+      },
+    };
+  }
+}
