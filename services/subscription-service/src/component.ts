@@ -22,22 +22,12 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {BillingComponent} from 'local-billing';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {SubscriptionServiceBindings} from './keys';
-import {ISubscriptionServiceConfig} from './types';
-import {
-  BillingCycleRepository,
-  CurrencyRepository,
-  PlanItemRepository,
-  PlanRepository,
-  ResourceRepository,
-  ServiceRepository,
-  SubscriptionRepository,
-} from './repositories';
 import {
   BillinCycleController,
   CurrencyController,
@@ -50,11 +40,17 @@ import {
   ServiceController,
   SubscriptionController,
 } from './controllers';
+import {BillingCustomerController} from './controllers/billing-customer.controller';
+import {BillingInvoiceController} from './controllers/billing-invoice.controller';
+import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
+import {WebhookController} from './controllers/webhook.controller';
+import {WebhookVerifierProvider} from './interceptors';
+import {SubscriptionServiceBindings, WEBHOOK_VERIFIER} from './keys';
 import {
   BillingCycle,
   Currency,
-  PlanItem,
   Plan,
+  PlanItem,
   Resource,
   Service,
   Subscription,
@@ -63,6 +59,18 @@ import {
   FeatureToggleBindings,
   FeatureToggleServiceComponent,
 } from '@sourceloop/feature-toggle-service';
+import {BillingCustomer} from './models/billing-customer.model';
+import {
+  BillingCycleRepository,
+  CurrencyRepository,
+  PlanItemRepository,
+  PlanRepository,
+  ResourceRepository,
+  ServiceRepository,
+  SubscriptionRepository,
+} from './repositories';
+import {BillingCustomerRepository} from './repositories/billing-customer.repository';
+import {ISubscriptionServiceConfig} from './types';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
@@ -81,6 +89,7 @@ export class SubscriptionServiceComponent implements Component {
       .bind(FeatureToggleBindings.Config)
       .to({bindControllers: true, useCustomSequence: true});
     this.application.component(FeatureToggleServiceComponent);
+    this.application.component(BillingComponent);
 
     this.application.api({
       openapi: '3.0.0',
@@ -108,6 +117,7 @@ export class SubscriptionServiceComponent implements Component {
       ResourceRepository,
       ServiceRepository,
       SubscriptionRepository,
+      BillingCustomerRepository,
     ];
 
     this.models = [
@@ -116,8 +126,12 @@ export class SubscriptionServiceComponent implements Component {
       PlanItem,
       Plan,
       Resource,
+      BillingCustomer,
       Service,
       Subscription,
+    ];
+    this.bindings = [
+      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
     ];
 
     this.controllers = [
@@ -131,6 +145,10 @@ export class SubscriptionServiceComponent implements Component {
       ServiceController,
       SubscriptionController,
       PlanSubscriptionController,
+      BillingCustomerController,
+      BillingInvoiceController,
+      BillingPaymentSourceController,
+      WebhookController,
     ];
   }
 
