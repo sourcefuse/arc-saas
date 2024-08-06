@@ -45,4 +45,8 @@ export const PermissionKey = {
   DeleteInvoice: '10214',
   ViewInvoice: '10215',
   CreateNotification: '2',
+  CreateFeature: '10216',
+  UpdateFeature: '10217',
+  DeleteFeature: '10218',
+  ViewFeature: '10219',
 };

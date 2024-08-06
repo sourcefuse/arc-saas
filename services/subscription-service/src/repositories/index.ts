@@ -5,3 +5,4 @@ export * from './service.repository';
 export * from './subscription.repository';
 export * from './billing-cycle.repository';
 export * from './currency.repository';
+export * from './feature.repository';

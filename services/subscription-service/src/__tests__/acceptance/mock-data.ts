@@ -48,4 +48,5 @@ export const mockSubscription: DataObject<Subscription> = {
   endDate: 'sdsd',
   status: SubscriptionStatus.ACTIVE,
   planId: 'test-plan-id',
+  planDetails: {},
 };

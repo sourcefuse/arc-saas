@@ -1,6 +1,7 @@
 import {belongsTo, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Plan} from './plan.model';
+import {IService} from '../types';
 
 @model({
   name: 'plan_items',
@@ -33,7 +34,7 @@ export class PlanItem extends UserModifiableEntity {
     required: true,
     description: 'value of the plan item',
   })
-  value: object;
+  value: IService;
 
   @belongsTo(() => Plan, undefined, {
     description: 'plan id of the plan item',

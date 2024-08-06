@@ -2,7 +2,7 @@ import {model, property, belongsTo} from '@loopback/repository';
 import {SubscriptionStatus} from '../enums/subscription-status.enum';
 import {numericEnumValues} from '../utils';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {Plan} from './plan.model';
+import {Plan, PlanWithRelations} from './plan.model';
 
 @model({
   name: 'subscriptions',
@@ -52,6 +52,14 @@ export class Subscription extends UserModifiableEntity {
     name: 'plan_id',
   })
   planId: string;
+
+  @property({
+    type: 'object',
+    required: true,
+    name: 'plan_details',
+    description: 'Details of the plan with relations',
+  })
+  planDetails: PlanWithRelations;
 
   constructor(data?: Partial<Subscription>) {
     super(data);

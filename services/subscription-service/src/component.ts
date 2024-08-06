@@ -32,6 +32,7 @@ import {ISubscriptionServiceConfig} from './types';
 import {
   BillingCycleRepository,
   CurrencyRepository,
+  FeatureRepository,
   PlanItemRepository,
   PlanRepository,
   ResourceRepository,
@@ -41,6 +42,7 @@ import {
 import {
   BillinCycleController,
   CurrencyController,
+  FeatureController,
   HomePageController,
   PingController,
   PlanController,
@@ -58,6 +60,7 @@ import {
   Resource,
   Service,
   Subscription,
+  Feature,
 } from './models';
 import {
   FeatureToggleBindings,
@@ -108,6 +111,7 @@ export class SubscriptionServiceComponent implements Component {
       ResourceRepository,
       ServiceRepository,
       SubscriptionRepository,
+      FeatureRepository,
     ];
 
     this.models = [
@@ -118,6 +122,7 @@ export class SubscriptionServiceComponent implements Component {
       Resource,
       Service,
       Subscription,
+      Feature,
     ];
 
     this.controllers = [
@@ -131,6 +136,7 @@ export class SubscriptionServiceComponent implements Component {
       ServiceController,
       SubscriptionController,
       PlanSubscriptionController,
+      FeatureController,
     ];
   }
 

@@ -79,6 +79,8 @@ export class Plan extends UserModifiableEntity {
 
 export interface PlanRelations {
   planItems: PlanItem[];
+  billingCycle: BillingCycle;
+  currency: Currency;
 }
 
 export type PlanWithRelations = Plan & PlanRelations;
