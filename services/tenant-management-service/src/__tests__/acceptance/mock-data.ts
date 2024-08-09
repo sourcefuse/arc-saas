@@ -1,10 +1,5 @@
 import {AnyObject, DataObject, DeepPartial} from '@loopback/repository';
-import {
-  InvoiceStatus,
-  NotificationType,
-  PlanTier,
-  TenantStatus,
-} from '../../enums';
+import {InvoiceStatus, NotificationType, TenantStatus} from '../../enums';
 import {
   Address,
   Contact,
@@ -96,8 +91,7 @@ export const mockSubscriptionId = 'test-subscription-id';
 export const mockSusbcription: DeepPartial<ISubscription> = {
   id: '1',
   plan: {
-    tier: PlanTier.POOLED,
-    planItems: [],
+    tier: 'Standard',
   },
 };
 

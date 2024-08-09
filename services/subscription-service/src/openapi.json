@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "subscription-service",
+    "title": "Subscription Service",
     "version": "1.0.0",
-    "description": "subscription-service",
+    "description": "Subscription management microservice for SaaS control plane",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -13,7 +13,9 @@
       "get": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "count",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -55,7 +57,9 @@
       "put": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "replaceById",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -92,7 +96,9 @@
       "patch": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "updateById",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -129,7 +135,9 @@
       "get": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "findById",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -174,7 +182,9 @@
       "delete": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "deleteById",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -203,7 +213,9 @@
       "post": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "create",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -236,7 +248,9 @@
       "patch": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "updateAll",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -285,7 +299,9 @@
       "get": {
         "x-controller-name": "BillinCycleController",
         "x-operation-name": "find",
-        "tags": ["BillinCycleController"],
+        "tags": [
+          "BillinCycleController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -327,7 +343,9 @@
       "get": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "count",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -369,7 +387,9 @@
       "put": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "replaceById",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -406,7 +426,9 @@
       "patch": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "updateById",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -443,7 +465,9 @@
       "get": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "findById",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -488,7 +512,9 @@
       "delete": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "deleteById",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -517,7 +543,9 @@
       "post": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "create",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -550,7 +578,9 @@
       "patch": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "updateAll",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -599,7 +629,9 @@
       "get": {
         "x-controller-name": "CurrencyController",
         "x-operation-name": "find",
-        "tags": ["CurrencyController"],
+        "tags": [
+          "CurrencyController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -637,11 +669,673 @@
         "operationId": "CurrencyController.find"
       }
     },
+    "/feature-values/count": {
+      "get": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "count",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureValues   |\n| 9   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "feature_values.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<FeatureValues>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureValuesController.count"
+      }
+    },
+    "/feature-values/{id}": {
+      "put": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FeatureValues PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureValues   |\n| 11   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureValues"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "FeatureValuesController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FeatureValues PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureValues   |\n| 11   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureValuesPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "FeatureValuesController.updateById"
+      },
+      "get": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "findById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureValuesWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureValues   |\n| 9   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/feature_values.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureValuesController.findById"
+      },
+      "delete": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FeatureValues DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteFeatureValues   |\n| 12   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "FeatureValuesController.deleteById"
+      }
+    },
+    "/feature-values": {
+      "post": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "create",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureValues"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateFeatureValues   |\n| 10   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFeatureValues"
+              }
+            }
+          }
+        },
+        "operationId": "FeatureValuesController.create"
+      },
+      "patch": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureValues   |\n| 11   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "feature_values.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<FeatureValues>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureValuesPartial"
+              }
+            }
+          }
+        },
+        "operationId": "FeatureValuesController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "find",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of FeatureValues model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeatureValuesWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureValues   |\n| 9   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/feature_values.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureValuesController.find"
+      }
+    },
+    "/features/count": {
+      "get": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "count",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeature   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "features.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Feature>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureController.count"
+      }
+    },
+    "/features/{id}": {
+      "put": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Feature PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeature   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feature"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "FeatureController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Feature PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeature   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeaturePartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "FeatureController.updateById"
+      },
+      "get": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "findById",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeature   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/features.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureController.findById"
+      },
+      "delete": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Feature DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteFeature   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "FeatureController.deleteById"
+      }
+    },
+    "/features": {
+      "post": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "create",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Feature"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateFeature   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFeature"
+              }
+            }
+          }
+        },
+        "operationId": "FeatureController.create"
+      },
+      "patch": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeature   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "features.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Feature>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeaturePartial"
+              }
+            }
+          }
+        },
+        "operationId": "FeatureController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "FeatureController",
+        "x-operation-name": "find",
+        "tags": [
+          "FeatureController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Feature model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeatureWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeature   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/features.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureController.find"
+      }
+    },
     "/ping": {
       "get": {
         "x-controller-name": "PingController",
         "x-operation-name": "ping",
-        "tags": ["PingController"],
+        "tags": [
+          "PingController"
+        ],
         "responses": {
           "200": {
             "description": "Ping Response",
@@ -658,19 +1352,16 @@
         "operationId": "PingController.ping"
       }
     },
-    "/plan-items/count": {
+    "/plan-sizes/count": {
       "get": {
-        "x-controller-name": "PlanItemController",
+        "x-controller-name": "PlanSizesController",
         "x-operation-name": "count",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
+        "tags": [
+          "PlanSizesController"
         ],
         "responses": {
           "200": {
-            "description": "PlanItem model count",
+            "description": "PlanSizes model count",
             "content": {
               "application/json": {
                 "schema": {
@@ -680,7 +1371,6 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7012   |\n",
         "parameters": [
           {
             "name": "where",
@@ -689,114 +1379,116 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "plan_items.WhereFilter",
+                  "title": "plan_sizes.WhereFilter",
                   "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<PlanItem>"
+                  "x-typescript-type": "@loopback/repository#Where<PlanSizes>"
                 }
               }
             }
           }
         ],
-        "operationId": "PlanItemController.count"
+        "operationId": "PlanSizesController.count"
       }
     },
-    "/plan-items/{id}": {
+    "/plan-sizes/{id}": {
       "put": {
-        "x-controller-name": "PlanItemController",
+        "x-controller-name": "PlanSizesController",
         "x-operation-name": "replaceById",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
+        "tags": [
+          "PlanSizesController"
         ],
         "responses": {
           "204": {
-            "description": "PlanItem PUT success"
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7010   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlanItem"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "PlanItemController.replaceById"
-      },
-      "patch": {
-        "x-controller-name": "PlanItemController",
-        "x-operation-name": "updateById",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "PlanItem PATCH success"
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7010   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlanItemPartial"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "PlanItemController.updateById"
-      },
-      "get": {
-        "x-controller-name": "PlanItemController",
-        "x-operation-name": "findById",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "PlanItem  model instance",
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PlanItemWithRelations"
+                  "description": "PlanSizes PUT success"
                 }
               }
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7012   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanSizes"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "PlanSizesController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "PlanSizesController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "PlanSizesController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "PlanSizes PATCH success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanSizesPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "PlanSizesController.updateById"
+      },
+      "get": {
+        "x-controller-name": "PlanSizesController",
+        "x-operation-name": "findById",
+        "tags": [
+          "PlanSizesController"
+        ],
+        "responses": {
+          "200": {
+            "description": "PlanSizes model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanSizesWithRelations"
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "id",
@@ -812,29 +1504,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/plan_items.Filter"
+                  "$ref": "#/components/schemas/plan_sizes.Filter"
                 }
               }
             }
           }
         ],
-        "operationId": "PlanItemController.findById"
+        "operationId": "PlanSizesController.findById"
       },
       "delete": {
-        "x-controller-name": "PlanItemController",
+        "x-controller-name": "PlanSizesController",
         "x-operation-name": "deleteById",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
+        "tags": [
+          "PlanSizesController"
         ],
         "responses": {
           "204": {
-            "description": "PlanItem DELETE success"
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "PlanSizes DELETE success"
+                }
+              }
+            }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7011   |\n",
         "parameters": [
           {
             "name": "id",
@@ -845,55 +1540,48 @@
             "required": true
           }
         ],
-        "operationId": "PlanItemController.deleteById"
+        "operationId": "PlanSizesController.deleteById"
       }
     },
-    "/plan-items": {
+    "/plan-sizes": {
       "post": {
-        "x-controller-name": "PlanItemController",
+        "x-controller-name": "PlanSizesController",
         "x-operation-name": "create",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
+        "tags": [
+          "PlanSizesController"
         ],
         "responses": {
           "200": {
-            "description": "PlanItem  model instance",
+            "description": "PlanSizes model instance",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PlanItem"
+                  "$ref": "#/components/schemas/PlanSizes"
                 }
               }
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7009   |\n",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlanItem"
+                "$ref": "#/components/schemas/NewPlanSizes"
               }
             }
           }
         },
-        "operationId": "PlanItemController.create"
+        "operationId": "PlanSizesController.create"
       },
       "patch": {
-        "x-controller-name": "PlanItemController",
+        "x-controller-name": "PlanSizesController",
         "x-operation-name": "updateAll",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
+        "tags": [
+          "PlanSizesController"
         ],
         "responses": {
           "200": {
-            "description": "PlanItem PATCH success count",
+            "description": "PlanSizes PATCH success count",
             "content": {
               "application/json": {
                 "schema": {
@@ -903,7 +1591,6 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7010   |\n",
         "parameters": [
           {
             "name": "where",
@@ -912,9 +1599,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "plan_items.WhereFilter",
+                  "title": "plan_sizes.WhereFilter",
                   "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<PlanItem>"
+                  "x-typescript-type": "@loopback/repository#Where<PlanSizes>"
                 }
               }
             }
@@ -924,38 +1611,34 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PlanItemPartial"
+                "$ref": "#/components/schemas/PlanSizesPartial"
               }
             }
           }
         },
-        "operationId": "PlanItemController.updateAll"
+        "operationId": "PlanSizesController.updateAll"
       },
       "get": {
-        "x-controller-name": "PlanItemController",
+        "x-controller-name": "PlanSizesController",
         "x-operation-name": "find",
-        "tags": ["PlanItemController"],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
+        "tags": [
+          "PlanSizesController"
         ],
         "responses": {
           "200": {
-            "description": "Array of PlanItem model instances",
+            "description": "Array of PlanSizes model instances",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PlanItemWithRelations"
+                    "$ref": "#/components/schemas/PlanSizesWithRelations"
                   }
                 }
               }
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 7012   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -963,20 +1646,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/plan_items.Filter1"
+                  "$ref": "#/components/schemas/plan_sizes.Filter1"
                 }
               }
             }
           }
         ],
-        "operationId": "PlanItemController.find"
+        "operationId": "PlanSizesController.find"
       }
     },
     "/plans/count": {
       "get": {
         "x-controller-name": "PlanController",
         "x-operation-name": "count",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1014,11 +1699,51 @@
         "operationId": "PlanController.count"
       }
     },
+    "/plans/{id}/subscriptions": {
+      "get": {
+        "x-controller-name": "PlanSubscriptionController",
+        "x-operation-name": "find",
+        "tags": [
+          "PlanSubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7008   |\n| 7004   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "PlanSubscriptionController.find"
+      }
+    },
     "/plans/{id}": {
       "put": {
         "x-controller-name": "PlanController",
         "x-operation-name": "replaceById",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1055,7 +1780,9 @@
       "patch": {
         "x-controller-name": "PlanController",
         "x-operation-name": "updateById",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1092,7 +1819,9 @@
       "get": {
         "x-controller-name": "PlanController",
         "x-operation-name": "findById",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1137,7 +1866,9 @@
       "delete": {
         "x-controller-name": "PlanController",
         "x-operation-name": "deleteById",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1166,7 +1897,9 @@
       "post": {
         "x-controller-name": "PlanController",
         "x-operation-name": "create",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1199,7 +1932,9 @@
       "patch": {
         "x-controller-name": "PlanController",
         "x-operation-name": "updateAll",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1248,7 +1983,9 @@
       "get": {
         "x-controller-name": "PlanController",
         "x-operation-name": "find",
-        "tags": ["PlanController"],
+        "tags": [
+          "PlanController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1290,7 +2027,9 @@
       "get": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "count",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1332,7 +2071,9 @@
       "put": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "replaceById",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1369,7 +2110,9 @@
       "patch": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "updateById",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1406,7 +2149,9 @@
       "get": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "findById",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1451,7 +2196,9 @@
       "delete": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "deleteById",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1480,7 +2227,9 @@
       "post": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "create",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1513,7 +2262,9 @@
       "patch": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "updateAll",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1562,7 +2313,9 @@
       "get": {
         "x-controller-name": "ResourceController",
         "x-operation-name": "find",
-        "tags": ["ResourceController"],
+        "tags": [
+          "ResourceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1604,7 +2357,9 @@
       "get": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "count",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1646,7 +2401,9 @@
       "put": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "replaceById",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1683,7 +2440,9 @@
       "patch": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "updateById",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1720,7 +2479,9 @@
       "get": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "findById",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1765,7 +2526,9 @@
       "delete": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "deleteById",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1794,7 +2557,9 @@
       "post": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "create",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1827,7 +2592,9 @@
       "patch": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "updateAll",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1876,7 +2643,9 @@
       "get": {
         "x-controller-name": "ServiceController",
         "x-operation-name": "find",
-        "tags": ["ServiceController"],
+        "tags": [
+          "ServiceController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1914,11 +2683,343 @@
         "operationId": "ServiceController.find"
       }
     },
+    "/strategies/count": {
+      "get": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "count",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Strategy model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewStrategy   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "strategies.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Strategy>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "StrategyController.count"
+      }
+    },
+    "/strategies/{id}": {
+      "put": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Strategy PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateStrategy   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Strategy"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "StrategyController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Strategy PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateStrategy   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StrategyPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "StrategyController.updateById"
+      },
+      "get": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "findById",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Strategy model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StrategyWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewStrategy   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/strategies.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "StrategyController.findById"
+      },
+      "delete": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Strategy DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteStrategy   |\n| 8   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "StrategyController.deleteById"
+      }
+    },
+    "/strategies": {
+      "post": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "create",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Strategy model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Strategy"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateStrategy   |\n| 6   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewStrategy"
+              }
+            }
+          }
+        },
+        "operationId": "StrategyController.create"
+      },
+      "patch": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Strategy PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateStrategy   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "strategies.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Strategy>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StrategyPartial"
+              }
+            }
+          }
+        },
+        "operationId": "StrategyController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "StrategyController",
+        "x-operation-name": "find",
+        "tags": [
+          "StrategyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Strategy model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StrategyWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewStrategy   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/strategies.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "StrategyController.find"
+      }
+    },
     "/subscriptions/count": {
       "get": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "count",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1956,11 +3057,108 @@
         "operationId": "SubscriptionController.count"
       }
     },
+    "/subscriptions/expire-soon": {
+      "get": {
+        "x-controller-name": "SubscriptionController",
+        "x-operation-name": "expireSoonSubscription",
+        "tags": [
+          "SubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Subscription model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubscriptionWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7004   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/subscriptions.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "SubscriptionController.expireSoonSubscription"
+      }
+    },
+    "/subscriptions/expired": {
+      "get": {
+        "x-controller-name": "SubscriptionController",
+        "x-operation-name": "expiredSubscription",
+        "tags": [
+          "SubscriptionController"
+        ],
+        "description": "api that will return newly expired subscription\n\n| Permissions |\n| ------- |\n| 7004   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Subscription model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubscriptionWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "days",
+            "in": "header",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/subscriptions.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "SubscriptionController.expiredSubscription"
+      }
+    },
     "/subscriptions/{id}": {
       "put": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "replaceById",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -1997,7 +3195,9 @@
       "patch": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "updateById",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -2034,7 +3234,9 @@
       "get": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "findById",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -2068,7 +3270,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/subscriptions.Filter"
+                  "$ref": "#/components/schemas/subscriptions.Filter1"
                 }
               }
             }
@@ -2079,7 +3281,9 @@
       "delete": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "deleteById",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -2108,7 +3312,9 @@
       "post": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "create",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -2141,7 +3347,9 @@
       "patch": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "updateAll",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -2190,7 +3398,9 @@
       "get": {
         "x-controller-name": "SubscriptionController",
         "x-operation-name": "find",
-        "tags": ["SubscriptionController"],
+        "tags": [
+          "SubscriptionController"
+        ],
         "security": [
           {
             "HTTPBearer": []
@@ -2219,7 +3429,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/subscriptions.Filter1"
+                  "$ref": "#/components/schemas/subscriptions.Filter"
                 }
               }
             }
@@ -2232,7 +3442,9 @@
       "get": {
         "x-controller-name": "HomePageController",
         "x-operation-name": "homePage",
-        "tags": ["HomePageController"],
+        "tags": [
+          "HomePageController"
+        ],
         "responses": {
           "200": {
             "description": "Home Page",
@@ -2259,119 +3471,10 @@
       }
     },
     "schemas": {
-      "Subscription": {
-        "title": "Subscription",
+      "Feature": {
+        "title": "Feature",
         "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "subscriberId": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string"
-          },
-          "endDate": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [0, 1, 2, 3, 4]
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the subscription"
-          }
-        },
-        "required": ["subscriberId", "startDate", "endDate", "status"],
-        "additionalProperties": false
-      },
-      "NewSubscription": {
-        "title": "NewSubscription",
-        "type": "object",
-        "description": "(tsType: Omit<Subscription, 'id'>, schemaOptions: { title: 'NewSubscription', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "subscriberId": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string"
-          },
-          "endDate": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [0, 1, 2, 3, 4]
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the subscription"
-          }
-        },
-        "required": ["subscriberId", "startDate", "endDate", "status"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Subscription, 'id'>"
-      },
-      "PlanItemWithRelations": {
-        "title": "PlanItemWithRelations",
-        "type": "object",
-        "description": "(tsType: PlanItemWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "The features table",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -2403,29 +3506,711 @@
             "type": "string"
           },
           "name": {
-            "type": "string",
-            "description": "name of the plan item"
+            "type": "string"
           },
-          "planItemType": {
+          "key": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "NewFeature": {
+        "title": "NewFeature",
+        "type": "object",
+        "description": "The features table (tsType: Feature, schemaOptions: { title: 'NewFeature' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
             "type": "string",
-            "description": "type of the plan item"
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "FeatureWithRelations": {
+        "title": "FeatureWithRelations",
+        "type": "object",
+        "description": "The features table (tsType: FeatureWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "FeaturePartial": {
+        "title": "FeaturePartial",
+        "type": "object",
+        "description": "The features table (tsType: Partial<Feature>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FeatureValues": {
+        "title": "FeatureValues",
+        "type": "object",
+        "description": "The feature-values table",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "featureKey": {
+            "type": "string"
+          },
+          "strategyKey": {
+            "type": "string"
+          },
+          "strategyEntityId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "value": {
-            "type": "object",
-            "description": "value of the plan item"
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the plan item"
-          },
-          "plan": {
-            "$ref": "#/components/schemas/PlanWithRelations"
-          },
-          "foreignKey": {}
+            "type": "string"
+          }
         },
-        "required": ["name", "planItemType", "value"],
+        "additionalProperties": false
+      },
+      "NewFeatureValues": {
+        "title": "NewFeatureValues",
+        "type": "object",
+        "description": "The feature-values table (tsType: FeatureValues, schemaOptions: { title: 'NewFeatureValues' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "featureKey": {
+            "type": "string"
+          },
+          "strategyKey": {
+            "type": "string"
+          },
+          "strategyEntityId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FeatureValuesWithRelations": {
+        "title": "FeatureValuesWithRelations",
+        "type": "object",
+        "description": "The feature-values table (tsType: FeatureValuesWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "featureKey": {
+            "type": "string"
+          },
+          "strategyKey": {
+            "type": "string"
+          },
+          "strategyEntityId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FeatureValuesPartial": {
+        "title": "FeatureValuesPartial",
+        "type": "object",
+        "description": "The feature-values table (tsType: Partial<FeatureValues>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "featureKey": {
+            "type": "string"
+          },
+          "strategyKey": {
+            "type": "string"
+          },
+          "strategyEntityId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Strategy": {
+        "title": "Strategy",
+        "type": "object",
+        "description": "The strategies table",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "NewStrategy": {
+        "title": "NewStrategy",
+        "type": "object",
+        "description": "The strategies table (tsType: Strategy, schemaOptions: { title: 'NewStrategy' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "StrategyWithRelations": {
+        "title": "StrategyWithRelations",
+        "type": "object",
+        "description": "The strategies table (tsType: StrategyWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "StrategyPartial": {
+        "title": "StrategyPartial",
+        "type": "object",
+        "description": "The strategies table (tsType: Partial<Strategy>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillingCycle": {
+        "title": "BillingCycle",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "cycleName": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "durationUnit": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cycleName",
+          "duration",
+          "durationUnit"
+        ],
+        "additionalProperties": false
+      },
+      "NewBillingCycle": {
+        "title": "NewBillingCycle",
+        "type": "object",
+        "description": "(tsType: Omit<BillingCycle, 'id'>, schemaOptions: { title: 'NewBillingCycle', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "cycleName": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "durationUnit": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cycleName",
+          "duration",
+          "durationUnit"
+        ],
         "additionalProperties": false,
-        "x-typescript-type": "PlanItemWithRelations"
+        "x-typescript-type": "Omit<BillingCycle, 'id'>"
       },
       "BillingCycleWithRelations": {
         "title": "BillingCycleWithRelations",
@@ -2474,1091 +4259,13 @@
             "type": "string"
           }
         },
-        "required": ["cycleName", "duration", "durationUnit"],
+        "required": [
+          "cycleName",
+          "duration",
+          "durationUnit"
+        ],
         "additionalProperties": false,
         "x-typescript-type": "BillingCycleWithRelations"
-      },
-      "CurrencyWithRelations": {
-        "title": "CurrencyWithRelations",
-        "type": "object",
-        "description": "(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "currencyCode": {
-            "type": "string"
-          },
-          "currencyName": {
-            "type": "string"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          }
-        },
-        "required": ["currencyCode", "currencyName"],
-        "additionalProperties": false,
-        "x-typescript-type": "CurrencyWithRelations"
-      },
-      "PlanWithRelations": {
-        "title": "PlanWithRelations",
-        "type": "object",
-        "description": "(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan"
-          },
-          "description": {
-            "type": "string",
-            "description": "description of the plan"
-          },
-          "tier": {
-            "type": "number",
-            "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [0, 1]
-          },
-          "price": {
-            "type": "number"
-          },
-          "metaData": {
-            "type": "object",
-            "description": "Meta data of the plan"
-          },
-          "billingCycleId": {
-            "type": "string"
-          },
-          "currencyId": {
-            "type": "string"
-          },
-          "planItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PlanItemWithRelations"
-            }
-          },
-          "billingCycle": {
-            "$ref": "#/components/schemas/BillingCycleWithRelations"
-          },
-          "foreignKey": {},
-          "currency": {
-            "$ref": "#/components/schemas/CurrencyWithRelations"
-          }
-        },
-        "required": ["name", "description", "tier", "price"],
-        "additionalProperties": false,
-        "x-typescript-type": "PlanWithRelations"
-      },
-      "SubscriptionWithRelations": {
-        "title": "SubscriptionWithRelations",
-        "type": "object",
-        "description": "(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "subscriberId": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string"
-          },
-          "endDate": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [0, 1, 2, 3, 4]
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the subscription"
-          },
-          "plan": {
-            "$ref": "#/components/schemas/PlanWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": ["subscriberId", "startDate", "endDate", "status"],
-        "additionalProperties": false,
-        "x-typescript-type": "SubscriptionWithRelations"
-      },
-      "SubscriptionPartial": {
-        "title": "SubscriptionPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Subscription>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "subscriberId": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string"
-          },
-          "endDate": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
-            "enum": [0, 1, 2, 3, 4]
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the subscription"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Subscription>"
-      },
-      "Service": {
-        "title": "Service",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the service"
-          }
-        },
-        "required": ["name"],
-        "additionalProperties": false
-      },
-      "NewService": {
-        "title": "NewService",
-        "type": "object",
-        "description": "(tsType: Omit<Service, 'id'>, schemaOptions: { title: 'NewService', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the service"
-          }
-        },
-        "required": ["name"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Service, 'id'>"
-      },
-      "ServiceWithRelations": {
-        "title": "ServiceWithRelations",
-        "type": "object",
-        "description": "(tsType: ServiceWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the service"
-          }
-        },
-        "required": ["name"],
-        "additionalProperties": false,
-        "x-typescript-type": "ServiceWithRelations"
-      },
-      "ServicePartial": {
-        "title": "ServicePartial",
-        "type": "object",
-        "description": "(tsType: Partial<Service>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the service"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Service>"
-      },
-      "Resource": {
-        "title": "Resource",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the resource"
-          },
-          "config": {
-            "type": "object",
-            "description": "config of the resource"
-          }
-        },
-        "required": ["name", "config"],
-        "additionalProperties": false
-      },
-      "NewResource": {
-        "title": "NewResource",
-        "type": "object",
-        "description": "(tsType: Omit<Resource, 'id'>, schemaOptions: { title: 'NewResource', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the resource"
-          },
-          "config": {
-            "type": "object",
-            "description": "config of the resource"
-          }
-        },
-        "required": ["name", "config"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Resource, 'id'>"
-      },
-      "ResourceWithRelations": {
-        "title": "ResourceWithRelations",
-        "type": "object",
-        "description": "(tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the resource"
-          },
-          "config": {
-            "type": "object",
-            "description": "config of the resource"
-          }
-        },
-        "required": ["name", "config"],
-        "additionalProperties": false,
-        "x-typescript-type": "ResourceWithRelations"
-      },
-      "ResourcePartial": {
-        "title": "ResourcePartial",
-        "type": "object",
-        "description": "(tsType: Partial<Resource>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the resource"
-          },
-          "config": {
-            "type": "object",
-            "description": "config of the resource"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Resource>"
-      },
-      "Plan": {
-        "title": "Plan",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan"
-          },
-          "description": {
-            "type": "string",
-            "description": "description of the plan"
-          },
-          "tier": {
-            "type": "number",
-            "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [0, 1]
-          },
-          "price": {
-            "type": "number"
-          },
-          "metaData": {
-            "type": "object",
-            "description": "Meta data of the plan"
-          },
-          "billingCycleId": {
-            "type": "string"
-          },
-          "currencyId": {
-            "type": "string"
-          }
-        },
-        "required": ["name", "description", "tier", "price"],
-        "additionalProperties": false
-      },
-      "NewPlan": {
-        "title": "NewPlan",
-        "type": "object",
-        "description": "(tsType: Omit<Plan, 'id'>, schemaOptions: { title: 'NewPlan', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan"
-          },
-          "description": {
-            "type": "string",
-            "description": "description of the plan"
-          },
-          "tier": {
-            "type": "number",
-            "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [0, 1]
-          },
-          "price": {
-            "type": "number"
-          },
-          "metaData": {
-            "type": "object",
-            "description": "Meta data of the plan"
-          },
-          "billingCycleId": {
-            "type": "string"
-          },
-          "currencyId": {
-            "type": "string"
-          }
-        },
-        "required": ["name", "description", "tier", "price"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Plan, 'id'>"
-      },
-      "PlanPartial": {
-        "title": "PlanPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Plan>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan"
-          },
-          "description": {
-            "type": "string",
-            "description": "description of the plan"
-          },
-          "tier": {
-            "type": "number",
-            "description": "Tier of the plan, it can be - 0(Pooled) and  1(Silo)",
-            "enum": [0, 1]
-          },
-          "price": {
-            "type": "number"
-          },
-          "metaData": {
-            "type": "object",
-            "description": "Meta data of the plan"
-          },
-          "billingCycleId": {
-            "type": "string"
-          },
-          "currencyId": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Plan>"
-      },
-      "PlanItem": {
-        "title": "PlanItem",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan item"
-          },
-          "planItemType": {
-            "type": "string",
-            "description": "type of the plan item"
-          },
-          "value": {
-            "type": "object",
-            "description": "value of the plan item"
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the plan item"
-          }
-        },
-        "required": ["name", "planItemType", "value"],
-        "additionalProperties": false
-      },
-      "NewPlanItem": {
-        "title": "NewPlanItem",
-        "type": "object",
-        "description": "(tsType: Omit<PlanItem, 'id'>, schemaOptions: { title: 'NewPlanItem', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan item"
-          },
-          "planItemType": {
-            "type": "string",
-            "description": "type of the plan item"
-          },
-          "value": {
-            "type": "object",
-            "description": "value of the plan item"
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the plan item"
-          }
-        },
-        "required": ["name", "planItemType", "value"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<PlanItem, 'id'>"
-      },
-      "PlanItemPartial": {
-        "title": "PlanItemPartial",
-        "type": "object",
-        "description": "(tsType: Partial<PlanItem>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan item"
-          },
-          "planItemType": {
-            "type": "string",
-            "description": "type of the plan item"
-          },
-          "value": {
-            "type": "object",
-            "description": "value of the plan item"
-          },
-          "planId": {
-            "type": "string",
-            "description": "plan id of the plan item"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<PlanItem>"
-      },
-      "Currency": {
-        "title": "Currency",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "currencyCode": {
-            "type": "string"
-          },
-          "currencyName": {
-            "type": "string"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          }
-        },
-        "required": ["currencyCode", "currencyName"],
-        "additionalProperties": false
-      },
-      "NewCurrency": {
-        "title": "NewCurrency",
-        "type": "object",
-        "description": "(tsType: Omit<Currency, 'id'>, schemaOptions: { title: 'NewCurrency', exclude: [ 'id' ] })",
-        "properties": {
-          "currencyCode": {
-            "type": "string"
-          },
-          "currencyName": {
-            "type": "string"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          }
-        },
-        "required": ["currencyCode", "currencyName"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Currency, 'id'>"
-      },
-      "CurrencyPartial": {
-        "title": "CurrencyPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Currency>, schemaOptions: { partial: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "currencyCode": {
-            "type": "string"
-          },
-          "currencyName": {
-            "type": "string"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Currency>"
-      },
-      "BillingCycle": {
-        "title": "BillingCycle",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "cycleName": {
-            "type": "string"
-          },
-          "duration": {
-            "type": "number"
-          },
-          "durationUnit": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": ["cycleName", "duration", "durationUnit"],
-        "additionalProperties": false
-      },
-      "NewBillingCycle": {
-        "title": "NewBillingCycle",
-        "type": "object",
-        "description": "(tsType: Omit<BillingCycle, 'id'>, schemaOptions: { title: 'NewBillingCycle', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "cycleName": {
-            "type": "string"
-          },
-          "duration": {
-            "type": "number"
-          },
-          "durationUnit": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": ["cycleName", "duration", "durationUnit"],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<BillingCycle, 'id'>"
       },
       "BillingCyclePartial": {
         "title": "BillingCyclePartial",
@@ -3609,6 +4316,1077 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<BillingCycle>"
+      },
+      "Currency": {
+        "title": "Currency",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "currencyName"
+        ],
+        "additionalProperties": false
+      },
+      "NewCurrency": {
+        "title": "NewCurrency",
+        "type": "object",
+        "description": "(tsType: Omit<Currency, 'id'>, schemaOptions: { title: 'NewCurrency', exclude: [ 'id' ] })",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "currencyName"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Currency, 'id'>"
+      },
+      "CurrencyWithRelations": {
+        "title": "CurrencyWithRelations",
+        "type": "object",
+        "description": "(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "currencyName"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "CurrencyWithRelations"
+      },
+      "CurrencyPartial": {
+        "title": "CurrencyPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Currency>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Currency>"
+      },
+      "Plan": {
+        "title": "Plan",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the plan"
+          },
+          "tier": {
+            "type": "string",
+            "description": "Tier of the plan."
+          },
+          "price": {
+            "type": "number"
+          },
+          "metaData": {
+            "type": "object",
+            "description": "Meta data of the plan"
+          },
+          "billingCycleId": {
+            "type": "string"
+          },
+          "currencyId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "tier",
+          "price"
+        ],
+        "additionalProperties": false
+      },
+      "NewPlan": {
+        "title": "NewPlan",
+        "type": "object",
+        "description": "(tsType: Omit<Plan, 'id'>, schemaOptions: { title: 'NewPlan', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the plan"
+          },
+          "tier": {
+            "type": "string",
+            "description": "Tier of the plan."
+          },
+          "price": {
+            "type": "number"
+          },
+          "metaData": {
+            "type": "object",
+            "description": "Meta data of the plan"
+          },
+          "billingCycleId": {
+            "type": "string"
+          },
+          "currencyId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "tier",
+          "price"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Plan, 'id'>"
+      },
+      "PlanWithRelations": {
+        "title": "PlanWithRelations",
+        "type": "object",
+        "description": "(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the plan"
+          },
+          "tier": {
+            "type": "string",
+            "description": "Tier of the plan."
+          },
+          "price": {
+            "type": "number"
+          },
+          "metaData": {
+            "type": "object",
+            "description": "Meta data of the plan"
+          },
+          "billingCycleId": {
+            "type": "string"
+          },
+          "currencyId": {
+            "type": "string"
+          },
+          "billingCycle": {
+            "$ref": "#/components/schemas/BillingCycleWithRelations"
+          },
+          "foreignKey": {},
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyWithRelations"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "tier",
+          "price"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "PlanWithRelations"
+      },
+      "PlanPartial": {
+        "title": "PlanPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Plan>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the plan"
+          },
+          "tier": {
+            "type": "string",
+            "description": "Tier of the plan."
+          },
+          "price": {
+            "type": "number"
+          },
+          "metaData": {
+            "type": "object",
+            "description": "Meta data of the plan"
+          },
+          "billingCycleId": {
+            "type": "string"
+          },
+          "currencyId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Plan>"
+      },
+      "Resource": {
+        "title": "Resource",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the resource"
+          },
+          "config": {
+            "type": "object",
+            "description": "config of the resource"
+          }
+        },
+        "required": [
+          "name",
+          "config"
+        ],
+        "additionalProperties": false
+      },
+      "NewResource": {
+        "title": "NewResource",
+        "type": "object",
+        "description": "(tsType: Omit<Resource, 'id'>, schemaOptions: { title: 'NewResource', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the resource"
+          },
+          "config": {
+            "type": "object",
+            "description": "config of the resource"
+          }
+        },
+        "required": [
+          "name",
+          "config"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Resource, 'id'>"
+      },
+      "ResourceWithRelations": {
+        "title": "ResourceWithRelations",
+        "type": "object",
+        "description": "(tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the resource"
+          },
+          "config": {
+            "type": "object",
+            "description": "config of the resource"
+          }
+        },
+        "required": [
+          "name",
+          "config"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "ResourceWithRelations"
+      },
+      "ResourcePartial": {
+        "title": "ResourcePartial",
+        "type": "object",
+        "description": "(tsType: Partial<Resource>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the resource"
+          },
+          "config": {
+            "type": "object",
+            "description": "config of the resource"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Resource>"
+      },
+      "Service": {
+        "title": "Service",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the service"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "NewService": {
+        "title": "NewService",
+        "type": "object",
+        "description": "(tsType: Omit<Service, 'id'>, schemaOptions: { title: 'NewService', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the service"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Service, 'id'>"
+      },
+      "ServiceWithRelations": {
+        "title": "ServiceWithRelations",
+        "type": "object",
+        "description": "(tsType: ServiceWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the service"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "ServiceWithRelations"
+      },
+      "ServicePartial": {
+        "title": "ServicePartial",
+        "type": "object",
+        "description": "(tsType: Partial<Service>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the service"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Service>"
+      },
+      "Subscription": {
+        "title": "Subscription",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "subscriberId": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "planId": {
+            "type": "string",
+            "description": "plan id of the subscription"
+          }
+        },
+        "required": [
+          "subscriberId",
+          "startDate",
+          "endDate",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "NewSubscription": {
+        "title": "NewSubscription",
+        "type": "object",
+        "description": "(tsType: Omit<Subscription, 'id' | 'startDate' | 'endDate'>, schemaOptions: { title: 'NewSubscription', exclude: [ 'id', 'startDate', 'endDate' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "subscriberId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "planId": {
+            "type": "string",
+            "description": "plan id of the subscription"
+          }
+        },
+        "required": [
+          "subscriberId",
+          "status"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Subscription, 'id' | 'startDate' | 'endDate'>"
+      },
+      "SubscriptionWithRelations": {
+        "title": "SubscriptionWithRelations",
+        "type": "object",
+        "description": "(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "subscriberId": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "planId": {
+            "type": "string",
+            "description": "plan id of the subscription"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/PlanWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "subscriberId",
+          "startDate",
+          "endDate",
+          "status"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SubscriptionWithRelations"
+      },
+      "SubscriptionPartial": {
+        "title": "SubscriptionPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Subscription>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "subscriberId": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "planId": {
+            "type": "string",
+            "description": "plan id of the subscription"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Subscription>"
+      },
+      "PlanSizes": {
+        "title": "PlanSizes",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "size"
+        ],
+        "additionalProperties": false
+      },
+      "NewPlanSizes": {
+        "title": "NewPlanSizes",
+        "type": "object",
+        "description": "(tsType: Omit<PlanSizes, 'id'>, schemaOptions: { title: 'NewPlanSizes', exclude: [ 'id' ] })",
+        "properties": {
+          "size": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "size"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<PlanSizes, 'id'>"
+      },
+      "PlanSizesWithRelations": {
+        "title": "PlanSizesWithRelations",
+        "type": "object",
+        "description": "(tsType: PlanSizesWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "size"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "PlanSizesWithRelations"
+      },
+      "PlanSizesPartial": {
+        "title": "PlanSizesPartial",
+        "type": "object",
+        "description": "(tsType: Partial<PlanSizes>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<PlanSizes>"
       },
       "loopback.Count": {
         "type": "object",
@@ -3986,6 +5764,452 @@
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Currency>"
       },
+      "feature_values.Filter": {
+        "type": "object",
+        "title": "feature_values.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "featureKey": {
+                    "type": "boolean"
+                  },
+                  "strategyKey": {
+                    "type": "boolean"
+                  },
+                  "strategyEntityId": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "featureKey",
+                    "strategyKey",
+                    "strategyEntityId",
+                    "status",
+                    "value"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "feature_values.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<FeatureValues>"
+      },
+      "feature_values.Filter1": {
+        "type": "object",
+        "title": "feature_values.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "feature_values.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "featureKey": {
+                    "type": "boolean"
+                  },
+                  "strategyKey": {
+                    "type": "boolean"
+                  },
+                  "strategyEntityId": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "featureKey",
+                    "strategyKey",
+                    "strategyEntityId",
+                    "status",
+                    "value"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "feature_values.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<FeatureValues>"
+      },
+      "features.Filter": {
+        "type": "object",
+        "title": "features.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "defaultValue": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "metadata": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "key",
+                    "description",
+                    "defaultValue",
+                    "type",
+                    "metadata"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "features.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Feature>"
+      },
+      "features.Filter1": {
+        "type": "object",
+        "title": "features.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "features.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "defaultValue": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "metadata": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "key",
+                    "description",
+                    "defaultValue",
+                    "type",
+                    "metadata"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "features.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Feature>"
+      },
       "PingResponse": {
         "type": "object",
         "title": "PingResponse",
@@ -4010,83 +6234,9 @@
           }
         }
       },
-      "plan_items.ScopeFilter": {
+      "plan_sizes.Filter": {
         "type": "object",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "minimum": 1,
-            "example": 100
-          },
-          "skip": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "order": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "where": {
-            "type": "object",
-            "additionalProperties": true
-          },
-          "fields": {
-            "oneOf": [
-              {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "uniqueItems": true
-              }
-            ]
-          },
-          "include": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true
-            }
-          }
-        },
-        "additionalProperties": false,
-        "title": "plan_items.ScopeFilter"
-      },
-      "plan_items.IncludeFilter.Items": {
-        "title": "plan_items.IncludeFilter.Items",
-        "type": "object",
-        "properties": {
-          "relation": {
-            "type": "string",
-            "enum": ["plan"]
-          },
-          "scope": {
-            "$ref": "#/components/schemas/plan_items.ScopeFilter"
-          }
-        }
-      },
-      "plan_items.Filter": {
-        "type": "object",
-        "title": "plan_items.Filter",
+        "title": "plan_sizes.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -4119,40 +6269,13 @@
               {
                 "type": "object",
                 "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
                   "id": {
                     "type": "boolean"
                   },
-                  "name": {
+                  "size": {
                     "type": "boolean"
                   },
-                  "planItemType": {
-                    "type": "boolean"
-                  },
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "planId": {
+                  "config": {
                     "type": "boolean"
                   }
                 },
@@ -4163,47 +6286,24 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
                     "id",
-                    "name",
-                    "planItemType",
-                    "value",
-                    "planId"
+                    "size",
+                    "config"
                   ],
-                  "example": "deleted"
+                  "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "plan_items.Fields"
-          },
-          "include": {
-            "title": "plan_items.IncludeFilter",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/plan_items.IncludeFilter.Items"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
+            "title": "plan_sizes.Fields"
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<PlanItem>"
+        "x-typescript-type": "@loopback/repository#Filter<PlanSizes>"
       },
-      "plan_items.Filter1": {
+      "plan_sizes.Filter1": {
         "type": "object",
-        "title": "plan_items.Filter",
+        "title": "plan_sizes.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -4232,7 +6332,7 @@
             ]
           },
           "where": {
-            "title": "plan_items.WhereFilter",
+            "title": "plan_sizes.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -4241,40 +6341,13 @@
               {
                 "type": "object",
                 "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
                   "id": {
                     "type": "boolean"
                   },
-                  "name": {
+                  "size": {
                     "type": "boolean"
                   },
-                  "planItemType": {
-                    "type": "boolean"
-                  },
-                  "value": {
-                    "type": "boolean"
-                  },
-                  "planId": {
+                  "config": {
                     "type": "boolean"
                   }
                 },
@@ -4285,43 +6358,20 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
                     "id",
-                    "name",
-                    "planItemType",
-                    "value",
-                    "planId"
+                    "size",
+                    "config"
                   ],
-                  "example": "deleted"
+                  "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "plan_items.Fields"
-          },
-          "include": {
-            "title": "plan_items.IncludeFilter",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/plan_items.IncludeFilter.Items"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
+            "title": "plan_sizes.Fields"
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<PlanItem>"
+        "x-typescript-type": "@loopback/repository#Filter<PlanSizes>"
       },
       "plans.ScopeFilter": {
         "type": "object",
@@ -4390,7 +6440,10 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": ["planItems", "billingCycle", "currency"]
+            "enum": [
+              "billingCycle",
+              "currency"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/plans.ScopeFilter"
@@ -5042,6 +7095,209 @@
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Service>"
       },
+      "strategies.Filter": {
+        "type": "object",
+        "title": "strategies.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "priority": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "key",
+                    "priority"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "strategies.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Strategy>"
+      },
+      "strategies.Filter1": {
+        "type": "object",
+        "title": "strategies.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "strategies.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "priority": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "key",
+                    "priority"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "strategies.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Strategy>"
+      },
       "subscriptions.ScopeFilter": {
         "type": "object",
         "properties": {
@@ -5109,7 +7365,9 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": ["plan"]
+            "enum": [
+              "plan"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/subscriptions.ScopeFilter"
@@ -5145,6 +7403,11 @@
                 }
               }
             ]
+          },
+          "where": {
+            "title": "subscriptions.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
           },
           "fields": {
             "oneOf": [
@@ -5266,11 +7529,6 @@
                 }
               }
             ]
-          },
-          "where": {
-            "title": "subscriptions.WhereFilter",
-            "type": "object",
-            "additionalProperties": true
           },
           "fields": {
             "oneOf": [
