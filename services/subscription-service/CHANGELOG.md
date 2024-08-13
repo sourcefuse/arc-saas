@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2024-08-13)</small>
+
+* fix(subscription-service): make description non mandatory (#40) ([73f1256](https://github.com/sourcefuse/arc-saas/commit/73f1256)), closes [#40](https://github.com/sourcefuse/arc-saas/issues/40)
+
+
+
+
+
 ## 0.2.0 (2024-08-05)
 
 * feat(subscription-service): add feature toggle service (#37) ([12ebca9](https://github.com/sourcefuse/arc-saas/commit/12ebca9)), closes [#37](https://github.com/sourcefuse/arc-saas/issues/37) [#26](https://github.com/sourcefuse/arc-saas/issues/26) [#36](https://github.com/sourcefuse/arc-saas/issues/36)
