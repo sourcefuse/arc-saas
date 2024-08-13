@@ -27,9 +27,8 @@ export class Plan extends UserModifiableEntity {
   @property({
     type: 'string',
     description: 'description of the plan',
-    required: true,
   })
-  description: string;
+  description?: string;
 
   @property({
     type: 'number',
