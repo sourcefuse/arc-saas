@@ -1,5 +1,5 @@
+import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
-import {PlanTier} from '../enums';
 
 export interface ISubscription {
   deleted?: boolean;
@@ -88,33 +88,14 @@ export interface IPlan {
   price: number;
   currencyId: string;
   metaData: IMetaData;
-  tier: PlanTier;
+  tier: string;
+  size?: string;
+  sizeConfig?: AnyObject;
   billingCycleId: string;
-  planItems?: IPlanItem[];
   billingCycle?: IBillingCycle;
   currency?: ICurrency;
 }
 
 export interface IMetaData {
   pipelineName: string;
-}
-
-export interface IPlanItem {
-  deleted?: boolean;
-  deletedOn?: string;
-  deletedBy?: string;
-  createdOn?: string;
-  modifiedOn?: string;
-  createdBy?: string;
-  modifiedBy?: string;
-  id: string;
-  name: string;
-  planItemType: string;
-  value: IValue;
-  planId?: string;
-}
-
-export interface IValue {
-  name: string;
-  value: number | string | boolean;
 }

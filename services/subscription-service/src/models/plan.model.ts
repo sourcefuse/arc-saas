@@ -1,10 +1,7 @@
-import {model, property, hasMany, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {PlanItem} from './plan-item.model';
 import {BillingCycle} from './billing-cycle.model';
 import {Currency} from './currency.model';
-import {numericEnumValues} from '../utils';
-import {PlanTier} from '../enums';
 
 @model({
   name: 'plans',
@@ -31,29 +28,30 @@ export class Plan extends UserModifiableEntity {
   description?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
-    description: 'Tier of the plan, it can be - 0(Pooled) and  1(Silo)',
-    jsonSchema: {
-      enum: numericEnumValues(PlanTier),
-    },
-    default: PlanTier.POOLED,
+    description: 'Tier of the plan.',
   })
-  tier: PlanTier;
+  tier: string;
+
+  @property({
+    type: 'string',
+    description: 'Size of the plan.',
+  })
+  size?: string;
 
   @property({
     type: 'number',
     required: true,
   })
   price: number;
+
   @property({
     type: 'object',
     name: 'meta_data',
     description: 'Meta data of the plan',
   })
   metaData?: object;
-  @hasMany(() => PlanItem, {keyTo: 'planId'})
-  planItems: PlanItem;
 
   @belongsTo(
     () => BillingCycle,
@@ -76,8 +74,6 @@ export class Plan extends UserModifiableEntity {
   }
 }
 
-export interface PlanRelations {
-  planItems: PlanItem[];
-}
+export interface PlanRelations {}
 
-export type PlanWithRelations = Plan & PlanRelations;
+export type PlanWithRelations = Plan;

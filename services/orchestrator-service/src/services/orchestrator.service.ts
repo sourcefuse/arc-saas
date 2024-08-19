@@ -4,11 +4,14 @@ import {
   OrchestratorServiceBindings,
   OrchestratorServiceInterface,
 } from './types';
-import {TenantProvisioningHandler} from './tenant-provisioning-handler.service';
 import {AnyObject} from '@loopback/repository';
-import {TenantDeprovisioningHandler} from './tenant-deprovisioning-handler.service';
-import {TenantProvisioningSuccessHandler} from './tenant-provisioning-success-handler.service';
-import {TenantProvisioningFailureHandler} from './tenant-provisioning-failure-handler.service';
+import {
+  TenantProvisioningHandler,
+  TenantDeprovisioningHandler,
+  TenantProvisioningSuccessHandler,
+  TenantProvisioningFailureHandler,
+  TenantDeploymentHandler,
+} from './';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class OrchestratorService implements OrchestratorServiceInterface {
@@ -21,6 +24,8 @@ export class OrchestratorService implements OrchestratorServiceInterface {
     private handleTenantProvisioningSuccess: TenantProvisioningSuccessHandler,
     @inject(OrchestratorServiceBindings.TENANT_PROVISIONING_FAILURE_HANDLER)
     private handleTenantProvisioningFailure: TenantProvisioningFailureHandler,
+    @inject(OrchestratorServiceBindings.TENANT_DEPLOYMENT_HANDLER)
+    private handleTenantDeployment: TenantDeploymentHandler,
   ) {}
 
   async handleEvent(
@@ -34,8 +39,10 @@ export class OrchestratorService implements OrchestratorServiceInterface {
         return this.handleTenantDeprovisioning(eventBody);
       case DefaultEventTypes.TENANT_PROVISIONING_SUCCESS:
         return this.handleTenantProvisioningSuccess(eventBody);
-      case DefaultEventTypes.TENANT_PROVISIONING_FAILED:
+      case DefaultEventTypes.TENANT_PROVISIONING_FAILURE:
         return this.handleTenantProvisioningFailure(eventBody);
+      case DefaultEventTypes.TENANT_DEPLOYMENT:
+        return this.handleTenantDeployment(eventBody);
       default:
         throw new Error(`Unsupported event type: ${eventType}`);
     }

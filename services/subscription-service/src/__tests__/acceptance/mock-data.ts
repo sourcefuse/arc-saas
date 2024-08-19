@@ -1,6 +1,6 @@
 import {DataObject} from '@loopback/repository';
-import {PlanTier, SubscriptionStatus} from '../../enums';
-import {Plan, PlanItem, Resource, Service, Subscription} from '../../models';
+import {SubscriptionStatus} from '../../enums';
+import {Plan, Resource, Service, Subscription} from '../../models';
 
 export const mockService: DataObject<Service> = {
   name: 'test-service',
@@ -31,15 +31,7 @@ export const mockPlan: DataObject<Plan> = {
   price: 100,
   currencyId: 'currrency-id',
   billingCycleId: 'test-billing-id',
-  tier: PlanTier.POOLED,
-};
-
-export const mockPlanItem: DataObject<PlanItem> = {
-  name: 'test-plan-item',
-  planItemType: 'test-type',
-  value: {
-    test: 'test',
-  },
+  tier: 'Standard',
 };
 
 export const mockSubscription: DataObject<Subscription> = {

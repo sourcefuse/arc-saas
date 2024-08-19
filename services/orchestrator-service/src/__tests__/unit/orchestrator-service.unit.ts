@@ -6,6 +6,7 @@ import {
   TenantDeprovisioningHandler,
   TenantProvisioningSuccessHandler,
   TenantProvisioningFailureHandler,
+  TenantDeploymentHandler,
 } from '../..';
 
 describe('OrchestratorService', () => {
@@ -14,6 +15,7 @@ describe('OrchestratorService', () => {
   let tenantDeprovisioningHandlerStub: sinon.SinonStub;
   let tenantProvisioningSuccessHandlerStub: sinon.SinonStub;
   let tenantProvisioningFailureHandlerStub: sinon.SinonStub;
+  let tenantDeploymentHandlerStub: sinon.SinonStub;
 
   beforeEach(givenOrchestratorService);
 
@@ -50,15 +52,27 @@ describe('OrchestratorService', () => {
     ).to.be.true();
   });
 
-  it('handles TENANT_PROVISIONING_FAILED event', async () => {
+  it('handles TENANT_PROVISIONING_FAILURE event', async () => {
     const eventBody = {tenantId: '123', error: 'Some error'};
     await orchestratorService.handleEvent(
-      DefaultEventTypes.TENANT_PROVISIONING_FAILED,
+      DefaultEventTypes.TENANT_PROVISIONING_FAILURE,
       eventBody,
     );
     expect(
       tenantProvisioningFailureHandlerStub.calledOnceWith(eventBody),
     ).to.be.true();
+  });
+
+  it('handles TENANT_DEPLOYMENT event', async () => {
+    const eventBody = {
+      tenantId: '123',
+      plan: {features: [{key: 'FEAT', value: 'FOO'}]},
+    };
+    await orchestratorService.handleEvent(
+      DefaultEventTypes.TENANT_DEPLOYMENT,
+      eventBody,
+    );
+    expect(tenantDeploymentHandlerStub.calledOnceWith(eventBody)).to.be.true();
   });
 
   it('throws error for unsupported event type', async () => {
@@ -76,12 +90,14 @@ describe('OrchestratorService', () => {
     tenantDeprovisioningHandlerStub = sinon.stub();
     tenantProvisioningSuccessHandlerStub = sinon.stub();
     tenantProvisioningFailureHandlerStub = sinon.stub();
+    tenantDeploymentHandlerStub = sinon.stub();
 
     orchestratorService = new OrchestratorService(
       tenantProvisioningHandlerStub as unknown as TenantProvisioningHandler,
       tenantDeprovisioningHandlerStub as unknown as TenantDeprovisioningHandler,
       tenantProvisioningSuccessHandlerStub as unknown as TenantProvisioningSuccessHandler,
       tenantProvisioningFailureHandlerStub as unknown as TenantProvisioningFailureHandler,
+      tenantDeploymentHandlerStub as unknown as TenantDeploymentHandler,
     );
   }
 });

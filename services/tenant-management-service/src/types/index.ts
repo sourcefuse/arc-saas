@@ -37,3 +37,4 @@ export * from './webhook-payload.type';
 export * from './resource.type';
 export * from './i-provisioning-service.interface';
 export * from './i-subscription.interface';
+export * from './i-event-connector.interface';
