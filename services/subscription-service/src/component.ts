@@ -32,8 +32,8 @@ import {ISubscriptionServiceConfig} from './types';
 import {
   BillingCycleRepository,
   CurrencyRepository,
-  PlanItemRepository,
   PlanRepository,
+  PlanSizesRepository,
   ResourceRepository,
   ServiceRepository,
   SubscriptionRepository,
@@ -44,7 +44,8 @@ import {
   HomePageController,
   PingController,
   PlanController,
-  PlanItemController,
+  PlanFeaturesController,
+  PlanSizesController,
   PlanSubscriptionController,
   ResourceController,
   ServiceController,
@@ -53,8 +54,8 @@ import {
 import {
   BillingCycle,
   Currency,
-  PlanItem,
   Plan,
+  PlanSizes,
   Resource,
   Service,
   Subscription,
@@ -85,7 +86,7 @@ export class SubscriptionServiceComponent implements Component {
     this.application.api({
       openapi: '3.0.0',
       info: {
-        title: 'Audit Service',
+        title: 'Subscription Service',
         version: '1.0.0',
       },
       paths: {},
@@ -103,21 +104,21 @@ export class SubscriptionServiceComponent implements Component {
     this.repositories = [
       BillingCycleRepository,
       CurrencyRepository,
-      PlanItemRepository,
       PlanRepository,
       ResourceRepository,
       ServiceRepository,
       SubscriptionRepository,
+      PlanSizesRepository,
     ];
 
     this.models = [
       BillingCycle,
       Currency,
-      PlanItem,
       Plan,
       Resource,
       Service,
       Subscription,
+      PlanSizes,
     ];
 
     this.controllers = [
@@ -125,12 +126,13 @@ export class SubscriptionServiceComponent implements Component {
       HomePageController,
       PingController,
       CurrencyController,
-      PlanItemController,
       PlanController,
       ResourceController,
       ServiceController,
       SubscriptionController,
       PlanSubscriptionController,
+      PlanSizesController,
+      PlanFeaturesController,
     ];
   }
 

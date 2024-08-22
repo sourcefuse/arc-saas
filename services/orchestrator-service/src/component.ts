@@ -19,6 +19,7 @@ import {
   TierDetailsProvider,
   TenantProvisioningSuccessHandlerProvider,
   TenantDeprovisioningHandlerProvider,
+  TenantDeploymentHandlerProvider,
 } from './services';
 import {EventController} from './controllers';
 import {RestApplication} from '@loopback/rest';
@@ -52,6 +53,8 @@ export class OrchestratorServiceComponent implements Component {
         TenantProvisioningSuccessHandlerProvider,
       [OrchestratorServiceBindings.TENANT_PROVISIONING_FAILURE_HANDLER.key]:
         TenantProvisioningFailureHandlerProvider,
+      [OrchestratorServiceBindings.TENANT_DEPLOYMENT_HANDLER.key]:
+        TenantDeploymentHandlerProvider,
     });
 
     // Bind Service Classes if not provided by consumer of the component

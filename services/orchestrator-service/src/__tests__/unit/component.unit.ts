@@ -11,6 +11,7 @@ import {
   OrchestratorService,
   BuilderService,
   TierDetailsFn,
+  TenantDeploymentHandlerProvider,
 } from './../../';
 import {OrchestratorServiceComponent} from '../../component';
 import {Provider} from '@loopback/context';
@@ -85,6 +86,8 @@ describe('OrchestratorServiceComponent', () => {
         TenantProvisioningSuccessHandlerProvider,
       [OrchestratorServiceBindings.TENANT_PROVISIONING_FAILURE_HANDLER.key]:
         TenantProvisioningFailureHandlerProvider,
+      [OrchestratorServiceBindings.TENANT_DEPLOYMENT_HANDLER.key]:
+        TenantDeploymentHandlerProvider,
     };
 
     for (const [key] of Object.entries(providerMap)) {

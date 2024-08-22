@@ -73,6 +73,7 @@ This microservice provides following loopback services and providers which can b
 5. [Tenant Deprovisioning Provider](#5-tenant-deprovisioning-provider)
 6. [Tenant Provisioning Success Handler](#6-tenant-provisioning-success-provider)
 7. [Tenant Provisioning Failure Handler](#7-tenant-provisioning-failure-provider)
+8. [Tenant Deployment Handler](#8-tenant-deployment-handler)
 
 Here's the invocation flow for quick understanding on how and when above artifacts are called, more details are provided in their own sections:
 
@@ -135,6 +136,7 @@ import {
   TenantProvisioningFailureHandler,
   TenantProvisioningHandler,
   TenantProvisioningSuccessHandler,
+  TenantDeploymentHandler,
 } from '@arc-saas/orchestrator-service';
 
 export interface AWSEventBridgeInterface {
@@ -160,6 +162,8 @@ export class OrchestratorService implements OrchestratorServiceInterface {
     private handleTenantProvisioningSuccess: TenantProvisioningSuccessHandler,
     @inject(OrchestratorServiceBindings.TENANT_PROVISIONING_FAILURE_HANDLER)
     private handleTenantProvisioningFailure: TenantProvisioningFailureHandler,
+    @inject(OrchestratorServiceBindings.TENANT_DEPLOYMENT_HANDLER)
+    private handleTenantDeployment: TenantDeploymentHandler,
   ) {}
 
   handleEvent(
@@ -173,8 +177,10 @@ export class OrchestratorService implements OrchestratorServiceInterface {
         return this.handleTenantDeprovisioning(eventBody.detail);
       case EventTypes.TENANT_PROVISIONING_SUCCESS:
         return this.handleTenantProvisioningSuccess(eventBody.detail);
-      case EventTypes.TENANT_PROVISIONING_FAILED:
+      case EventTypes.TENANT_PROVISIONING_FAILURE:
         return this.handleTenantProvisioningFailure(eventBody.detail);
+      case DefaultEventTypes.TENANT_DEPLOYMENT:
+        return this.handleTenantDeployment(eventBody);
       default:
         throw new Error(`Unsupported event type: ${eventType}`);
     }
@@ -518,6 +524,14 @@ This provider is intended to be used as the handler to be invoked when the tenan
 For example, In this provider you can implement any cleanup or notification needed to handle the failure.
 
 The way of binding this provider is similar to other provider, just the binding key is `OrchestratorServiceBindings.TENANT_PROVISIONING_FAILURE_HANDLER`.
+
+#### 8. Tenant Deployment Provider
+
+This provider is intended to be the handler of the tenant deployment, which means any work after the provisioning that is required to make the tenant's application up and running, should be implemented here.
+
+For example, this can be adding some initial users. Populating some seed data in the application service etc.
+
+The way of binding this provider is similar to other provider, just the binding key is `OrchestratorServiceBindings.TENANT_DEPLOYMENT_HANDLER`.
 
 ## Deployment
 

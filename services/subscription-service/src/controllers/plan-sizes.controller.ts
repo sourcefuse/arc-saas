@@ -16,22 +16,23 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {PlanItem} from '../models';
-import {PlanItemRepository} from '../repositories';
+import {PlanSizes} from '../models';
+import {PlanSizesRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
 
-const basePath = '/plan-items';
-export class PlanItemController {
+const basePath = '/plan-sizes';
+
+export class PlanSizesController {
   constructor(
-    @repository(PlanItemRepository)
-    public planItemRepository: PlanItemRepository,
+    @repository(PlanSizesRepository)
+    public planSizesRepository: PlanSizesRepository,
   ) {}
 
   @authorize({
-    permissions: [PermissionKey.CreatePlanItem],
+    permissions: [PermissionKey.CreatePlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -40,10 +41,8 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'PlanItem  model instance',
-        content: {
-          'application/json': {schema: getModelSchemaRef(PlanItem)},
-        },
+        description: 'PlanSizes model instance',
+        content: {'application/json': {schema: getModelSchemaRef(PlanSizes)}},
       },
     },
   })
@@ -51,20 +50,20 @@ export class PlanItemController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PlanItem, {
-            title: 'NewPlanItem',
+          schema: getModelSchemaRef(PlanSizes, {
+            title: 'NewPlanSizes',
             exclude: ['id'],
           }),
         },
       },
     })
-    planItem: Omit<PlanItem, 'id'>,
-  ): Promise<PlanItem> {
-    return this.planItemRepository.create(planItem);
+    planSizes: Omit<PlanSizes, 'id'>,
+  ): Promise<PlanSizes> {
+    return this.planSizesRepository.create(planSizes);
   }
 
   @authorize({
-    permissions: [PermissionKey.ViewPlanItem],
+    permissions: [PermissionKey.ViewPlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -73,17 +72,19 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'PlanItem model count',
+        description: 'PlanSizes model count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
-  async count(@param.where(PlanItem) where?: Where<PlanItem>): Promise<Count> {
-    return this.planItemRepository.count(where);
+  async count(
+    @param.where(PlanSizes) where?: Where<PlanSizes>,
+  ): Promise<Count> {
+    return this.planSizesRepository.count(where);
   }
 
   @authorize({
-    permissions: [PermissionKey.ViewPlanItem],
+    permissions: [PermissionKey.ViewPlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -92,12 +93,12 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of PlanItem model instances',
+        description: 'Array of PlanSizes model instances',
         content: {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(PlanItem, {includeRelations: true}),
+              items: getModelSchemaRef(PlanSizes, {includeRelations: true}),
             },
           },
         },
@@ -105,13 +106,13 @@ export class PlanItemController {
     },
   })
   async find(
-    @param.filter(PlanItem) filter?: Filter<PlanItem>,
-  ): Promise<PlanItem[]> {
-    return this.planItemRepository.find(filter);
+    @param.filter(PlanSizes) filter?: Filter<PlanSizes>,
+  ): Promise<PlanSizes[]> {
+    return this.planSizesRepository.find(filter);
   }
 
   @authorize({
-    permissions: [PermissionKey.UpdatePlanItem],
+    permissions: [PermissionKey.UpdatePlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -120,7 +121,7 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'PlanItem PATCH success count',
+        description: 'PlanSizes PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -129,18 +130,18 @@ export class PlanItemController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PlanItem, {partial: true}),
+          schema: getModelSchemaRef(PlanSizes, {partial: true}),
         },
       },
     })
-    planItem: PlanItem,
-    @param.where(PlanItem) where?: Where<PlanItem>,
+    planSizes: PlanSizes,
+    @param.where(PlanSizes) where?: Where<PlanSizes>,
   ): Promise<Count> {
-    return this.planItemRepository.updateAll(planItem, where);
+    return this.planSizesRepository.updateAll(planSizes, where);
   }
 
   @authorize({
-    permissions: [PermissionKey.ViewPlanItem],
+    permissions: [PermissionKey.ViewPlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -149,10 +150,10 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'PlanItem  model instance',
+        description: 'PlanSizes model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(PlanItem, {includeRelations: true}),
+            schema: getModelSchemaRef(PlanSizes, {includeRelations: true}),
           },
         },
       },
@@ -160,14 +161,14 @@ export class PlanItemController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(PlanItem, {exclude: 'where'})
-    filter?: FilterExcludingWhere<PlanItem>,
-  ): Promise<PlanItem> {
-    return this.planItemRepository.findById(id, filter);
+    @param.filter(PlanSizes, {exclude: 'where'})
+    filter?: FilterExcludingWhere<PlanSizes>,
+  ): Promise<PlanSizes> {
+    return this.planSizesRepository.findById(id, filter);
   }
 
   @authorize({
-    permissions: [PermissionKey.UpdatePlanItem],
+    permissions: [PermissionKey.UpdatePlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -176,7 +177,7 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'PlanItem PATCH success',
+        description: 'PlanSizes PATCH success',
       },
     },
   })
@@ -185,17 +186,17 @@ export class PlanItemController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PlanItem, {partial: true}),
+          schema: getModelSchemaRef(PlanSizes, {partial: true}),
         },
       },
     })
-    planItem: PlanItem,
+    planSizes: PlanSizes,
   ): Promise<void> {
-    await this.planItemRepository.updateById(id, planItem);
+    await this.planSizesRepository.updateById(id, planSizes);
   }
 
   @authorize({
-    permissions: [PermissionKey.UpdatePlanItem],
+    permissions: [PermissionKey.UpdatePlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -204,19 +205,19 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'PlanItem PUT success',
+        description: 'PlanSizes PUT success',
       },
     },
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() planItem: PlanItem,
+    @requestBody() planSizes: PlanSizes,
   ): Promise<void> {
-    await this.planItemRepository.replaceById(id, planItem);
+    await this.planSizesRepository.replaceById(id, planSizes);
   }
 
   @authorize({
-    permissions: [PermissionKey.DeletePlanItem],
+    permissions: [PermissionKey.DeletePlanSizes],
   })
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -225,11 +226,11 @@ export class PlanItemController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'PlanItem DELETE success',
+        description: 'PlanSizes DELETE success',
       },
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.planItemRepository.deleteById(id);
+    await this.planSizesRepository.deleteById(id);
   }
 }
