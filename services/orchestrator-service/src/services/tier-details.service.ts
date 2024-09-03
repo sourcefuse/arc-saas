@@ -6,7 +6,9 @@ import {
 } from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 
-export type TierDetailsFn = (tier: string) => ValueOrPromise<AnyObject>;
+export type TierDetailsFn<T extends AnyObject = AnyObject> = (
+  tier: string,
+) => ValueOrPromise<T>;
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TierDetailsProvider implements Provider<TierDetailsFn> {
