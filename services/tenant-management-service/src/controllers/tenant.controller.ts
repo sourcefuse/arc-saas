@@ -285,4 +285,32 @@ export class TenantController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tenantRepository.deleteById(id);
   }
+
+  @authorize({
+    permissions: ['*'],
+  })
+  @get(`tenant/keys`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Tenant keys',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async getTenantKeys(
+    @param.filter(Tenant) filter?: Filter<Tenant>,
+  ): Promise<string[]> {
+    const tenants = await this.tenantRepository.find(filter);
+    return tenants.map((tenant: Tenant) => tenant.key);
+  }
 }
