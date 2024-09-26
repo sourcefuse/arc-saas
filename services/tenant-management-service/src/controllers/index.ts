@@ -6,3 +6,5 @@ export * from './lead-tenant.controller';
 export * from './tenant.controller';
 export * from './webhook.controller';
 export * from './invoice.controller';
+export * from './tenant-config.controller';
+export * from './tenant-config-tenant.controller';

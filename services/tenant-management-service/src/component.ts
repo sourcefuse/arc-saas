@@ -60,6 +60,7 @@ import {
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
+  TenantConfig,
 } from './models';
 import {
   AddressRepository,
@@ -70,6 +71,7 @@ import {
   ResourceRepository,
   TenantRepository,
   WebhookSecretRepository,
+  TenantConfigRepository,
 } from './repositories';
 import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
 import {
@@ -81,6 +83,8 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
+import { IdpController } from './controllers/idp.controller';
+import { KeycloakIdpProvider } from './providers/idp/idp-keycloak.provider';
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -120,6 +124,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
+      TenantConfigRepository
     ];
 
     this.models = [
@@ -136,6 +141,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
+      TenantConfig
     ];
 
     this.controllers = [
@@ -145,7 +151,7 @@ export class TenantManagementServiceComponent implements Component {
       LeadTenantController,
       LeadController,
       PingController,
-      TenantController,
+      TenantController
     ];
 
     this.bindings = [

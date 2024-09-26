@@ -6,3 +6,4 @@ export * from './resource.repository';
 export * from './invoice.repository';
 export * from './address.repository';
 export * from './lead-token.repository';
+export * from './tenant-config.repository';
