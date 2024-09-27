@@ -36,15 +36,7 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
       const adminUsername = `${tenant.key}-admin`; // Customize this as needed
       const adminPassword = 'your-secure-password'; // This can be dynamic or set in the environment
       await this.createUser(tenant.key, adminUsername, adminPassword, token);
-
-      console.log(
-        `Successfully configured Keycloak for tenant: ${tenant.name}`,
-      );
     } catch (error) {
-      console.error(
-        `Error configuring Keycloak for tenant: ${tenant.name}`,
-        error,
-      );
       throw new Error(
         `Failed to configure Keycloak for tenant: ${tenant.name}`,
       );
@@ -75,7 +67,7 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
   async createRealm(realmName: string, token: string): Promise<void> {
     // const token = await this.authenticateAdmin();
 
-    const response = await axios.post(
+    await axios.post(
       `${process.env.KEYCLOAK_HOST}/admin/realms`,
       {
         realm: realmName,
@@ -87,8 +79,6 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
         },
       },
     );
-
-    console.log('Realm created:', response.data);
   }
 
   async createClient(
@@ -98,7 +88,7 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
   ): Promise<void> {
     // const token = await this.authenticateAdmin();
 
-    const response = await axios.post(
+    await axios.post(
       `${process.env.KEYCLOAK_HOST}/admin/realms/${realmName}/clients`,
       {
         clientId: clientId,
@@ -113,8 +103,6 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
         },
       },
     );
-
-    console.log('Client created:', response.data);
   }
 
   async createUser(
@@ -125,7 +113,7 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
   ): Promise<void> {
     // const token = await this.authenticateAdmin();
 
-    const response = await axios.post(
+    await axios.post(
       `${process.env.KEYCLOAK_HOST}/admin/realms/${realmName}/users`,
       {
         username: username,
@@ -144,7 +132,5 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
         },
       },
     );
-
-    console.log('User created:', response.data);
   }
 }

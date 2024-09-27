@@ -35,8 +35,6 @@ import {
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
-  WEBHOOK_CONFIG,
-  WEBHOOK_VERIFIER,
 } from './keys';
 import {ITenantManagementServiceConfig} from './types';
 import {InvoiceController} from './controllers/invoice.controller';
@@ -88,14 +86,6 @@ import {
   ProvisioningService,
 } from './services';
 import {IdpController} from './controllers/idp.controller';
-import {Auth0IdpProvider, KeycloakIdpProvider} from './providers/idp';
-import {WebhookVerifierProvider} from './interceptors';
-import {
-  DEFAULT_SIGNATURE_HEADER,
-  DEFAULT_TIMESTAMP_HEADER,
-  DEFAULT_TIMESTAMP_TOLERANCE,
-} from './utils';
-import {ProvisioningWebhookHandler} from './services/webhook';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(
@@ -172,19 +162,13 @@ export class TenantManagementServiceComponent implements Component {
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
-      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
-        KeycloakIdpProvider,
-      ),
-      Binding.bind(TenantManagementServiceBindings.IDP_AUTH0).toProvider(
-        Auth0IdpProvider,
-      ),
+
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
       createServiceBinding(InvoicePDFGenerator),
-     
     ];
 
     this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);

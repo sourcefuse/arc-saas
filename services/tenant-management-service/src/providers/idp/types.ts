@@ -4,7 +4,7 @@ export interface UserData {
   // eslint-disable-next-line
   phone_number?: string;
   // eslint-disable-next-line
-  user_metadata?: {[key: string]: any};
+  user_metadata?: {[key: string]: any}; //NOSONAR
   blocked?: boolean;
   // eslint-disable-next-line
   email_verified?: boolean;

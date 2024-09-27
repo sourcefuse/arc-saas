@@ -78,7 +78,7 @@ import {
 import {ProvisioningWebhookHandler} from './services/webhook';
 import {KeycloakIdpProvider} from './providers/idp/idp-keycloak.provider';
 import {IdpController} from './controllers/idp.controller';
-import { Auth0IdpProvider } from './providers/idp';
+import {Auth0IdpProvider} from './providers/idp';
 
 export class WebhookTenantManagementServiceComponent implements Component {
   constructor(

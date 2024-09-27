@@ -9,7 +9,8 @@ import {TenantConfigRepository} from '../../repositories/tenant-config.repositor
 import {repository} from '@loopback/repository';
 
 import {HttpErrors} from '@loopback/rest';
-
+const STATUS_OK = 200;
+const STATUS_NOT_FOUND = 404;
 export class Auth0IdpProvider
   implements Provider<ConfigureIdpFunc<Auth0Response>>
 {
@@ -41,12 +42,6 @@ export class Auth0IdpProvider
       );
     }
     const configValue: ConfigValue = tenantConfig.configValue;
-    if (!configValue) {
-      throw new HttpErrors.NotFound(
-        `Tenant configuration not found for tenant: ${tenant.id}`,
-      );
-    }
-
     const organizationData: OrganizationData = {
       name: tenant.name,
       // eslint-disable-next-line
@@ -97,11 +92,11 @@ export class Auth0IdpProvider
         const organizationResponse =
           await this.management.organizations.getByName({name: tenant.name});
 
-        if (organizationResponse.status === 200) {
+        if (organizationResponse.status === STATUS_OK) {
           organizationId = organizationResponse.data.id;
         }
       } catch (error) {
-        if (error.statusCode === 404) {
+        if (error.statusCode === STATUS_NOT_FOUND) {
           const organization = await this.createOrganization(organizationData);
           organizationId = organization.data.id;
         } else {
@@ -164,5 +159,13 @@ export class Auth0IdpProvider
     } catch (error) {
       throw new Error(`Error adding member to organization: ${error.message}`);
     }
+  }
+  initManagementClient(): ManagementClient {
+    return new ManagementClient({
+      domain: process.env.AUTH0_DOMAIN ?? '',
+      clientId: process.env.AUTH0_CLIENT_ID ?? '',
+      clientSecret: process.env.AUTH0_CLIENT_SECRET ?? '',
+      audience: process.env.AUTH0_AUDIENCE,
+    });
   }
 }
