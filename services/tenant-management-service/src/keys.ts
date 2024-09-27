@@ -17,7 +17,7 @@ import {
 } from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {IEventConnector} from './types/i-event-connector.interface';
-import { Auth0Response } from './providers/idp';
+import {Auth0Response} from './providers/idp';
 
 export namespace TenantManagementServiceBindings {
   export const Config =

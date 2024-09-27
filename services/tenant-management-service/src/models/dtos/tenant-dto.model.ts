@@ -31,7 +31,7 @@ export class TenantDto extends Tenant {
     description: 'plan details',
     jsonSchema: getJsonSchema(Object),
   })
-  plan:AnyObject;
+  plan: AnyObject;
 
   constructor(data?: Partial<TenantDto>) {
     super(data);

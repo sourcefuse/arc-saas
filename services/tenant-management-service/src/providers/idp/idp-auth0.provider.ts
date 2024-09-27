@@ -1,7 +1,7 @@
 import {Provider} from '@loopback/context';
 
 import {ConfigureIdpFunc, IdpDetails} from '../../types';
-import { ManagementClient} from 'auth0';
+import {ManagementClient} from 'auth0';
 
 import {Auth0Response, ConfigValue, OrganizationData, UserData} from './types';
 
@@ -31,7 +31,7 @@ export class Auth0IdpProvider
       audience: process.env.AUTH0_AUDIENCE,
     });
     const {tenant} = payload;
-    let planTier=tenant.plan.tier
+    const planTier = tenant.plan.tier;
     const tenantConfig = await this.tenantConfigRepository.findOne({
       where: {tenantId: tenant.id},
     });
@@ -87,19 +87,15 @@ export class Auth0IdpProvider
       user_id: configValue.user_id,
     };
 
-    const orgName = configValue.name;
     let organizationId!: string;
- 
+
     if (planTier === 'PREMIUM') {
-   
       const organization = await this.createOrganization(organizationData);
       organizationId = organization.data.id;
-
     } else {
-   
       try {
         const organizationResponse =
-          await this.management.organizations.getByName({name: configValue.name});
+          await this.management.organizations.getByName({name: tenant.name});
 
         if (organizationResponse.status === 200) {
           organizationId = organizationResponse.data.id;
@@ -118,10 +114,10 @@ export class Auth0IdpProvider
       throw new Error('Failed to retrieve or create organization ID.');
     }
 
-    let user = await this.createUser(userData);
-    let userId = user.data.user_id;
+    const user = await this.createUser(userData);
+    const userId = user.data.user_id;
 
-    const response = await this.addMemberToOrganization(organizationId, userId);
+    await this.addMemberToOrganization(organizationId, userId);
     return {
       organizationId: organizationId,
       userId: userId,

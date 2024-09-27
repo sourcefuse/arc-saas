@@ -8,7 +8,7 @@ import {
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {ratelimit} from 'loopback4-ratelimiter';
-import {TenantManagementServiceBindings} from '../keys';
+import {TenantManagementServiceBindings, WEBHOOK_VERIFIER} from '../keys';
 import {IdpDetailsDTO} from '../models/dtos/idp-details-dto.model';
 import {ConfigureIdpFunc, IdPKey} from '../types';
 
@@ -20,7 +20,7 @@ export class IdpController {
     @inject(TenantManagementServiceBindings.IDP_AUTH0)
     private readonly idpAuth0Provider: ConfigureIdpFunc<IdpDetailsDTO>,
   ) {}
-  // @intercept(WEBHOOK_VERIFIER)
+  @intercept(WEBHOOK_VERIFIER)
   @ratelimit(true, {
     max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,

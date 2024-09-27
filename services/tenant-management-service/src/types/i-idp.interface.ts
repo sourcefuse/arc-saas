@@ -1,5 +1,4 @@
-import {Tenant} from '../models';
-import { TenantDto } from '../models/dtos/tenant-dto.model';
+import {TenantDto} from '../models/dtos/tenant-dto.model';
 
 export enum IdPKey {
   AUTH0 = 'auth0',
