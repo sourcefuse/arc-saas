@@ -35,7 +35,7 @@ import {
   WEBHOOK_VERIFIER,
 } from './keys';
 import {ITenantManagementServiceConfig} from './types';
-import {WebhookController} from './controllers';
+import {IdpController, TenantConfigController, TenantConfigTenantController, WebhookController} from './controllers';
 import {
   Address,
   Contact,
@@ -50,6 +50,7 @@ import {
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
+  TenantConfig,
 } from './models';
 import {
   AddressRepository,
@@ -61,9 +62,10 @@ import {
   TenantRepository,
   WebhookSecretRepository,
   SaasTenantRepository,
+  TenantConfigRepository,
 } from './repositories';
 import {WebhookVerifierProvider} from './interceptors';
-import {SystemUserProvider} from './providers';
+import {KeycloakIdpProvider, SystemUserProvider} from './providers';
 import {CryptoHelperService, NotificationService} from './services';
 import {
   DEFAULT_SIGNATURE_HEADER,
@@ -112,6 +114,7 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantRepository,
       SaasTenantRepository,
       WebhookSecretRepository,
+      TenantConfigRepository
     ];
 
     this.models = [
@@ -128,12 +131,14 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
+      TenantConfig
     ];
 
-    this.controllers = [WebhookController];
+    this.controllers = [WebhookController,IdpController,TenantConfigController,TenantConfigTenantController];
 
     this.bindings = [
-      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(KeycloakIdpProvider),
+      
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
       Binding.bind(WEBHOOK_CONFIG).to({
         signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
