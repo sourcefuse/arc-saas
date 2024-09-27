@@ -34,7 +34,10 @@ import {
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
+
   TenantManagementServiceBindings,
+  WEBHOOK_CONFIG,
+  WEBHOOK_VERIFIER,
 } from './keys';
 import {ITenantManagementServiceConfig} from './types';
 import {InvoiceController} from './controllers/invoice.controller';
@@ -45,6 +48,8 @@ import {
   LeadController,
   PingController,
   TenantController,
+  TenantConfigController,
+  TenantConfigTenantController,
 } from './controllers';
 import {
   Address,
@@ -83,8 +88,12 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
-import { IdpController } from './controllers/idp.controller';
-import { KeycloakIdpProvider } from './providers/idp/idp-keycloak.provider';
+import {IdpController} from './controllers/idp.controller';
+import { Auth0IdpProvider, KeycloakIdpProvider } from './providers/idp';
+import { WebhookVerifierProvider } from './interceptors';
+import { DEFAULT_SIGNATURE_HEADER, DEFAULT_TIMESTAMP_HEADER, DEFAULT_TIMESTAMP_TOLERANCE } from './utils';
+import { ProvisioningWebhookHandler } from './services/webhook';
+
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -124,7 +133,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
-      TenantConfigRepository
+      TenantConfigRepository,
     ];
 
     this.models = [
@@ -141,7 +150,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
-      TenantConfig
+      TenantConfig,
     ];
 
     this.controllers = [
@@ -151,18 +160,37 @@ export class TenantManagementServiceComponent implements Component {
       LeadTenantController,
       LeadController,
       PingController,
-      TenantController
+      TenantController,
+      IdpController,
+      TenantConfigController,
+      TenantConfigTenantController,
     ];
 
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(KeycloakIdpProvider),
+      Binding.bind(TenantManagementServiceBindings.IDP_AUTH0).toProvider(Auth0IdpProvider),
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
       createServiceBinding(InvoicePDFGenerator),
+      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
+        KeycloakIdpProvider,
+      ),
+
+      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(WEBHOOK_CONFIG).to({
+        signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
+        timestampHeaderName: DEFAULT_TIMESTAMP_HEADER,
+        timestampTolerance: DEFAULT_TIMESTAMP_TOLERANCE,
+      }),
+      Binding.bind('services.NotificationService').toClass(NotificationService),
+      createServiceBinding(ProvisioningWebhookHandler),
+      createServiceBinding(CryptoHelperService),
     ];
 
     this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);

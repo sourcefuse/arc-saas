@@ -35,7 +35,11 @@ import {
   WEBHOOK_VERIFIER,
 } from './keys';
 import {ITenantManagementServiceConfig} from './types';
-import {TenantConfigController, TenantConfigTenantController, WebhookController} from './controllers';
+import {
+  TenantConfigController,
+  TenantConfigTenantController,
+  WebhookController,
+} from './controllers';
 import {
   Address,
   Contact,
@@ -72,8 +76,8 @@ import {
   DEFAULT_TIMESTAMP_TOLERANCE,
 } from './utils';
 import {ProvisioningWebhookHandler} from './services/webhook';
-import { KeycloakIdpProvider } from './providers/idp/idp-keycloak.provider';
-import { IdpController } from './controllers/idp.controller';
+import {KeycloakIdpProvider} from './providers/idp/idp-keycloak.provider';
+import {IdpController} from './controllers/idp.controller';
 
 export class WebhookTenantManagementServiceComponent implements Component {
   constructor(
@@ -114,7 +118,7 @@ export class WebhookTenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
-      TenantConfigRepository
+      TenantConfigRepository,
     ];
 
     this.models = [
@@ -131,14 +135,22 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
-      TenantConfig
+      TenantConfig,
     ];
 
-    this.controllers = [WebhookController,IdpController,TenantConfigController,TenantConfigTenantController];
+    this.controllers = [
+      WebhookController,
+      IdpController,
+      TenantConfigController,
+      TenantConfigTenantController,
+    ];
 
     this.bindings = [
-      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(KeycloakIdpProvider),
-      
+      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
+        KeycloakIdpProvider,
+      ),
+
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
       Binding.bind(WEBHOOK_CONFIG).to({
         signatureHeaderName: DEFAULT_SIGNATURE_HEADER,

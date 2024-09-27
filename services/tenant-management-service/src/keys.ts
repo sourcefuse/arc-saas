@@ -1,4 +1,4 @@
-import { VerifyFunction } from 'loopback4-authentication';
+import {VerifyFunction} from 'loopback4-authentication';
 import {
   ConfigureIdpFunc,
   ITenantManagementServiceConfig,
@@ -6,18 +6,18 @@ import {
   WebhookConfig,
   WebhookNotificationServiceType,
 } from './types';
-import { IAuthUser } from 'loopback4-authorization';
-import { AnyObject } from '@loopback/repository';
-import { WebhookController } from './controllers';
+import {IAuthUser} from 'loopback4-authorization';
+import {AnyObject} from '@loopback/repository';
+import {WebhookController} from './controllers';
 import {
   BindingKey,
   BindingTemplate,
   Interceptor,
   extensionFor,
 } from '@loopback/core';
-import { BINDING_PREFIX } from '@sourceloop/core';
-import { IEventConnector } from './types/i-event-connector.interface';
-import { ValueOrPromise } from '@loopback/context';
+import {BINDING_PREFIX} from '@sourceloop/core';
+import {IEventConnector} from './types/i-event-connector.interface';
+import { Auth0Response } from './providers/idp';
 
 export namespace TenantManagementServiceBindings {
   export const Config =
@@ -25,11 +25,16 @@ export namespace TenantManagementServiceBindings {
       `${BINDING_PREFIX}.chat.config`,
     );
   /**
-  * Binding key for the Idp keycloak provider.
-  */
-  export const IDP_KEYCLOAK = BindingKey.create<
-  ConfigureIdpFunc<void>
-  >('sf.user.idp.keycloak');
+   * Binding key for the Idp keycloak provider.
+   */
+  export const IDP_KEYCLOAK = BindingKey.create<ConfigureIdpFunc<void>>(
+    'sf.user.idp.keycloak',
+  );
+  /**
+   * Binding key for the Idp Auth0 provider.
+   */
+  export const IDP_AUTH0 =
+    BindingKey.create<ConfigureIdpFunc<Auth0Response>>('sf.user.idp.auth0');
 }
 
 /**
@@ -38,10 +43,6 @@ export namespace TenantManagementServiceBindings {
 export const LEAD_TOKEN_VERIFIER = BindingKey.create<
   VerifyFunction.BearerFn<LeadUser>
 >('sf.user.lead.verifier');
-
-
-
-
 
 /**
  * Binding key for the system user.
@@ -75,7 +76,7 @@ export const WebhookHandlerEP = BindingKey.create<WebhookController<never>>(
  */
 export const asWebhookHandler: BindingTemplate = binding => {
   extensionFor(WebhookHandlerEP.key)(binding);
-  binding.tag({ namespace: WebhookHandlerEP.key });
+  binding.tag({namespace: WebhookHandlerEP.key});
 };
 
 export const WebhookNotificationService =

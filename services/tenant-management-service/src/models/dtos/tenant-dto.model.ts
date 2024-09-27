@@ -1,9 +1,9 @@
 import {getJsonSchema} from '@loopback/openapi-v3';
-import {model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
 import {Address} from '../address.model';
-import {Lead} from '../lead.model';
-import { Tenant } from '../tenant.model';
-import { Contact } from '../contact.model';
+
+import {Tenant} from '../tenant.model';
+import {Contact} from '../contact.model';
 
 @model({
   description: 'model describing payload used to create a lead',
@@ -26,6 +26,12 @@ export class TenantDto extends Tenant {
     },
   })
   contacts: Contact[];
+  @property({
+    type: 'object',
+    description: 'plan details',
+    jsonSchema: getJsonSchema(Object),
+  })
+  plan:AnyObject;
 
   constructor(data?: Partial<TenantDto>) {
     super(data);
