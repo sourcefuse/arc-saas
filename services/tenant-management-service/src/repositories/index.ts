@@ -7,4 +7,3 @@ export * from './invoice.repository';
 export * from './address.repository';
 export * from './lead-token.repository';
 export * from './tenant-config.repository';
-export * from './saas-tenant.repository';

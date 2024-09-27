@@ -42,9 +42,6 @@ export class SubscriptionDTO implements ISubscription {
   @property({type: 'string'})
   planId: string;
 
-  @property({type: 'string'})
-  invoiceId: string;
-
   // Assuming IPlan interface is defined, you can include it here
   @property()
   plan?: IPlan;

@@ -18,6 +18,7 @@ import {
 import { BINDING_PREFIX } from '@sourceloop/core';
 import { IEventConnector } from './types/i-event-connector.interface';
 import { ValueOrPromise } from '@loopback/context';
+import { Auth0Response } from './providers/idp/types';
 
 export namespace TenantManagementServiceBindings {
   export const Config =
@@ -31,6 +32,12 @@ export namespace TenantManagementServiceBindings {
   ConfigureIdpFunc<void>
   >('sf.user.idp.keycloak');
 }
+
+  /**
+   * Binding key for the Idp Auth0 provider.
+   */
+  export const IDP_AUTH0 =
+    BindingKey.create<ConfigureIdpFunc<Auth0Response>>('sf.user.idp.auth0');
 
 /**
  * Binding key for the lead token verifier.
