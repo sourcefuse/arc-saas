@@ -184,20 +184,7 @@ export class TenantManagementServiceComponent implements Component {
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
       createServiceBinding(InvoicePDFGenerator),
-      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
-      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
-        KeycloakIdpProvider,
-      ),
-
-      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
-      Binding.bind(WEBHOOK_CONFIG).to({
-        signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
-        timestampHeaderName: DEFAULT_TIMESTAMP_HEADER,
-        timestampTolerance: DEFAULT_TIMESTAMP_TOLERANCE,
-      }),
-      Binding.bind('services.NotificationService').toClass(NotificationService),
-      createServiceBinding(ProvisioningWebhookHandler),
-      createServiceBinding(CryptoHelperService),
+     
     ];
 
     this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
