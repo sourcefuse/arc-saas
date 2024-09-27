@@ -1,7 +1,7 @@
-import { getJsonSchema } from '@loopback/openapi-v3';
-import { Model, model, property } from '@loopback/repository';
-import { IdpDetails, IdPKey } from '../../types';
-import { TenantDto } from './tenant-dto.model';
+import {getJsonSchema} from '@loopback/openapi-v3';
+import {Model, model, property} from '@loopback/repository';
+import {IdpDetails, IdPKey} from '../../types';
+import {TenantDto} from './tenant-dto.model';
 
 @model({
   description: 'model describing payload for IDP controller',
@@ -13,8 +13,8 @@ export class IdpDetailsDTO extends Model implements IdpDetails {
     required: true,
     default: IdPKey.AUTH0,
     jsonSchema: {
-        enum: Object.values(IdPKey),
-      },
+      enum: Object.values(IdPKey),
+    },
   })
   identityProvider: IdPKey;
 

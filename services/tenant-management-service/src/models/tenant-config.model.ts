@@ -1,10 +1,11 @@
-import { belongsTo, model, property } from '@loopback/repository';
-import { UserModifiableEntity } from '@sourceloop/core';
-import { Tenant } from './tenant.model';
+import {model, property, belongsTo} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
+import {Tenant} from './tenant.model';
+import {ConfigValue} from '../providers/idp';
 
 @model({
   name: 'tenant_configs',
-  description: 'tenant_configs to save any tenant specific data related to idP'
+  description: 'tenant_configs to save any tenant specific data related to idP',
 })
 export class TenantConfig extends UserModifiableEntity {
   @property({
@@ -17,16 +18,16 @@ export class TenantConfig extends UserModifiableEntity {
   @property({
     type: 'string',
     required: true,
-    name: 'config_key'
+    name: 'config_key',
   })
   configKey: string;
 
   @property({
     type: 'object',
     required: true,
-    name: 'config_value'
+    name: 'config_value',
   })
-  configValue: object;
+  configValue: ConfigValue;
 
   @belongsTo(
     () => Tenant,

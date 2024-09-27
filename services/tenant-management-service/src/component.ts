@@ -45,6 +45,18 @@ import {
   SYSTEM_USER,
   TenantManagementServiceBindings,
 } from './keys';
+import {ITenantManagementServiceConfig} from './types';
+import {InvoiceController} from './controllers/invoice.controller';
+import {
+  ContactController,
+  HomePageController,
+  LeadTenantController,
+  LeadController,
+  PingController,
+  TenantController,
+  TenantConfigController,
+  TenantConfigTenantController,
+} from './controllers';
 import {
   Address,
   Contact,
@@ -82,7 +94,8 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
-import { ITenantManagementServiceConfig } from './types';
+import {IdpController} from './controllers/idp.controller';
+
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -122,7 +135,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
-      TenantConfigRepository
+      TenantConfigRepository,
     ];
 
     this.models = [
@@ -139,7 +152,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
-      TenantConfig
+      TenantConfig,
     ];
 
     this.controllers = [
@@ -149,12 +162,16 @@ export class TenantManagementServiceComponent implements Component {
       LeadTenantController,
       LeadController,
       PingController,
-      TenantController
+      TenantController,
+      IdpController,
+      TenantConfigController,
+      TenantConfigTenantController,
     ];
 
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),

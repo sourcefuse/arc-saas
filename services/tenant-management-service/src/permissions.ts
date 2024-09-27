@@ -17,6 +17,11 @@ export const PermissionKey = {
   DeleteInvoice: '10214',
   ViewInvoice: '10215',
   CreateNotification: '2',
+  CreateTenantConfig: '10216',
+
+  UpdateTenantConfig: '10217',
+  DeleteTenantConfig: '10218',
+  ViewTenantConfig: '10219',
 
   CreateSubscription: '7001',
   UpdateSubscription: '7002',
