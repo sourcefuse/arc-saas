@@ -38,6 +38,7 @@ import {
   LeadTenantController,
   PingController,
   TenantConfigController,
+  TenantConfigTenantController,
   TenantController,
 } from './controllers';
 import {InvoiceController} from './controllers/invoice.controller';
@@ -85,7 +86,6 @@ import {
   ProvisioningService,
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
-import {TenantConfigTenantController} from '@sourceloop/ctrl-plane-tenant-management-service/dist/controllers';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(

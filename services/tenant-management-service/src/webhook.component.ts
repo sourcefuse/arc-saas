@@ -70,11 +70,7 @@ import {
   SaasTenantRepository,
 } from './repositories';
 import {WebhookVerifierProvider} from './interceptors';
-import {
-  Auth0IdpProvider,
-  KeycloakIdpProvider,
-  SystemUserProvider,
-} from './providers';
+import {KeycloakIdpProvider, SystemUserProvider} from './providers';
 import {CryptoHelperService, NotificationService} from './services';
 import {
   DEFAULT_SIGNATURE_HEADER,
@@ -82,6 +78,7 @@ import {
   DEFAULT_TIMESTAMP_TOLERANCE,
 } from './utils';
 import {ProvisioningWebhookHandler} from './services/webhook';
+import {Auth0IdpProvider} from './providers/idp/idp-auth0.provider';
 
 export class WebhookTenantManagementServiceComponent implements Component {
   constructor(

@@ -47,6 +47,17 @@ export class Auth0IdpProvider
       name: tenant.name,
       // eslint-disable-next-line
       display_name: configValue.display_name,
+      branding: {
+        // eslint-disable-next-line
+        logo_url: configValue.logo_url,
+        colors: {
+          primary: configValue.primary_color,
+          // eslint-disable-next-line
+          page_background: configValue.page_background,
+        },
+      },
+      // eslint-disable-next-line
+      enabled_connections: configValue.enabled_connections,
     };
 
     const userData: UserCreate = {
@@ -113,14 +124,7 @@ export class Auth0IdpProvider
   }
   async createOrganization(data: PostOrganizationsRequest) {
     try {
-      return await this.management.organizations.create({
-        name: data.name,
-        // eslint-disable-next-line
-        display_name: data.display_name,
-        branding: {},
-        // eslint-disable-next-line
-        enabled_connections: [],
-      });
+      return await this.management.organizations.create(data);
     } catch (error) {
       throw new Error(`Error creating organization: ${error.message}`);
     }
@@ -145,5 +149,4 @@ export class Auth0IdpProvider
       throw new Error(`Error adding member to organization: ${error.message}`);
     }
   }
-
 }
