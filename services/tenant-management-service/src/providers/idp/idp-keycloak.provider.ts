@@ -1,7 +1,7 @@
 import {Provider} from '@loopback/context';
 import axios from 'axios';
 import qs from 'qs';
-import {ConfigureIdpFunc, IdpDetails} from '../../types';
+import {ConfigureIdpFunc, IdpDetails, IdpResp} from '../../types';
 
 interface TokenResponse {
   // eslint-disable-next-line
@@ -14,13 +14,13 @@ interface Credentials {
   temporary: boolean;
 }
 
-export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
+export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
   constructor() {}
 
-  value(): ConfigureIdpFunc<void> {
+  value(): ConfigureIdpFunc<IdpResp> {
     return payload => this.configure(payload);
   }
-  async configure(payload: IdpDetails): Promise<void> {
+  async configure(payload: IdpDetails): Promise<IdpResp> {
     const {tenant} = payload;
 
     try {
@@ -40,6 +40,9 @@ export class KeycloakIdpProvider implements Provider<ConfigureIdpFunc<void>> {
       throw new Error(
         `Failed to configure Keycloak for tenant: ${tenant.name}`,
       );
+    }
+    return {
+      authId:"",          // dummy authID
     }
   }
 

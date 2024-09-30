@@ -1,6 +1,7 @@
 import {VerifyFunction} from 'loopback4-authentication';
 import {
   ConfigureIdpFunc,
+  IdpResp,
   ITenantManagementServiceConfig,
   LeadUser,
   WebhookConfig,
@@ -27,14 +28,14 @@ export namespace TenantManagementServiceBindings {
   /**
    * Binding key for the Idp keycloak provider.
    */
-  export const IDP_KEYCLOAK = BindingKey.create<ConfigureIdpFunc<void>>(
+  export const IDP_KEYCLOAK = BindingKey.create<ConfigureIdpFunc<IdpResp>>(
     'sf.user.idp.keycloak',
   );
   /**
    * Binding key for the Idp Auth0 provider.
    */
   export const IDP_AUTH0 =
-    BindingKey.create<ConfigureIdpFunc<Auth0Response>>('sf.user.idp.auth0');
+    BindingKey.create<ConfigureIdpFunc<IdpResp>>('sf.user.idp.auth0');
 }
 
 /**

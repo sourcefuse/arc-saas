@@ -14,3 +14,7 @@ export interface IdpDetails {
   tenant: Tenant;
   plan: AnyObject;
 }
+
+export interface IdpResp{
+  authId:string;
+}

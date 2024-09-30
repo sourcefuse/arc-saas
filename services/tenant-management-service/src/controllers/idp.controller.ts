@@ -10,15 +10,15 @@ import {authorize} from 'loopback4-authorization';
 import {ratelimit} from 'loopback4-ratelimiter';
 import {TenantManagementServiceBindings, WEBHOOK_VERIFIER} from '../keys';
 import {IdpDetailsDTO} from '../models/dtos/idp-details-dto.model';
-import {ConfigureIdpFunc, IdPKey} from '../types';
+import {ConfigureIdpFunc, IdPKey, IdpResp} from '../types';
 
 const basePath = '/manage/users';
 export class IdpController {
   constructor(
     @inject(TenantManagementServiceBindings.IDP_KEYCLOAK)
-    private readonly idpKeycloakProvider: ConfigureIdpFunc<IdpDetailsDTO>,
+    private readonly idpKeycloakProvider: ConfigureIdpFunc<IdpResp>,
     @inject(TenantManagementServiceBindings.IDP_AUTH0)
-    private readonly idpAuth0Provider: ConfigureIdpFunc<IdpDetailsDTO>,
+    private readonly idpAuth0Provider: ConfigureIdpFunc<IdpResp>,
   ) {}
   @intercept(WEBHOOK_VERIFIER)
   @ratelimit(true, {
@@ -47,19 +47,24 @@ export class IdpController {
       },
     })
     payload: IdpDetailsDTO,
-  ): Promise<void> {
+  ): Promise<IdpResp> {
+    let res:IdpResp={
+      authId:""
+    };
     switch (payload.identityProvider) {
+
       case IdPKey.AUTH0:
-        await this.idpAuth0Provider(payload);
-        break;
+        let auth0Resp=await this.idpAuth0Provider(payload);
+        return auth0Resp;
       case IdPKey.COGNITO:
         break;
       case IdPKey.KEYCLOAK:
-        await this.idpKeycloakProvider(payload);
-        break;
+        let keycloakResp=await this.idpKeycloakProvider(payload);
+        return keycloakResp;
 
       default:
         break;
     }
+    return res;
   }
 }

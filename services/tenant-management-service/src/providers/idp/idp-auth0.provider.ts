@@ -1,6 +1,6 @@
 import {Provider} from '@loopback/context';
 
-import {ConfigureIdpFunc, IdpDetails, IdPKey} from '../../types';
+import {ConfigureIdpFunc, IdpDetails, IdPKey, IdpResp} from '../../types';
 import {ManagementClient, PostOrganizationsRequest, UserCreate} from 'auth0';
 
 import {Auth0Response} from './types';
@@ -13,7 +13,7 @@ import {HttpErrors} from '@loopback/rest';
 const STATUS_OK = 200;
 const STATUS_NOT_FOUND = 404;
 export class Auth0IdpProvider
-  implements Provider<ConfigureIdpFunc<Auth0Response>>
+  implements Provider<ConfigureIdpFunc<IdpResp>>
 {
   management: ManagementClient;
 
@@ -22,10 +22,10 @@ export class Auth0IdpProvider
     private readonly tenantConfigRepository: TenantConfigRepository,
   ) {}
 
-  value(): ConfigureIdpFunc<Auth0Response> {
+  value(): ConfigureIdpFunc<IdpResp> {
     return payload => this.configure(payload);
   }
-  async configure(payload: IdpDetails): Promise<Auth0Response> {
+  async configure(payload: IdpDetails): Promise<IdpResp> {
     this.management = new ManagementClient({
       domain: process.env.AUTH0_DOMAIN ?? '',
       clientId: process.env.AUTH0_CLIENT_ID ?? '',
@@ -118,8 +118,7 @@ export class Auth0IdpProvider
 
     await this.addMemberToOrganization(organizationId, userId);
     return {
-      organizationId: organizationId,
-      userId: userId,
+      authId: userId,
     };
   }
   async createOrganization(data: PostOrganizationsRequest) {
