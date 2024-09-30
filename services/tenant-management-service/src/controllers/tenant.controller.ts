@@ -285,4 +285,37 @@ export class TenantController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tenantRepository.deleteById(id);
   }
+
+  @authorize({
+    permissions: ['*'],
+  })
+  @get('verify-key/{key}', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Check if key exists for any Tenant',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'object',
+              properties: {
+                exists: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async checkKeyExists(
+    @param.path.string('key') key: string,
+  ): Promise<{exists: boolean}> {
+    const tenantKeyExists = await this.tenantRepository.findOne({
+      where: {key: key},
+    });
+
+    return {exists: !!tenantKeyExists};
+  }
 }
