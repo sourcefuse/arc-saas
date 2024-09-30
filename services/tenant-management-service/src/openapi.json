@@ -1154,50 +1154,6 @@
         "operationId": "PingController.ping"
       }
     },
-    "/tenant/keys": {
-      "get": {
-        "x-controller-name": "TenantController",
-        "x-operation-name": "getTenantKeys",
-        "tags": [
-          "TenantController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Array of Tenant keys",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/tenants.Filter"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "TenantController.getTenantKeys"
-      }
-    },
     "/tenants/count": {
       "get": {
         "x-controller-name": "TenantController",
@@ -1407,7 +1363,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/tenants.Filter1"
+                  "$ref": "#/components/schemas/tenants.Filter"
                 }
               }
             }
@@ -1566,13 +1522,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/tenants.Filter"
+                  "$ref": "#/components/schemas/tenants.Filter1"
                 }
               }
             }
           }
         ],
         "operationId": "TenantController.find"
+      }
+    },
+    "/verify-key/{key}": {
+      "get": {
+        "x-controller-name": "TenantController",
+        "x-operation-name": "checkKeyExists",
+        "tags": [
+          "TenantController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Check if key exists for any Tenant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "exists": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "TenantController.checkKeyExists"
       }
     },
     "/webhook": {
@@ -4451,11 +4450,6 @@
               }
             ]
           },
-          "where": {
-            "title": "tenants.WhereFilter",
-            "type": "object",
-            "additionalProperties": true
-          },
           "fields": {
             "oneOf": [
               {
@@ -4584,6 +4578,11 @@
                 }
               }
             ]
+          },
+          "where": {
+            "title": "tenants.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
           },
           "fields": {
             "oneOf": [
