@@ -94,6 +94,7 @@ export class BillingInvoiceController {
         country: invoice.shippingAddress?.country ?? '',
       }),
       options: invoice.options,
+      currencyCode:invoice.currencyCode
     });
   }
 

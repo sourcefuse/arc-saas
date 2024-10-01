@@ -21,6 +21,12 @@ export class InvoiceDto extends Model {
   customerId: string;
 
   @property({
+    type: 'string',
+    name: 'currency_code',
+  })
+  currencyCode: string;
+
+  @property({
     type: 'object',
   })
   options?: Options;
@@ -43,6 +49,8 @@ export class InvoiceDto extends Model {
     name: 'status',
   })
   status?: InvoiceStatus;
+
+
 
   constructor(data?: Partial<InvoiceDto>) {
     super(data);
