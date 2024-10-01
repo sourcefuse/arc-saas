@@ -60,6 +60,7 @@ import {
   ResourceRepository,
   TenantRepository,
   WebhookSecretRepository,
+  SaasTenantRepository,
 } from './repositories';
 import {WebhookVerifierProvider} from './interceptors';
 import {SystemUserProvider} from './providers';
@@ -109,6 +110,7 @@ export class WebhookTenantManagementServiceComponent implements Component {
       LeadRepository,
       ResourceRepository,
       TenantRepository,
+      SaasTenantRepository,
       WebhookSecretRepository,
     ];
 
