@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "NOTIFICATION-SERVICE_DB_HOST"
+      },
+      "port": {
+        "ENV": "NOTIFICATION-SERVICE_DB_PORT"
+      },
+      "user": {
+        "ENV": "NOTIFICATION-SERVICE_DB_USER"
+      },
+      "password": {
+        "ENV": "NOTIFICATION-SERVICE_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "NOTIFICATION-SERVICE_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+}
