@@ -10,11 +10,10 @@ export enum IdPKey {
 export type ConfigureIdpFunc<T> = (payload: IdpDetails) => Promise<T>;
 
 export interface IdpDetails {
-  identityProvider: IdPKey;
-  tenant: Tenant;
+  tenant: AnyObject;
   plan: AnyObject;
 }
 
-export interface IdpResp{
-  authId:string;
+export interface IdpResp {
+  authId: string;
 }

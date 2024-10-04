@@ -12,9 +12,7 @@ import {HttpErrors} from '@loopback/rest';
 
 const STATUS_OK = 200;
 const STATUS_NOT_FOUND = 404;
-export class Auth0IdpProvider
-  implements Provider<ConfigureIdpFunc<IdpResp>>
-{
+export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
   management: ManagementClient;
 
   constructor(
@@ -64,7 +62,12 @@ export class Auth0IdpProvider
       email: tenant.contacts[0].email,
 
       connection: configValue.connection,
-      password: configValue.password,
+      /* saving a constant password for now
+       ** this will a random generated string that will be temporary password
+       ** the user will be forced to change it on first login
+       ** need to check actions in auth0 to see how we can achieve this
+       **/
+      password: 'test123!@#',
       // eslint-disable-next-line
       verify_email: configValue.verify_email,
       // eslint-disable-next-line
