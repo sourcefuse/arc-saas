@@ -5,10 +5,10 @@ import {ManagementClient, PostOrganizationsRequest, UserCreate} from 'auth0';
 
 import {Auth0Response} from './types';
 
-import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {repository} from '@loopback/repository';
 
 import {HttpErrors} from '@loopback/rest';
+import {TenantMgmtConfigRepository} from '../../repositories';
 
 const STATUS_OK = 200;
 const STATUS_NOT_FOUND = 404;
@@ -16,8 +16,8 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
   management: ManagementClient;
 
   constructor(
-    @repository(TenantConfigRepository)
-    private readonly tenantConfigRepository: TenantConfigRepository,
+    @repository(TenantMgmtConfigRepository)
+    private readonly tenantConfigRepository: TenantMgmtConfigRepository,
   ) {}
 
   value(): ConfigureIdpFunc<IdpResp> {
@@ -30,9 +30,9 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
       clientSecret: process.env.AUTH0_CLIENT_SECRET ?? '',
       audience: process.env.AUTH0_AUDIENCE,
     });
-    const {tenant} = payload;
+    const tenant = payload.tenant;
     const planTier = payload.plan.tier;
-    const tenantConfig = await this.tenantConfigRepository.findOne({
+    const tenantConfig = await this.tenantConfigRepository.find({
       where: {tenantId: tenant.id, configKey: IdPKey.AUTH0},
     });
     if (!tenantConfig) {
@@ -40,9 +40,10 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
         `Tenant configuration not found for tenant: ${tenant.id}`,
       );
     }
-    const configValue = tenantConfig.configValue;
+
+    const configValue = tenantConfig[0].configValue;
     const organizationData: PostOrganizationsRequest = {
-      name: tenant.name,
+      name: tenant.key,
       // eslint-disable-next-line
       display_name: configValue.display_name,
       branding: {

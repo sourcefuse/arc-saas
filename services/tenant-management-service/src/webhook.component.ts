@@ -29,6 +29,7 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  CALLABCK_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
   WEBHOOK_CONFIG,
@@ -37,8 +38,8 @@ import {
 import {ITenantManagementServiceConfig} from './types';
 import {
   IdpController,
-  TenantConfigController,
-  TenantConfigTenantController,
+  TenantMgmtConfigController,
+  TenantMgmtConfigTenantController,
   WebhookController,
 } from './controllers';
 import {
@@ -55,7 +56,7 @@ import {
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
-  TenantConfig,
+  TenantMgmtConfig,
 } from './models';
 import {
   AddressRepository,
@@ -66,10 +67,13 @@ import {
   ResourceRepository,
   TenantRepository,
   WebhookSecretRepository,
-  TenantConfigRepository,
+  TenantMgmtConfigRepository,
   SaasTenantRepository,
 } from './repositories';
-import {WebhookVerifierProvider} from './interceptors';
+import {
+  CallbackVerifierProvider,
+  WebhookVerifierProvider,
+} from './interceptors';
 import {KeycloakIdpProvider, SystemUserProvider} from './providers';
 import {CryptoHelperService, NotificationService} from './services';
 import {
@@ -120,7 +124,7 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantRepository,
       SaasTenantRepository,
       WebhookSecretRepository,
-      TenantConfigRepository,
+      TenantMgmtConfigRepository,
     ];
 
     this.models = [
@@ -137,18 +141,20 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
-      TenantConfig,
+      TenantMgmtConfig,
     ];
 
     this.controllers = [
       WebhookController,
       IdpController,
-      TenantConfigController,
-      TenantConfigTenantController,
+      TenantMgmtConfigController,
+      TenantMgmtConfigTenantController,
     ];
 
     this.bindings = [
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),
+
       Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
         KeycloakIdpProvider,
       ),

@@ -37,8 +37,8 @@ import {
   LeadController,
   LeadTenantController,
   PingController,
-  TenantConfigController,
-  TenantConfigTenantController,
+  TenantMgmtConfigController,
+  TenantMgmtConfigTenantController,
   TenantController,
 } from './controllers';
 import {InvoiceController} from './controllers/invoice.controller';
@@ -58,7 +58,7 @@ import {
   ProvisioningDTO,
   Resource,
   Tenant,
-  TenantConfig,
+  TenantMgmtConfig,
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
@@ -72,7 +72,7 @@ import {
   LeadRepository,
   LeadTokenRepository,
   ResourceRepository,
-  TenantConfigRepository,
+  TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
 } from './repositories';
@@ -126,7 +126,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
-      TenantConfigRepository,
+      TenantMgmtConfigRepository,
     ];
 
     this.models = [
@@ -143,7 +143,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
-      TenantConfig,
+      TenantMgmtConfig,
     ];
 
     this.controllers = [
@@ -154,8 +154,8 @@ export class TenantManagementServiceComponent implements Component {
       LeadController,
       PingController,
       TenantController,
-      TenantConfigController,
-      TenantConfigTenantController,
+      TenantMgmtConfigController,
+      TenantMgmtConfigTenantController,
     ];
 
     this.bindings = [

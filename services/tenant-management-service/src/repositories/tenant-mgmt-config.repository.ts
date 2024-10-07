@@ -1,6 +1,6 @@
 import {Getter, inject} from '@loopback/core';
 import {juggler, repository, BelongsToAccessor} from '@loopback/repository';
-import {TenantConfig, Tenant} from '../models';
+import {Tenant, TenantMgmtConfig} from '../models';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -9,14 +9,14 @@ import {SYSTEM_USER} from '../keys';
 import {TenantManagementDbSourceName} from '../types';
 import {TenantRepository} from './tenant.repository';
 
-export class TenantConfigRepository extends DefaultUserModifyCrudRepository<
-  TenantConfig,
-  typeof TenantConfig.prototype.id,
+export class TenantMgmtConfigRepository extends DefaultUserModifyCrudRepository<
+  TenantMgmtConfig,
+  typeof TenantMgmtConfig.prototype.id,
   {}
 > {
   public readonly tenant: BelongsToAccessor<
     Tenant,
-    typeof TenantConfig.prototype.id
+    typeof TenantMgmtConfig.prototype.id
   >;
 
   constructor(
@@ -27,7 +27,7 @@ export class TenantConfigRepository extends DefaultUserModifyCrudRepository<
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
   ) {
-    super(TenantConfig, dataSource, getCurrentUser);
+    super(TenantMgmtConfig, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

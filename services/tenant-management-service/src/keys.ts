@@ -65,6 +65,10 @@ export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
   'sf.webhook.verifier',
 );
 
+export const CALLABCK_VERIFIER = BindingKey.create<Interceptor>(
+  'sf.callback.verifier',
+);
+
 /**
  * Binding key for the webhook handler extension point.
  */

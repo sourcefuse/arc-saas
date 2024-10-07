@@ -16,8 +16,8 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {TenantConfig} from '../models';
-import {TenantConfigRepository} from '../repositories';
+import {TenantMgmtConfig} from '../models';
+import {TenantMgmtConfigRepository} from '../repositories';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../permissions';
@@ -27,10 +27,10 @@ import {
   STATUS_CODE,
 } from '@sourceloop/core';
 const basePath = '/tenant-configs';
-export class TenantConfigController {
+export class TenantMgmtConfigController {
   constructor(
-    @repository(TenantConfigRepository)
-    public tenantConfigRepository: TenantConfigRepository,
+    @repository(TenantMgmtConfigRepository)
+    public tenantConfigRepository: TenantMgmtConfigRepository,
   ) {}
   @authorize({
     permissions: [PermissionKey.CreateTenantConfig],
@@ -44,7 +44,7 @@ export class TenantConfigController {
       [STATUS_CODE.OK]: {
         description: 'Tenant Config model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TenantConfig)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TenantMgmtConfig)},
         },
       },
     },
@@ -53,15 +53,15 @@ export class TenantConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantConfig, {
+          schema: getModelSchemaRef(TenantMgmtConfig, {
             title: 'NewTenantConfig',
             exclude: ['id'],
           }),
         },
       },
     })
-    tenantConfig: Omit<TenantConfig, 'id'>,
-  ): Promise<TenantConfig> {
+    tenantConfig: Omit<TenantMgmtConfig, 'id'>,
+  ): Promise<TenantMgmtConfig> {
     return this.tenantConfigRepository.create(tenantConfig);
   }
   @authorize({
@@ -80,7 +80,7 @@ export class TenantConfigController {
     },
   })
   async count(
-    @param.where(TenantConfig) where?: Where<TenantConfig>,
+    @param.where(TenantMgmtConfig) where?: Where<TenantMgmtConfig>,
   ): Promise<Count> {
     return this.tenantConfigRepository.count(where);
   }
@@ -99,7 +99,9 @@ export class TenantConfigController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(TenantConfig, {includeRelations: true}),
+              items: getModelSchemaRef(TenantMgmtConfig, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -107,8 +109,8 @@ export class TenantConfigController {
     },
   })
   async find(
-    @param.filter(TenantConfig) filter?: Filter<TenantConfig>,
-  ): Promise<TenantConfig[]> {
+    @param.filter(TenantMgmtConfig) filter?: Filter<TenantMgmtConfig>,
+  ): Promise<TenantMgmtConfig[]> {
     return this.tenantConfigRepository.find(filter);
   }
   @authorize({
@@ -124,7 +126,7 @@ export class TenantConfigController {
         description: 'Tenant Config PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(TenantConfig),
+            schema: getModelSchemaRef(TenantMgmtConfig),
           },
         },
       },
@@ -134,12 +136,12 @@ export class TenantConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantConfig, {partial: true}),
+          schema: getModelSchemaRef(TenantMgmtConfig, {partial: true}),
         },
       },
     })
-    tenantConfig: TenantConfig,
-    @param.where(TenantConfig) where?: Where<TenantConfig>,
+    tenantConfig: TenantMgmtConfig,
+    @param.where(TenantMgmtConfig) where?: Where<TenantMgmtConfig>,
   ): Promise<Count> {
     return this.tenantConfigRepository.updateAll(tenantConfig, where);
   }
@@ -155,16 +157,16 @@ export class TenantConfigController {
       [STATUS_CODE.OK]: {
         description: 'Tenant Config model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TenantConfig)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TenantMgmtConfig)},
         },
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(TenantConfig, {exclude: 'where'})
-    filter?: FilterExcludingWhere<TenantConfig>,
-  ): Promise<TenantConfig> {
+    @param.filter(TenantMgmtConfig, {exclude: 'where'})
+    filter?: FilterExcludingWhere<TenantMgmtConfig>,
+  ): Promise<TenantMgmtConfig> {
     return this.tenantConfigRepository.findById(id, filter);
   }
   @authorize({
@@ -180,7 +182,7 @@ export class TenantConfigController {
         description: 'Tenant Config PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(TenantConfig),
+            schema: getModelSchemaRef(TenantMgmtConfig),
           },
         },
       },
@@ -191,11 +193,11 @@ export class TenantConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantConfig, {partial: true}),
+          schema: getModelSchemaRef(TenantMgmtConfig, {partial: true}),
         },
       },
     })
-    tenantConfig: TenantConfig,
+    tenantConfig: TenantMgmtConfig,
   ): Promise<void> {
     await this.tenantConfigRepository.updateById(id, tenantConfig);
   }
@@ -215,7 +217,7 @@ export class TenantConfigController {
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() tenantConfig: TenantConfig,
+    @requestBody() tenantConfig: TenantMgmtConfig,
   ): Promise<void> {
     await this.tenantConfigRepository.replaceById(id, tenantConfig);
   }
