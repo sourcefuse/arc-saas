@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS main.tenant_configs
+CREATE TABLE IF NOT EXISTS main.tenant_mgmt_configs
 (
     id uuid NOT NULL DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid,
     config_key varchar(100) NOT NULL,
@@ -28,6 +28,6 @@ END;
 $function$;
 
 CREATE TRIGGER mdt_tenant_configs
-    BEFORE UPDATE ON main.tenant_configs
+    BEFORE UPDATE ON main.tenant_mgmt_configs
     FOR EACH ROW
     EXECUTE FUNCTION main.moddatetime('modified_on');

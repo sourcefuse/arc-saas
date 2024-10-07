@@ -7,4 +7,4 @@ export * from './resource.model';
 export * from './invoice.model';
 export * from './address.model';
 export * from './lead-token.model';
-export * from './tenant-config.model';
+export * from './tenant-mgmt-config.model';

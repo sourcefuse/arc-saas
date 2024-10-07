@@ -1,1 +1,1 @@
-drop table main.tenant_configs;
+drop table main.tenant_mgmt_configs;
