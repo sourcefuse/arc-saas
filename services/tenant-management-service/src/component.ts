@@ -154,7 +154,6 @@ export class TenantManagementServiceComponent implements Component {
       LeadController,
       PingController,
       TenantController,
-      IdpController,
       TenantConfigController,
       TenantConfigTenantController,
     ];
