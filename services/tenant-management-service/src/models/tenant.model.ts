@@ -51,6 +51,13 @@ export class Tenant extends UserModifiableEntity {
   key: string;
 
   @property({
+    type: 'string',
+    description:
+      'Acquisition source of the tenant. Eg. AWS Marketplace, Super Admin Portal, Registration Page.',
+  })
+  source: string;
+
+  @property({
     name: 'spoc_user_id',
     description:
       'user id of the admin user who acts as a spoc for this tenant.',
