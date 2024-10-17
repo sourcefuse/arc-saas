@@ -15,7 +15,7 @@ import {
 } from '../../types';
 import {CryptoHelperService} from '../crypto-helper.service';
 import {NotificationService} from '../notifications';
-import { SaasTenantRepository } from '../../repositories/saas-tenant.repository';
+import {SaasTenantRepository} from '../../repositories/saas-tenant.repository';
 
 /**
  * Handler for provisioning webhooks.
