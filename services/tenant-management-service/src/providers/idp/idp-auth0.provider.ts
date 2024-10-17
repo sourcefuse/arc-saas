@@ -2,9 +2,8 @@ import {Provider} from '@loopback/context';
 
 import {ConfigureIdpFunc, IdpDetails, IdPKey, IdpResp} from '../../types';
 import {ManagementClient, PostOrganizationsRequest, UserCreate} from 'auth0';
-import {randomBytes} from 'crypto';
 import {repository} from '@loopback/repository';
-
+import {randomBytes} from 'crypto';
 import {HttpErrors} from '@loopback/rest';
 import {TenantMgmtConfigRepository} from '../../repositories';
 
@@ -57,21 +56,27 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
       enabled_connections: configValue.enabled_connections,
     };
     function generateStrongPassword(length: number): string {
-      const charset =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=';
+      const regex = /[A-Za-z0-9!@#$%^&*()_+~`|}{[\]:;?><,./-=]/; //NOSONAR
+      const validChars: string[] = [];
 
-      // Generate random bytes
+      const ASCII_PRINTABLE_START = 33;
+
+      const ASCII_PRINTABLE_END = 126;
+
+      for (let i = ASCII_PRINTABLE_START; i <= ASCII_PRINTABLE_END; i++) {
+        const char = String.fromCharCode(i);
+        if (regex.test(char)) {
+          validChars.push(char);
+        }
+      }
       const randomBytesArray = randomBytes(length);
-
-      // Map each byte to a character in the charset
       const password = Array.from(randomBytesArray)
-        .map(byte => charset[byte % charset.length])
+        .map(byte => validChars[byte % validChars.length])
         .join('');
-
       return password;
     }
 
-    const passwordLength = 16;
+    const passwordLength = 20;
     const password = generateStrongPassword(passwordLength);
     const userData: UserCreate = {
       email: tenant.contacts[0].email,
