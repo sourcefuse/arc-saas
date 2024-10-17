@@ -86,4 +86,3 @@ export class SaasTenantRepository extends DefaultTransactionalUserModifyReposito
     this.registerInclusionResolver('address', this.address.inclusionResolver);
   }
 }
-

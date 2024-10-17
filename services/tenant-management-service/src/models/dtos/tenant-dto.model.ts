@@ -1,8 +1,9 @@
-import { getJsonSchema } from '@loopback/openapi-v3';
-import { model, property } from '@loopback/repository';
-import { Address } from '../address.model';
-import { Contact } from '../contact.model';
-import { Tenant } from '../tenant.model';
+import {getJsonSchema} from '@loopback/openapi-v3';
+import {model, property} from '@loopback/repository';
+import {Address} from '../address.model';
+
+import {Tenant} from '../tenant.model';
+import {Contact} from '../contact.model';
 
 @model({
   description: 'model describing payload used to create a lead',

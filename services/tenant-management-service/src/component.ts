@@ -36,9 +36,11 @@ import {
   LeadController,
   LeadTenantController,
   PingController,
+  TenantMgmtConfigController,
+  TenantMgmtConfigTenantController,
   TenantController,
 } from './controllers';
-import { InvoiceController } from './controllers/invoice.controller';
+import {InvoiceController} from './controllers/invoice.controller';
 import {
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
@@ -49,27 +51,31 @@ import {
   Address,
   Contact,
   CreateLeadDTO,
+  CreateLeadDTO,
   Invoice,
   Lead,
   LeadToken,
   ProvisioningDTO,
+  ProvisioningDTO,
   Resource,
   Tenant,
-  TenantConfig,
+  TenantMgmtConfig,
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
   WebhookSecret,
+  WebhookSecret,
 } from './models';
-import { LeadTokenVerifierProvider, SystemUserProvider } from './providers';
+import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
 import {
   AddressRepository,
   ContactRepository,
   InvoiceRepository,
   LeadRepository,
+  LeadRepository,
   LeadTokenRepository,
   ResourceRepository,
-  TenantConfigRepository,
+  TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
 } from './repositories';
@@ -82,7 +88,8 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
-import { ITenantManagementServiceConfig } from './types';
+import {ITenantManagementServiceConfig} from './types';
+
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -122,7 +129,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
-      TenantConfigRepository
+      TenantMgmtConfigRepository,
     ];
 
     this.models = [
@@ -139,7 +146,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
-      TenantConfig
+      TenantMgmtConfig,
     ];
 
     this.controllers = [
@@ -149,7 +156,9 @@ export class TenantManagementServiceComponent implements Component {
       LeadTenantController,
       LeadController,
       PingController,
-      TenantController
+      TenantController,
+      TenantMgmtConfigController,
+      TenantMgmtConfigTenantController,
     ];
 
     this.bindings = [
