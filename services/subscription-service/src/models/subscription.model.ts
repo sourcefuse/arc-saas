@@ -3,6 +3,7 @@ import {SubscriptionStatus} from '../enums/subscription-status.enum';
 import {numericEnumValues} from '../utils';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Plan} from './plan.model';
+import {Invoice} from './invoice.model';
 
 @model({
   name: 'subscriptions',
@@ -52,6 +53,12 @@ export class Subscription extends UserModifiableEntity {
     name: 'plan_id',
   })
   planId: string;
+
+  @belongsTo(() => Invoice, undefined, {
+    description: 'invoice id of the subscription',
+    name: 'invoice_id',
+  })
+  invoiceId: string;
 
   constructor(data?: Partial<Subscription>) {
     super(data);

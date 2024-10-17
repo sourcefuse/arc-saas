@@ -5,3 +5,5 @@ export * from './subscription.repository';
 export * from './billing-cycle.repository';
 export * from './currency.repository';
 export * from './plan-sizes.repository';
+export * from './billing-customer.repository';
+export * from './invoice.repository';

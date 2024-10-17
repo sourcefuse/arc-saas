@@ -22,10 +22,27 @@ export const PermissionKey = {
   UpdateSubscription: '7002',
   ViewSubscription: '7004',
   ViewPlan: '7008',
+  CreateTenantConfig: '10220',
+  ViewTenantConfig: '10221',
+  UpdateTenantConfig: '10222',
+  DeleteTenantConfig: '10223',
 
   // notification service
   ViewNotificationTemplate: '8000',
   CreateNotificationTemplate: '8001',
   UpdateNotificationTemplate: '8002',
   DeleteNotificationTemplate: '8003',
+
+  CreateBillingCustomer: '5321',
+  CreateBillingPaymentSource: '5322',
+  CreateBillingInvoice: '5323',
+  GetBillingCustomer: '5324',
+  GetBillingPaymentSource: '5325',
+  GetBillingInvoice: '5326',
+  UpdateBillingCustomer: '5327',
+  UpdateBillingPaymentSource: '5328',
+  UpdateBillingInvoice: '5329',
+  DeleteBillingCustomer: '5331',
+  DeleteBillingPaymentSource: '5332',
+  DeleteBillingInvoice: '5333',
 };
