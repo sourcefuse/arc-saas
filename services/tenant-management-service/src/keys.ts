@@ -1,20 +1,22 @@
-import {VerifyFunction} from 'loopback4-authentication';
 import {
+  BindingKey,
+  BindingTemplate,
+  extensionFor,
+  Interceptor,
+} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import {BINDING_PREFIX} from '@sourceloop/core';
+import {VerifyFunction} from 'loopback4-authentication';
+import {IAuthUser} from 'loopback4-authorization';
+import {WebhookController} from './controllers';
+import {
+  ConfigureIdpFunc,
+  IdpResp,
   ITenantManagementServiceConfig,
   LeadUser,
   WebhookConfig,
   WebhookNotificationServiceType,
 } from './types';
-import {IAuthUser} from 'loopback4-authorization';
-import {AnyObject} from '@loopback/repository';
-import {WebhookController} from './controllers';
-import {
-  BindingKey,
-  BindingTemplate,
-  Interceptor,
-  extensionFor,
-} from '@loopback/core';
-import {BINDING_PREFIX} from '@sourceloop/core';
 import {IEventConnector} from './types/i-event-connector.interface';
 
 export namespace TenantManagementServiceBindings {
@@ -22,6 +24,17 @@ export namespace TenantManagementServiceBindings {
     BindingKey.create<ITenantManagementServiceConfig | null>(
       `${BINDING_PREFIX}.chat.config`,
     );
+  /**
+   * Binding key for the Idp keycloak provider.
+   */
+  export const IDP_KEYCLOAK = BindingKey.create<ConfigureIdpFunc<IdpResp>>(
+    'sf.user.idp.keycloak',
+  );
+  /**
+   * Binding key for the Idp Auth0 provider.
+   */
+  export const IDP_AUTH0 =
+    BindingKey.create<ConfigureIdpFunc<IdpResp>>('sf.user.idp.auth0');
 }
 
 /**
@@ -49,6 +62,10 @@ export const WEBHOOK_CONFIG =
  */
 export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
   'sf.webhook.verifier',
+);
+
+export const CALLABCK_VERIFIER = BindingKey.create<Interceptor>(
+  'sf.callback.verifier',
 );
 
 /**
