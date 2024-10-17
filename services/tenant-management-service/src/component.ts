@@ -14,8 +14,8 @@ import {
   ProviderMap,
   ServiceOrProviderClass,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { Class, Model, Repository } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -25,53 +25,54 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import { AuthenticationComponent } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+import {
+  ContactController,
+  HomePageController,
+  LeadController,
+  LeadTenantController,
+  PingController,
+  TenantController,
+} from './controllers';
+import { InvoiceController } from './controllers/invoice.controller';
 import {
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
 } from './keys';
-import {ITenantManagementServiceConfig} from './types';
-import {InvoiceController} from './controllers/invoice.controller';
-import {
-  ContactController,
-  HomePageController,
-  LeadTenantController,
-  LeadController,
-  PingController,
-  TenantController,
-} from './controllers';
 import {
   Address,
   Contact,
+  CreateLeadDTO,
   Invoice,
   Lead,
   LeadToken,
+  ProvisioningDTO,
   Resource,
   Tenant,
-  WebhookSecret,
-  CreateLeadDTO,
-  ProvisioningDTO,
+  TenantConfig,
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
+  WebhookSecret,
 } from './models';
+import { LeadTokenVerifierProvider, SystemUserProvider } from './providers';
 import {
   AddressRepository,
   ContactRepository,
   InvoiceRepository,
-  LeadTokenRepository,
   LeadRepository,
+  LeadTokenRepository,
   ResourceRepository,
+  TenantConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
 } from './repositories';
-import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
 import {
   CryptoHelperService,
   EventConnector,
@@ -81,6 +82,7 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
+import { ITenantManagementServiceConfig } from './types';
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -120,6 +122,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
+      TenantConfigRepository
     ];
 
     this.models = [
@@ -136,6 +139,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
+      TenantConfig
     ];
 
     this.controllers = [
@@ -145,7 +149,7 @@ export class TenantManagementServiceComponent implements Component {
       LeadTenantController,
       LeadController,
       PingController,
-      TenantController,
+      TenantController
     ];
 
     this.bindings = [
