@@ -39,10 +39,17 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
     }
 
     const configValue = tenantConfig[0].configValue;
+
+    /**Organization name for silo tenants will be its key
+     * whereas for pooled tenants it will be the plan tier
+     * all the pooled tenants will be under the same organization
+     */
+    const orgName =
+      planTier === 'PREMIUM' ? tenant.key : planTier.toLowerCase();
     const organizationData: PostOrganizationsRequest = {
-      name: tenant.key,
+      name: orgName,
       // eslint-disable-next-line
-      display_name: configValue.display_name,
+      display_name: orgName,
       branding: {
         // eslint-disable-next-line
         logo_url: configValue.logo_url,
@@ -117,7 +124,7 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
     } else {
       try {
         const organizationResponse =
-          await this.management.organizations.getByName({name: tenant.name});
+          await this.management.organizations.getByName({name: orgName});
 
         if (organizationResponse.status === STATUS_OK) {
           organizationId = organizationResponse.data.id;

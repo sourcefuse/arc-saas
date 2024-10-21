@@ -14,7 +14,7 @@ import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 import {SYSTEM_USER} from '../keys';
 import {WebhookSecretRepository} from '../repositories';
 
-const DEFAULT_TIME_TOLERANCE = 10000;
+const DEFAULT_TIME_TOLERANCE = 20000;
 
 export class CallbackVerifierProvider implements Provider<Interceptor> {
   constructor(
@@ -78,7 +78,7 @@ export class CallbackVerifierProvider implements Provider<Interceptor> {
       }
 
       const hh = Math.abs(timestamp - Date.now());
-      // timestamp should be within 10 seconds
+      // timestamp should be within 20 seconds
       if (hh > TIMESTAMP_TOLERANCE) {
         this.logger.error('Timestamp out of tolerance');
         throw new HttpErrors.Unauthorized();

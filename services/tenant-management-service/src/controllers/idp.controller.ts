@@ -49,21 +49,18 @@ export class IdpController {
     })
     payload: IdpDetailsDTO,
   ): Promise<IdpResp> {
-    const res: IdpResp = {
+    let res: IdpResp = {
       authId: '',
     };
     switch (payload.tenant.identityProvider) {
-      case IdPKey.AUTH0: {
-        const auth0Resp = await this.idpAuth0Provider(payload);
-        return auth0Resp;
-      }
+      case IdPKey.AUTH0:
+        res = await this.idpAuth0Provider(payload);
+        break;
       case IdPKey.COGNITO:
         break;
-
-      case IdPKey.KEYCLOAK: {
-        const keycloakResp = await this.idpKeycloakProvider(payload);
-        return keycloakResp;
-      }
+      case IdPKey.KEYCLOAK:
+        res = await this.idpKeycloakProvider(payload);
+        break;
       default:
         break;
     }

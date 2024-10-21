@@ -79,10 +79,8 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
         throw new HttpErrors.Unauthorized();
       }
 
-      // timestamp should be within 5 seconds
-      if (
-        Math.abs(timestamp - Date.now()) > this.webhookConfig.timestampTolerance
-      ) {
+      // timestamp should be within 5-20 seconds
+      if (Math.abs(timestamp - Date.now()) > 20000) {
         this.logger.error('Timestamp out of tolerance');
         throw new HttpErrors.Unauthorized();
       }
