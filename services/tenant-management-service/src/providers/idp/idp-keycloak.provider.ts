@@ -58,6 +58,7 @@ export class KeycloakIdpProvider
         clientId,
         token,
         clientSecret,
+        tenant.key,
       );
 
       // 4. Create a new admin user for the tenant
@@ -154,10 +155,11 @@ export class KeycloakIdpProvider
     clientId: string,
     token: string,
     clientSecret: string,
+    key: string,
   ): Promise<void> {
     const redirectUris = [
       'http://localhost:3000/*', // Example: Local development redirect URI
-      'https://your-app.com/*',
+      `https://${key}.${process.env.DOMAIN_NAME}/authentication-service/*`,
     ];
 
     await axios.post(
