@@ -15,6 +15,7 @@ import {
 } from '../../types';
 import {CryptoHelperService} from '../crypto-helper.service';
 import {NotificationService} from '../notifications';
+import {SaasTenantRepository} from '../../repositories/saas-tenant.repository';
 
 /**
  * Handler for provisioning webhooks.
@@ -37,7 +38,7 @@ export class ProvisioningWebhookHandler implements IWebhookHandler {
   constructor(
     @repository(ResourceRepository)
     public resourceRepository: ResourceRepository,
-    @repository(TenantRepository)
+    @repository(SaasTenantRepository)
     public tenantRepository: TenantRepository,
     @inject('services.NotificationService')
     private notificationService: NotificationService,

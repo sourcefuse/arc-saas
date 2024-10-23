@@ -1,0 +1,1 @@
+drop table main.tenant_mgmt_configs;
