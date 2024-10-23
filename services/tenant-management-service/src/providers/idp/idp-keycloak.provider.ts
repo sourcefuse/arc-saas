@@ -37,13 +37,13 @@ export class KeycloakIdpProvider
 
       // Fetch the clientId, clientSecret, and realmName from AWS SSM
       const clientId = await this.getParameterFromSSM(
-        `/${tenant.namespace}/${tenant.environment}/${tenant.key}/keycloak-client-id`,
+        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${tenant.tier.toLowerCase()}/${tenant.key}/keycloak-client-id`,
       );
       const clientSecret = await this.getParameterFromSSM(
-        `/${tenant.namespace}/${tenant.environment}/${tenant.key}/keycloak-client-secret`,
+        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${tenant.tier.toLowerCase()}/${tenant.key}/keycloak-client-secret`,
       );
       const realmName = await this.getParameterFromSSM(
-        `/${tenant.namespace}/${tenant.environment}/${tenant.key}/keycloak-client-realm`,
+        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${tenant.tier.toLowerCase()}/${tenant.key}/keycloak-client-realm`,
       );
 
       // 1. Create a new realm using the tenant key
