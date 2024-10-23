@@ -30,29 +30,42 @@ export class KeycloakIdpProvider
   }
 
   async configure(payload: IdpDetails): Promise<IdpResp> {
-    const {tenant} = payload;
+    const {tenant, plan} = payload;
 
     try {
       const token = await this.authenticateAdmin();
 
       // Fetch the clientId, clientSecret, and realmName from AWS SSM
       const clientId = await this.getParameterFromSSM(
-        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${tenant.tier.toLowerCase()}/${tenant.key}/keycloak-client-id`,
+        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${plan.tier.toLowerCase()}/${tenant.key}/keycloak-client-id`,
       );
       const clientSecret = await this.getParameterFromSSM(
-        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${tenant.tier.toLowerCase()}/${tenant.key}/keycloak-client-secret`,
+        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${plan.tier.toLowerCase()}/${tenant.key}/keycloak-client-secret`,
       );
       const realmName = await this.getParameterFromSSM(
-        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${tenant.tier.toLowerCase()}/${tenant.key}/keycloak-client-realm`,
+        `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${plan.tier.toLowerCase()}/${tenant.key}/keycloak-client-realm`,
       );
 
-      // 1. Create a new realm using the tenant key
-      await this.createRealm(realmName ?? tenant.key, token);
+      // Handling the logic based on tenant tier
+      if (plan.tier === 'PREMIUM') {
+        // For PREMIUM: always create a new realm
+        await this.createRealm(realmName ?? tenant.key, token);
+      } else if (plan.tier === 'STANDARD' || plan.tier === 'BASIC') {
+        // For STANDARD or BASIC: check if the realm exists
+        const realmExists = await this.realmExists(
+          realmName ?? tenant.key,
+          token,
+        );
+        if (!realmExists) {
+          // If the realm does not exist, create it
+          await this.createRealm(realmName ?? tenant.key, token);
+        }
+      }
 
-      // 2. Set up SMTP settings in the realm for AWS SES
+      // Set up SMTP settings in the realm for AWS SES
       await this.setupEmailSettings(realmName ?? tenant.key, token);
 
-      // 2. Create a new client within the realm
+      // Create a new client within the realm
       await this.createClient(
         realmName ?? tenant.key,
         clientId,
@@ -61,11 +74,10 @@ export class KeycloakIdpProvider
         tenant.key,
       );
 
-      // 4. Create a new admin user for the tenant
+      // Create a new admin user for the tenant
       const adminUsername = tenant.contacts[0].email;
-
       const passwordLength = 20;
-      const adminPassword = this.generateStrongPassword(passwordLength); // This can be dynamic or set in the environment
+      const adminPassword = this.generateStrongPassword(passwordLength);
       const {firstName, lastName, email} = tenant.contacts[0];
 
       const user = await this.createUser(
@@ -85,6 +97,29 @@ export class KeycloakIdpProvider
       throw new Error(
         `Failed to configure Keycloak for tenant: ${tenant.name}`,
       );
+    }
+  }
+
+  // Method to check if a realm exists
+  async realmExists(realmName: string, token: string): Promise<boolean> {
+    try {
+      const response = await axios.get(
+        `${process.env.KEYCLOAK_HOST}/admin/realms/${realmName}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      // If the realm exists, a successful response is returned (status code 200)
+      return response.status === 200;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // If a 404 is returned, it means the realm doesn't exist
+        return false;
+      }
+      // Rethrow any other errors
+      throw new Error(`Error checking realm existence: ${error.message}`);
     }
   }
 
