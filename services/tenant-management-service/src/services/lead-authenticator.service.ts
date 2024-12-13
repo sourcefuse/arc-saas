@@ -55,6 +55,10 @@ export class LeadAuthenticator {
       PermissionKey.DeleteBillingCustomer,
       PermissionKey.DeleteBillingPaymentSource,
       PermissionKey.DeleteBillingInvoice,
+      PermissionKey.CreateTenantConfig,
+      PermissionKey.ViewTenantConfig,
+      PermissionKey.DeleteTenantConfig,
+      PermissionKey.UpdateTenantConfig,
     ]);
     const randomKey = this.cryptoHelperService.generateRandomString(
       +process.env.LEAD_KEY_LENGTH!,
