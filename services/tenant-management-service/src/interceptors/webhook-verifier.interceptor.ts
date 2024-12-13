@@ -78,9 +78,9 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
         this.logger.error('Invalid signature');
         throw new HttpErrors.Unauthorized();
       }
-
+      const TIMESTAMP_TOLERANCE_MS = 20000; // 20 seconds
       // timestamp should be within 5-20 seconds
-      if (Math.abs(timestamp - Date.now()) > 20000) {
+      if (Math.abs(timestamp - Date.now()) > TIMESTAMP_TOLERANCE_MS) {
         this.logger.error('Timestamp out of tolerance');
         throw new HttpErrors.Unauthorized();
       }

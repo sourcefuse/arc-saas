@@ -115,11 +115,11 @@ describe('WebhookController', () => {
     });
 
     it('should return 401 status for a webhook call with an expired timestamp', async () => {
-      const sixSeconds = 20000;
+      const TIMESTAMP_TOLERANCE_MS = 20000; // 20 seconds
       // generate token that was set 6 seconds ago
       const headers = await buildHeaders(
         webhookPayload,
-        Date.now() - sixSeconds,
+        Date.now() - TIMESTAMP_TOLERANCE_MS,
       );
       await client
         .post('/webhook')

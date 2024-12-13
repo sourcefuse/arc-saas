@@ -5,6 +5,11 @@ import {ConfigureIdpFunc, IdpDetails, IdpResp} from '../../types';
 import AWS from 'aws-sdk';
 import {randomBytes} from 'crypto';
 
+export const STATUS = {
+  OK: 200,
+  NOT_FOUND: 404,
+};
+
 interface TokenResponse {
   // eslint-disable-next-line
   access_token: string;
@@ -54,6 +59,8 @@ export class KeycloakIdpProvider
           // If the realm does not exist, create it
           await this.createRealm(realmName ?? tenant.key, token);
         }
+      } else {
+        // DO NOTHING
       }
 
       // Set up SMTP settings in the realm for AWS SES
@@ -106,9 +113,9 @@ export class KeycloakIdpProvider
         },
       );
       // If the realm exists, a successful response is returned (status code 200)
-      return response.status === 200;
+      return response.status === STATUS.OK;
     } catch (error) {
-      if (error.response && error.response.status === 404) {
+      if (error.response && error.response.status === STATUS.NOT_FOUND) {
         // If a 404 is returned, it means the realm doesn't exist
         return false;
       }
@@ -153,17 +160,7 @@ export class KeycloakIdpProvider
           },
         },
       );
-      console.log(`Realm '${realmName}' created successfully.`);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Axios-specific error handling
-        console.error(
-          `Error creating realm: ${error.response?.data || error.message}`,
-        );
-      } else {
-        // Generic error handling
-        console.error(`An unexpected error occurred: ${error.message}`);
-      }
       throw new Error(
         `Failed to create realm '${realmName}': ${error.message}`,
       );
@@ -193,17 +190,7 @@ export class KeycloakIdpProvider
           },
         },
       );
-      console.log(`SMTP settings updated for realm '${realmName}'.`);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(
-          `Error setting up email settings: ${error.response?.data || error.message}`,
-        );
-      } else {
-        console.error(
-          `An unexpected error occurred while setting up email settings: ${error.message}`,
-        );
-      }
       throw new Error(
         `Failed to set up email settings for realm '${realmName}': ${error.message}`,
       );
@@ -241,19 +228,7 @@ export class KeycloakIdpProvider
           },
         },
       );
-      console.log(
-        `Client '${clientId}' created successfully in realm '${realmName}'.`,
-      );
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Handle Axios-specific error
-        console.error(
-          `Error creating client: ${error.response?.data || error.message}`,
-        );
-      } else {
-        // Handle generic error
-        console.error(`An unexpected error occurred: ${error.message}`);
-      }
       throw new Error(
         `Failed to create client '${clientId}' in realm '${realmName}': ${error.message}`,
       );
@@ -312,20 +287,8 @@ export class KeycloakIdpProvider
       // Send the password reset email
       await this.sendPasswordResetEmail(realmName, userId, token);
 
-      console.log(
-        `User '${username}' created successfully with ID '${userId}'.`,
-      );
       return {id: userId};
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Handle Axios-specific error
-        console.error(
-          `Error creating user: ${error.response?.data || error.message}`,
-        );
-      } else {
-        // Handle generic error
-        console.error(`An unexpected error occurred: ${error.message}`);
-      }
       throw new Error(
         `Failed to create user '${username}' in realm '${realmName}': ${error.message}`,
       );
@@ -348,19 +311,7 @@ export class KeycloakIdpProvider
           },
         },
       );
-      console.log(
-        `Password reset email sent to user '${userId}' in realm '${realmName}'.`,
-      );
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Handle Axios-specific error
-        console.error(
-          `Error sending password reset email: ${error.response?.data || error.message}`,
-        );
-      } else {
-        // Handle generic error
-        console.error(`An unexpected error occurred: ${error.message}`);
-      }
       throw new Error(
         `Failed to send password reset email for user '${userId}' in realm '${realmName}': ${error.message}`,
       );
@@ -375,7 +326,6 @@ export class KeycloakIdpProvider
         .promise();
       return response.Parameter?.Value ?? '';
     } catch (error) {
-      console.error(`Error fetching parameter ${parameterName}:`, error);
       // Optionally, you can throw the error or return a default value
       throw new Error(`Failed to fetch parameter ${parameterName}`);
     }
