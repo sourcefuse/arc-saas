@@ -5,3 +5,6 @@ export * from './resource.model';
 export * from './billing-cycle.model';
 export * from './currency.model';
 export * from './plan-sizes.model';
+export * from './dto';
+export * from './billing-customer.model';
+export * from './invoice.model';

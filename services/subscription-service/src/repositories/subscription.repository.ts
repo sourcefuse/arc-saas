@@ -1,6 +1,6 @@
 import {inject, Getter} from '@loopback/core';
 import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
-import {Subscription, SubscriptionRelations, Plan} from '../models';
+import {Subscription, SubscriptionRelations, Plan, Invoice} from '../models';
 import {PlanRepository} from './plan.repository';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {
@@ -8,6 +8,7 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {SubscriptionDbSourceName} from '../types';
+import {InvoiceRepository} from './invoice.repository';
 
 export class SubscriptionRepository extends DefaultUserModifyCrudRepository<
   Subscription,
@@ -19,6 +20,11 @@ export class SubscriptionRepository extends DefaultUserModifyCrudRepository<
     typeof Subscription.prototype.id
   >;
 
+  public readonly invoice: BelongsToAccessor<
+    Invoice,
+    typeof Subscription.prototype.id
+  >;
+
   constructor(
     @inject(`datasources.${SubscriptionDbSourceName}`)
     dataSource: juggler.DataSource,
@@ -26,8 +32,15 @@ export class SubscriptionRepository extends DefaultUserModifyCrudRepository<
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('PlanRepository')
     protected planRepositoryGetter: Getter<PlanRepository>,
+    @repository.getter('InvoiceRepository')
+    protected invoiceRepositoryGetter: Getter<InvoiceRepository>,
   ) {
     super(Subscription, dataSource, getCurrentUser);
+    this.invoice = this.createBelongsToAccessorFor(
+      'invoice',
+      invoiceRepositoryGetter,
+    );
+    this.registerInclusionResolver('invoice', this.invoice.inclusionResolver);
     this.plan = this.createBelongsToAccessorFor('plan', planRepositoryGetter);
     this.registerInclusionResolver('plan', this.plan.inclusionResolver);
   }

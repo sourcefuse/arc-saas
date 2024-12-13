@@ -2,7 +2,9 @@ import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import {TenantStatus} from '../enums';
 import {Address, Contact, Lead, Tenant, TenantOnboardDTO} from '../models';
+import {CreateLeadDTO} from '../models/dtos/create-lead-dto.model';
 import {
   AddressRepository,
   ContactRepository,
@@ -10,10 +12,8 @@ import {
   TenantRepository,
 } from '../repositories';
 import {LeadUser} from '../types';
-import {LeadAuthenticator} from './lead-authenticator.service';
-import {TenantStatus} from '../enums';
-import {CreateLeadDTO} from '../models/dtos/create-lead-dto.model';
 import {hasAnyOf, weakEqual} from '../utils';
+import {LeadAuthenticator} from './lead-authenticator.service';
 
 /**
  * Helper service for onboarding tenants.
@@ -197,8 +197,21 @@ export class OnboardingService {
         },
         {transaction},
       );
+      const res = await this.tenantRepository.findById(
+        tenant.id,
+        {
+          include: [
+            {relation: 'contacts'},
+            {relation: 'resources'},
+            {relation: 'lead'},
+            {relation: 'address'},
+          ],
+        },
+        {transaction},
+      );
+
       await transaction.commit();
-      return tenant;
+      return res;
     } catch (error) {
       await transaction.rollback();
       throw error;
