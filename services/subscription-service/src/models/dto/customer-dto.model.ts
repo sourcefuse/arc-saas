@@ -57,19 +57,3 @@ export class CustomerDto extends Model {
     super(data);
   }
 }
-
-// this refers to the billing address and shipping address.
-export interface IAddress {
-  firstName: string;
-  lastName: string;
-  email: string;
-  company?: string;
-  phone?: string;
-  line1?: string;
-  line2?: string;
-  line3?: string;
-  city: string;
-  state: string;
-  zip: string;
-  coutnry: string;
-}
