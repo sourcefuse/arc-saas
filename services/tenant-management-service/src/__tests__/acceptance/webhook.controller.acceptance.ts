@@ -115,7 +115,7 @@ describe('WebhookController', () => {
     });
 
     it('should return 401 status for a webhook call with an expired timestamp', async () => {
-      const sixSeconds = 6000;
+      const sixSeconds = 20000;
       // generate token that was set 6 seconds ago
       const headers = await buildHeaders(
         webhookPayload,

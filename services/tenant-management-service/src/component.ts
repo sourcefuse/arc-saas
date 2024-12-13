@@ -31,47 +31,50 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  ContactController,
+  HomePageController,
+  LeadController,
+  LeadTenantController,
+  PingController,
+  TenantMgmtConfigController,
+  TenantMgmtConfigTenantController,
+  TenantController,
+} from './controllers';
+import {InvoiceController} from './controllers/invoice.controller';
+import {
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
 } from './keys';
-import {ITenantManagementServiceConfig} from './types';
-import {InvoiceController} from './controllers/invoice.controller';
-import {
-  ContactController,
-  HomePageController,
-  LeadTenantController,
-  LeadController,
-  PingController,
-  TenantController,
-} from './controllers';
 import {
   Address,
   Contact,
+  CreateLeadDTO,
   Invoice,
   Lead,
   LeadToken,
+  ProvisioningDTO,
   Resource,
   Tenant,
-  WebhookSecret,
-  CreateLeadDTO,
-  ProvisioningDTO,
+  TenantMgmtConfig,
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
+  WebhookSecret,
 } from './models';
+import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
 import {
   AddressRepository,
   ContactRepository,
   InvoiceRepository,
-  LeadTokenRepository,
   LeadRepository,
+  LeadTokenRepository,
   ResourceRepository,
+  TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
 } from './repositories';
-import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
 import {
   CryptoHelperService,
   EventConnector,
@@ -81,6 +84,8 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
+import {ITenantManagementServiceConfig} from './types';
+
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -120,6 +125,7 @@ export class TenantManagementServiceComponent implements Component {
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,
+      TenantMgmtConfigRepository,
     ];
 
     this.models = [
@@ -136,6 +142,7 @@ export class TenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
+      TenantMgmtConfig,
     ];
 
     this.controllers = [
@@ -146,6 +153,8 @@ export class TenantManagementServiceComponent implements Component {
       LeadController,
       PingController,
       TenantController,
+      TenantMgmtConfigController,
+      TenantMgmtConfigTenantController,
     ];
 
     this.bindings = [
