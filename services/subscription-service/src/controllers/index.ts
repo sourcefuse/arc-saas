@@ -9,3 +9,4 @@ export * from './currency.controller';
 export * from './plan-subscription.controller';
 export * from './plan-sizes.controller';
 export * from './plan-features.controller';
+export * from './subscription-invoice.controller';

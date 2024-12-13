@@ -21,6 +21,8 @@ CREATE  TABLE plans (
 	CONSTRAINT pk_plans_id PRIMARY KEY ( id )
  );
 
+
+
 CREATE  TABLE subscriptions ( 
 	id                   uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL  ,
 	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL  ,

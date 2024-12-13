@@ -43,6 +43,18 @@ export class LeadAuthenticator {
       PermissionKey.ViewPlan,
       PermissionKey.ViewSubscription,
       PermissionKey.CreateInvoice,
+      PermissionKey.CreateBillingCustomer,
+      PermissionKey.CreateBillingPaymentSource,
+      PermissionKey.CreateBillingInvoice,
+      PermissionKey.GetBillingCustomer,
+      PermissionKey.GetBillingPaymentSource,
+      PermissionKey.GetBillingInvoice,
+      PermissionKey.UpdateBillingCustomer,
+      PermissionKey.UpdateBillingPaymentSource,
+      PermissionKey.UpdateBillingInvoice,
+      PermissionKey.DeleteBillingCustomer,
+      PermissionKey.DeleteBillingPaymentSource,
+      PermissionKey.DeleteBillingInvoice,
     ]);
     const randomKey = this.cryptoHelperService.generateRandomString(
       +process.env.LEAD_KEY_LENGTH!,
