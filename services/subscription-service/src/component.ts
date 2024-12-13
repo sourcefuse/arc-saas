@@ -2,68 +2,83 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+
+import {inject, Binding} from '@loopback/context';
 import {
-  Binding,
   Component,
-  ControllerClass,
   CoreBindings,
-  inject,
   ProviderMap,
   ServiceOrProviderClass,
+  ControllerClass,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
+import {Class, Repository, Model} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
-  BearerVerifierBindings,
-  BearerVerifierComponent,
-  BearerVerifierConfig,
-  BearerVerifierType,
   CoreComponent,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
+  BearerVerifierBindings,
+  BearerVerifierType,
+  BearerVerifierConfig,
+  BearerVerifierComponent,
 } from '@sourceloop/core';
+import {
+  FeatureToggleBindings,
+  FeatureToggleServiceComponent,
+} from '@sourceloop/feature-toggle-service';
+import {BillingComponent} from 'loopback4-billing';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {SubscriptionServiceBindings} from './keys';
-import {ISubscriptionServiceConfig} from './types';
-import {
-  BillingCycleRepository,
-  CurrencyRepository,
-  PlanRepository,
-  PlanSizesRepository,
-  ResourceRepository,
-  ServiceRepository,
-  SubscriptionRepository,
-} from './repositories';
 import {
   BillinCycleController,
-  CurrencyController,
   HomePageController,
   PingController,
+  CurrencyController,
   PlanController,
-  PlanFeaturesController,
-  PlanSizesController,
-  PlanSubscriptionController,
   ResourceController,
   ServiceController,
   SubscriptionController,
+  PlanSubscriptionController,
+  PlanSizesController,
+  PlanFeaturesController,
 } from './controllers';
+import {
+  SubscriptionServiceBindings,
+  SYSTEM_USER,
+  WEBHOOK_VERIFIER,
+} from './keys';
 import {
   BillingCycle,
   Currency,
   Plan,
-  PlanSizes,
   Resource,
+  BillingCustomer,
+  Invoice,
   Service,
   Subscription,
+  PlanSizes,
 } from './models';
 import {
-  FeatureToggleBindings,
-  FeatureToggleServiceComponent,
-} from '@sourceloop/feature-toggle-service';
+  BillingCycleRepository,
+  CurrencyRepository,
+  PlanRepository,
+  ResourceRepository,
+  ServiceRepository,
+  SubscriptionRepository,
+  PlanSizesRepository,
+  BillingCustomerRepository,
+  InvoiceRepository,
+} from './repositories';
+import {ISubscriptionServiceConfig} from './types';
+import {WebhookVerifierProvider} from './interceptors/webhook-verifier.interceptor';
+import {SystemUserProvider} from './providers';
+import {BillingCustomerController} from './controllers/billing-customer.controller';
+import {BillingInvoiceController} from './controllers/billing-invoice.controller';
+import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
+import {WebhookController} from './controllers/webhook.controller';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
@@ -82,6 +97,7 @@ export class SubscriptionServiceComponent implements Component {
       .bind(FeatureToggleBindings.Config)
       .to({bindControllers: true, useCustomSequence: true});
     this.application.component(FeatureToggleServiceComponent);
+    this.application.component(BillingComponent);
 
     this.application.api({
       openapi: '3.0.0',
@@ -109,6 +125,8 @@ export class SubscriptionServiceComponent implements Component {
       ServiceRepository,
       SubscriptionRepository,
       PlanSizesRepository,
+      BillingCustomerRepository,
+      InvoiceRepository,
     ];
 
     this.models = [
@@ -116,9 +134,16 @@ export class SubscriptionServiceComponent implements Component {
       Currency,
       Plan,
       Resource,
+      BillingCustomer,
+      Invoice,
       Service,
       Subscription,
       PlanSizes,
+    ];
+    this.bindings = [
+      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+
+      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
     ];
 
     this.controllers = [
@@ -133,6 +158,10 @@ export class SubscriptionServiceComponent implements Component {
       PlanSubscriptionController,
       PlanSizesController,
       PlanFeaturesController,
+      BillingCustomerController,
+      BillingInvoiceController,
+      BillingPaymentSourceController,
+      WebhookController,
     ];
   }
 

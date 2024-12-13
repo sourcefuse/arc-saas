@@ -38,3 +38,4 @@ export * from './resource.type';
 export * from './i-provisioning-service.interface';
 export * from './i-subscription.interface';
 export * from './i-event-connector.interface';
+export * from './i-post-webhook-handler-service.interface';

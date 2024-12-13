@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {TInvoice} from 'loopback4-billing';
 import {IServiceConfig} from '@sourceloop/core';
 
 // sonarignore:start
@@ -24,3 +25,24 @@ export type LeadUserWithToken = {
 
 export const SubscriptionDbSourceName = 'SubscriptionDB';
 // sonarignore:end
+
+export type InvoiceStatus =
+  | 'paid'
+  | 'posted'
+  | 'payment_due'
+  | 'not_paid'
+  | 'voided'
+  | 'pending';
+
+export interface IPayload {
+  id: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  event_type: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  webhook_status: string;
+  content: IContent;
+}
+
+export interface IContent {
+  invoice: TInvoice;
+}

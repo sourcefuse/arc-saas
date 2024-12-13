@@ -4,7 +4,7 @@ import {ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {createHmac, randomBytes} from 'crypto';
 import {TenantMgmtServiceApplication} from '../../application';
 import {TenantStatus} from '../../enums';
-import {WEBHOOK_CONFIG} from '../../keys';
+import {PostWebhookHandlerServiceKey, WEBHOOK_CONFIG} from '../../keys';
 import {
   ContactRepository,
   ResourceRepository,
@@ -24,6 +24,7 @@ describe('WebhookController', () => {
   let tenantRepo: TenantRepository;
   let contactRepo: ContactRepository;
   let webhookPayload: WebhookPayload;
+  let postWebhookHandlerServiceStub: sinon.SinonStub;
   const nonExistantTenant = 'non-existant-tenant';
   const notifStub = sinon.stub();
 
@@ -49,6 +50,11 @@ describe('WebhookController', () => {
       createNotification: notifStub,
       getTemplateByName: (name: string) => testTemplates[name],
     });
+
+    postWebhookHandlerServiceStub = sinon.stub();
+    app.bind(PostWebhookHandlerServiceKey).to({
+      postWebhookHandler: postWebhookHandlerServiceStub,
+    });
   });
 
   after(async () => {
@@ -70,6 +76,19 @@ describe('WebhookController', () => {
   });
 
   describe('Common', () => {
+    it('should call postWebhookHandler on successful webhook processing', async () => {
+      const headers = await buildHeaders(webhookPayload);
+      await client
+        .post('/webhook')
+        .set(webhookConfig.signatureHeaderName, headers.signature)
+        .set(webhookConfig.timestampHeaderName, headers.timestamp)
+        .send(webhookPayload)
+        .expect(STATUS_CODE.NO_CONTENT);
+
+      // Verify that postWebhookHandler is called
+      sinon.assert.calledOnce(postWebhookHandlerServiceStub);
+      sinon.assert.calledWith(postWebhookHandlerServiceStub, webhookPayload);
+    });
     it('should return 204 status for a webhook call with valid token', async () => {
       const headers = await buildHeaders(webhookPayload);
       await client
