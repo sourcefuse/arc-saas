@@ -1,4 +1,4 @@
-import {model, Model, property} from '@loopback/repository';
+import {AnyObject, model, Model, property} from '@loopback/repository';
 
 @model({
   name: 'payment_source_dto',
@@ -19,7 +19,6 @@ export class PaymentSourceDto extends Model {
   @property({
     type: 'object',
     name: 'card',
-    required: true,
     jsonSchema: {
       type: 'object',
       properties: {
@@ -38,8 +37,12 @@ export class PaymentSourceDto extends Model {
       ],
     },
   })
-  card: ICard;
+  card?: ICard;
 
+  @property({
+    type: 'object',
+  })
+  options?: AnyObject;
   constructor(data?: Partial<PaymentSourceDto>) {
     super(data);
   }
