@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.3.0 (2024-12-13)
+
+* feat(ci-cd): add apis to manage plan size configuration and features … (#39) ([5e03dcb](https://github.com/sourcefuse/arc-saas/commit/5e03dcb)), closes [#39](https://github.com/sourcefuse/arc-saas/issues/39)
+* feat(subscription-service): add billing functionality to subscription… (#38) ([a1ea1e3](https://github.com/sourcefuse/arc-saas/commit/a1ea1e3)), closes [#38](https://github.com/sourcefuse/arc-saas/issues/38) [#34](https://github.com/sourcefuse/arc-saas/issues/34)
+* feat(subscription-service): add stripe integration in subscription service (#55) ([c3b4889](https://github.com/sourcefuse/arc-saas/commit/c3b4889)), closes [#55](https://github.com/sourcefuse/arc-saas/issues/55)
+
+
+### BREAKING CHANGE
+
+* yes
+
+
+
+
 ## <small>0.2.1 (2024-08-13)</small>
 
 * fix(subscription-service): make description non mandatory (#40) ([73f1256](https://github.com/sourcefuse/arc-saas/commit/73f1256)), closes [#40](https://github.com/sourcefuse/arc-saas/issues/40)

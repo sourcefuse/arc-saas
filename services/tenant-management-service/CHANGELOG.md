@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.3.0 (2024-12-13)
+
+* feat(ci-cd): add apis to manage plan size configuration and features … (#39) ([5e03dcb](https://github.com/sourcefuse/arc-saas/commit/5e03dcb)), closes [#39](https://github.com/sourcefuse/arc-saas/issues/39)
+* feat(subscription-service): add billing functionality to subscription… (#38) ([a1ea1e3](https://github.com/sourcefuse/arc-saas/commit/a1ea1e3)), closes [#38](https://github.com/sourcefuse/arc-saas/issues/38) [#34](https://github.com/sourcefuse/arc-saas/issues/34)
+* feat(subscription-service): add stripe integration in subscription service (#55) ([c3b4889](https://github.com/sourcefuse/arc-saas/commit/c3b4889)), closes [#55](https://github.com/sourcefuse/arc-saas/issues/55)
+* feat(tenant-management): integrate multiple idps (#53) ([c2f9875](https://github.com/sourcefuse/arc-saas/commit/c2f9875)), closes [#53](https://github.com/sourcefuse/arc-saas/issues/53)
+* fix(tenant-management): add post webhook handler (#22) ([944a5c3](https://github.com/sourcefuse/arc-saas/commit/944a5c3)), closes [#22](https://github.com/sourcefuse/arc-saas/issues/22) [#21](https://github.com/sourcefuse/arc-saas/issues/21)
+
+
+### BREAKING CHANGE
+
+* yes
+
+
+
+
 ## 0.2.0 (2024-08-05)
 
 * feat(subscription-service): add feature toggle service (#37) ([12ebca9](https://github.com/sourcefuse/arc-saas/commit/12ebca9)), closes [#37](https://github.com/sourcefuse/arc-saas/issues/37) [#26](https://github.com/sourcefuse/arc-saas/issues/26) [#36](https://github.com/sourcefuse/arc-saas/issues/36)
