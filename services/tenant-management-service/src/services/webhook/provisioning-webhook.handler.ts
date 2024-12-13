@@ -15,6 +15,8 @@ import {
 } from '../../types';
 import {CryptoHelperService} from '../crypto-helper.service';
 import {NotificationService} from '../notifications';
+import {IPostWebhookHandlerService} from '../../types/i-post-webhook-handler-service.interface';
+import {PostWebhookHandlerServiceKey} from '../../keys';
 
 /**
  * Handler for provisioning webhooks.
@@ -41,6 +43,8 @@ export class ProvisioningWebhookHandler implements IWebhookHandler {
     public tenantRepository: TenantRepository,
     @inject('services.NotificationService')
     private notificationService: NotificationService,
+    @inject(PostWebhookHandlerServiceKey)
+    private postWebhookHandlerService: IPostWebhookHandlerService<ResourceProvisionedWebhookPayload>,
     @service(CryptoHelperService)
     private cryptoHelperService: CryptoHelperService,
     @inject(LOGGER.LOGGER_INJECT)
@@ -97,6 +101,7 @@ export class ProvisioningWebhookHandler implements IWebhookHandler {
           {transaction},
         );
       }
+      await this.postWebhookHandlerService.postWebhookHandler(payload);
 
       await transaction.commit();
     } catch (e) {

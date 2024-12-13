@@ -1,7 +1,9 @@
 import {VerifyFunction} from 'loopback4-authentication';
 import {
+  IPostWebhookHandlerService,
   ITenantManagementServiceConfig,
   LeadUser,
+  ResourceProvisionedWebhookPayload,
   WebhookConfig,
   WebhookNotificationServiceType,
 } from './types';
@@ -74,3 +76,7 @@ export const WebhookNotificationService =
 export const EventConnectorBinding = BindingKey.create<
   IEventConnector<unknown>
 >('arc-saas.services.tenant-management.event-connector');
+
+export const PostWebhookHandlerServiceKey = BindingKey.create<
+  IPostWebhookHandlerService<ResourceProvisionedWebhookPayload>
+>('services.PostWebhookHandlerService');
