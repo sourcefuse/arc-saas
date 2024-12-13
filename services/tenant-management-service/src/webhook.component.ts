@@ -70,8 +70,6 @@ import {
   LeadRepository,
   LeadTokenRepository,
   ResourceRepository,
-  SaasTenantRepository,
-  TenantMgmtConfigRepository,
   TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
