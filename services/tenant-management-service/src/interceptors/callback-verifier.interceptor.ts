@@ -5,28 +5,23 @@ import {
   Setter,
   ValueOrPromise,
   inject,
-  service,
 } from '@loopback/core';
-import {WebhookConfig, WebhookPayload} from '../types';
+import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors, RequestContext} from '@loopback/rest';
-import {SYSTEM_USER, WEBHOOK_CONFIG} from '../keys';
-import {CryptoHelperService} from '../services';
-import {repository} from '@loopback/repository';
-import {WebhookSecretRepository} from '../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {timingSafeEqual} from 'crypto';
+import {createHmac, timingSafeEqual} from 'crypto';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {SYSTEM_USER} from '../keys';
+import {WebhookSecretRepository} from '../repositories';
 
-export class WebhookVerifierProvider implements Provider<Interceptor> {
+const DEFAULT_TIME_TOLERANCE = 20000;
+
+export class CallbackVerifierProvider implements Provider<Interceptor> {
   constructor(
-    @inject(WEBHOOK_CONFIG)
-    private readonly webhookConfig: WebhookConfig,
-    @service(CryptoHelperService)
-    private readonly cryptoHelperService: CryptoHelperService,
-    @repository(WebhookSecretRepository)
-    private readonly webhookSecretRepo: WebhookSecretRepository,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
+    @repository(WebhookSecretRepository)
+    private readonly webhookSecretRepo: WebhookSecretRepository,
     @inject.setter(AuthenticationBindings.CURRENT_USER)
     private readonly setCurrentUser: Setter<IAuthUser>,
     @inject(SYSTEM_USER)
@@ -42,32 +37,35 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
     next: () => ValueOrPromise<T>,
   ) {
     const {request} = invocationCtx.parent as RequestContext;
-    const value: WebhookPayload = request.body;
-    const timestamp = Number(
-      request.headers[this.webhookConfig.timestampHeaderName],
-    );
+    const value: AnyObject = request.body;
+    const TIMESTAMP_TOLERANCE = +DEFAULT_TIME_TOLERANCE;
+    const timestamp = Number(request.headers['x-timestamp']);
     if (isNaN(timestamp)) {
       this.logger.error('Invalid timestamp');
       throw new HttpErrors.Unauthorized();
     }
-    const signature = request.headers[this.webhookConfig.signatureHeaderName];
+
+    const signature = request.headers['x-signature'];
     if (!signature || typeof signature !== 'string') {
       this.logger.error('Missing signature string');
       throw new HttpErrors.Unauthorized();
     }
-    const initiatorId = value.initiatorId;
 
-    const secretInfo = await this.webhookSecretRepo.get(initiatorId);
+    const tenantId = value.tenant?.id;
+    if (!tenantId) {
+      this.logger.error('Missing secret');
+      throw new HttpErrors.Unauthorized();
+    }
+
+    const secretInfo = await this.webhookSecretRepo.get(tenantId);
     if (!secretInfo) {
       this.logger.error('No secret found for this initiator');
       throw new HttpErrors.Unauthorized();
     }
-    const expectedSignature =
-      this.cryptoHelperService.generateHmacForWebhookVerification(
-        `${JSON.stringify(value)}${secretInfo.context}`,
-        timestamp,
-        secretInfo.secret,
-      );
+
+    const expectedSignature = createHmac('sha256', secretInfo.secret)
+      .update(`${JSON.stringify(value)}${timestamp}`)
+      .digest('hex');
 
     try {
       // actual signature should be equal to expected signature
@@ -78,9 +76,10 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
         this.logger.error('Invalid signature');
         throw new HttpErrors.Unauthorized();
       }
-      const TIMESTAMP_TOLERANCE_MS = 20000; // 20 seconds
-      // timestamp should be within 5-20 seconds
-      if (Math.abs(timestamp - Date.now()) > TIMESTAMP_TOLERANCE_MS) {
+
+      const hh = Math.abs(timestamp - Date.now());
+      // timestamp should be within 20 seconds
+      if (hh > TIMESTAMP_TOLERANCE) {
         this.logger.error('Timestamp out of tolerance');
         throw new HttpErrors.Unauthorized();
       }
@@ -93,3 +92,9 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
     return next();
   }
 }
+
+export type TempUser = {
+  userTenantId: string;
+  tenantType: string;
+  tenantId?: string;
+} & IAuthUser;

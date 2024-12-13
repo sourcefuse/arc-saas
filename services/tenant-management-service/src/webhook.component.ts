@@ -29,48 +29,60 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  IdpController,
+  TenantMgmtConfigController,
+  TenantMgmtConfigTenantController,
+  WebhookController,
+} from './controllers';
+import {
+  CallbackVerifierProvider,
+  WebhookVerifierProvider,
+} from './interceptors';
+import {
+  CALLABCK_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
   WEBHOOK_CONFIG,
   WEBHOOK_VERIFIER,
 } from './keys';
-import {ITenantManagementServiceConfig} from './types';
-import {WebhookController} from './controllers';
 import {
   Address,
   Contact,
+  CreateLeadDTO,
   Invoice,
   Lead,
   LeadToken,
+  ProvisioningDTO,
   Resource,
   Tenant,
-  WebhookSecret,
-  CreateLeadDTO,
-  ProvisioningDTO,
+  TenantMgmtConfig,
   TenantOnboardDTO,
   VerifyLeadResponseDTO,
   WebhookDTO,
+  WebhookSecret,
 } from './models';
+import {KeycloakIdpProvider, SystemUserProvider} from './providers';
+import {Auth0IdpProvider} from './providers/idp/idp-auth0.provider';
 import {
   AddressRepository,
   ContactRepository,
   InvoiceRepository,
-  LeadTokenRepository,
   LeadRepository,
+  LeadTokenRepository,
   ResourceRepository,
+  TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
   SaasTenantRepository,
 } from './repositories';
-import {WebhookVerifierProvider} from './interceptors';
-import {SystemUserProvider} from './providers';
 import {CryptoHelperService, NotificationService} from './services';
+import {ProvisioningWebhookHandler} from './services/webhook';
+import {ITenantManagementServiceConfig} from './types';
 import {
   DEFAULT_SIGNATURE_HEADER,
   DEFAULT_TIMESTAMP_HEADER,
   DEFAULT_TIMESTAMP_TOLERANCE,
 } from './utils';
-import {ProvisioningWebhookHandler} from './services/webhook';
 
 export class WebhookTenantManagementServiceComponent implements Component {
   constructor(
@@ -112,6 +124,7 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantRepository,
       SaasTenantRepository,
       WebhookSecretRepository,
+      TenantMgmtConfigRepository,
     ];
 
     this.models = [
@@ -128,12 +141,26 @@ export class WebhookTenantManagementServiceComponent implements Component {
       TenantOnboardDTO,
       VerifyLeadResponseDTO,
       WebhookDTO,
+      TenantMgmtConfig,
     ];
 
-    this.controllers = [WebhookController];
+    this.controllers = [
+      WebhookController,
+      IdpController,
+      TenantMgmtConfigController,
+      TenantMgmtConfigTenantController,
+    ];
 
     this.bindings = [
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),
+
+      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
+        KeycloakIdpProvider,
+      ),
+      Binding.bind(TenantManagementServiceBindings.IDP_AUTH0).toProvider(
+        Auth0IdpProvider,
+      ),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
       Binding.bind(WEBHOOK_CONFIG).to({
         signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
