@@ -80,6 +80,7 @@ export class OnboardingService {
         firstName: lead.firstName,
         lastName: lead.lastName,
         email: lead.email,
+        communicationEmail: lead.communicationEmail,
         isValidated: false,
         addressId,
       }),
@@ -190,6 +191,7 @@ export class OnboardingService {
       await this.contactRepository.create(
         {
           email: dto.contact.email,
+          communicationEmail: dto.contact.communicationEmail,
           firstName: dto.contact.firstName,
           lastName: dto.contact.lastName,
           tenantId: tenant.id,
