@@ -120,6 +120,7 @@ export class OnboardingService {
         ...dto,
         contact: new Contact({
           email: existing.email,
+          communicationEmail: existing.communicationEmail,
           type: 'admin',
           firstName: existing.firstName,
           lastName: existing.lastName,
