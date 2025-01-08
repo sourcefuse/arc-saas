@@ -9,14 +9,18 @@ This is the primary service of the control plane responsible for subscription an
 A Microservice for handling subscription management operations. It provides -
 - plan creations and management - plan includes plan tier - silo/pooled
 - Add or Update Plan Items/Services/Resources to Plans - plan items are the offerings to user with in the selected plan
-- Billing Cycle handling - Billing cycle includes start date and end date etc
+- Billing & Invoice Management.
+
+## Billing & Invoicing
+ we have created a package [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) that  is designed to integrate billing functionality into LoopBack 4 applications. It provides an abstraction layer to work with billing services such as Chargebee, Stripe etc, offering common billing operations like creating and managing customers, invoices, payment sources, and transactions.
+
 
 ## Installation
 
 Install Subscription service using `npm`;
 
 ```sh
-$ [npm install | yarn add] @sourceloop/subscription-service
+$ [npm install | yarn add] @sourceloop/ctrl-plane-subscription-service
 ```
 
 ## Usage
@@ -24,13 +28,13 @@ $ [npm install | yarn add] @sourceloop/subscription-service
 - Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
 - Install the subscription service
-  `npm i @sourceloop/subscription-service`
+  `npm i @sourceloop/ctrl-plane-subscription-service`
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Add the `SubscriptionServiceComponent` to your Loopback4 Application (in `application.ts`).
   ```typescript
   // import the SubscriptionServiceComponent
-  import {SubscriptionServiceComponent} from '@sourceloop/subscription-service';
+  import {SubscriptionServiceComponent} from '@sourceloop/ctrl-plane-subscription-service';
   // add Component for subscription-service
   this.component(SubscriptionServiceComponent);
   ```
@@ -38,7 +42,98 @@ $ [npm install | yarn add] @sourceloop/subscription-service
   `SubscriptionDB`. You can see an example datasource [here](#setting-up-a-datasource).
 - Bind any of the custom [providers](#providers) you need.
 
+## Integrating Billing Functionality into Subscription Service using LoopBack 4
 
+We are leveraging the [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) package to integrate billing capabilities into our Subscription Service.
+
+To include billing functionality, we integrate the BillingComponent into the SubscriptionServiceComponent as follows:
+```typescript
+// import billing component from loopback4-billing
+import {BillingComponent} from 'loopback4-billing';
+  // add Component for subscription-service component
+this.application.component(BillingComponent);
+```
+We utilize the BillingProvider binding from [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) in our controllers as shown below:
+
+  ```typescript
+// import billing component from loopback4-billing
+import {BillingComponentBindings,IService} from 'loopback4-billing';
+  // add Component for subscription-service component
+export class BillingInvoiceController {
+  constructor(
+...
+    @inject(BillingComponentBindings.BillingProvider)
+    private readonly billingProvider: IService,
+...
+  ) {}
+}
+```
+
+Depending on the billing provider, the setup process varies. Currently, we support Stripe and Chargebee.
+
+### For ChargeBee -
+To use Chargebee as the billing provider, you need to configure the Chargebee API keys and site URL in your application. You can set these values in the environment variables of your LoopBack 4 project.
+```
+API_KEY=your_chargebee_api_key
+SITE=your_chargebee_site_url
+```
+Next, bind these values with ChargeBeeBindings.Config and register the Chargebee provider, as shown below:
+```typescript
+import { ChargeBeeBindings,BillingComponentBindings } from 'loopback4-billing';
+  import {SubscriptionServiceComponent} from '@sourceloop/ctrl-plane-subscription-service';
+export class YourApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    super(options);
+
+    // Bind the config values
+    this.bind(ChargeBeeBindings.config).to({
+      site: process.env.SITE ?? '',
+      apiKey: process.env.API_KEY ?? '',
+    });
+    // Register Billing component
+    this.bind(BillingComponentBindings.SDKProvider).toProvider(
+      ChargeBeeServiceProvider,
+    );
+
+    this.component(SubscriptionServiceComponent);
+    // Other configurations
+  }
+}
+```
+
+
+### For STRIPE -
+To use Stripe as the billing provider, you need to configure the Chargebee API keys and site URL in your application. You can set these values in the environment variables of your LoopBack 4 project.
+```
+STRIPE_SECRET=your_stripe_secret_key
+```
+Next, bind these values with StripeBindings.Config and register the Stripe provider, as shown below:
+
+```typescript
+import { StripeBindings,BillingComponentBindings } from 'loopback4-billing';
+  import {SubscriptionServiceComponent} from '@sourceloop/ctrl-plane-subscription-service';
+export class YourApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    super(options);
+
+    // Bind the config values
+    this.bind(StripeBindings.config).to({
+      secretKey: process.env.STRIPE_SECRET ?? '',
+    });
+    // Register Billing component
+    this.bind(BillingComponentBindings.SDKProvider).toProvider(
+      StripeServiceProvider,
+    );
+
+    this.component(SubscriptionServiceComponent);
+    // Other configurations
+  }
+}
+```
 ### Environment Variables
 
 <table>
