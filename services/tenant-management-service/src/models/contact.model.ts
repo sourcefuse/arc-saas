@@ -38,6 +38,13 @@ export class Contact extends UserModifiableEntity {
   email: string;
 
   @property({
+    type: 'string',
+    description: 'communication email id of the contact',
+    name: 'communication_email',
+  })
+  communicationEmail?: string;
+
+  @property({
     name: 'is_primary',
     type: 'boolean',
     description:
