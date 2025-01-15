@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.1 (2025-01-15)</small>
+
+* docs(all-services): update readme (#58) ([5f85b62](https://github.com/sourcefuse/arc-saas/commit/5f85b62)), closes [#58](https://github.com/sourcefuse/arc-saas/issues/58)
+* chore(ci-cd): update the env examples in tenant management services (#56) ([3f8bde9](https://github.com/sourcefuse/arc-saas/commit/3f8bde9)), closes [#56](https://github.com/sourcefuse/arc-saas/issues/56) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+
+
+
 ## 0.3.0 (2024-12-13)
 
 * feat(ci-cd): add apis to manage plan size configuration and features … (#39) ([5e03dcb](https://github.com/sourcefuse/arc-saas/commit/5e03dcb)), closes [#39](https://github.com/sourcefuse/arc-saas/issues/39)
