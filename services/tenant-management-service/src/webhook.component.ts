@@ -61,8 +61,8 @@ import {
   WebhookDTO,
   WebhookSecret,
 } from './models';
-import {KeycloakIdpProvider, SystemUserProvider} from './providers';
-import {Auth0IdpProvider} from './providers/idp/idp-auth0.provider';
+import {SystemUserProvider} from './providers';
+import {Auth0IdpProvider, KeycloakIdpProvider} from './providers/idp-provider';
 import {
   AddressRepository,
   ContactRepository,
