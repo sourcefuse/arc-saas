@@ -14,6 +14,27 @@ A Microservice for handling subscription management operations. It provides -
 ## Billing & Invoicing
  we have created a package [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) that  is designed to integrate billing functionality into LoopBack 4 applications. It provides an abstraction layer to work with billing services such as Chargebee, Stripe etc, offering common billing operations like creating and managing customers, invoices, payment sources, and transactions.
 
+## Customizing Plans with Sizes and Features
+This feature allows for the creation and management of plans with different sizes and features. Plans are used to represent various service tiers or options you offer to your customers. Sizes define the overall scope or capacity of a plan, while features are specific functionalities that can be enabled or disabled for each plan.
+
+The Plan Customization feature consists of two main aspects:
+- Plan Sizes: Manage different plan sizes and their configurations.
+- Plan Features: Customize features associated with a specific plan.
+
+#### Plan Sizes
+
+Plan sizes are defined by the PlanSizes model. Here's a breakdown of PlanSize:
+
+- size: The name or label of the plan size (string, required)
+- config: An optional object that can hold additional configuration details specific to the plan size
+
+
+#### Plan Features
+
+Plan features are managed through the FeatureValues model and associated with plans using the PlanFeaturesController. Here's a breakdown of the relevant concepts:
+
+- Feature: Represents a general capability or functionality offered in your plans.
+- FeatureValues: This model associates features with specific plans and allows configuration of their values.
 
 ## Installation
 
