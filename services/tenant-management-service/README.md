@@ -60,12 +60,15 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 ## IDP - Identity Provider
 
 The IDP (Identity Provider) Controller provides an endpoint to manage identity provider configurations for tenants. It supports multiple identity providers, such as Keycloak and Auth0, and ensures secure handling of identity provider setup requests through rate-limiting, authorization, and input validation.
+
 ### Features
+
 ##### Multi-IDP Support:
+
 - Supports Keycloak and Auth0 as identity providers.
 - Extensible for additional providers like Cognito.
 
-#####  Bindings:
+##### Bindings:
 
 **TenantManagementServiceBindings.IDP_KEYCLOAK** - Provides Keycloak configuration handler.
 
@@ -77,13 +80,14 @@ This switch statement selects the appropriate identity provider (IDP) configurat
 - KEYCLOAK: Calls idpKeycloakProvider to configure Keycloak.
 
 Finally, it returns the response (res) from the selected provider.
-``` typescript
+
+```typescript
 export interface IdpResp {
   authId: string;
 }
 ```
-authId is the id of the user created over identity provider.
 
+authId is the id of the user created over identity provider.
 
 ## Webhook Integration
 
@@ -109,6 +113,8 @@ const signature = crypto
   .update(`${payload}${context}${timestamp}`)
   .digest('hex');
 ```
+
+The identity provider and its related providers are also a part of the 'WebhookTenantManagementServiceComponent' since we expect it to be invoked separately once the tenant provisioning is completed via the orchestrator or any other medium preferred.
 
 ### Environment Variables
 
