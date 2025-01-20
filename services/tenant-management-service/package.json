@@ -93,7 +93,7 @@
         "loopback4-authorization": "^7.0.2",
         "loopback4-ratelimiter": "^7.0.2",
         "passport-google-oauth20": "^2.0.0",
-        "pdfkit": "^0.15.0",
+        "pdfkit": "^0.16.0",
         "swagger-stats": "^0.99.5",
         "symlink-resolver": "0.2.1",
         "tslib": "^2.6.2"
