@@ -1,4 +1,4 @@
-# subscription-service
+# Subscription-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
@@ -352,4 +352,4 @@ The migrations required for this service can be copied from the service. You can
 
 ## Database Schema
 
-![Screenshot from 2024-04-24 11-55-23](https://github.com/sourcefuse/arc-saas/assets/107617248/d780de95-61d9-4eda-9903-b16277813a6e)
+![ERD](static/subscription-erd.png)
