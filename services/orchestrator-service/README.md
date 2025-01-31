@@ -1,19 +1,19 @@
 <a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/arc-saas/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-# [@arc-saas/orchestrator-service](https://github.com/sourcefuse/arc-saas/tree/master/services/audit-service)
+# [@sourceloop/ctrl-plane-orchestrator-service](https://github.com/sourcefuse/arc-saas/tree/master/services/orchestrator-service)
 
 <p align="left">
-<a href="https://www.npmjs.org/package/@arc-saas/orchestrator-service">
-<img src="https://img.shields.io/npm/v/@arc-saas/orchestrator-service.svg" alt="npm version" />
+<a href="https://www.npmjs.org/package/@sourceloop/ctrl-plane-orchestrator-service">
+<img src="https://img.shields.io/npm/v/@sourceloop/ctrl-plane-orchestrator-service.svg" alt="npm version" />
 </a>
 <a href="https://github.com/sourcefuse/arc-saas/graphs/contributors" target="_blank">
-<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/arc-saas">
 </a>
-<a href="https://www.npmjs.com/@arc-saas/orchestrator-service" target="_blank">
-<img alt="sourceloop orchestrator-service downloads" src="https://img.shields.io/npm/dm/@arc-saas/orchestrator-service">
+<a href="https://www.npmjs.com/@sourceloop/ctrl-plane-orchestrator-service" target="_blank">
+<img alt="sourceloop orchestrator-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/ctrl-plane-orchestrator-service">
 </a>
 <a href="./LICENSE">
-<img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog" alt="License" />
+<img src="https://img.shields.io/github/license/sourcefuse/arc-saas" alt="License" />
 </a>
 <a href="https://loopback.io/" target="_blank">
 <img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
@@ -22,23 +22,23 @@
 
 ## Overview
 
-The `@arc-saas/orchestrator-service` is designed to provide the standard interfaces and endpoint to handle the events sent from / to a SaaS Control Plane. This acts as a orchestrator for the event targets/processors.
+The `@sourceloop/ctrl-plane-orchestrator-service` is designed to provide the standard interfaces and endpoint to handle the events sent from / to a SaaS Control Plane. This acts as a orchestrator for the event targets/processors.
 
 Consider the following example architecture that uses Amazon EventBridge at the center to pass on the events, and this Orchestrator service is used as its initial target, so that the events can then be sent to the expected candidates to process the event.
 
-![Example Architecture with Orchestrator Service in Use](./docs/example-architecture.png)
+![Example Architecture with Orchestrator Service in Use](./docs/orchestrator.png)
 
 Above example is of a tenant provisioning event flow, as shown it originates from a control plane service called tenant management service and then when it's received to the Amazon EventBridge, it passes it to the orchestrator service which can run any bussiness logic before it's sent for processing (the example illustrates starting the codebuild or jenkins job conditionally based on the event). Further code examples in this README will take this same reference.
 
 ## Installation
 
 ```bash
-npm i @arc-saas/orchestrator-service
+npm i @sourceloop/ctrl-plane-orchestrator-service
 ```
 
 ## Getting Started
 
-You can start using `@arc-saas/orchestrator-service` in just 4 steps:
+You can start using `@sourceloop/ctrl-plane-orchestrator-service` in just 4 steps:
 
 1. [Bind Component](#bind-component)
 2. [Configure the Providers and Services](#configure-the-providers-and-services)
@@ -50,7 +50,7 @@ Bind the `OrchestratorServiceComponent` to your application constructor as shown
 Mainly the `EventController` that provides the endpoint to receive the events.
 
 ```ts
-import {OrchestratorServiceComponent} from '@arc-saas/orchestrator-service';
+import {OrchestratorServiceComponent} from '@sourceloop/ctrl-plane-orchestrator-service';
 // ...
 export class MyApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -102,7 +102,7 @@ Here's how you can bind your custom orchestrator service:
 import {
   OrchestratorServiceComponent,
   OrchestratorServiceBindings,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 import {YourOrchestratorService} from './services';
 
@@ -137,7 +137,7 @@ import {
   TenantProvisioningHandler,
   TenantProvisioningSuccessHandler,
   TenantDeploymentHandler,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 export interface AWSEventBridgeInterface {
   version: string;
@@ -212,7 +212,7 @@ Here's how you can bind your builder service implementation:
 import {
   OrchestratorServiceComponent,
   OrchestratorServiceBindings,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 import {AwsCodeBuildService} from './services';
 
@@ -238,7 +238,7 @@ export class OrchestratorApplication extends BootMixin(
 ```ts
 import {injectable, BindingScope} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {BuilderServiceInterface} from '@arc-saas/orchestrator-service';
+import {BuilderServiceInterface} from '@sourceloop/ctrl-plane-orchestrator-service';
 import {
   CodeBuildClient,
   StartBuildCommand,
@@ -290,7 +290,7 @@ Here's how you can bind your tier details provider:
 import {
   OrchestratorServiceComponent,
   OrchestratorServiceBindings,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 import {TierDetailsProvider} from './providers';
 
@@ -315,7 +315,7 @@ export class OrchestratorApplication extends BootMixin(
 
 ```ts
 import {injectable, BindingScope, Provider} from '@loopback/core';
-import {TierDetailsFn} from '@arc-saas/orchestrator-service';
+import {TierDetailsFn} from '@sourceloop/ctrl-plane-orchestrator-service';
 import {marshall, unmarshall} from '@aws-sdk/util-dynamodb';
 
 import {DynamoDBClient, QueryCommand} from '@aws-sdk/client-dynamodb';
@@ -376,7 +376,7 @@ For example, In this provider you can implement the logic of invoking the [tier 
 import {
   OrchestratorServiceComponent,
   OrchestratorServiceBindings,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 import {TenantProvisioningHandlerProvider} from './providers';
 
@@ -409,7 +409,7 @@ import {
   TenantProvisioningHandler,
   TierDetailsFn,
   OrchestratorServiceBindings,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 export type ProvisioningInputs = {
   planConfig: AnyObject;
@@ -486,7 +486,7 @@ For example, In this provider you can implement any business logic you want to e
 import {
   OrchestratorServiceComponent,
   OrchestratorServiceBindings,
-} from '@arc-saas/orchestrator-service';
+} from '@sourceloop/ctrl-plane-orchestrator-service';
 
 import {TenantDeprovisioningHandlerProvider} from './providers';
 
@@ -535,7 +535,7 @@ The way of binding this provider is similar to other provider, just the binding 
 
 ## Deployment
 
-The @arc-saas/orchestrator-service can be deployed in various ways, including as a serverless application. Here's how you can set it up for serverless deployment, specifically for AWS Lambda.
+The @sourceloop/ctrl-plane-orchestrator-service can be deployed in various ways, including as a serverless application. Here's how you can set it up for serverless deployment, specifically for AWS Lambda.
 
 ### Serverless Deployment
 
