@@ -48,6 +48,7 @@ export class Invoice extends UserModifiableEntity {
   currencyCode: string;
 
   @property({
+    name: 'invoice_file',
     type: 'string',
     description: 'option reference to the generated file of the invoice',
   })

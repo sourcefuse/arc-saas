@@ -1,6 +1,7 @@
 import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
+  Entity,
   HasManyRepositoryFactory,
   juggler,
   repository,
@@ -25,8 +26,10 @@ import {ResourceRepository} from './resource.repository';
 import {AddressRepository} from './address.repository';
 import {TenantManagementDbSourceName} from '../types';
 
-export class SaasTenantRepository extends DefaultTransactionalUserModifyRepository<
-  Tenant,
+export class SaasTenantRepository<
+  T extends Tenant = Tenant,
+> extends DefaultTransactionalUserModifyRepository<
+  T,
   typeof Tenant.prototype.id,
   TenantRelations
 > {
@@ -60,8 +63,10 @@ export class SaasTenantRepository extends DefaultTransactionalUserModifyReposito
     protected resourceRepositoryGetter: Getter<ResourceRepository>,
     @repository.getter('AddressRepository')
     protected addressRepositoryGetter: Getter<AddressRepository>,
+    @inject('models.Tenant')
+    private readonly tenant: typeof Entity & {prototype: T},
   ) {
-    super(Tenant, dataSource, getCurrentUser);
+    super(tenant, dataSource, getCurrentUser);
     this.lead = this.createBelongsToAccessorFor('lead', leadRepositoryGetter);
     this.registerInclusionResolver('lead', this.lead.inclusionResolver);
     this.contacts = this.createHasManyRepositoryFactoryFor(

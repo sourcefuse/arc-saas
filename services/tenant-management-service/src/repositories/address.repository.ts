@@ -1,5 +1,5 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler} from '@loopback/repository';
+import {BelongsToAccessor, Entity, juggler} from '@loopback/repository';
 import {
   DefaultTransactionalUserModifyRepository,
   IAuthUserWithPermissions,
@@ -9,8 +9,10 @@ import {Address, Tenant} from '../models';
 import {SYSTEM_USER} from '../keys';
 import {TenantManagementDbSourceName} from '../types';
 
-export class AddressRepository extends DefaultTransactionalUserModifyRepository<
-  Address,
+export class AddressRepository<
+  T extends Address = Address,
+> extends DefaultTransactionalUserModifyRepository<
+  T,
   typeof Address.prototype.id,
   {}
 > {
@@ -24,7 +26,9 @@ export class AddressRepository extends DefaultTransactionalUserModifyRepository<
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(`datasources.${TenantManagementDbSourceName}`)
     dataSource: juggler.DataSource,
+    @inject('models.Address')
+    private readonly address: typeof Entity & {prototype: T},
   ) {
-    super(Address, dataSource, getCurrentUser);
+    super(address, dataSource, getCurrentUser);
   }
 }

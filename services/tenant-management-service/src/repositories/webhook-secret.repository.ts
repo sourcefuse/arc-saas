@@ -1,13 +1,17 @@
 import {inject} from '@loopback/core';
-import {DefaultKeyValueRepository, juggler} from '@loopback/repository';
+import {DefaultKeyValueRepository, Entity, juggler} from '@loopback/repository';
 import {WebhookSecret} from '../models';
 import {TenantManagementCacheSourceName} from '../types';
 
-export class WebhookSecretRepository extends DefaultKeyValueRepository<WebhookSecret> {
+export class WebhookSecretRepository<
+  T extends WebhookSecret = WebhookSecret,
+> extends DefaultKeyValueRepository<T> {
   constructor(
     @inject(`datasources.${TenantManagementCacheSourceName}`)
     dataSource: juggler.DataSource,
+    @inject('models.WebhookSecret')
+    private readonly webhookSecret: typeof Entity & {prototype: T},
   ) {
-    super(WebhookSecret, dataSource);
+    super(webhookSecret, dataSource);
   }
 }

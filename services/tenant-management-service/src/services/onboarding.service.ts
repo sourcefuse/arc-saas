@@ -14,6 +14,7 @@ import {
 import {LeadUser} from '../types';
 import {hasAnyOf, weakEqual} from '../utils';
 import {LeadAuthenticator} from './lead-authenticator.service';
+import {omit} from 'lodash';
 
 /**
  * Helper service for onboarding tenants.
@@ -74,14 +75,12 @@ export class OnboardingService {
       );
       addressId = address.id;
     }
+
     const newLead = await this.leadRepository.create(
       new Lead({
-        companyName: lead.companyName,
-        firstName: lead.firstName,
-        lastName: lead.lastName,
-        email: lead.email,
         isValidated: false,
         addressId,
+        ...omit(lead, 'address'),
       }),
     );
     const key = await this.leadAuthenticator.triggerValidationMail(newLead); // triggered notification sunny

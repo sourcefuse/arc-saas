@@ -1,5 +1,10 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  BelongsToAccessor,
+  Entity,
+  juggler,
+  repository,
+} from '@loopback/repository';
 import {
   DefaultTransactionalUserModifyRepository,
   IAuthUserWithPermissions,
@@ -29,8 +34,10 @@ export class ResourceRepository<
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
+    @inject('models.Resource')
+    private readonly resource: typeof Entity & {prototype: Resource<T>},
   ) {
-    super(Resource, dataSource, getCurrentUser);
+    super(resource, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

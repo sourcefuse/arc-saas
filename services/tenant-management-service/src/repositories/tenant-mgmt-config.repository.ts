@@ -1,5 +1,10 @@
 import {Getter, inject} from '@loopback/core';
-import {juggler, repository, BelongsToAccessor} from '@loopback/repository';
+import {
+  juggler,
+  repository,
+  BelongsToAccessor,
+  Entity,
+} from '@loopback/repository';
 import {Tenant, TenantMgmtConfig} from '../models';
 import {
   DefaultUserModifyCrudRepository,
@@ -9,8 +14,10 @@ import {SYSTEM_USER} from '../keys';
 import {TenantManagementDbSourceName} from '../types';
 import {TenantRepository} from './tenant.repository';
 
-export class TenantMgmtConfigRepository extends DefaultUserModifyCrudRepository<
-  TenantMgmtConfig,
+export class TenantMgmtConfigRepository<
+  T extends TenantMgmtConfig = TenantMgmtConfig,
+> extends DefaultUserModifyCrudRepository<
+  T,
   typeof TenantMgmtConfig.prototype.id,
   {}
 > {
@@ -26,8 +33,12 @@ export class TenantMgmtConfigRepository extends DefaultUserModifyCrudRepository<
     dataSource: juggler.DataSource,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
+    @inject('models.TenantMgmtConfig')
+    private readonly tenantMgmtConfig: typeof Entity & {
+      prototype: T;
+    },
   ) {
-    super(TenantMgmtConfig, dataSource, getCurrentUser);
+    super(tenantMgmtConfig, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

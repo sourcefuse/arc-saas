@@ -101,6 +101,7 @@
         "dotenv-extended": "^2.9.0",
         "handlebars": "^4.7.8",
         "jsonwebtoken": "^9.0.2",
+        "lodash": "^4.17.21",
         "loopback-connector-kv-redis": "^4.0.0",
         "loopback-connector-postgresql": "^7.1.8",
         "loopback4-authentication": "^12.1.1",
