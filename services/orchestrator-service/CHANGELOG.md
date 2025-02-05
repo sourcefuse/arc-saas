@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.1 (2025-02-05)</small>
+
+* chore(deps): arc and loopback version update (#67) ([4fae34e](https://github.com/sourcefuse/arc-saas/commit/4fae34e)), closes [#67](https://github.com/sourcefuse/arc-saas/issues/67) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+* docs(orchestrator-service): readme update (#65) ([2bdf418](https://github.com/sourcefuse/arc-saas/commit/2bdf418)), closes [#65](https://github.com/sourcefuse/arc-saas/issues/65) [#61](https://github.com/sourcefuse/arc-saas/issues/61)
+
+
+
+
+
 ## 0.1.0 (2025-01-15)
 
 * feat(ci-cd): add apis to manage plan size configuration and features … (#39) ([5e03dcb](https://github.com/sourcefuse/arc-saas/commit/5e03dcb)), closes [#39](https://github.com/sourcefuse/arc-saas/issues/39)

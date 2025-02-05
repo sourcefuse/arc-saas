@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.4.0 (2025-02-05)
+
+* feat(all-services): make model dynamic in repositories (#66) ([aed9e4a](https://github.com/sourcefuse/arc-saas/commit/aed9e4a)), closes [#66](https://github.com/sourcefuse/arc-saas/issues/66)
+* chore(deps): arc and loopback version update (#67) ([4fae34e](https://github.com/sourcefuse/arc-saas/commit/4fae34e)), closes [#67](https://github.com/sourcefuse/arc-saas/issues/67) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+* docs(orchestrator-service): readme update (#65) ([2bdf418](https://github.com/sourcefuse/arc-saas/commit/2bdf418)), closes [#65](https://github.com/sourcefuse/arc-saas/issues/65) [#61](https://github.com/sourcefuse/arc-saas/issues/61)
+* fix(tenant-management): make the idp providers and its dependencies optional (#62) ([6e05abb](https://github.com/sourcefuse/arc-saas/commit/6e05abb)), closes [#62](https://github.com/sourcefuse/arc-saas/issues/62) [#61](https://github.com/sourcefuse/arc-saas/issues/61) [#61](https://github.com/sourcefuse/arc-saas/issues/61)
+
+
+
+
+
 ## <small>0.3.1 (2025-01-15)</small>
 
 * docs(all-services): update readme (#58) ([5f85b62](https://github.com/sourcefuse/arc-saas/commit/5f85b62)), closes [#58](https://github.com/sourcefuse/arc-saas/issues/58)
