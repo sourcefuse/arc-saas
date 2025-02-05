@@ -1,5 +1,6 @@
 import {Getter, inject} from '@loopback/core';
 import {
+  Entity,
   HasManyRepositoryFactory,
   juggler,
   repository,
@@ -13,8 +14,10 @@ import {BillingCustomer, Invoice} from '../models';
 import {SubscriptionDbSourceName} from '../types';
 import {InvoiceRepository} from './invoice.repository';
 
-export class BillingCustomerRepository extends DefaultUserModifyCrudRepository<
-  BillingCustomer,
+export class BillingCustomerRepository<
+  T extends BillingCustomer = BillingCustomer,
+> extends DefaultUserModifyCrudRepository<
+  T,
   typeof BillingCustomer.prototype.id,
   {}
 > {
@@ -28,11 +31,14 @@ export class BillingCustomerRepository extends DefaultUserModifyCrudRepository<
     dataSource: juggler.DataSource,
     @repository.getter('InvoiceRepository')
     protected invoiceRepositoryGetter: Getter<InvoiceRepository>,
-
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
+    @inject('models.BillingCustomer')
+    private readonly billingCustomer: typeof Entity & {
+      prototype: T;
+    },
   ) {
-    super(BillingCustomer, dataSource, getCurrentUser);
+    super(billingCustomer, dataSource, getCurrentUser);
     this.invoices = this.createHasManyRepositoryFactoryFor(
       'invoices',
       invoiceRepositoryGetter,

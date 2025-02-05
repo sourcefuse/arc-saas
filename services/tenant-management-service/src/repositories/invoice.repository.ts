@@ -1,5 +1,10 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  BelongsToAccessor,
+  Entity,
+  juggler,
+  repository,
+} from '@loopback/repository';
 import {
   DefaultTransactionalUserModifyRepository,
   IAuthUserWithPermissions,
@@ -10,8 +15,10 @@ import {Invoice, InvoiceRelations, Tenant} from '../models';
 import {TenantRepository} from './tenant.repository';
 import {TenantManagementDbSourceName} from '../types';
 
-export class InvoiceRepository extends DefaultTransactionalUserModifyRepository<
-  Invoice,
+export class InvoiceRepository<
+  T extends Invoice = Invoice,
+> extends DefaultTransactionalUserModifyRepository<
+  T,
   typeof Invoice.prototype.id,
   InvoiceRelations
 > {
@@ -27,8 +34,10 @@ export class InvoiceRepository extends DefaultTransactionalUserModifyRepository<
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
+    @inject('models.Invoice')
+    private readonly invoice: typeof Entity & {prototype: T},
   ) {
-    super(Invoice, dataSource, getCurrentUser);
+    super(invoice, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

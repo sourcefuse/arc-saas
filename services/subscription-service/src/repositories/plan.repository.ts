@@ -5,13 +5,20 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
+import {
+  repository,
+  BelongsToAccessor,
+  juggler,
+  Entity,
+} from '@loopback/repository';
 import {BillingCycleRepository} from './billing-cycle.repository';
 import {CurrencyRepository} from './currency.repository';
 import {SubscriptionDbSourceName} from '../types';
 
-export class PlanRepository extends DefaultUserModifyCrudRepository<
-  Plan,
+export class PlanRepository<
+  T extends Plan = Plan,
+> extends DefaultUserModifyCrudRepository<
+  T,
   typeof Plan.prototype.id,
   PlanRelations
 > {
@@ -34,8 +41,10 @@ export class PlanRepository extends DefaultUserModifyCrudRepository<
     protected billingCycleRepositoryGetter: Getter<BillingCycleRepository>,
     @repository.getter('CurrencyRepository')
     protected currencyRepositoryGetter: Getter<CurrencyRepository>,
+    @inject('models.Plan')
+    private readonly plan: typeof Entity & {prototype: T},
   ) {
-    super(Plan, dataSource, getCurrentUser);
+    super(plan, dataSource, getCurrentUser);
     this.currency = this.createBelongsToAccessorFor(
       'currency',
       currencyRepositoryGetter,

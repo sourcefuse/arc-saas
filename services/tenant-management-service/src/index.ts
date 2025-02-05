@@ -14,3 +14,5 @@ export * from './providers';
 export * from './interceptors';
 export * from './decorators';
 export * from './webhook.component';
+export * from './permissions';
+export * from './utils';

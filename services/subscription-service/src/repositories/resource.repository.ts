@@ -5,11 +5,13 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {juggler} from '@loopback/repository';
+import {Entity, juggler} from '@loopback/repository';
 import {SubscriptionDbSourceName} from '../types';
 
-export class ResourceRepository extends DefaultUserModifyCrudRepository<
-  Resource,
+export class ResourceRepository<
+  T extends Resource = Resource,
+> extends DefaultUserModifyCrudRepository<
+  T,
   typeof Resource.prototype.id,
   ResourceRelations
 > {
@@ -18,7 +20,9 @@ export class ResourceRepository extends DefaultUserModifyCrudRepository<
     dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
+    @inject('models.Resource')
+    private readonly resource: typeof Entity & {prototype: T},
   ) {
-    super(Resource, dataSource, getCurrentUser);
+    super(resource, dataSource, getCurrentUser);
   }
 }

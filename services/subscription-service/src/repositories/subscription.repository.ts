@@ -1,5 +1,10 @@
 import {inject, Getter} from '@loopback/core';
-import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
+import {
+  repository,
+  BelongsToAccessor,
+  juggler,
+  Entity,
+} from '@loopback/repository';
 import {Subscription, SubscriptionRelations, Plan, Invoice} from '../models';
 import {PlanRepository} from './plan.repository';
 import {AuthenticationBindings} from 'loopback4-authentication';
@@ -10,8 +15,10 @@ import {
 import {SubscriptionDbSourceName} from '../types';
 import {InvoiceRepository} from './invoice.repository';
 
-export class SubscriptionRepository extends DefaultUserModifyCrudRepository<
-  Subscription,
+export class SubscriptionRepository<
+  T extends Subscription = Subscription,
+> extends DefaultUserModifyCrudRepository<
+  T,
   typeof Subscription.prototype.id,
   SubscriptionRelations
 > {
@@ -34,8 +41,10 @@ export class SubscriptionRepository extends DefaultUserModifyCrudRepository<
     protected planRepositoryGetter: Getter<PlanRepository>,
     @repository.getter('InvoiceRepository')
     protected invoiceRepositoryGetter: Getter<InvoiceRepository>,
+    @inject('models.Subscription')
+    private readonly subscription: typeof Entity & {prototype: T},
   ) {
-    super(Subscription, dataSource, getCurrentUser);
+    super(subscription, dataSource, getCurrentUser);
     this.invoice = this.createBelongsToAccessorFor(
       'invoice',
       invoiceRepositoryGetter,

@@ -6,6 +6,7 @@ import {
 
 import {
   BelongsToAccessor,
+  Entity,
   HasOneRepositoryFactory,
   juggler,
   repository,
@@ -17,8 +18,10 @@ import {TenantRepository} from './tenant.repository';
 import {AddressRepository} from './address.repository';
 import {TenantManagementDbSourceName} from '../types';
 
-export class LeadRepository extends DefaultUserModifyCrudRepository<
-  Lead,
+export class LeadRepository<
+  T extends Lead = Lead,
+> extends DefaultUserModifyCrudRepository<
+  T,
   typeof Lead.prototype.id,
   LeadRelations
 > {
@@ -41,8 +44,10 @@ export class LeadRepository extends DefaultUserModifyCrudRepository<
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @repository.getter('AddressRepository')
     protected addressRepositoryGetter: Getter<AddressRepository>,
+    @inject('models.Lead')
+    private readonly lead: typeof Entity & {prototype: T},
   ) {
-    super(Lead, dataSource, getCurrentUser);
+    super(lead, dataSource, getCurrentUser);
     this.tenant = this.createHasOneRepositoryFactoryFor(
       'tenant',
       tenantRepositoryGetter,
