@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2025-02-18)</small>
+
+* fix(tenant-management): remove the default provider binding (#68) ([46d0e3d](https://github.com/sourcefuse/arc-saas/commit/46d0e3d)), closes [#68](https://github.com/sourcefuse/arc-saas/issues/68) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+
+
+
 ## 0.4.0 (2025-02-05)
 
 * feat(all-services): make model dynamic in repositories (#66) ([aed9e4a](https://github.com/sourcefuse/arc-saas/commit/aed9e4a)), closes [#66](https://github.com/sourcefuse/arc-saas/issues/66)
