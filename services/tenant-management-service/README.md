@@ -89,6 +89,24 @@ export interface IdpResp {
 
 authId is the id of the user created over identity provider.
 
+Bind your required provider as below
+
+- For Keycloak
+
+```ts
+app
+  .bind(TenantManagementServiceBindings.IDP_KEYCLOAK)
+  .toProvider(KeycloakIdpProvider);
+```
+
+- For Auth0
+
+```ts
+app
+  .bind(TenantManagementServiceBindings.IDP_AUTH0)
+  .toProvider(Auth0IdpProvider);
+```
+
 ## Webhook Integration
 
 - A webhook endpoint is available in the service that is supposed to update the status of a tenant based on the updates from the third-party responsible for actual provisioning of resources
