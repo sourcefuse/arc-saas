@@ -62,7 +62,6 @@ import {
   WebhookSecret,
 } from './models';
 import {SystemUserProvider} from './providers';
-import {Auth0IdpProvider, KeycloakIdpProvider} from './providers/idp-provider';
 import {
   AddressRepository,
   ContactRepository,
@@ -154,13 +153,6 @@ export class WebhookTenantManagementServiceComponent implements Component {
     this.bindings = [
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
       Binding.bind(CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),
-
-      Binding.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(
-        KeycloakIdpProvider,
-      ),
-      Binding.bind(TenantManagementServiceBindings.IDP_AUTH0).toProvider(
-        Auth0IdpProvider,
-      ),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
       Binding.bind(WEBHOOK_CONFIG).to({
         signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
