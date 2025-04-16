@@ -6,11 +6,6 @@ import {AnyObject} from '@loopback/repository';
 import {IAuthUser} from 'loopback4-authorization';
 
 export namespace SubscriptionServiceBindings {
-  // export const Config = BindingKey.create<ISubscriptionServiceConfig | null>(
-  //   `${BINDING_PREFIX}.chat.config`,
-  // );
-// }
-
 export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
   'sf.webhook.verifier',
 );
