@@ -2,13 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import { IServiceConfig } from '@sourceloop/core';
 import {TInvoice} from 'loopback4-billing';
-import {IServiceConfig} from '@sourceloop/core';
-
-// sonarignore:start
-export interface ISubscriptionServiceConfig extends IServiceConfig {
-  //do nothing
-}
 
 export type BaseUser = {
   id: string;
@@ -45,4 +40,8 @@ export interface IPayload {
 
 export interface IContent {
   invoice: TInvoice;
+}
+export interface SubscriptionServiceConfig extends IServiceConfig{
+  useCustomSequence:boolean;
+  useSequelize?: boolean;
 }

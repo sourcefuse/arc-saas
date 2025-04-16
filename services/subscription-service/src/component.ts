@@ -45,11 +45,7 @@ import {
   PlanSizesController,
   PlanFeaturesController,
 } from './controllers';
-import {
-  SubscriptionServiceBindings,
-  SYSTEM_USER,
-  WEBHOOK_VERIFIER,
-} from './keys';
+import {SubscriptionServiceBindings} from './keys';
 import {
   BillingCycle,
   Currency,
@@ -61,6 +57,16 @@ import {
   Subscription,
   PlanSizes,
 } from './models';
+import { BillingCycleRepository as BillingCycleSequelizeRepository,
+  CurrencyRepository as CurrencySequelizeRepository,
+  PlanRepository as PlanSequelizeRepository,
+  ResourceRepository as ResourceSequelizeRepository,
+  ServiceRepository as ServiceSequelizeRepository,
+  SubscriptionRepository as SubscriptionSequelizeRepository,
+  PlanSizesRepository as PlanSizesSequelizeRepository,
+  BillingCustomerRepository as BillingCustomerSequelizeRepository,
+  InvoiceRepository as InvoiceSequelizeRepository
+ } from './repositories/sequelize';
 import {
   BillingCycleRepository,
   CurrencyRepository,
@@ -72,7 +78,7 @@ import {
   BillingCustomerRepository,
   InvoiceRepository,
 } from './repositories';
-import {ISubscriptionServiceConfig} from './types';
+import {SubscriptionServiceConfig} from './types';
 import {WebhookVerifierProvider} from './interceptors/webhook-verifier.interceptor';
 import {SystemUserProvider} from './providers';
 import {BillingCustomerController} from './controllers/billing-customer.controller';
@@ -85,7 +91,7 @@ export class SubscriptionServiceComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(SubscriptionServiceBindings.Config, {optional: true})
-    private readonly subscriptionConfig?: ISubscriptionServiceConfig,
+    private readonly subscriptionConfig?: SubscriptionServiceConfig,
   ) {
     this.providers = {};
 
@@ -116,18 +122,32 @@ export class SubscriptionServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
-    this.repositories = [
-      BillingCycleRepository,
-      CurrencyRepository,
-      PlanRepository,
-      ResourceRepository,
-      ServiceRepository,
-      SubscriptionRepository,
-      PlanSizesRepository,
-      BillingCustomerRepository,
-      InvoiceRepository,
-    ];
+    if(subscriptionConfig?.useSequelize){
+      this.repositories=[
+        BillingCustomerSequelizeRepository,
+        BillingCycleSequelizeRepository,
+        PlanSequelizeRepository,
+        PlanSizesSequelizeRepository,
+        InvoiceSequelizeRepository,
+        ResourceSequelizeRepository,
+        SubscriptionSequelizeRepository,
+        ServiceSequelizeRepository,
+        CurrencySequelizeRepository
+      ]
+    }
+    else{
+      this.repositories = [
+        BillingCycleRepository,
+        CurrencyRepository,
+        PlanRepository,
+        ResourceRepository,
+        ServiceRepository,
+        SubscriptionRepository,
+        PlanSizesRepository,
+        BillingCustomerRepository,
+        InvoiceRepository,
+      ];
+    }
 
     this.models = [
       BillingCycle,
@@ -141,9 +161,9 @@ export class SubscriptionServiceComponent implements Component {
       PlanSizes,
     ];
     this.bindings = [
-      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(SubscriptionServiceBindings.WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
 
-      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(SubscriptionServiceBindings.SYSTEM_USER).toProvider(SystemUserProvider),
     ];
 
     this.controllers = [
