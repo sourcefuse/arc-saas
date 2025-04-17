@@ -1,25 +1,18 @@
 import {Getter, inject} from '@loopback/core';
-import {
-  BelongsToAccessor,
-  Entity,
-  repository,
-} from '@loopback/repository';
-import {
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {BelongsToAccessor, Entity, repository} from '@loopback/repository';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 import {Contact, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
 import {TenantManagementDbSourceName} from '../../types';
 
 export class ContactRepository<
   T extends Contact = Contact,
-> extends SequelizeCrudRepository<
-  T,
-  typeof Contact.prototype.id,
-  {}
-> {
+> extends SequelizeCrudRepository<T, typeof Contact.prototype.id, {}> {
   public readonly tenant: BelongsToAccessor<
     Tenant,
     typeof Contact.prototype.id

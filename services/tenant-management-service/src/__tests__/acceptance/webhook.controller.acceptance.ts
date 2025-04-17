@@ -5,7 +5,7 @@ import {createHmac, randomBytes} from 'crypto';
 import {TenantMgmtServiceApplication} from '../../application';
 import {TenantStatus} from '../../enums';
 // import {PostWebhookHandlerServiceKey, WEBHOOK_CONFIG} from '../../keys';
-import { TenantManagementServiceBindings } from '../../keys';
+import {TenantManagementServiceBindings} from '../../keys';
 import {
   ContactRepository,
   ResourceRepository,

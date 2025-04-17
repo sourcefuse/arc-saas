@@ -68,7 +68,7 @@ import {
   ResourceRepository as ResourceSequelizeRepository,
   TenantMgmtConfigRepository as TenantMgmtConfigSequelizeRepository,
   TenantRepository as TenantSequelizeRepository,
-  WebhookSecretRepository as WebhookSecretSequelizeRepository
+  WebhookSecretRepository as WebhookSecretSequelizeRepository,
 } from './repositories/sequelize';
 import {
   AddressRepository,
@@ -121,8 +121,8 @@ export class TenantManagementServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-    if(tenantMgmtConfig?.useSequelize){
-      this.repositories=[
+    if (tenantMgmtConfig?.useSequelize) {
+      this.repositories = [
         AddressSequelizeRepository,
         ContactSequelizeRepository,
         InvoiceSequelizeRepository,
@@ -131,10 +131,9 @@ export class TenantManagementServiceComponent implements Component {
         ResourceSequelizeRepository,
         TenantSequelizeRepository,
         WebhookSecretSequelizeRepository,
-        TenantMgmtConfigSequelizeRepository
-      ]
-    }
-    else{
+        TenantMgmtConfigSequelizeRepository,
+      ];
+    } else {
       this.repositories = [
         AddressRepository,
         ContactRepository,
@@ -178,8 +177,12 @@ export class TenantManagementServiceComponent implements Component {
     ];
 
     this.bindings = [
-      Binding.bind(TenantManagementServiceBindings.LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
-      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(
+        TenantManagementServiceBindings.LEAD_TOKEN_VERIFIER,
+      ).toProvider(LeadTokenVerifierProvider),
+      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(
+        SystemUserProvider,
+      ),
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),
@@ -188,7 +191,10 @@ export class TenantManagementServiceComponent implements Component {
       createServiceBinding(InvoicePDFGenerator),
     ];
 
-    this.addClassBindingIfNotPresent(TenantManagementServiceBindings.EventConnectorBinding.key, EventConnector);
+    this.addClassBindingIfNotPresent(
+      TenantManagementServiceBindings.EventConnectorBinding.key,
+      EventConnector,
+    );
   }
 
   providers?: ProviderMap = {};

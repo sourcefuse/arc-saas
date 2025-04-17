@@ -1,7 +1,5 @@
 import {Getter, inject} from '@loopback/core';
-import {
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 
 import {
   BelongsToAccessor,
@@ -9,7 +7,10 @@ import {
   HasOneRepositoryFactory,
   repository,
 } from '@loopback/repository';
-import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 import {TenantManagementServiceBindings} from '../../keys';
 import {Address, Lead, LeadRelations, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
@@ -18,11 +19,7 @@ import {TenantManagementDbSourceName} from '../../types';
 
 export class LeadRepository<
   T extends Lead = Lead,
-> extends SequelizeCrudRepository<
-  T,
-  typeof Lead.prototype.id,
-  LeadRelations
-> {
+> extends SequelizeCrudRepository<T, typeof Lead.prototype.id, LeadRelations> {
   public readonly tenant: HasOneRepositoryFactory<
     Tenant,
     typeof Tenant.prototype.id

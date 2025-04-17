@@ -38,9 +38,7 @@ import {
   CallbackVerifierProvider,
   WebhookVerifierProvider,
 } from './interceptors';
-import {
-  TenantManagementServiceBindings,
-} from './keys';
+import {TenantManagementServiceBindings} from './keys';
 import {
   Address,
   Contact,
@@ -147,9 +145,15 @@ export class WebhookTenantManagementServiceComponent implements Component {
     ];
 
     this.bindings = [
-      Binding.bind(TenantManagementServiceBindings.WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
-      Binding.bind(TenantManagementServiceBindings.CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),
-      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(TenantManagementServiceBindings.WEBHOOK_VERIFIER).toProvider(
+        WebhookVerifierProvider,
+      ),
+      Binding.bind(
+        TenantManagementServiceBindings.CALLABCK_VERIFIER,
+      ).toProvider(CallbackVerifierProvider),
+      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(
+        SystemUserProvider,
+      ),
       Binding.bind(TenantManagementServiceBindings.WEBHOOK_CONFIG).to({
         signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
         timestampHeaderName: DEFAULT_TIMESTAMP_HEADER,

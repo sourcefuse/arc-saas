@@ -7,9 +7,9 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
-import { TenantManagementServiceComponent } from '../../component';
-import { WebhookTenantManagementServiceComponent } from '../../webhook.component';
-import { TenantManagementServiceBindings } from '../../keys';
+import {TenantManagementServiceComponent} from '../../component';
+import {WebhookTenantManagementServiceComponent} from '../../webhook.component';
+import {TenantManagementServiceBindings} from '../../keys';
 
 export {ApplicationConfig};
 
@@ -20,9 +20,9 @@ export class TenantMgmtServiceApplication extends BootMixin(
     super(options);
     this.static('/', path.join(__dirname, '../public'));
     this.bind(TenantManagementServiceBindings.config).to({
-        useCustomSequence:false,
-        useSequelize:true
-    })
+      useCustomSequence: false,
+      useSequelize: true,
+    });
     this.component(TenantManagementServiceComponent);
     this.component(WebhookTenantManagementServiceComponent);
     this.projectRoot = __dirname;

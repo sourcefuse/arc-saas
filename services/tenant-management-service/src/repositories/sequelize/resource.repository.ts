@@ -1,14 +1,11 @@
 import {Getter, inject} from '@loopback/core';
-import {
-  BelongsToAccessor,
-  Entity,
-  repository,
-} from '@loopback/repository';
-import {
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {BelongsToAccessor, Entity, repository} from '@loopback/repository';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import { SequelizeCrudRepository,SequelizeDataSource} from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 import {Resource, ResourceRelations, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
 import {ResourceData, TenantManagementDbSourceName} from '../../types';
