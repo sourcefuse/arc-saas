@@ -19,8 +19,9 @@ export interface ISubscription {
 }
 
 // sonarignore:start
-export interface ITenantManagementServiceConfig extends IServiceConfig {
-  //do nothing
+export interface TenantManagementServiceConfig extends IServiceConfig {
+  useCustomSequence:boolean,
+  useSequelize?:boolean
 }
 
 export type SubscriptionCreationType = Omit<

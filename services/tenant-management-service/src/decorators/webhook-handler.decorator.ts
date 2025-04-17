@@ -1,6 +1,6 @@
 import {injectable} from '@loopback/context';
-import {asWebhookHandler} from '../keys';
+import {TenantManagementServiceBindings} from '../keys';
 
 export function webhookHandler() {
-  return injectable(asWebhookHandler);
+  return injectable(TenantManagementServiceBindings.asWebhookHandler);
 }

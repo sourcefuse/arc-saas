@@ -85,6 +85,7 @@
         "@loopback/repository": "^7.0.9",
         "@loopback/rest": "^14.0.9",
         "@loopback/rest-explorer": "^7.0.9",
+        "@loopback/sequelize": "^0.6.12",
         "@loopback/service-proxy": "^7.0.9",
         "@opentelemetry/exporter-jaeger": "^1.15.0",
         "@opentelemetry/plugin-dns": "^0.15.0",
@@ -109,6 +110,7 @@
         "loopback4-ratelimiter": "^7.0.6",
         "passport-google-oauth20": "^2.0.0",
         "pdfkit": "^0.15.0",
+        "sequelize": "^6.37.7",
         "swagger-stats": "^0.99.5",
         "symlink-resolver": "0.2.1",
         "tslib": "^2.6.2"

@@ -1,17 +1,16 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, Entity, juggler} from '@loopback/repository';
+import {BelongsToAccessor, Entity} from '@loopback/repository';
 import {
-  DefaultTransactionalUserModifyRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-
-import {Address, Tenant} from '../models';
-import {TenantManagementServiceBindings} from '../keys';
-import {TenantManagementDbSourceName} from '../types';
+import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {Address, Tenant} from '../../models';
+import {TenantManagementServiceBindings} from '../../keys';
+import {TenantManagementDbSourceName} from '../../types';
 
 export class AddressRepository<
   T extends Address = Address,
-> extends DefaultTransactionalUserModifyRepository<
+> extends SequelizeCrudRepository<
   T,
   typeof Address.prototype.id,
   {}
@@ -25,10 +24,10 @@ export class AddressRepository<
     @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(`datasources.${TenantManagementDbSourceName}`)
-    dataSource: juggler.DataSource,
+    dataSource: SequelizeDataSource,
     @inject('models.Address')
     private readonly address: typeof Entity & {prototype: T},
   ) {
-    super(address, dataSource, getCurrentUser);
+    super(address, dataSource);
   }
 }

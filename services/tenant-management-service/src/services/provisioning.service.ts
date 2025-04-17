@@ -7,7 +7,7 @@ import {HttpErrors} from '@loopback/rest';
 import {IProvisioningService} from '../types';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {TenantStatus} from '../enums';
-import {EventConnectorBinding} from '../keys';
+import {TenantManagementServiceBindings} from '../keys';
 import {EventConnector, EventTypes} from './event-connector';
 import {randomUUID} from 'crypto';
 /**
@@ -26,7 +26,7 @@ export class ProvisioningService<T extends SubscriptionDTO>
   constructor(
     @service(CryptoHelperService)
     private cryptoHelperService: CryptoHelperService,
-    @inject(EventConnectorBinding)
+    @inject(TenantManagementServiceBindings.EventConnectorBinding)
     private eventConnector: EventConnector,
     @repository(WebhookSecretRepository)
     private webhookSecretRepo: WebhookSecretRepository,

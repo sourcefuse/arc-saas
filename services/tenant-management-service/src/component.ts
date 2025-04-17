@@ -41,12 +41,7 @@ import {
   TenantController,
 } from './controllers';
 import {InvoiceController} from './controllers/invoice.controller';
-import {
-  EventConnectorBinding,
-  LEAD_TOKEN_VERIFIER,
-  SYSTEM_USER,
-  TenantManagementServiceBindings,
-} from './keys';
+import {TenantManagementServiceBindings} from './keys';
 import {
   Address,
   Contact,
@@ -64,6 +59,17 @@ import {
   WebhookSecret,
 } from './models';
 import {LeadTokenVerifierProvider, SystemUserProvider} from './providers';
+import {
+  AddressRepository as AddressSequelizeRepository,
+  ContactRepository as ContactSequelizeRepository,
+  InvoiceRepository as InvoiceSequelizeRepository,
+  LeadRepository as LeadSequelizeRepository,
+  LeadTokenRepository as LeadTokenSequelizeRepository,
+  ResourceRepository as ResourceSequelizeRepository,
+  TenantMgmtConfigRepository as TenantMgmtConfigSequelizeRepository,
+  TenantRepository as TenantSequelizeRepository,
+  WebhookSecretRepository as WebhookSecretSequelizeRepository
+} from './repositories/sequelize';
 import {
   AddressRepository,
   ContactRepository,
@@ -84,14 +90,14 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
-import {ITenantManagementServiceConfig} from './types';
+import {TenantManagementServiceConfig} from './types';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(TenantManagementServiceBindings.Config, {optional: true})
-    private readonly tenantMgmtConfig?: ITenantManagementServiceConfig,
+    @inject(TenantManagementServiceBindings.config, {optional: true})
+    private readonly tenantMgmtConfig?: TenantManagementServiceConfig,
   ) {
     this.providers = {};
 
@@ -115,18 +121,32 @@ export class TenantManagementServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
-    this.repositories = [
-      AddressRepository,
-      ContactRepository,
-      InvoiceRepository,
-      LeadTokenRepository,
-      LeadRepository,
-      ResourceRepository,
-      TenantRepository,
-      WebhookSecretRepository,
-      TenantMgmtConfigRepository,
-    ];
+    if(tenantMgmtConfig?.useSequelize){
+      this.repositories=[
+        AddressSequelizeRepository,
+        ContactSequelizeRepository,
+        InvoiceSequelizeRepository,
+        LeadSequelizeRepository,
+        LeadTokenSequelizeRepository,
+        ResourceSequelizeRepository,
+        TenantSequelizeRepository,
+        WebhookSecretSequelizeRepository,
+        TenantMgmtConfigSequelizeRepository
+      ]
+    }
+    else{
+      this.repositories = [
+        AddressRepository,
+        ContactRepository,
+        InvoiceRepository,
+        LeadTokenRepository,
+        LeadRepository,
+        ResourceRepository,
+        TenantRepository,
+        WebhookSecretRepository,
+        TenantMgmtConfigRepository,
+      ];
+    }
 
     this.models = [
       Address,
@@ -158,8 +178,8 @@ export class TenantManagementServiceComponent implements Component {
     ];
 
     this.bindings = [
-      Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
-      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(TenantManagementServiceBindings.LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
+      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(SystemUserProvider),
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),
@@ -168,7 +188,7 @@ export class TenantManagementServiceComponent implements Component {
       createServiceBinding(InvoicePDFGenerator),
     ];
 
-    this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
+    this.addClassBindingIfNotPresent(TenantManagementServiceBindings.EventConnectorBinding.key, EventConnector);
   }
 
   providers?: ProviderMap = {};

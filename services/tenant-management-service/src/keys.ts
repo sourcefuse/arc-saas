@@ -13,7 +13,7 @@ import {
   IPostWebhookHandlerService,
   ConfigureIdpFunc,
   IdpResp,
-  ITenantManagementServiceConfig,
+  TenantManagementServiceConfig,
   LeadUser,
   ResourceProvisionedWebhookPayload,
   WebhookConfig,
@@ -22,10 +22,6 @@ import {
 import {IEventConnector} from './types/i-event-connector.interface';
 
 export namespace TenantManagementServiceBindings {
-  export const Config =
-    BindingKey.create<ITenantManagementServiceConfig | null>(
-      `${BINDING_PREFIX}.chat.config`,
-    );
   /**
    * Binding key for the Idp keycloak provider.
    */
@@ -37,7 +33,7 @@ export namespace TenantManagementServiceBindings {
    */
   export const IDP_AUTH0 =
     BindingKey.create<ConfigureIdpFunc<IdpResp>>('sf.user.idp.auth0');
-}
+// }
 
 /**
  * Binding key for the lead token verifier.
@@ -97,3 +93,8 @@ export const EventConnectorBinding = BindingKey.create<
 export const PostWebhookHandlerServiceKey = BindingKey.create<
   IPostWebhookHandlerService<ResourceProvisionedWebhookPayload>
 >('services.PostWebhookHandlerService');
+
+export const config=BindingKey.create<TenantManagementServiceConfig>(
+  `${BINDING_PREFIX}.task.config`,
+)
+}

@@ -1,22 +1,21 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  juggler,
   repository,
   BelongsToAccessor,
   Entity,
 } from '@loopback/repository';
-import {Tenant, TenantMgmtConfig} from '../models';
+import {Tenant, TenantMgmtConfig} from '../../models';
 import {
-  DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-import {TenantManagementServiceBindings} from '../keys';
-import {TenantManagementDbSourceName} from '../types';
-import {TenantRepository} from './tenant.repository';
+import {TenantManagementServiceBindings} from '../../keys';
+import {TenantManagementDbSourceName} from '../../types';
+import { TenantRepository } from './tenant.repository';
+import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
 
 export class TenantMgmtConfigRepository<
   T extends TenantMgmtConfig = TenantMgmtConfig,
-> extends DefaultUserModifyCrudRepository<
+> extends SequelizeCrudRepository<
   T,
   typeof TenantMgmtConfig.prototype.id,
   {}
@@ -30,7 +29,7 @@ export class TenantMgmtConfigRepository<
     @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(`datasources.${TenantManagementDbSourceName}`)
-    dataSource: juggler.DataSource,
+    dataSource: SequelizeDataSource,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @inject('models.TenantMgmtConfig')
@@ -38,7 +37,7 @@ export class TenantMgmtConfigRepository<
       prototype: T;
     },
   ) {
-    super(tenantMgmtConfig, dataSource, getCurrentUser);
+    super(tenantMgmtConfig, dataSource);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

@@ -1,6 +1,5 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 
@@ -8,19 +7,18 @@ import {
   BelongsToAccessor,
   Entity,
   HasOneRepositoryFactory,
-  juggler,
   repository,
 } from '@loopback/repository';
-
-import {TenantManagementServiceBindings} from '../keys';
-import {Address, Lead, LeadRelations, Tenant} from '../models';
+import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {TenantManagementServiceBindings} from '../../keys';
+import {Address, Lead, LeadRelations, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
 import {AddressRepository} from './address.repository';
-import {TenantManagementDbSourceName} from '../types';
+import {TenantManagementDbSourceName} from '../../types';
 
 export class LeadRepository<
   T extends Lead = Lead,
-> extends DefaultUserModifyCrudRepository<
+> extends SequelizeCrudRepository<
   T,
   typeof Lead.prototype.id,
   LeadRelations
@@ -37,7 +35,7 @@ export class LeadRepository<
 
   constructor(
     @inject(`datasources.${TenantManagementDbSourceName}`)
-    dataSource: juggler.DataSource,
+    dataSource: SequelizeDataSource,
     @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('TenantRepository')
@@ -47,7 +45,7 @@ export class LeadRepository<
     @inject('models.Lead')
     private readonly lead: typeof Entity & {prototype: T},
   ) {
-    super(lead, dataSource, getCurrentUser);
+    super(lead, dataSource);
     this.tenant = this.createHasOneRepositoryFactoryFor(
       'tenant',
       tenantRepositoryGetter,
