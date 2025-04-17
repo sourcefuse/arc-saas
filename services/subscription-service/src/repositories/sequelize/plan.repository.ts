@@ -1,26 +1,18 @@
 import {Getter, inject} from '@loopback/core';
 import {Plan, PlanRelations, BillingCycle, Currency} from '../../models';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {
-  repository,
-  BelongsToAccessor,
-  Entity,
-} from '@loopback/repository';
+import {repository, BelongsToAccessor, Entity} from '@loopback/repository';
 import {BillingCycleRepository} from './billing-cycle.repository';
 import {CurrencyRepository} from './currency.repository';
 import {SubscriptionDbSourceName} from '../../types';
-import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 export class PlanRepository<
   T extends Plan = Plan,
-> extends SequelizeCrudRepository<
-  T,
-  typeof Plan.prototype.id,
-  PlanRelations
-> {
+> extends SequelizeCrudRepository<T, typeof Plan.prototype.id, PlanRelations> {
   public readonly billingCycle: BelongsToAccessor<
     BillingCycle,
     typeof Plan.prototype.id

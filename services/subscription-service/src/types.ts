@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { IServiceConfig } from '@sourceloop/core';
+import {IServiceConfig} from '@sourceloop/core';
 import {TInvoice} from 'loopback4-billing';
 
 export type BaseUser = {
@@ -41,7 +41,7 @@ export interface IPayload {
 export interface IContent {
   invoice: TInvoice;
 }
-export interface SubscriptionServiceConfig extends IServiceConfig{
-  useCustomSequence:boolean;
+export interface SubscriptionServiceConfig extends IServiceConfig {
+  useCustomSequence: boolean;
   useSequelize?: boolean;
 }

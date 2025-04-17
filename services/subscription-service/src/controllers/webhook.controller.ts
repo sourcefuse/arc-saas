@@ -2,7 +2,7 @@ import {intercept} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {post, requestBody} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
-import { SubscriptionServiceBindings } from '../keys';
+import {SubscriptionServiceBindings} from '../keys';
 import {InvoiceRepository} from '../repositories';
 import {BillingCustomerRepository} from '../repositories/billing-customer.repository';
 import {IContent, IPayload} from '../types';

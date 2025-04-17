@@ -57,7 +57,8 @@ import {
   Subscription,
   PlanSizes,
 } from './models';
-import { BillingCycleRepository as BillingCycleSequelizeRepository,
+import {
+  BillingCycleRepository as BillingCycleSequelizeRepository,
   CurrencyRepository as CurrencySequelizeRepository,
   PlanRepository as PlanSequelizeRepository,
   ResourceRepository as ResourceSequelizeRepository,
@@ -65,8 +66,8 @@ import { BillingCycleRepository as BillingCycleSequelizeRepository,
   SubscriptionRepository as SubscriptionSequelizeRepository,
   PlanSizesRepository as PlanSizesSequelizeRepository,
   BillingCustomerRepository as BillingCustomerSequelizeRepository,
-  InvoiceRepository as InvoiceSequelizeRepository
- } from './repositories/sequelize';
+  InvoiceRepository as InvoiceSequelizeRepository,
+} from './repositories/sequelize';
 import {
   BillingCycleRepository,
   CurrencyRepository,
@@ -122,8 +123,8 @@ export class SubscriptionServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-    if(subscriptionConfig?.useSequelize){
-      this.repositories=[
+    if (subscriptionConfig?.useSequelize) {
+      this.repositories = [
         BillingCustomerSequelizeRepository,
         BillingCycleSequelizeRepository,
         PlanSequelizeRepository,
@@ -132,10 +133,9 @@ export class SubscriptionServiceComponent implements Component {
         ResourceSequelizeRepository,
         SubscriptionSequelizeRepository,
         ServiceSequelizeRepository,
-        CurrencySequelizeRepository
-      ]
-    }
-    else{
+        CurrencySequelizeRepository,
+      ];
+    } else {
       this.repositories = [
         BillingCycleRepository,
         CurrencyRepository,
@@ -161,9 +161,13 @@ export class SubscriptionServiceComponent implements Component {
       PlanSizes,
     ];
     this.bindings = [
-      Binding.bind(SubscriptionServiceBindings.WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
+      Binding.bind(SubscriptionServiceBindings.WEBHOOK_VERIFIER).toProvider(
+        WebhookVerifierProvider,
+      ),
 
-      Binding.bind(SubscriptionServiceBindings.SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind(SubscriptionServiceBindings.SYSTEM_USER).toProvider(
+        SystemUserProvider,
+      ),
     ];
 
     this.controllers = [

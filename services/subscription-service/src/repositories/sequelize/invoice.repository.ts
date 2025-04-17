@@ -1,13 +1,13 @@
 import {Getter, inject} from '@loopback/core';
 import {Entity} from '@loopback/repository';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Invoice} from '../../models';
 import {SubscriptionDbSourceName} from '../../types';
-import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 export class InvoiceRepository<
   T extends Invoice = Invoice,
 > extends SequelizeCrudRepository<T, typeof Invoice.prototype.id, {}> {

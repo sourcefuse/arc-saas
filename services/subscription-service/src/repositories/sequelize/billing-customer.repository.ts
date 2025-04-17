@@ -4,25 +4,18 @@ import {
   HasManyRepositoryFactory,
   repository,
 } from '@loopback/repository';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {BillingCustomer, Invoice} from '../../models';
 import {SubscriptionDbSourceName} from '../../types';
 import {InvoiceRepository} from './../invoice.repository';
 import {
-    SequelizeCrudRepository,
-    SequelizeDataSource,
-  } from '@loopback/sequelize';
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 export class BillingCustomerRepository<
   T extends BillingCustomer = BillingCustomer,
-> extends SequelizeCrudRepository<
-  T,
-  typeof BillingCustomer.prototype.id,
-  {}
-> {
+> extends SequelizeCrudRepository<T, typeof BillingCustomer.prototype.id, {}> {
   public readonly invoices: HasManyRepositoryFactory<
     Invoice,
     typeof BillingCustomer.prototype.id

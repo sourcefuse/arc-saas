@@ -1,20 +1,16 @@
 import {Getter, inject} from '@loopback/core';
 import {BillingCycle} from '../../models';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Entity} from '@loopback/repository';
 import {SubscriptionDbSourceName} from '../../types';
-import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 export class BillingCycleRepository<
   T extends BillingCycle = BillingCycle,
-> extends SequelizeCrudRepository<
-  T,
-  typeof BillingCycle.prototype.id,
-  {}
-> {
+> extends SequelizeCrudRepository<T, typeof BillingCycle.prototype.id, {}> {
   constructor(
     @inject(`datasources.${SubscriptionDbSourceName}`)
     dataSource: SequelizeDataSource,

@@ -9,7 +9,7 @@ import {
 import {HttpErrors, RequestContext} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
-import { SubscriptionServiceBindings } from '../keys';
+import {SubscriptionServiceBindings} from '../keys';
 
 export class WebhookVerifierProvider implements Provider<Interceptor> {
   constructor(

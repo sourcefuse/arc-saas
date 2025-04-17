@@ -17,7 +17,7 @@ export class SubscriptionServiceApplication extends BootMixin(
     super(options);
     this.static('/', path.join(__dirname, '../public'));
     this.component(SubscriptionServiceComponent);
-    
+
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {

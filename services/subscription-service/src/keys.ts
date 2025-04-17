@@ -6,24 +6,24 @@ import {AnyObject} from '@loopback/repository';
 import {IAuthUser} from 'loopback4-authorization';
 
 export namespace SubscriptionServiceBindings {
-export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
-  'sf.webhook.verifier',
-);
+  export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
+    'sf.webhook.verifier',
+  );
 
-/**
- * Binding key for the lead token verifier.
- */
-export const LEAD_TOKEN_VERIFIER = BindingKey.create<
-  VerifyFunction.BearerFn<AnyObject>
->('sf.user.lead.verifier');
+  /**
+   * Binding key for the lead token verifier.
+   */
+  export const LEAD_TOKEN_VERIFIER = BindingKey.create<
+    VerifyFunction.BearerFn<AnyObject>
+  >('sf.user.lead.verifier');
 
-/**
- * Binding key for the system user.
- */
-export const SYSTEM_USER = BindingKey.create<IAuthUser & AnyObject>(
-  'sf.user.system',
-);
-export const Config = BindingKey.create<SubscriptionServiceConfig>(
-  `${BINDING_PREFIX}.task.config`,
-);
+  /**
+   * Binding key for the system user.
+   */
+  export const SYSTEM_USER = BindingKey.create<IAuthUser & AnyObject>(
+    'sf.user.system',
+  );
+  export const Config = BindingKey.create<SubscriptionServiceConfig>(
+    `${BINDING_PREFIX}.task.config`,
+  );
 }

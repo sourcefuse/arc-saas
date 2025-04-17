@@ -7,8 +7,8 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
-import { SubscriptionServiceComponent } from '../../component';
-import { SubscriptionServiceBindings } from '../../keys';
+import {SubscriptionServiceComponent} from '../../component';
+import {SubscriptionServiceBindings} from '../../keys';
 export {ApplicationConfig};
 
 export class SubscriptionServiceSequelizeApplication extends BootMixin(
@@ -18,11 +18,11 @@ export class SubscriptionServiceSequelizeApplication extends BootMixin(
     super(options);
     this.static('/', path.join(__dirname, '../public'));
     this.bind(SubscriptionServiceBindings.Config).to({
-        useCustomSequence:false,
-        useSequelize:true
-    })
+      useCustomSequence: false,
+      useSequelize: true,
+    });
     this.component(SubscriptionServiceComponent);
-    
+
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {

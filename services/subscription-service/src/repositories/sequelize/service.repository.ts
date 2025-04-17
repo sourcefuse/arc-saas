@@ -1,13 +1,13 @@
 import {Getter, inject} from '@loopback/core';
 import {Service, ServiceRelations} from '../../models';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Entity} from '@loopback/repository';
 import {SubscriptionDbSourceName} from '../../types';
-import { SequelizeCrudRepository,SequelizeDataSource } from '@loopback/sequelize';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
 export class ServiceRepository<
   T extends Service = Service,
 > extends SequelizeCrudRepository<
