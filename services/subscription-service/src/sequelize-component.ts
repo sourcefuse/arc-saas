@@ -59,14 +59,14 @@ import {
 } from './models';
 import {
   BillingCycleRepository,
-  CurrencyRepository ,
-  PlanRepository ,
-  ResourceRepository ,
-  ServiceRepository ,
+  CurrencyRepository,
+  PlanRepository,
+  ResourceRepository,
+  ServiceRepository,
   SubscriptionRepository,
-  PlanSizesRepository ,
-  BillingCustomerRepository ,
-  InvoiceRepository ,
+  PlanSizesRepository,
+  BillingCustomerRepository,
+  InvoiceRepository,
 } from './repositories/sequelize';
 import {SubscriptionServiceConfig} from './types';
 import {WebhookVerifierProvider} from './interceptors/webhook-verifier.interceptor';
@@ -112,17 +112,17 @@ export class SubscriptionSequelizeServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-      this.repositories = [
-        BillingCustomerRepository,
-        BillingCycleRepository,
-        PlanRepository,
-        PlanSizesRepository,
-        InvoiceRepository,
-        ResourceRepository,
-        SubscriptionRepository,
-        ServiceRepository,
-        CurrencyRepository,
-      ];
+    this.repositories = [
+      BillingCustomerRepository,
+      BillingCycleRepository,
+      PlanRepository,
+      PlanSizesRepository,
+      InvoiceRepository,
+      ResourceRepository,
+      SubscriptionRepository,
+      ServiceRepository,
+      CurrencyRepository,
+    ];
 
     this.models = [
       BillingCycle,

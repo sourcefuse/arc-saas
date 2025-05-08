@@ -112,17 +112,17 @@ export class SubscriptionServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-      this.repositories = [
-        BillingCycleRepository,
-        CurrencyRepository,
-        PlanRepository,
-        ResourceRepository,
-        ServiceRepository,
-        SubscriptionRepository,
-        PlanSizesRepository,
-        BillingCustomerRepository,
-        InvoiceRepository,
-      ];
+    this.repositories = [
+      BillingCycleRepository,
+      CurrencyRepository,
+      PlanRepository,
+      ResourceRepository,
+      ServiceRepository,
+      SubscriptionRepository,
+      PlanSizesRepository,
+      BillingCustomerRepository,
+      InvoiceRepository,
+    ];
 
     this.models = [
       BillingCycle,
