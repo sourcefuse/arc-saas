@@ -89,10 +89,12 @@
         "loopback4-authentication": "^12.1.1",
         "loopback4-authorization": "^7.0.3",
         "loopback4-billing": "^1.0.0",
-        "sequelize": "^6.37.7",
         "swagger-stats": "^0.99.5",
         "symlink-resolver": "0.2.1",
         "tslib": "^2.6.2"
+    },
+    "optionalDependencies": {
+        "sequelize": "^6.37.7"
     },
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
