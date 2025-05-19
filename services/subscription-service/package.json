@@ -70,7 +70,6 @@
         "@loopback/repository": "^7.0.9",
         "@loopback/rest": "^14.0.9",
         "@loopback/rest-explorer": "^7.0.9",
-        "@loopback/sequelize": "^0.6.12",
         "@loopback/service-proxy": "^7.0.9",
         "@opentelemetry/exporter-jaeger": "^1.15.0",
         "@opentelemetry/plugin-dns": "^0.15.0",
@@ -94,7 +93,8 @@
         "tslib": "^2.6.2"
     },
     "optionalDependencies": {
-        "sequelize": "^6.37.7"
+        "sequelize": "^6.37.7",
+        "@loopback/sequelize": "^0.6.12"
     },
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
