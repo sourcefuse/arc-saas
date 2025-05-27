@@ -35,7 +35,7 @@ import {PermissionKey} from '../permissions';
 import {LeadRepository} from '../repositories';
 import {OnboardingService} from '../services';
 import {ratelimit} from 'loopback4-ratelimiter';
-import {LEAD_TOKEN_VERIFIER} from '../keys';
+import {TenantManagementServiceBindings} from '../keys';
 import {LeadUserWithToken} from '../types';
 import {VerifyLeadResponseDTO} from '../models/dtos/verify-lead-response-dto.model';
 
@@ -94,7 +94,7 @@ export class LeadController {
       passReqToCallback: true,
     },
     undefined,
-    LEAD_TOKEN_VERIFIER,
+    TenantManagementServiceBindings.LEAD_TOKEN_VERIFIER,
   )
   @post(`${basePath}/{id}/verify`, {
     security: OPERATION_SECURITY_SPEC,

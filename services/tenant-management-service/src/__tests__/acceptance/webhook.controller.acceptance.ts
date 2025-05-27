@@ -4,7 +4,8 @@ import {ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {createHmac, randomBytes} from 'crypto';
 import {TenantMgmtServiceApplication} from '../../application';
 import {TenantStatus} from '../../enums';
-import {PostWebhookHandlerServiceKey, WEBHOOK_CONFIG} from '../../keys';
+// import {PostWebhookHandlerServiceKey, WEBHOOK_CONFIG} from '../../keys';
+import {TenantManagementServiceBindings} from '../../keys';
 import {
   ContactRepository,
   ResourceRepository,
@@ -30,7 +31,7 @@ describe('WebhookController', () => {
 
   before('setupApplication', async () => {
     ({app, client} = await setupApplication(notifStub));
-    webhookConfig = app.getSync(WEBHOOK_CONFIG);
+    webhookConfig = app.getSync(TenantManagementServiceBindings.WEBHOOK_CONFIG);
     const logger = app.getSync<ILogger>(LOGGER.LOGGER_INJECT);
     loggerSpy = sinon.spy(logger);
     app.bind(LOGGER.LOGGER_INJECT).to(logger).inScope(BindingScope.SINGLETON);
@@ -52,7 +53,7 @@ describe('WebhookController', () => {
     });
 
     postWebhookHandlerServiceStub = sinon.stub();
-    app.bind(PostWebhookHandlerServiceKey).to({
+    app.bind(TenantManagementServiceBindings.PostWebhookHandlerServiceKey).to({
       postWebhookHandler: postWebhookHandlerServiceStub,
     });
   });

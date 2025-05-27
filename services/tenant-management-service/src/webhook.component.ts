@@ -38,13 +38,7 @@ import {
   CallbackVerifierProvider,
   WebhookVerifierProvider,
 } from './interceptors';
-import {
-  CALLABCK_VERIFIER,
-  SYSTEM_USER,
-  TenantManagementServiceBindings,
-  WEBHOOK_CONFIG,
-  WEBHOOK_VERIFIER,
-} from './keys';
+import {TenantManagementServiceBindings} from './keys';
 import {
   Address,
   Contact,
@@ -76,7 +70,7 @@ import {
 } from './repositories';
 import {CryptoHelperService, NotificationService} from './services';
 import {ProvisioningWebhookHandler} from './services/webhook';
-import {ITenantManagementServiceConfig} from './types';
+import {TenantManagementServiceConfig} from './types';
 import {
   DEFAULT_SIGNATURE_HEADER,
   DEFAULT_TIMESTAMP_HEADER,
@@ -87,8 +81,8 @@ export class WebhookTenantManagementServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(TenantManagementServiceBindings.Config, {optional: true})
-    private readonly notifConfig?: ITenantManagementServiceConfig,
+    @inject(TenantManagementServiceBindings.config, {optional: true})
+    private readonly notifConfig?: TenantManagementServiceConfig,
   ) {
     this.providers = {};
 
@@ -151,10 +145,16 @@ export class WebhookTenantManagementServiceComponent implements Component {
     ];
 
     this.bindings = [
-      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
-      Binding.bind(CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),
-      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
-      Binding.bind(WEBHOOK_CONFIG).to({
+      Binding.bind(TenantManagementServiceBindings.WEBHOOK_VERIFIER).toProvider(
+        WebhookVerifierProvider,
+      ),
+      Binding.bind(
+        TenantManagementServiceBindings.CALLABCK_VERIFIER,
+      ).toProvider(CallbackVerifierProvider),
+      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(
+        SystemUserProvider,
+      ),
+      Binding.bind(TenantManagementServiceBindings.WEBHOOK_CONFIG).to({
         signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
         timestampHeaderName: DEFAULT_TIMESTAMP_HEADER,
         timestampTolerance: DEFAULT_TIMESTAMP_TOLERANCE,

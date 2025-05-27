@@ -1,18 +1,22 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# Run commitizen to generate conventional commits
 exec < /dev/tty && npx cz --hook || true
 
 # Section for git-secrets
-if ! command -v git-secrets &> /dev/null 2>&1 
-then
+GIT_SECRETS_PATH=$(which git-secrets 2>/dev/null)
+
+if [ ! -x "$GIT_SECRETS_PATH" ]; then
     echo "git-secrets is not installed. Please run 'brew install git-secrets' or visit https://github.com/awslabs/git-secrets#installing-git-secrets"
     exit 1
 fi
 
-# Initialise git-secrets configuration
-git-secrets --register-aws > /dev/null
+echo "Using git-secrets at: $GIT_SECRETS_PATH"
 
-echo "Running git-secrets..."
-# Determines if merging in a commit will introduce tainted history.
-git-secrets --prepare_commit_msg_hook -- "$@"
+# Register AWS secrets patterns (safe to run multiple times)
+$GIT_SECRETS_PATH --register-aws > /dev/null
+
+echo "Running git-secrets (prepare-commit-msg)..."
+# Scans the commit message that is being prepared (e.g., merges, rebases)
+$GIT_SECRETS_PATH --prepare_commit_msg_hook -- "$@"

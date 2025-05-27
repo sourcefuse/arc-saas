@@ -7,17 +7,24 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
-import {SubscriptionServiceComponent} from './component';
+import {TenantManagementServiceComponent} from '../../component';
+import {WebhookTenantManagementServiceComponent} from '../../webhook.component';
+import {TenantManagementServiceBindings} from '../../keys';
+
 export {ApplicationConfig};
 
-export class SubscriptionServiceApplication extends BootMixin(
+export class TenantMgmtServiceApplication extends BootMixin(
   RepositoryMixin(RestApplication),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
-    this.component(SubscriptionServiceComponent);
-
+    this.bind(TenantManagementServiceBindings.config).to({
+      useCustomSequence: false,
+      useSequelize: true,
+    });
+    this.component(TenantManagementServiceComponent);
+    this.component(WebhookTenantManagementServiceComponent);
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {

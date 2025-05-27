@@ -69,7 +69,7 @@ import {
   TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
-} from './repositories';
+} from './repositories/sequelize';
 import {
   CryptoHelperService,
   EventConnector,
@@ -81,7 +81,7 @@ import {
 } from './services';
 import {TenantManagementServiceConfig} from './types';
 
-export class TenantManagementServiceComponent implements Component {
+export class TenantManagementSequelizeServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
@@ -114,8 +114,8 @@ export class TenantManagementServiceComponent implements Component {
       AddressRepository,
       ContactRepository,
       InvoiceRepository,
-      LeadTokenRepository,
       LeadRepository,
+      LeadTokenRepository,
       ResourceRepository,
       TenantRepository,
       WebhookSecretRepository,

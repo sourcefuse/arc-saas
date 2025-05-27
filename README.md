@@ -69,6 +69,10 @@ There are currently 2 Microservices provided and actively maintained:
 1. [Tenant Management Service](services/tenant-management-service)
 2. [Subscription Service](services/subscription-service)
 
+## Sequelize Support
+
+If your SaaS application uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.
+
 ## Feedback
 
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/arc-saas/issues) to see if someone else in the community has already created a ticket.

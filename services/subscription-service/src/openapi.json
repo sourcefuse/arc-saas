@@ -3,12 +3,167 @@
   "info": {
     "title": "Subscription Service",
     "version": "1.0.0",
-    "description": "Subscription management microservice for SaaS control plane",
+    "description": "Subscription management microservice for SaaS control plane.",
     "contact": {
       "name": "Sourcefuse"
     }
   },
   "paths": {
+    "/billing-customer/{tenantId}": {
+      "patch": {
+        "x-controller-name": "BillingCustomerController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "BillingCustomerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "BillingCustomer PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5327   |\n",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerDtoPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "BillingCustomerController.updateById"
+      },
+      "delete": {
+        "x-controller-name": "BillingCustomerController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "BillingCustomerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "BillingCustomer DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5331   |\n",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "BillingCustomerController.deleteById"
+      }
+    },
+    "/billing-customer": {
+      "post": {
+        "x-controller-name": "BillingCustomerController",
+        "x-operation-name": "create",
+        "tags": [
+          "BillingCustomerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BillingCustomer model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewBillingCustomer"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5321   |\n",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCustomer"
+              }
+            }
+          }
+        },
+        "operationId": "BillingCustomerController.create"
+      },
+      "get": {
+        "x-controller-name": "BillingCustomerController",
+        "x-operation-name": "getCustomer",
+        "tags": [
+          "BillingCustomerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BillingCustomer model ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5324   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/billing_customer.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "BillingCustomerController.getCustomer"
+      }
+    },
     "/billing-cycles/count": {
       "get": {
         "x-controller-name": "BillinCycleController",
@@ -337,6 +492,294 @@
           }
         ],
         "operationId": "BillinCycleController.find"
+      }
+    },
+    "/billing-invoice/{invoiceId}/payments": {
+      "post": {
+        "x-controller-name": "BillingInvoiceController",
+        "x-operation-name": "applyPaymentForInvoice",
+        "tags": [
+          "BillingInvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "invoice model instance"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5323   |\n",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionDtoPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "BillingInvoiceController.applyPaymentForInvoice"
+      }
+    },
+    "/billing-invoice/{invoiceId}": {
+      "patch": {
+        "x-controller-name": "BillingInvoiceController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "BillingInvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Billing Invoice PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5329   |\n",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceDtoPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "BillingInvoiceController.updateById"
+      },
+      "get": {
+        "x-controller-name": "BillingInvoiceController",
+        "x-operation-name": "getInvoice",
+        "tags": [
+          "BillingInvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get invoice",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5326   |\n",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "BillingInvoiceController.getInvoice"
+      },
+      "delete": {
+        "x-controller-name": "BillingInvoiceController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "BillingInvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Billing Invoice DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5332   |\n",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "BillingInvoiceController.deleteById"
+      }
+    },
+    "/billing-invoice": {
+      "post": {
+        "x-controller-name": "BillingInvoiceController",
+        "x-operation-name": "create",
+        "tags": [
+          "BillingInvoiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "invoice model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5323   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newInvoice"
+              }
+            }
+          }
+        },
+        "operationId": "BillingInvoiceController.create"
+      }
+    },
+    "/billing-payment-source/{paymentSourceId}": {
+      "delete": {
+        "x-controller-name": "BillingPaymentSourceController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "BillingPaymentSourceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Billing Payment Source DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5332   |\n",
+        "parameters": [
+          {
+            "name": "paymentSourceId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "BillingPaymentSourceController.deleteById"
+      }
+    },
+    "/billing-payment-source": {
+      "post": {
+        "x-controller-name": "BillingPaymentSourceController",
+        "x-operation-name": "create",
+        "tags": [
+          "BillingPaymentSourceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payment model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentSourceDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5322   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPaymentSource"
+              }
+            }
+          }
+        },
+        "operationId": "BillingPaymentSourceController.create"
+      },
+      "get": {
+        "x-controller-name": "BillingPaymentSourceController",
+        "x-operation-name": "getPaymentSource",
+        "tags": [
+          "BillingPaymentSourceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get payment source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentSourceDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 5325   |\n",
+        "parameters": [
+          {
+            "name": "paymentSourceId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "BillingPaymentSourceController.getPaymentSource"
       }
     },
     "/currencies/count": {
@@ -1359,6 +1802,11 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PlanSizes model count",
@@ -1371,6 +1819,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7029   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1397,18 +1846,17 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "PlanSizes PUT success"
-                }
-              }
-            }
+            "description": "PlanSizes PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7031   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1437,18 +1885,17 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "PlanSizes PATCH success"
-                }
-              }
-            }
+            "description": "PlanSizes PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7031   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1477,6 +1924,11 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PlanSizes model instance",
@@ -1489,6 +1941,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7029   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1518,18 +1971,17 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "PlanSizes DELETE success"
-                }
-              }
-            }
+            "description": "PlanSizes DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7032   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1550,6 +2002,11 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PlanSizes model instance",
@@ -1562,6 +2019,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7030   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1579,6 +2037,11 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PlanSizes PATCH success count",
@@ -1591,6 +2054,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7031   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1624,6 +2088,11 @@
         "tags": [
           "PlanSizesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of PlanSizes model instances",
@@ -1639,6 +2108,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7029   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -1697,6 +2167,142 @@
           }
         ],
         "operationId": "PlanController.count"
+      }
+    },
+    "/plans/{id}/features": {
+      "post": {
+        "x-controller-name": "PlanFeaturesController",
+        "x-operation-name": "setPlanFeatures",
+        "tags": [
+          "PlanFeaturesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan Features Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureValues"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7034   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "PlanFeaturesController.setPlanFeatures"
+      },
+      "patch": {
+        "x-controller-name": "PlanFeaturesController",
+        "x-operation-name": "updatePlanFeatures",
+        "tags": [
+          "PlanFeaturesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan Features Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeatureValues"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7035   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureValuesPartial"
+                }
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "PlanFeaturesController.updatePlanFeatures"
+      },
+      "get": {
+        "x-controller-name": "PlanFeaturesController",
+        "x-operation-name": "getPlanFeatures",
+        "tags": [
+          "PlanFeaturesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan Features Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureValues"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 7033   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "PlanFeaturesController.getPlanFeatures"
       }
     },
     "/plans/{id}/subscriptions": {
@@ -3152,6 +3758,38 @@
         "operationId": "SubscriptionController.expiredSubscription"
       }
     },
+    "/subscriptions/{id}/invoice": {
+      "get": {
+        "x-controller-name": "SubscriptionInvoiceController",
+        "x-operation-name": "getInvoice",
+        "tags": [
+          "SubscriptionInvoiceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice belonging to Subscription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "SubscriptionInvoiceController.getInvoice"
+      }
+    },
     "/subscriptions/{id}": {
       "put": {
         "x-controller-name": "SubscriptionController",
@@ -3436,6 +4074,32 @@
           }
         ],
         "operationId": "SubscriptionController.find"
+      }
+    },
+    "/webhooks/billing-payment": {
+      "post": {
+        "x-controller-name": "WebhookController",
+        "x-operation-name": "handleWebhook",
+        "tags": [
+          "WebhookController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of WebhookController.handleWebhook",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "WebhookController.handleWebhook"
       }
     },
     "/": {
@@ -4465,6 +5129,10 @@
             "type": "string",
             "description": "Tier of the plan."
           },
+          "size": {
+            "type": "string",
+            "description": "Size of the plan."
+          },
           "price": {
             "type": "number"
           },
@@ -4481,7 +5149,6 @@
         },
         "required": [
           "name",
-          "description",
           "tier",
           "price"
         ],
@@ -4530,6 +5197,10 @@
             "type": "string",
             "description": "Tier of the plan."
           },
+          "size": {
+            "type": "string",
+            "description": "Size of the plan."
+          },
           "price": {
             "type": "number"
           },
@@ -4546,7 +5217,6 @@
         },
         "required": [
           "name",
-          "description",
           "tier",
           "price"
         ],
@@ -4599,6 +5269,10 @@
             "type": "string",
             "description": "Tier of the plan."
           },
+          "size": {
+            "type": "string",
+            "description": "Size of the plan."
+          },
           "price": {
             "type": "number"
           },
@@ -4622,7 +5296,6 @@
         },
         "required": [
           "name",
-          "description",
           "tier",
           "price"
         ],
@@ -4674,6 +5347,10 @@
           "tier": {
             "type": "string",
             "description": "Tier of the plan."
+          },
+          "size": {
+            "type": "string",
+            "description": "Size of the plan."
           },
           "price": {
             "type": "number"
@@ -5111,6 +5788,10 @@
           "planId": {
             "type": "string",
             "description": "plan id of the subscription"
+          },
+          "invoiceId": {
+            "type": "string",
+            "description": "invoice id of the subscription"
           }
         },
         "required": [
@@ -5169,6 +5850,10 @@
           "planId": {
             "type": "string",
             "description": "plan id of the subscription"
+          },
+          "invoiceId": {
+            "type": "string",
+            "description": "invoice id of the subscription"
           }
         },
         "required": [
@@ -5177,6 +5862,57 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Subscription, 'id' | 'startDate' | 'endDate'>"
+      },
+      "InvoiceWithRelations": {
+        "title": "InvoiceWithRelations",
+        "type": "object",
+        "description": "invoice for a customer (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "invoiceId": {
+            "type": "string"
+          },
+          "invoiceStatus": {
+            "type": "string",
+            "description": "payment or invoice status"
+          },
+          "billingCustomerId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "invoiceId",
+          "billingCustomerId"
+        ],
+        "additionalProperties": false
       },
       "SubscriptionWithRelations": {
         "title": "SubscriptionWithRelations",
@@ -5236,10 +5972,17 @@
             "type": "string",
             "description": "plan id of the subscription"
           },
+          "invoiceId": {
+            "type": "string",
+            "description": "invoice id of the subscription"
+          },
           "plan": {
             "$ref": "#/components/schemas/PlanWithRelations"
           },
-          "foreignKey": {}
+          "foreignKey": {},
+          "invoice": {
+            "$ref": "#/components/schemas/InvoiceWithRelations"
+          }
         },
         "required": [
           "subscriberId",
@@ -5307,6 +6050,10 @@
           "planId": {
             "type": "string",
             "description": "plan id of the subscription"
+          },
+          "invoiceId": {
+            "type": "string",
+            "description": "invoice id of the subscription"
           }
         },
         "additionalProperties": false,
@@ -5316,6 +6063,32 @@
         "title": "PlanSizes",
         "type": "object",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -5336,6 +6109,32 @@
         "type": "object",
         "description": "(tsType: Omit<PlanSizes, 'id'>, schemaOptions: { title: 'NewPlanSizes', exclude: [ 'id' ] })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "size": {
             "type": "string"
           },
@@ -5354,6 +6153,32 @@
         "type": "object",
         "description": "(tsType: PlanSizesWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -5375,6 +6200,32 @@
         "type": "object",
         "description": "(tsType: Partial<PlanSizes>, schemaOptions: { partial: true })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -5387,6 +6238,740 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<PlanSizes>"
+      },
+      "AddressDto": {
+        "title": "AddressDto",
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "email",
+          "city",
+          "state",
+          "zip",
+          "country"
+        ],
+        "additionalProperties": false
+      },
+      "NewBillingCustomer": {
+        "title": "NewBillingCustomer",
+        "type": "object",
+        "description": "(tsType: CustomerDto, schemaOptions: { title: 'NewBillingCustomer' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "CustomerDto"
+      },
+      "NewCustomer": {
+        "title": "NewCustomer",
+        "type": "object",
+        "description": "(tsType: Omit<CustomerDto, 'id'>, schemaOptions: { title: 'NewCustomer', exclude: [ 'id' ] })",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<CustomerDto, 'id'>"
+      },
+      "CustomerDto": {
+        "title": "CustomerDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerDtoPartial": {
+        "title": "CustomerDtoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<CustomerDto>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<CustomerDto>"
+      },
+      "ChargeDto": {
+        "title": "ChargeDto",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "description"
+        ],
+        "additionalProperties": false
+      },
+      "InvoiceDto": {
+        "title": "InvoiceDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "shippingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "charges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChargeDto"
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "newInvoice": {
+        "title": "newInvoice",
+        "type": "object",
+        "description": "(tsType: Omit<InvoiceDto, 'id' | 'status'>, schemaOptions: { title: 'newInvoice', exclude: [ 'id', 'status' ] })",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "shippingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "charges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChargeDto"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<InvoiceDto, 'id' | 'status'>"
+      },
+      "InvoiceDtoPartial": {
+        "title": "InvoiceDtoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<InvoiceDto>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "shippingAddress": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "charges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChargeDto"
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<InvoiceDto>"
+      },
+      "TransactionDtoPartial": {
+        "title": "TransactionDtoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<TransactionDto>, schemaOptions: { partial: true })",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "paymentMethod": {
+            "type": "string",
+            "description": "payment method",
+            "enum": [
+              "cash",
+              "check",
+              "bank_transfer",
+              "other",
+              "custom",
+              "payment_source"
+            ]
+          },
+          "paymentSourceId": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "customPaymentMethodId": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "idAtGateway": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failure"
+            ]
+          },
+          "date": {
+            "type": "number"
+          },
+          "errorCode": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "errorText": {
+            "type": "string",
+            "maxLength": 65000
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 300
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<TransactionDto>"
+      },
+      "TransactionDto": {
+        "title": "TransactionDto",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "paymentMethod": {
+            "type": "string",
+            "description": "payment method",
+            "enum": [
+              "cash",
+              "check",
+              "bank_transfer",
+              "other",
+              "custom",
+              "payment_source"
+            ]
+          },
+          "paymentSourceId": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "customPaymentMethodId": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "idAtGateway": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failure"
+            ]
+          },
+          "date": {
+            "type": "number"
+          },
+          "errorCode": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "errorText": {
+            "type": "string",
+            "maxLength": 65000
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "paymentMethod"
+        ],
+        "additionalProperties": false
+      },
+      "PaymentSourceDto": {
+        "title": "PaymentSourceDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "card": {
+            "type": "object",
+            "properties": {
+              "gatewayAccountId": {
+                "type": "string"
+              },
+              "number": {
+                "type": "string"
+              },
+              "expiryMonth": {
+                "type": "number"
+              },
+              "expiryear": {
+                "type": "number"
+              },
+              "cvv": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "gatewayAccountId",
+              "number",
+              "expiryMonth",
+              "expiryYear",
+              "cvv"
+            ]
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewPaymentSource": {
+        "title": "NewPaymentSource",
+        "type": "object",
+        "description": "(tsType: Omit<PaymentSourceDto, 'id'>, schemaOptions: { title: 'NewPaymentSource', exclude: [ 'id' ] })",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "card": {
+            "type": "object",
+            "properties": {
+              "gatewayAccountId": {
+                "type": "string"
+              },
+              "number": {
+                "type": "string"
+              },
+              "expiryMonth": {
+                "type": "number"
+              },
+              "expiryear": {
+                "type": "number"
+              },
+              "cvv": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "gatewayAccountId",
+              "number",
+              "expiryMonth",
+              "expiryYear",
+              "cvv"
+            ]
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<PaymentSourceDto, 'id'>"
+      },
+      "Invoice": {
+        "title": "Invoice",
+        "type": "object",
+        "description": "invoice for a customer",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "invoiceId": {
+            "type": "string"
+          },
+          "invoiceStatus": {
+            "type": "string",
+            "description": "payment or invoice status"
+          },
+          "billingCustomerId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "invoiceId",
+          "billingCustomerId"
+        ],
+        "additionalProperties": false
+      },
+      "billing_customer.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "billing_customer.ScopeFilter"
+      },
+      "billing_customer.IncludeFilter.Items": {
+        "title": "billing_customer.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "invoices"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/billing_customer.ScopeFilter"
+          }
+        }
+      },
+      "billing_customer.Filter": {
+        "type": "object",
+        "title": "billing_customer.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "billing_customer.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
+                    "type": "boolean"
+                  },
+                  "customerId": {
+                    "type": "boolean"
+                  },
+                  "paymentSourceId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "tenantId",
+                    "customerId",
+                    "paymentSourceId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "billing_customer.Fields"
+          },
+          "include": {
+            "title": "billing_customer.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/billing_customer.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<BillingCustomer>"
       },
       "loopback.Count": {
         "type": "object",
@@ -6269,6 +7854,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -6286,11 +7892,18 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "size",
                     "config"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -6341,6 +7954,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -6358,11 +7992,18 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "size",
                     "config"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -6518,6 +8159,9 @@
                   "tier": {
                     "type": "boolean"
                   },
+                  "size": {
+                    "type": "boolean"
+                  },
                   "price": {
                     "type": "boolean"
                   },
@@ -6549,6 +8193,7 @@
                     "name",
                     "description",
                     "tier",
+                    "size",
                     "price",
                     "metaData",
                     "billingCycleId",
@@ -6652,6 +8297,9 @@
                   "tier": {
                     "type": "boolean"
                   },
+                  "size": {
+                    "type": "boolean"
+                  },
                   "price": {
                     "type": "boolean"
                   },
@@ -6683,6 +8331,7 @@
                     "name",
                     "description",
                     "tier",
+                    "size",
                     "price",
                     "metaData",
                     "billingCycleId",
@@ -7366,7 +9015,8 @@
           "relation": {
             "type": "string",
             "enum": [
-              "plan"
+              "plan",
+              "invoice"
             ]
           },
           "scope": {
@@ -7452,6 +9102,9 @@
                   },
                   "planId": {
                     "type": "boolean"
+                  },
+                  "invoiceId": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -7473,7 +9126,8 @@
                     "startDate",
                     "endDate",
                     "status",
-                    "planId"
+                    "planId",
+                    "invoiceId"
                   ],
                   "example": "deleted"
                 },
@@ -7573,6 +9227,9 @@
                   },
                   "planId": {
                     "type": "boolean"
+                  },
+                  "invoiceId": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -7594,7 +9251,8 @@
                     "startDate",
                     "endDate",
                     "status",
-                    "planId"
+                    "planId",
+                    "invoiceId"
                   ],
                   "example": "deleted"
                 },
