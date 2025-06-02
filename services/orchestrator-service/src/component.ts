@@ -41,7 +41,7 @@ export class OrchestratorServiceComponent implements Component {
       enableHttpAccessLog: true,
     });
     application.component(LoggingComponent);
-    application.component(CoreComponent)
+    application.component(CoreComponent);
 
     // Bind Providers if not provided by consumer of the component
     this.bindProviders({
