@@ -1,4 +1,5 @@
-/* Replace with your SQL commands */CREATE SCHEMA main;
+/* Replace with your SQL commands */
+CREATE SCHEMA IF NOT EXISTS main;
 
 SET search_path TO main,public;
 GRANT ALL ON SCHEMA main TO public;
@@ -17,7 +18,7 @@ CREATE TABLE main.features (
     modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
     deleted              bool DEFAULT false NOT NULL ,
     deleted_on           timestamptz   ,
-    deleted_by           uuid   ;
+    deleted_by           uuid   ,
 	CONSTRAINT pk_features_id PRIMARY KEY ( id )
  );
 
@@ -32,7 +33,7 @@ CREATE TABLE main.features (
     modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
     deleted              bool DEFAULT false NOT NULL ,
     deleted_on           timestamptz   ,
-    deleted_by           uuid   ;
+    deleted_by           uuid   ,
 	CONSTRAINT pk_strategies_id PRIMARY KEY ( id )
  );
 
@@ -49,7 +50,7 @@ CREATE TABLE main.features (
     modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
     deleted              bool DEFAULT false NOT NULL ,
     deleted_on           timestamptz   ,
-    deleted_by           uuid   ;
+    deleted_by           uuid   ,
 	CONSTRAINT pk_feature_values_id PRIMARY KEY ( id )
  );
 
