@@ -60,6 +60,7 @@
         "README.md",
         "dist",
         "src",
+        "migrations",
         "!*/__tests__"
     ],
     "dependencies": {

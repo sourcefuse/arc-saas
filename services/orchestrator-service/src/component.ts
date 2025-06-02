@@ -24,6 +24,7 @@ import {
 import {EventController} from './controllers';
 import {RestApplication} from '@loopback/rest';
 import {LoggingBindings, LoggingComponent} from '@loopback/logging';
+import {CoreComponent} from '@sourceloop/core';
 
 export class OrchestratorServiceComponent implements Component {
   providers: ProviderMap = {};
@@ -40,6 +41,7 @@ export class OrchestratorServiceComponent implements Component {
       enableHttpAccessLog: true,
     });
     application.component(LoggingComponent);
+    application.component(CoreComponent)
 
     // Bind Providers if not provided by consumer of the component
     this.bindProviders({
