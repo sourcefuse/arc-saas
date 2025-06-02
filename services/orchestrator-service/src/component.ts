@@ -14,6 +14,7 @@ import {OrchestratorServiceBindings} from './services/types';
 import {BuilderService, TierDetailsProvider} from './services';
 import {RestApplication} from '@loopback/rest';
 import {LoggingBindings, LoggingComponent} from '@loopback/logging';
+import {CoreComponent} from '@sourceloop/core';
 import {EventStreamConnectorComponent} from 'loopback4-message-bus-connector';
 
 export class OrchestratorServiceComponent implements Component {
@@ -31,6 +32,7 @@ export class OrchestratorServiceComponent implements Component {
       enableHttpAccessLog: true,
     });
     application.component(LoggingComponent);
+    application.component(CoreComponent)
     application.component(EventStreamConnectorComponent);
 
     // Bind Providers if not provided by consumer of the component
