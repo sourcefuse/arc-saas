@@ -59,6 +59,7 @@
         "!*/__tests__"
     ],
     "dependencies": {
+        "@sourceloop/core": "^15.0.2",
         "tslib": "^2.6.2"
     },
     "peerDependencies": {
