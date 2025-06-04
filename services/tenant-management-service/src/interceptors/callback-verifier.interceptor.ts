@@ -11,7 +11,7 @@ import {HttpErrors, RequestContext} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {createHmac, timingSafeEqual} from 'crypto';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
-import {TenantManagementServiceBindings} from '../keys';
+import {SYSTEM_USER} from '../keys';
 import {WebhookSecretRepository} from '../repositories';
 
 const DEFAULT_TIME_TOLERANCE = 20000;
@@ -24,7 +24,7 @@ export class CallbackVerifierProvider implements Provider<Interceptor> {
     private readonly webhookSecretRepo: WebhookSecretRepository,
     @inject.setter(AuthenticationBindings.CURRENT_USER)
     private readonly setCurrentUser: Setter<IAuthUser>,
-    @inject(TenantManagementServiceBindings.SYSTEM_USER)
+    @inject(SYSTEM_USER)
     private readonly systemUser: IAuthUser,
   ) {}
 

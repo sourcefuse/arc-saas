@@ -11,7 +11,7 @@ import {
   SequelizeCrudRepository,
   SequelizeDataSource,
 } from '@loopback/sequelize';
-import {TenantManagementServiceBindings} from '../../keys';
+import {SYSTEM_USER} from '../../keys';
 import {Address, Lead, LeadRelations, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
 import {AddressRepository} from './address.repository';
@@ -33,7 +33,7 @@ export class LeadRepository<
   constructor(
     @inject(`datasources.${TenantManagementDbSourceName}`)
     dataSource: SequelizeDataSource,
-    @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
+    @inject.getter(SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,

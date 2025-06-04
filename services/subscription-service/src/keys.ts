@@ -1,11 +1,16 @@
 import {BindingKey, Interceptor} from '@loopback/core';
-import {SubscriptionServiceConfig} from './types';
+import {ISubscriptionServiceConfig} from './types';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import {AnyObject} from '@loopback/repository';
 import {IAuthUser} from 'loopback4-authorization';
 
 export namespace SubscriptionServiceBindings {
+  export const Config = BindingKey.create<ISubscriptionServiceConfig>(
+    `${BINDING_PREFIX}.task.config`,
+  );
+}
+
   export const WEBHOOK_VERIFIER = BindingKey.create<Interceptor>(
     'sf.webhook.verifier',
   );
@@ -23,7 +28,3 @@ export namespace SubscriptionServiceBindings {
   export const SYSTEM_USER = BindingKey.create<IAuthUser & AnyObject>(
     'sf.user.system',
   );
-  export const Config = BindingKey.create<SubscriptionServiceConfig>(
-    `${BINDING_PREFIX}.task.config`,
-  );
-}

@@ -45,7 +45,7 @@ import {
   PlanSizesController,
   PlanFeaturesController,
 } from './controllers';
-import {SubscriptionServiceBindings} from './keys';
+import {SubscriptionServiceBindings,SYSTEM_USER,WEBHOOK_VERIFIER} from './keys';
 import {
   BillingCycle,
   Currency,
@@ -79,7 +79,7 @@ import {
   BillingCustomerRepository,
   InvoiceRepository,
 } from './repositories';
-import {SubscriptionServiceConfig} from './types';
+import {ISubscriptionServiceConfig} from './types';
 import {WebhookVerifierProvider} from './interceptors/webhook-verifier.interceptor';
 import {SystemUserProvider} from './providers';
 import {BillingCustomerController} from './controllers/billing-customer.controller';
@@ -92,7 +92,7 @@ export class SubscriptionServiceComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(SubscriptionServiceBindings.Config, {optional: true})
-    private readonly subscriptionConfig?: SubscriptionServiceConfig,
+    private readonly subscriptionConfig?: ISubscriptionServiceConfig,
   ) {
     this.providers = {};
 
@@ -161,11 +161,11 @@ export class SubscriptionServiceComponent implements Component {
       PlanSizes,
     ];
     this.bindings = [
-      Binding.bind(SubscriptionServiceBindings.WEBHOOK_VERIFIER).toProvider(
+      Binding.bind(WEBHOOK_VERIFIER).toProvider(
         WebhookVerifierProvider,
       ),
 
-      Binding.bind(SubscriptionServiceBindings.SYSTEM_USER).toProvider(
+      Binding.bind(SYSTEM_USER).toProvider(
         SystemUserProvider,
       ),
     ];
