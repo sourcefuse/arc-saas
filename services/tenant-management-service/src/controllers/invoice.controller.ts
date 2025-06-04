@@ -92,17 +92,10 @@ export class InvoiceController {
       throw new Error('Invoice with given id does not exist');
     }
     // Generate PDF invoice
-    try {
-      const pdfFilePath = await this.invoicePDFGenerator.generatePDF(invoice);
-      invoice.invoiceFile = pdfFilePath; // Assuming invoiceFile property stores the path to the generated PDF
-      // Update invoice record in the database to store the PDF file path
-      await this.invoiceRepository.updateById(invoice.id, invoice);
-    } catch (error) {
-      //sonarignore:start
-      console.error('Error generating PDF:', error);
-      //sonarignore:end
-      // Handle error appropriately
-    }
+    const pdfFilePath = await this.invoicePDFGenerator.generatePDF(invoice);
+    invoice.invoiceFile = pdfFilePath; // Assuming invoiceFile property stores the path to the generated PDF
+    // Update invoice record in the database to store the PDF file path
+    await this.invoiceRepository.updateById(invoice.id, invoice);
   }
 
   @authorize({
