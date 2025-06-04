@@ -10,7 +10,7 @@ import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-import {TenantManagementServiceBindings} from '../keys';
+import {SYSTEM_USER} from '../keys';
 import {TenantManagementDbSourceName} from '../types';
 import {TenantRepository} from './tenant.repository';
 
@@ -27,7 +27,7 @@ export class TenantMgmtConfigRepository<
   >;
 
   constructor(
-    @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
+    @inject.getter(SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(`datasources.${TenantManagementDbSourceName}`)
     dataSource: juggler.DataSource,

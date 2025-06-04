@@ -16,7 +16,7 @@ import {
 import {CryptoHelperService} from '../crypto-helper.service';
 import {NotificationService} from '../notifications';
 import {IPostWebhookHandlerService} from '../../types/i-post-webhook-handler-service.interface';
-import {TenantManagementServiceBindings} from '../../keys';
+import {PostWebhookHandlerServiceKey} from '../../keys';
 import {SaasTenantRepository} from '../../repositories/saas-tenant.repository';
 
 /**
@@ -44,7 +44,7 @@ export class ProvisioningWebhookHandler implements IWebhookHandler {
     public tenantRepository: TenantRepository,
     @inject('services.NotificationService')
     private notificationService: NotificationService,
-    @inject(TenantManagementServiceBindings.PostWebhookHandlerServiceKey)
+    @inject(PostWebhookHandlerServiceKey)
     private postWebhookHandlerService: IPostWebhookHandlerService<ResourceProvisionedWebhookPayload>,
     @service(CryptoHelperService)
     private cryptoHelperService: CryptoHelperService,

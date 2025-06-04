@@ -9,7 +9,7 @@ import {
 } from '@loopback/core';
 import {WebhookConfig, WebhookPayload} from '../types';
 import {HttpErrors, RequestContext} from '@loopback/rest';
-import {TenantManagementServiceBindings} from '../keys';
+import {SYSTEM_USER, WEBHOOK_CONFIG} from '../keys';
 import {CryptoHelperService} from '../services';
 import {repository} from '@loopback/repository';
 import {WebhookSecretRepository} from '../repositories';
@@ -19,7 +19,7 @@ import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 
 export class WebhookVerifierProvider implements Provider<Interceptor> {
   constructor(
-    @inject(TenantManagementServiceBindings.WEBHOOK_CONFIG)
+    @inject(WEBHOOK_CONFIG)
     private readonly webhookConfig: WebhookConfig,
     @service(CryptoHelperService)
     private readonly cryptoHelperService: CryptoHelperService,
@@ -29,7 +29,7 @@ export class WebhookVerifierProvider implements Provider<Interceptor> {
     private readonly logger: ILogger,
     @inject.setter(AuthenticationBindings.CURRENT_USER)
     private readonly setCurrentUser: Setter<IAuthUser>,
-    @inject(TenantManagementServiceBindings.SYSTEM_USER)
+    @inject(SYSTEM_USER)
     private readonly systemUser: IAuthUser,
   ) {}
 

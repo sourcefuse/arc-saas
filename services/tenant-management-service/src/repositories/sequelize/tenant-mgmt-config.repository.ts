@@ -2,7 +2,7 @@ import {Getter, inject} from '@loopback/core';
 import {repository, BelongsToAccessor, Entity} from '@loopback/repository';
 import {Tenant, TenantMgmtConfig} from '../../models';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {TenantManagementServiceBindings} from '../../keys';
+import {SYSTEM_USER} from '../../keys';
 import {TenantManagementDbSourceName} from '../../types';
 import {TenantRepository} from './tenant.repository';
 import {
@@ -19,7 +19,7 @@ export class TenantMgmtConfigRepository<
   >;
 
   constructor(
-    @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
+    @inject.getter(SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(`datasources.${TenantManagementDbSourceName}`)
     dataSource: SequelizeDataSource,

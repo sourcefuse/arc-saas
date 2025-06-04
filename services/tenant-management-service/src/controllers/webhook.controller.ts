@@ -9,17 +9,17 @@ import {authorize} from 'loopback4-authorization';
 import {WebhookDTO} from '../models';
 import {IWebhookHandler, WebhookPayload} from '../types';
 import {Getter, extensionPoint, extensions, intercept} from '@loopback/core';
-import {TenantManagementServiceBindings} from '../keys';
+import {WEBHOOK_VERIFIER, WebhookHandlerEP} from '../keys';
 import {ratelimit} from 'loopback4-ratelimiter';
 
 const basePath = '/webhook';
-@extensionPoint(TenantManagementServiceBindings.WebhookHandlerEP.key)
+@extensionPoint(WebhookHandlerEP.key)
 export class WebhookController<T extends WebhookPayload['data']> {
   constructor(
     @extensions()
     private readonly getHandlers: Getter<IWebhookHandler[]>,
   ) {}
-  @intercept(TenantManagementServiceBindings.WEBHOOK_VERIFIER)
+  @intercept(WEBHOOK_VERIFIER)
   @ratelimit(true, {
     max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,

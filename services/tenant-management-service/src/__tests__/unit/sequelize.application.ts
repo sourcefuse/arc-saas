@@ -19,7 +19,7 @@ export class TenantMgmtServiceApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
-    this.bind(TenantManagementServiceBindings.config).to({
+    this.bind(TenantManagementServiceBindings.Config).to({
       useCustomSequence: false,
       useSequelize: true,
     });

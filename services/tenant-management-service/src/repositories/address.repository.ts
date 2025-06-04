@@ -6,7 +6,7 @@ import {
 } from '@sourceloop/core';
 
 import {Address, Tenant} from '../models';
-import {TenantManagementServiceBindings} from '../keys';
+import {SYSTEM_USER} from '../keys';
 import {TenantManagementDbSourceName} from '../types';
 
 export class AddressRepository<
@@ -22,7 +22,7 @@ export class AddressRepository<
   >;
 
   constructor(
-    @inject.getter(TenantManagementServiceBindings.SYSTEM_USER)
+    @inject.getter(SYSTEM_USER)
     public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(`datasources.${TenantManagementDbSourceName}`)
     dataSource: juggler.DataSource,

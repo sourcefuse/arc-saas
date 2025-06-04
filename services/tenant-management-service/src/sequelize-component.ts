@@ -41,7 +41,12 @@ import {
   TenantController,
 } from './controllers';
 import {InvoiceController} from './controllers/invoice.controller';
-import {TenantManagementServiceBindings} from './keys';
+import {
+  EventConnectorBinding,
+  LEAD_TOKEN_VERIFIER,
+  SYSTEM_USER,
+  TenantManagementServiceBindings,
+} from './keys';
 import {
   Address,
   Contact,
@@ -79,14 +84,14 @@ import {
   OnboardingService,
   ProvisioningService,
 } from './services';
-import {TenantManagementServiceConfig} from './types';
+import {ITenantManagementServiceConfig} from './types';
 
 export class TenantManagementSequelizeServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(TenantManagementServiceBindings.config, {optional: true})
-    private readonly tenantMgmtConfig?: TenantManagementServiceConfig,
+    @inject(TenantManagementServiceBindings.Config, {optional: true})
+    private readonly tenantMgmtConfig?: ITenantManagementServiceConfig,
   ) {
     this.providers = {};
 
@@ -152,12 +157,8 @@ export class TenantManagementSequelizeServiceComponent implements Component {
     ];
 
     this.bindings = [
-      Binding.bind(
-        TenantManagementServiceBindings.LEAD_TOKEN_VERIFIER,
-      ).toProvider(LeadTokenVerifierProvider),
-      Binding.bind(TenantManagementServiceBindings.SYSTEM_USER).toProvider(
-        SystemUserProvider,
-      ),
+      Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
+      Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
       createServiceBinding(ProvisioningService),
       createServiceBinding(OnboardingService),
       createServiceBinding(LeadAuthenticator),
@@ -166,10 +167,7 @@ export class TenantManagementSequelizeServiceComponent implements Component {
       createServiceBinding(InvoicePDFGenerator),
     ];
 
-    this.addClassBindingIfNotPresent(
-      TenantManagementServiceBindings.EventConnectorBinding.key,
-      EventConnector,
-    );
+    this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
   }
 
   providers?: ProviderMap = {};
