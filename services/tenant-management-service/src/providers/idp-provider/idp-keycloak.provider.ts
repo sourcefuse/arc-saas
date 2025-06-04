@@ -4,6 +4,7 @@ import qs from 'qs';
 import {ConfigureIdpFunc, IdpDetails, IdpResp} from '../../types';
 import AWS from 'aws-sdk';
 import {randomBytes} from 'crypto';
+import {AnyObject} from '@loopback/repository';
 
 export const STATUS = {
   OK: 200,
@@ -45,25 +46,7 @@ export class KeycloakIdpProvider
         `/${process.env.NAMESPACE}/${process.env.ENVIRONMENT}/${plan.tier.toLowerCase()}/${tenant.key}/keycloak-client-realm`,
       );
 
-      // Handling the logic based on tenant tier
-      if (plan.tier === 'PREMIUM') {
-        // For PREMIUM: always create a new realm
-        await this.createRealm(realmName ?? tenant.key, token);
-      } else if (plan.tier === 'STANDARD' || plan.tier === 'BASIC') {
-        // For STANDARD or BASIC: check if the realm exists
-        const realmExists = await this.realmExists(
-          realmName ?? tenant.key,
-          token,
-        );
-        if (!realmExists) {
-          // If the realm does not exist, create it
-          await this.createRealm(realmName ?? tenant.key, token);
-        }
-      } else {
-        // DO NOTHING
-      }
-
-      // Set up SMTP settings in the realm for AWS SES
+      await this._setupRealm(plan.tier, realmName ?? tenant.key, token);
       await this.setupEmailSettings(realmName ?? tenant.key, token);
 
       // Create a new client within the realm
@@ -75,19 +58,9 @@ export class KeycloakIdpProvider
         tenant.key,
       );
 
-      // Create a new admin user for the tenant
-      const adminUsername = tenant.contacts[0].email;
-      const passwordLength = 20;
-      const adminPassword = this.generateStrongPassword(passwordLength);
-      const {firstName, lastName, email} = tenant.contacts[0];
-
-      const user = await this.createUser(
+      const user = await this._createAdminUser(
+        tenant,
         realmName ?? tenant.key,
-        adminUsername,
-        adminPassword,
-        firstName,
-        lastName,
-        email,
         token,
       );
 
@@ -96,9 +69,76 @@ export class KeycloakIdpProvider
       };
     } catch (error) {
       throw new Error(
-        `Failed to configure Keycloak for tenant: ${tenant.name}`,
+        `Failed to configure Keycloak for tenant: ${tenant.name},error: ${error.message}`,
       );
     }
+  }
+
+  /**
+   * The _setupRealm function creates a new realm if the tier is PREMIUM, or checks if the realm exists
+   * and creates it if it doesn't for STANDARD or BASIC tiers.
+   * @param {string} tier - Tier specifies the level of service or plan for the realm, such as
+   * 'PREMIUM', 'STANDARD', or 'BASIC'.
+   * @param {string} realmName - The `realmName` parameter is a string that represents the name of the
+   * realm that needs to be set up.
+   * @param {string} token - The `token` parameter is used for authentication purposes. It is a
+   * security token that grants access to the necessary resources for creating or checking the
+   * existence of a realm. This token is typically provided by the user or system initiating the setup
+   * of the realm and is used to authenticate the requests made to the realm
+   */
+  private async _setupRealm(
+    tier: string,
+    realmName: string,
+    token: string,
+  ): Promise<void> {
+    if (tier === 'PREMIUM') {
+      // For PREMIUM: always create a new realm
+      await this.createRealm(realmName, token);
+    } else if (tier === 'STANDARD' || tier === 'BASIC') {
+      // For STANDARD or BASIC: check if the realm exists
+      const realmExists = await this.realmExists(realmName, token);
+      if (!realmExists) {
+        // If the realm does not exist, create it
+        await this.createRealm(realmName, token);
+      }
+    }
+  }
+
+  /**
+   * The _createAdminUser function generates a strong password for an admin user and creates the user in
+   * a specified realm.
+   * @param {any} tenant - The `tenant` parameter is an object containing information about a tenant,
+   * including an array of contacts. The function retrieves the email, first name, last name, and other
+   * details of the first contact in the contacts array to create an admin user for that tenant.
+   * @param {string} realmName - The `realmName` parameter in the `_createAdminUser` function refers to
+   * the name of the realm in which the admin user will be created. It is a string value that specifies
+   * the realm within which the user account will be managed.
+   * @param {string} token - The `token` parameter in the `_createAdminUser` function is likely a
+   * security token or authentication token that is used to authorize the creation of the admin user. It
+   * is passed as a parameter to the function to ensure that the user creating the admin user has the
+   * necessary permissions or rights to do so
+   * @returns The `_createAdminUser` function is returning a Promise that resolves to an object with a
+   * property `id` of type string.
+   */
+  private async _createAdminUser(
+    tenant: AnyObject,
+    realmName: string,
+    token: string,
+  ): Promise<{id: string}> {
+    const adminUsername = tenant.contacts[0].email;
+    const passwordLength = 20;
+    const adminPassword = this.generateStrongPassword(passwordLength);
+    const {firstName, lastName, email} = tenant.contacts[0];
+
+    return this.createUser(
+      realmName,
+      adminUsername,
+      adminPassword,
+      firstName,
+      lastName,
+      email,
+      token,
+    );
   }
 
   // Method to check if a realm exists
@@ -327,7 +367,9 @@ export class KeycloakIdpProvider
       return response.Parameter?.Value ?? '';
     } catch (error) {
       // Optionally, you can throw the error or return a default value
-      throw new Error(`Failed to fetch parameter ${parameterName}`);
+      throw new Error(
+        `Failed to fetch parameter ${parameterName},error: ${error.message}`,
+      );
     }
   }
 
