@@ -19,6 +19,7 @@ import {
 } from 'loopback4-authentication';
 import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
 import {
+  EventConnectorBinding,
   TenantManagementServiceBindings,
   TenantManagementServiceComponent,
   WebhookTenantManagementServiceComponent,
@@ -135,9 +136,7 @@ function setupEventConnector(app: RestApplication) {
     }
   }
 
-  app
-    .bind(TenantManagementServiceBindings.EventConnectorBinding)
-    .toClass(EventConnector);
+  app.bind(EventConnectorBinding).toClass(EventConnector);
 }
 
 export interface AppWithClient {
@@ -175,7 +174,7 @@ export class TestTenantMgmtServiceApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
-    this.bind(TenantManagementServiceBindings.config).to({
+    this.bind(TenantManagementServiceBindings.Config).to({
       useCustomSequence: true,
     });
     this.component(TenantManagementServiceComponent);

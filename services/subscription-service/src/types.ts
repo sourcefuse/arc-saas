@@ -41,7 +41,7 @@ export interface IPayload {
 export interface IContent {
   invoice: TInvoice;
 }
-export interface SubscriptionServiceConfig extends IServiceConfig {
+export interface ISubscriptionServiceConfig extends IServiceConfig {
   useCustomSequence: boolean;
   useSequelize?: boolean;
 }
