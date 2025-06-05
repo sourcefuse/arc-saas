@@ -31,12 +31,8 @@ export function weakEqual<T>(
   value1: T | null | undefined,
   value2: T | null | undefined,
 ): boolean {
-  if (value1 === null) {
-    value1 = undefined;
-  }
-  if (value2 === null) {
-    value2 = undefined;
-  }
+  value1 ??= undefined;
+  value2 ??= undefined;
   return value1 === value2;
 }
 

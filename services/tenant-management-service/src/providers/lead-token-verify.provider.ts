@@ -18,8 +18,14 @@ export class LeadTokenVerifierProvider
       if (!response.token) {
         throw new HttpErrors.Unauthorized();
       }
+      const secret = process.env.JWT_SECRET;
+      if (!secret) {
+        throw new Error(
+          'JWT_SECRET is not defined in the environment variables.',
+        );
+      }
       //sonarignore:start
-      const data = verify(response.token, process.env.JWT_SECRET!, {
+      const data = verify(response.token, secret, {
         //sonarignore:end
         issuer: process.env.JWT_ISSUER,
         algorithms: ['HS256'],
