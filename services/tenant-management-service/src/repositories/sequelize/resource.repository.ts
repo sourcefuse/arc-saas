@@ -2,17 +2,15 @@ import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, Entity, repository} from '@loopback/repository';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {Resource, ResourceRelations, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
 import {ResourceData, TenantManagementDbSourceName} from '../../types';
 
 export class ResourceRepository<
   T extends ResourceData['metadata'] = ResourceData['metadata'],
-> extends SequelizeCrudRepository<
+> extends SequelizeUserModifyCrudRepository<
   Resource<T>,
   typeof Resource.prototype.id,
   ResourceRelations
@@ -32,7 +30,7 @@ export class ResourceRepository<
     @inject('models.Resource')
     private readonly resource: typeof Entity & {prototype: Resource<T>},
   ) {
-    super(resource, dataSource);
+    super(resource, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

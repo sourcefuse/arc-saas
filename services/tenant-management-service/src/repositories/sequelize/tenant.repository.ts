@@ -7,10 +7,8 @@ import {
 } from '@loopback/repository';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {
   Address,
   Contact,
@@ -27,7 +25,7 @@ import {TenantManagementDbSourceName} from '../../types';
 
 export class TenantRepository<
   T extends Tenant = Tenant,
-> extends SequelizeCrudRepository<
+> extends SequelizeUserModifyCrudRepository<
   T,
   typeof Tenant.prototype.id,
   TenantRelations
@@ -65,7 +63,7 @@ export class TenantRepository<
     @inject('models.Tenant')
     private readonly tenant: typeof Entity & {prototype: T},
   ) {
-    super(tenant, dataSource);
+    super(tenant, dataSource, getCurrentUser);
     this.lead = this.createBelongsToAccessorFor('lead', leadRepositoryGetter);
     this.registerInclusionResolver('lead', this.lead.inclusionResolver);
     this.contacts = this.createHasManyRepositoryFactoryFor(
