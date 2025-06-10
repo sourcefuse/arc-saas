@@ -4,13 +4,11 @@ import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Entity} from '@loopback/repository';
 import {SubscriptionDbSourceName} from '../../types';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 export class PlanSizesRepository<
   T extends PlanSizes = PlanSizes,
-> extends SequelizeCrudRepository<
+> extends SequelizeUserModifyCrudRepository<
   T,
   typeof PlanSizes.prototype.id,
   PlanSizesRelations
@@ -23,6 +21,6 @@ export class PlanSizesRepository<
     @inject('models.PlanSizes')
     private readonly planSizes: typeof Entity & {prototype: T},
   ) {
-    super(planSizes, dataSource);
+    super(planSizes, dataSource, getCurrentUser);
   }
 }

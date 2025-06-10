@@ -4,13 +4,11 @@ import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Entity} from '@loopback/repository';
 import {SubscriptionDbSourceName} from '../../types';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 export class ServiceRepository<
   T extends Service = Service,
-> extends SequelizeCrudRepository<
+> extends SequelizeUserModifyCrudRepository<
   T,
   typeof Service.prototype.id,
   ServiceRelations
@@ -23,6 +21,6 @@ export class ServiceRepository<
     @inject('models.Service')
     private readonly service: typeof Entity & {prototype: T},
   ) {
-    super(service, dataSource);
+    super(service, dataSource, getCurrentUser);
   }
 }
