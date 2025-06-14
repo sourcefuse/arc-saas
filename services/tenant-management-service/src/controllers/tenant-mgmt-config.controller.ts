@@ -6,16 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {TenantMgmtConfig} from '../models';
 import {TenantMgmtConfigRepository} from '../repositories';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -23,6 +14,7 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../permissions';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -44,7 +36,7 @@ export class TenantMgmtConfigController {
       [STATUS_CODE.OK]: {
         description: 'Tenant Config model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TenantMgmtConfig)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(TenantMgmtConfig)},
         },
       },
     },
@@ -53,7 +45,7 @@ export class TenantMgmtConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantMgmtConfig, {
+          schema: getModelSchemaRefSF(TenantMgmtConfig, {
             title: 'NewTenantConfig',
             exclude: ['id'],
           }),
@@ -99,7 +91,7 @@ export class TenantMgmtConfigController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(TenantMgmtConfig, {
+              items: getModelSchemaRefSF(TenantMgmtConfig, {
                 includeRelations: true,
               }),
             },
@@ -126,7 +118,7 @@ export class TenantMgmtConfigController {
         description: 'Tenant Config PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(TenantMgmtConfig),
+            schema: getModelSchemaRefSF(TenantMgmtConfig),
           },
         },
       },
@@ -136,7 +128,7 @@ export class TenantMgmtConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantMgmtConfig, {partial: true}),
+          schema: getModelSchemaRefSF(TenantMgmtConfig, {partial: true}),
         },
       },
     })
@@ -157,7 +149,7 @@ export class TenantMgmtConfigController {
       [STATUS_CODE.OK]: {
         description: 'Tenant Config model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TenantMgmtConfig)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(TenantMgmtConfig)},
         },
       },
     },
@@ -182,7 +174,7 @@ export class TenantMgmtConfigController {
         description: 'Tenant Config PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(TenantMgmtConfig),
+            schema: getModelSchemaRefSF(TenantMgmtConfig),
           },
         },
       },
@@ -193,7 +185,7 @@ export class TenantMgmtConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantMgmtConfig, {partial: true}),
+          schema: getModelSchemaRefSF(TenantMgmtConfig, {partial: true}),
         },
       },
     })

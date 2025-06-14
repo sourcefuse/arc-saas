@@ -1,9 +1,10 @@
-import {post, requestBody, getModelSchemaRef, HttpErrors} from '@loopback/rest';
+import {post, requestBody, HttpErrors} from '@loopback/rest';
 import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   CONTENT_TYPE,
   rateLimitKeyGenPublic,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {WebhookDTO} from '../models';
@@ -39,7 +40,7 @@ export class WebhookController<T extends WebhookPayload['data']> {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WebhookDTO, {
+          schema: getModelSchemaRefSF(WebhookDTO, {
             title: 'WebhookDTO',
           }),
         },

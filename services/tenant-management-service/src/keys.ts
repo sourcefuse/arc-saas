@@ -8,7 +8,6 @@ import {AnyObject} from '@loopback/repository';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUser} from 'loopback4-authorization';
-import {WebhookController} from './controllers';
 import {
   IPostWebhookHandlerService,
   ConfigureIdpFunc,
@@ -72,7 +71,7 @@ export const CALLABCK_VERIFIER = BindingKey.create<Interceptor>(
 /**
  * Binding key for the webhook handler extension point.
  */
-export const WebhookHandlerEP = BindingKey.create<WebhookController<never>>(
+export const WebhookHandlerEP = BindingKey.create(
   `sf.webhook.handler.extensionpoint`,
 );
 

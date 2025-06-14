@@ -1,7 +1,8 @@
 import {inject, intercept} from '@loopback/core';
-import {getModelSchemaRef, post, requestBody} from '@loopback/rest';
+import {post, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   rateLimitKeyGenPublic,
   STATUS_CODE,
@@ -41,7 +42,7 @@ export class IdpController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(IdpDetailsDTO, {
+          schema: getModelSchemaRefSF(IdpDetailsDTO, {
             title: 'IdpDetailsDTO',
           }),
         },

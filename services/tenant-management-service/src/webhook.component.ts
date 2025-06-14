@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -28,22 +29,17 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  IdpController,
-  TenantMgmtConfigController,
-  TenantMgmtConfigTenantController,
-  WebhookController,
-} from './controllers';
+import {WebhookControllerBooter, WebhookModelBooter} from './booters';
 import {
   CallbackVerifierProvider,
   WebhookVerifierProvider,
 } from './interceptors';
 import {
-  TenantManagementServiceBindings,
   CALLABCK_VERIFIER,
-  WEBHOOK_VERIFIER,
   SYSTEM_USER,
+  TenantManagementServiceBindings,
   WEBHOOK_CONFIG,
+  WEBHOOK_VERIFIER,
 } from './keys';
 import {
   Address,
@@ -69,10 +65,10 @@ import {
   LeadRepository,
   LeadTokenRepository,
   ResourceRepository,
+  SaasTenantRepository,
   TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
-  SaasTenantRepository,
 } from './repositories';
 import {CryptoHelperService, NotificationService} from './services';
 import {ProvisioningWebhookHandler} from './services/webhook';
@@ -84,6 +80,7 @@ import {
 } from './utils';
 
 export class WebhookTenantManagementServiceComponent implements Component {
+  booters?: Class<Booter>[];
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
@@ -112,6 +109,8 @@ export class WebhookTenantManagementServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+    this.booters = [WebhookModelBooter, WebhookControllerBooter];
 
     this.repositories = [
       AddressRepository,
@@ -142,14 +141,6 @@ export class WebhookTenantManagementServiceComponent implements Component {
       WebhookDTO,
       TenantMgmtConfig,
     ];
-
-    this.controllers = [
-      WebhookController,
-      IdpController,
-      TenantMgmtConfigController,
-      TenantMgmtConfigTenantController,
-    ];
-
     this.bindings = [
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
       Binding.bind(CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),

@@ -5,18 +5,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -50,7 +42,7 @@ export class InvoiceController {
       [STATUS_CODE.OK]: {
         description: 'Invoice model instance POST success',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Invoice)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Invoice)},
         },
       },
     },
@@ -59,7 +51,7 @@ export class InvoiceController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Invoice, {
+          schema: getModelSchemaRefSF(Invoice, {
             title: 'NewInvoice',
             exclude: ['id'],
           }),
@@ -132,7 +124,7 @@ export class InvoiceController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Invoice, {includeRelations: true}),
+              items: getModelSchemaRefSF(Invoice, {includeRelations: true}),
             },
           },
         },
@@ -158,7 +150,7 @@ export class InvoiceController {
         description: 'Invoice PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Invoice),
+            schema: getModelSchemaRefSF(Invoice),
           },
         },
       },
@@ -168,7 +160,7 @@ export class InvoiceController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Invoice, {partial: true}),
+          schema: getModelSchemaRefSF(Invoice, {partial: true}),
         },
       },
     })
@@ -190,7 +182,7 @@ export class InvoiceController {
       [STATUS_CODE.OK]: {
         description: 'Invoice model instance success',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Invoice)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Invoice)},
         },
       },
     },
@@ -216,7 +208,7 @@ export class InvoiceController {
         description: 'Invoice PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Invoice),
+            schema: getModelSchemaRefSF(Invoice),
           },
         },
       },
@@ -227,7 +219,7 @@ export class InvoiceController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Invoice, {partial: true}),
+          schema: getModelSchemaRefSF(Invoice, {partial: true}),
         },
       },
     })
