@@ -177,6 +177,7 @@ export class OnboardingService {
           domains: dto.domains,
           status: TenantStatus.PENDINGPROVISION,
           addressId: address?.id,
+          source: dto.source,
         },
         {transaction},
       );
