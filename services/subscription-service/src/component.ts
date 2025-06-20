@@ -10,6 +10,7 @@ import {
   ProviderMap,
   ServiceOrProviderClass,
   ControllerClass,
+  createServiceBinding,
 } from '@loopback/core';
 import {Class, Repository, Model} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -79,6 +80,13 @@ import {BillingCustomerController} from './controllers/billing-customer.controll
 import {BillingInvoiceController} from './controllers/billing-invoice.controller';
 import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
 import {WebhookController} from './controllers/webhook.controller';
+import {
+  BillingCustomerService,
+  BillingInvoiceService,
+  BillingPaymentSourceService,
+  PlanFeaturesService,
+  SubscriptionService,
+} from './services';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
@@ -143,6 +151,11 @@ export class SubscriptionServiceComponent implements Component {
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
 
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      createServiceBinding(BillingPaymentSourceService),
+      createServiceBinding(BillingInvoiceService),
+      createServiceBinding(SubscriptionService),
+      createServiceBinding(PlanFeaturesService),
+      createServiceBinding(BillingCustomerService),
     ];
 
     this.controllers = [
