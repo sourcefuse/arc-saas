@@ -23,7 +23,7 @@ import {IProvisioningService} from '../types';
 
 const basePath = '/tenants';
 
-export default class TenantController {
+export class TenantController {
   constructor(
     @repository(TenantRepository)
     private readonly tenantRepository: TenantRepository,

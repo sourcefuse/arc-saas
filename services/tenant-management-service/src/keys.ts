@@ -71,7 +71,7 @@ export const CALLABCK_VERIFIER = BindingKey.create<Interceptor>(
 /**
  * Binding key for the webhook handler extension point.
  */
-export const WebhookHandlerEP = BindingKey.create(
+export const WebhookHandlerEP = BindingKey.create<unknown>(
   `sf.webhook.handler.extensionpoint`,
 );
 
