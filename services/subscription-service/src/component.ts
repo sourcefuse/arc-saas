@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {inject, Binding} from '@loopback/context';
+import {inject, Binding, createBindingFromClass} from '@loopback/context';
 import {
   Component,
   CoreBindings,
@@ -79,6 +79,13 @@ import {BillingCustomerController} from './controllers/billing-customer.controll
 import {BillingInvoiceController} from './controllers/billing-invoice.controller';
 import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
 import {WebhookController} from './controllers/webhook.controller';
+import {
+  BillingCustomerService,
+  BillingInvoiceService,
+  BillingPaymentSourceService,
+  PlanFeaturesService,
+  SubscriptionService,
+} from './services';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
@@ -143,6 +150,12 @@ export class SubscriptionServiceComponent implements Component {
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
 
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      createBindingFromClass(SubscriptionService),
+      createBindingFromClass(BillingCustomerService),
+      createBindingFromClass(BillingInvoiceService),
+      createBindingFromClass(BillingPaymentSourceService),
+      createBindingFromClass(PlanFeaturesService),
+      createBindingFromClass(BillingPaymentSourceService),
     ];
 
     this.controllers = [

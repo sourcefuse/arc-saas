@@ -26,7 +26,7 @@ import {InvoiceRepository} from '../repositories';
 import {Invoice} from '../models';
 import {PermissionKey} from '../permissions';
 import {service} from '@loopback/core';
-import {InvoicePDFGenerator} from '../services';
+import {InvoiceHelperService} from '../services';
 
 const basePath = '/invoices';
 
@@ -34,8 +34,8 @@ export class InvoiceController {
   constructor(
     @repository(InvoiceRepository)
     public invoiceRepository: InvoiceRepository,
-    @service(InvoicePDFGenerator)
-    private invoicePDFGenerator: InvoicePDFGenerator,
+    @service(InvoiceHelperService)
+    private invoiceService: InvoiceHelperService,
   ) {}
 
   @authorize({
@@ -68,8 +68,7 @@ export class InvoiceController {
     })
     invoice: Omit<Invoice, 'id'>,
   ): Promise<Invoice> {
-    const createdInvoice = await this.invoiceRepository.create(invoice);
-    return createdInvoice;
+    return this.invoiceService.createInvoice(invoice);
   }
 
   @authorize({
@@ -87,15 +86,7 @@ export class InvoiceController {
     },
   })
   async downloadInvoice(@param.path.number('id') id: string): Promise<void> {
-    const invoice = await this.invoiceRepository.findById(id);
-    if (!invoice) {
-      throw new Error('Invoice with given id does not exist');
-    }
-    // Generate PDF invoice
-    const pdfFilePath = await this.invoicePDFGenerator.generatePDF(invoice);
-    invoice.invoiceFile = pdfFilePath; // Assuming invoiceFile property stores the path to the generated PDF
-    // Update invoice record in the database to store the PDF file path
-    await this.invoiceRepository.updateById(invoice.id, invoice);
+    return this.invoiceService.downloadInvoice(id);
   }
 
   @authorize({

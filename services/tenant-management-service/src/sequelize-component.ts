@@ -78,13 +78,15 @@ import {
 import {
   CryptoHelperService,
   EventConnector,
-  InvoicePDFGenerator,
+  IdpHelperService,
+  InvoiceHelperService,
   LeadAuthenticator,
   NotificationService,
   OnboardingService,
   ProvisioningService,
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
+import {LeadHelperService} from './services/lead-helper.service';
 
 export class TenantManagementSequelizeServiceComponent implements Component {
   constructor(
@@ -164,7 +166,9 @@ export class TenantManagementSequelizeServiceComponent implements Component {
       createServiceBinding(LeadAuthenticator),
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
-      createServiceBinding(InvoicePDFGenerator),
+      createServiceBinding(InvoiceHelperService),
+      createBindingFromClass(IdpHelperService),
+      createBindingFromClass(LeadHelperService),
     ];
 
     this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
