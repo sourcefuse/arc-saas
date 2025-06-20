@@ -1,5 +1,5 @@
 import {inject, service} from '@loopback/core';
-import {post, requestBody, param, HttpErrors} from '@loopback/rest';
+import {post, requestBody, getModelSchemaRef, param} from '@loopback/rest';
 import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -70,10 +70,6 @@ export class LeadTenantController {
     >,
     @param.path.string('id') id: string,
   ): Promise<Tenant> {
-    if (leadUser.id !== id) {
-      this.logger.error('Lead id does not match with the id in token');
-      throw new HttpErrors.Unauthorized();
-    }
-    return this.onboardingService.onboardForLead(dto, leadUser);
+    return this.onboardingService.onboardForLead(dto, leadUser, id);
   }
 }

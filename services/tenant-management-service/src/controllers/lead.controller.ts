@@ -38,6 +38,7 @@ import {ratelimit} from 'loopback4-ratelimiter';
 import {LEAD_TOKEN_VERIFIER} from '../keys';
 import {LeadUserWithToken} from '../types';
 import {VerifyLeadResponseDTO} from '../models/dtos/verify-lead-response-dto.model';
+import {LeadHelperService} from '../services/lead-helper.service';
 
 const basePath = '/leads';
 const leadDescription = 'Lead model instance';
@@ -48,6 +49,8 @@ export class LeadController {
     public leadRepository: LeadRepository,
     @service(OnboardingService)
     public onboarding: OnboardingService,
+    @inject('services.LeadHelperService')
+    private readonly leadService: LeadHelperService,
     @inject(RestBindings.Http.REQUEST)
     private readonly request: Request,
   ) {}
@@ -114,16 +117,7 @@ export class LeadController {
     @inject(AuthenticationBindings.CURRENT_USER)
     leadUser: LeadUserWithToken,
   ): Promise<VerifyLeadResponseDTO> {
-    if (leadUser.id !== id) {
-      throw new HttpErrors.Unauthorized();
-    }
-    await this.leadRepository.updateById(leadUser.id, {
-      isValidated: true,
-    });
-    return new VerifyLeadResponseDTO({
-      id: leadUser.id,
-      token: leadUser.token,
-    });
+    return this.leadService.validateLead(id, leadUser);
   }
 
   @authorize({
