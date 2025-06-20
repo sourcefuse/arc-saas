@@ -5,18 +5,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -53,7 +45,7 @@ export class TenantController {
       [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Tenant)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Tenant)},
         },
       },
     },
@@ -62,7 +54,7 @@ export class TenantController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TenantOnboardDTO, {
+          schema: getModelSchemaRefSF(TenantOnboardDTO, {
             title: 'NewTenantOnboarding',
             exclude: [],
           }),
@@ -92,7 +84,7 @@ export class TenantController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(SubscriptionDTO, {
+          schema: getModelSchemaRefSF(SubscriptionDTO, {
             title: 'SubscriptionDTO',
           }),
         },
@@ -145,7 +137,7 @@ export class TenantController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Tenant, {includeRelations: true}),
+              items: getModelSchemaRefSF(Tenant, {includeRelations: true}),
             },
           },
         },
@@ -169,7 +161,7 @@ export class TenantController {
         description: 'Tenant PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Tenant),
+            schema: getModelSchemaRefSF(Tenant),
           },
         },
       },
@@ -179,7 +171,7 @@ export class TenantController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Tenant, {partial: true}),
+          schema: getModelSchemaRefSF(Tenant, {partial: true}),
         },
       },
     })
@@ -201,7 +193,7 @@ export class TenantController {
       [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Tenant)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Tenant)},
         },
       },
     },
@@ -227,7 +219,7 @@ export class TenantController {
         description: 'Tenant PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Tenant),
+            schema: getModelSchemaRefSF(Tenant),
           },
         },
       },
@@ -238,7 +230,7 @@ export class TenantController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Tenant, {partial: true}),
+          schema: getModelSchemaRefSF(Tenant, {partial: true}),
         },
       },
     })

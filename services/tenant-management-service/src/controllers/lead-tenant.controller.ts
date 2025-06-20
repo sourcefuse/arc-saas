@@ -1,11 +1,5 @@
 import {inject, service} from '@loopback/core';
-import {
-  post,
-  requestBody,
-  getModelSchemaRef,
-  param,
-  HttpErrors,
-} from '@loopback/rest';
+import {post, requestBody, param, HttpErrors} from '@loopback/rest';
 import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -13,6 +7,7 @@ import {
   rateLimitKeyGenPublic,
   LOGGER,
   ILogger,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -50,7 +45,7 @@ export class LeadTenantController {
       [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Tenant)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Tenant)},
         },
       },
     },
@@ -61,7 +56,7 @@ export class LeadTenantController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TenantOnboardDTO, {
+          schema: getModelSchemaRefSF(TenantOnboardDTO, {
             title: 'TenantOnboardDto',
             exclude: ['contact'],
             optional: ['name'],
