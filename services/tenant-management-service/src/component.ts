@@ -78,13 +78,15 @@ import {
 import {
   CryptoHelperService,
   EventConnector,
-  InvoicePDFGenerator,
+  InvoiceHelperService,
   LeadAuthenticator,
   NotificationService,
   OnboardingService,
   ProvisioningService,
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
+import {IdpHelperService} from './services/idp-helper.service';
+import {LeadHelperService} from './services/lead-helper.service';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(
@@ -164,7 +166,9 @@ export class TenantManagementServiceComponent implements Component {
       createServiceBinding(LeadAuthenticator),
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
-      createServiceBinding(InvoicePDFGenerator),
+      createServiceBinding(InvoiceHelperService),
+      createBindingFromClass(IdpHelperService),
+      createBindingFromClass(LeadHelperService),
     ];
 
     this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
