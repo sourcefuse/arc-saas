@@ -79,6 +79,13 @@ import {BillingCustomerController} from './controllers/billing-customer.controll
 import {BillingInvoiceController} from './controllers/billing-invoice.controller';
 import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
 import {WebhookController} from './controllers/webhook.controller';
+import {
+  BillingCustomerService,
+  BillingInvoiceService,
+  BillingPaymentSourceService,
+  PlanFeaturesService,
+  SubscriptionService,
+} from './services';
 
 export class SubscriptionServiceComponent implements Component {
   constructor(
@@ -143,6 +150,17 @@ export class SubscriptionServiceComponent implements Component {
       Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
 
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
+      Binding.bind('services.BillingPaymentSourceService').toClass(
+        BillingPaymentSourceService,
+      ),
+      Binding.bind('services.BillingInvoiceService').toClass(
+        BillingInvoiceService,
+      ),
+      Binding.bind('services.SubscriptionService').toClass(SubscriptionService),
+      Binding.bind('services.PlanFeaturesService').toClass(PlanFeaturesService),
+      Binding.bind('services.BillingCustomerService').toClass(
+        BillingCustomerService,
+      ),
     ];
 
     this.controllers = [
