@@ -6,13 +6,15 @@ import {repository, BelongsToAccessor, Entity} from '@loopback/repository';
 import {BillingCycleRepository} from './billing-cycle.repository';
 import {CurrencyRepository} from './currency.repository';
 import {SubscriptionDbSourceName} from '../../types';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 export class PlanRepository<
   T extends Plan = Plan,
-> extends SequelizeCrudRepository<T, typeof Plan.prototype.id, PlanRelations> {
+> extends SequelizeUserModifyCrudRepository<
+  T,
+  typeof Plan.prototype.id,
+  PlanRelations
+> {
   public readonly billingCycle: BelongsToAccessor<
     BillingCycle,
     typeof Plan.prototype.id
@@ -35,7 +37,7 @@ export class PlanRepository<
     @inject('models.Plan')
     private readonly plan: typeof Entity & {prototype: T},
   ) {
-    super(plan, dataSource);
+    super(plan, dataSource, getCurrentUser);
     this.currency = this.createBelongsToAccessorFor(
       'currency',
       currencyRepositoryGetter,

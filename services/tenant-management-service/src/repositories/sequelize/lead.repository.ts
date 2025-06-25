@@ -7,10 +7,8 @@ import {
   HasOneRepositoryFactory,
   repository,
 } from '@loopback/repository';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {SYSTEM_USER} from '../../keys';
 import {Address, Lead, LeadRelations, Tenant} from '../../models';
 import {TenantRepository} from './tenant.repository';
@@ -19,7 +17,11 @@ import {TenantManagementDbSourceName} from '../../types';
 
 export class LeadRepository<
   T extends Lead = Lead,
-> extends SequelizeCrudRepository<T, typeof Lead.prototype.id, LeadRelations> {
+> extends SequelizeUserModifyCrudRepository<
+  T,
+  typeof Lead.prototype.id,
+  LeadRelations
+> {
   public readonly tenant: HasOneRepositoryFactory<
     Tenant,
     typeof Tenant.prototype.id
@@ -42,7 +44,7 @@ export class LeadRepository<
     @inject('models.Lead')
     private readonly lead: typeof Entity & {prototype: T},
   ) {
-    super(lead, dataSource);
+    super(lead, dataSource, getCurrentUser);
     this.tenant = this.createHasOneRepositoryFactoryFor(
       'tenant',
       tenantRepositoryGetter,

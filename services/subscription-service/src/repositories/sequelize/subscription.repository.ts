@@ -6,13 +6,11 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SubscriptionDbSourceName} from '../../types';
 import {InvoiceRepository} from './invoice.repository';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 export class SubscriptionRepository<
   T extends Subscription = Subscription,
-> extends SequelizeCrudRepository<
+> extends SequelizeUserModifyCrudRepository<
   T,
   typeof Subscription.prototype.id,
   SubscriptionRelations
@@ -39,7 +37,7 @@ export class SubscriptionRepository<
     @inject('models.Subscription')
     private readonly subscription: typeof Entity & {prototype: T},
   ) {
-    super(subscription, dataSource);
+    super(subscription, dataSource, getCurrentUser);
     this.invoice = this.createBelongsToAccessorFor(
       'invoice',
       invoiceRepositoryGetter,
