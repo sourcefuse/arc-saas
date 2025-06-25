@@ -1,17 +1,19 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, Entity} from '@loopback/repository';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {Address, Tenant} from '../../models';
 import {SYSTEM_USER} from '../../keys';
 import {TenantManagementDbSourceName} from '../../types';
 
 export class AddressRepository<
   T extends Address = Address,
-> extends SequelizeCrudRepository<T, typeof Address.prototype.id, {}> {
+> extends SequelizeUserModifyCrudRepository<
+  T,
+  typeof Address.prototype.id,
+  {}
+> {
   public readonly tenant: BelongsToAccessor<
     Tenant,
     typeof Address.prototype.id
@@ -25,6 +27,6 @@ export class AddressRepository<
     @inject('models.Address')
     private readonly address: typeof Entity & {prototype: T},
   ) {
-    super(address, dataSource);
+    super(address, dataSource, getCurrentUser);
   }
 }

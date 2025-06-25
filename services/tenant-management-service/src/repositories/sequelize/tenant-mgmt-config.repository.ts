@@ -5,14 +5,15 @@ import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SYSTEM_USER} from '../../keys';
 import {TenantManagementDbSourceName} from '../../types';
 import {TenantRepository} from './tenant.repository';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
-
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 export class TenantMgmtConfigRepository<
   T extends TenantMgmtConfig = TenantMgmtConfig,
-> extends SequelizeCrudRepository<T, typeof TenantMgmtConfig.prototype.id, {}> {
+> extends SequelizeUserModifyCrudRepository<
+  T,
+  typeof TenantMgmtConfig.prototype.id,
+  {}
+> {
   public readonly tenant: BelongsToAccessor<
     Tenant,
     typeof TenantMgmtConfig.prototype.id
@@ -30,7 +31,7 @@ export class TenantMgmtConfigRepository<
       prototype: T;
     },
   ) {
-    super(tenantMgmtConfig, dataSource);
+    super(tenantMgmtConfig, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

@@ -9,13 +9,15 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 import {BillingCustomer, Invoice} from '../../models';
 import {SubscriptionDbSourceName} from '../../types';
 import {InvoiceRepository} from './../invoice.repository';
-import {
-  SequelizeCrudRepository,
-  SequelizeDataSource,
-} from '@loopback/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 export class BillingCustomerRepository<
   T extends BillingCustomer = BillingCustomer,
-> extends SequelizeCrudRepository<T, typeof BillingCustomer.prototype.id, {}> {
+> extends SequelizeUserModifyCrudRepository<
+  T,
+  typeof BillingCustomer.prototype.id,
+  {}
+> {
   public readonly invoices: HasManyRepositoryFactory<
     Invoice,
     typeof BillingCustomer.prototype.id
@@ -33,7 +35,7 @@ export class BillingCustomerRepository<
       prototype: T;
     },
   ) {
-    super(billingCustomer, dataSource);
+    super(billingCustomer, dataSource, getCurrentUser);
     this.invoices = this.createHasManyRepositoryFactoryFor(
       'invoices',
       invoiceRepositoryGetter,
