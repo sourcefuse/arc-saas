@@ -5,18 +5,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -46,7 +38,7 @@ export class ContactController {
       [STATUS_CODE.OK]: {
         description: 'Contact model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Contact)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Contact)},
         },
       },
     },
@@ -55,7 +47,7 @@ export class ContactController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contact, {
+          schema: getModelSchemaRefSF(Contact, {
             title: 'NewContact',
             exclude: ['id'],
           }),
@@ -101,7 +93,7 @@ export class ContactController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Contact, {includeRelations: true}),
+              items: getModelSchemaRefSF(Contact, {includeRelations: true}),
             },
           },
         },
@@ -127,7 +119,7 @@ export class ContactController {
         description: 'Contact PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Contact),
+            schema: getModelSchemaRefSF(Contact),
           },
         },
       },
@@ -137,7 +129,7 @@ export class ContactController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contact, {partial: true}),
+          schema: getModelSchemaRefSF(Contact, {partial: true}),
         },
       },
     })
@@ -159,7 +151,7 @@ export class ContactController {
       [STATUS_CODE.OK]: {
         description: 'Contact model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Contact)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Contact)},
         },
       },
     },
@@ -185,7 +177,7 @@ export class ContactController {
         description: 'Contact PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Contact),
+            schema: getModelSchemaRefSF(Contact),
           },
         },
       },
@@ -196,7 +188,7 @@ export class ContactController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contact, {partial: true}),
+          schema: getModelSchemaRefSF(Contact, {partial: true}),
         },
       },
     })

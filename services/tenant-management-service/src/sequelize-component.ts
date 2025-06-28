@@ -30,17 +30,9 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  ContactController,
-  HomePageController,
-  LeadController,
-  LeadTenantController,
-  PingController,
-  TenantMgmtConfigController,
-  TenantMgmtConfigTenantController,
-  TenantController,
-} from './controllers';
-import {InvoiceController} from './controllers/invoice.controller';
+// import
+//   TenantController
+//  from './controllers';
 import {
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
@@ -85,8 +77,11 @@ import {
   ProvisioningService,
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
+import {Booter} from '@loopback/boot';
+import {SequelizeModelBooter, TenantMgmtControllerBooter} from './booters';
 
 export class TenantManagementSequelizeServiceComponent implements Component {
+  booters?: Class<Booter>[];
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
@@ -144,17 +139,7 @@ export class TenantManagementSequelizeServiceComponent implements Component {
       TenantMgmtConfig,
     ];
 
-    this.controllers = [
-      ContactController,
-      HomePageController,
-      InvoiceController,
-      LeadTenantController,
-      LeadController,
-      PingController,
-      TenantController,
-      TenantMgmtConfigController,
-      TenantMgmtConfigTenantController,
-    ];
+    this.booters = [SequelizeModelBooter, TenantMgmtControllerBooter];
 
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),

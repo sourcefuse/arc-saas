@@ -9,7 +9,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -20,6 +19,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   rateLimitKeyGenPublic,
   STATUS_CODE,
@@ -64,7 +64,7 @@ export class LeadController {
       [STATUS_CODE.OK]: {
         description: leadDescription,
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Lead)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Lead)},
         },
       },
     },
@@ -73,7 +73,7 @@ export class LeadController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(CreateLeadDTO, {
+          schema: getModelSchemaRefSF(CreateLeadDTO, {
             title: 'CreateLeadDTO',
             exclude: ['isValidated', 'addressId', 'id'],
           }),
@@ -103,7 +103,7 @@ export class LeadController {
         description: 'A response with token for the verified lead',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(VerifyLeadResponseDTO),
+            schema: getModelSchemaRefSF(VerifyLeadResponseDTO),
           },
         },
       },
@@ -160,7 +160,7 @@ export class LeadController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Lead, {includeRelations: true}),
+              items: getModelSchemaRefSF(Lead, {includeRelations: true}),
             },
           },
         },
@@ -184,7 +184,7 @@ export class LeadController {
         description: 'Lead PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Lead),
+            schema: getModelSchemaRefSF(Lead),
           },
         },
       },
@@ -194,7 +194,7 @@ export class LeadController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Lead, {partial: true}),
+          schema: getModelSchemaRefSF(Lead, {partial: true}),
         },
       },
     })
@@ -216,7 +216,7 @@ export class LeadController {
       [STATUS_CODE.OK]: {
         description: leadDescription,
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Lead)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Lead)},
         },
       },
     },
@@ -242,7 +242,7 @@ export class LeadController {
         description: 'Lead PATCH success',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Lead),
+            schema: getModelSchemaRefSF(Lead),
           },
         },
       },
@@ -253,7 +253,7 @@ export class LeadController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Lead, {partial: true}),
+          schema: getModelSchemaRefSF(Lead, {partial: true}),
         },
       },
     })
