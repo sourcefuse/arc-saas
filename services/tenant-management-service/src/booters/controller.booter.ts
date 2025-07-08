@@ -1,4 +1,4 @@
-import {ArtifactOptions, BaseArtifactBooter, BootBindings} from '@loopback/boot';
+import {ArtifactOptions, BaseArtifactBooter} from '@loopback/boot';
 import {
   BindingScope,
   config,
@@ -19,13 +19,12 @@ export class TenantMgmtControllerBooter extends BaseArtifactBooter {
     @config()
     public controllerConfig: ArtifactOptions = {},
   ) {
-   super(
+    super(
       basePath,
       // Set Controller Booter Options if passed in via bootConfig
       Object.assign({}, ControllerDefaults, controllerConfig),
     );
   }
-
 
   async load(): Promise<void> {
     await super.load();
