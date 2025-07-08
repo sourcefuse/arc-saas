@@ -30,9 +30,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-// import
-//   TenantController
-//  from './controllers';
 import {
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
