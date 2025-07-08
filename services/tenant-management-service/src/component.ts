@@ -30,22 +30,15 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+// import {
+//   TenantController,
+// } from './controllers';
+import {Booter} from '@loopback/boot';
 import {
-  ContactController,
-  HomePageController,
-  LeadController,
-  LeadTenantController,
-  PingController,
-  TenantMgmtConfigController,
-  TenantMgmtConfigTenantController,
-  TenantController,
-} from './controllers';
-import {InvoiceController} from './controllers/invoice.controller';
-import {
-  TenantManagementServiceBindings,
+  EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
-  EventConnectorBinding,
+  TenantManagementServiceBindings,
 } from './keys';
 import {
   Address,
@@ -85,6 +78,7 @@ import {
   ProvisioningService,
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
+import {TenantMgmtControllerBooter, TenantMgmtModelBooter} from './booters';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(
@@ -115,6 +109,8 @@ export class TenantManagementServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+    this.booters = [TenantMgmtModelBooter, TenantMgmtControllerBooter];
     this.repositories = [
       AddressRepository,
       ContactRepository,
@@ -144,18 +140,6 @@ export class TenantManagementServiceComponent implements Component {
       TenantMgmtConfig,
     ];
 
-    this.controllers = [
-      ContactController,
-      HomePageController,
-      InvoiceController,
-      LeadTenantController,
-      LeadController,
-      PingController,
-      TenantController,
-      TenantMgmtConfigController,
-      TenantMgmtConfigTenantController,
-    ];
-
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
@@ -175,6 +159,7 @@ export class TenantManagementServiceComponent implements Component {
   bindings: Binding[] = [];
 
   services?: ServiceOrProviderClass[];
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection

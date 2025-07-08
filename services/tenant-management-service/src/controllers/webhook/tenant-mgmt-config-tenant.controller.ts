@@ -1,11 +1,15 @@
 import {repository} from '@loopback/repository';
-import {param, get, getModelSchemaRef} from '@loopback/rest';
-import {TenantMgmtConfig, Tenant} from '../models';
-import {TenantMgmtConfigRepository} from '../repositories';
+import {param, get} from '@loopback/rest';
+import {TenantMgmtConfig, Tenant} from '../../models';
+import {TenantMgmtConfigRepository} from '../../repositories';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../permissions';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {PermissionKey} from '../../permissions';
+import {
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 
 const basePath = '/tenant-configs/{id}/tenant';
 export class TenantMgmtConfigTenantController {
@@ -26,7 +30,7 @@ export class TenantMgmtConfigTenantController {
         description: 'Tenant belonging to TenantConfig',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Tenant),
+            schema: getModelSchemaRefSF(Tenant),
           },
         },
       },
