@@ -22,7 +22,6 @@ import {
   EventConnectorBinding,
   TenantManagementServiceBindings,
   TenantManagementServiceComponent,
-  WebhookTenantManagementServiceComponent,
 } from '../..';
 import {
   ContactRepository,
@@ -178,7 +177,7 @@ export class TestTenantMgmtServiceApplication extends BootMixin(
       useCustomSequence: true,
     });
     this.component(TenantManagementServiceComponent);
-    this.component(WebhookTenantManagementServiceComponent);
+    // this.component(WebhookTenantManagementServiceComponent);
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {

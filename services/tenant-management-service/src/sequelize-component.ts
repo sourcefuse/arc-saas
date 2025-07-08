@@ -22,6 +22,8 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -75,7 +77,6 @@ import {
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
 import {Booter} from '@loopback/boot';
-import {SequelizeModelBooter, TenantMgmtControllerBooter} from './booters';
 
 export class TenantManagementSequelizeServiceComponent implements Component {
   booters?: Class<Booter>[];
@@ -136,7 +137,8 @@ export class TenantManagementSequelizeServiceComponent implements Component {
       TenantMgmtConfig,
     ];
 
-    this.booters = [SequelizeModelBooter, TenantMgmtControllerBooter];
+    this.application.bind('paths.base').to(__dirname);
+    this.booters = [CoreModelBooter, CoreControllerBooter];
 
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),

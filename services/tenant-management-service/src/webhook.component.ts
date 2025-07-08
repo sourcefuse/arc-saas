@@ -21,6 +21,8 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -29,7 +31,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {WebhookControllerBooter, WebhookModelBooter} from './booters';
 import {
   CallbackVerifierProvider,
   WebhookVerifierProvider,
@@ -109,8 +110,13 @@ export class WebhookTenantManagementServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
-    this.booters = [WebhookModelBooter, WebhookControllerBooter];
+    this.application.configure('booters.CoreControllerBooter').to({
+      dirs: ['controllers/webhook'],
+      extensions: ['.controller.js'],
+      nested: true,
+    });
+    this.application.bind('paths.base').to(__dirname);
+    this.booters = [CoreModelBooter, CoreControllerBooter];
 
     this.repositories = [
       AddressRepository,
