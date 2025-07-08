@@ -7,10 +7,10 @@ import {
   getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
-import {WebhookDTO} from '../models';
-import {IWebhookHandler, WebhookPayload} from '../types';
+import {WebhookDTO} from '../../models';
+import {IWebhookHandler, WebhookPayload} from '../../types';
 import {Getter, extensionPoint, extensions, intercept} from '@loopback/core';
-import {WEBHOOK_VERIFIER, WebhookHandlerEP} from '../keys';
+import {WEBHOOK_VERIFIER, WebhookHandlerEP} from '../../keys';
 import {ratelimit} from 'loopback4-ratelimiter';
 
 const basePath = '/webhook';

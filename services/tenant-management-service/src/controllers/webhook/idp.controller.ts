@@ -9,9 +9,9 @@ import {
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {ratelimit} from 'loopback4-ratelimiter';
-import {CALLABCK_VERIFIER, TenantManagementServiceBindings} from '../keys';
-import {IdpDetailsDTO} from '../models/dtos/idp-details-dto.model';
-import {ConfigureIdpFunc, IdPKey, IdpResp} from '../types';
+import {CALLABCK_VERIFIER, TenantManagementServiceBindings} from '../../keys';
+import {IdpDetailsDTO} from '../../models/dtos/idp-details-dto.model';
+import {ConfigureIdpFunc, IdPKey, IdpResp} from '../../types';
 
 const basePath = '/manage/users';
 export class IdpController {

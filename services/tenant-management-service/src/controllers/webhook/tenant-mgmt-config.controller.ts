@@ -7,11 +7,11 @@ import {
   Where,
 } from '@loopback/repository';
 import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
-import {TenantMgmtConfig} from '../models';
-import {TenantMgmtConfigRepository} from '../repositories';
+import {TenantMgmtConfig} from '../../models';
+import {TenantMgmtConfigRepository} from '../../repositories';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../permissions';
+import {PermissionKey} from '../../permissions';
 import {
   CONTENT_TYPE,
   getModelSchemaRefSF,

@@ -1,10 +1,10 @@
 import {repository} from '@loopback/repository';
 import {param, get} from '@loopback/rest';
-import {TenantMgmtConfig, Tenant} from '../models';
-import {TenantMgmtConfigRepository} from '../repositories';
+import {TenantMgmtConfig, Tenant} from '../../models';
+import {TenantMgmtConfigRepository} from '../../repositories';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../permissions';
+import {PermissionKey} from '../../permissions';
 import {
   getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
