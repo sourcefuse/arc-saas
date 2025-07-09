@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -21,6 +22,7 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
   CoreControllerBooter,
   CoreModelBooter,
@@ -32,15 +34,11 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {Booter} from '@loopback/boot';
 import {
-  CALLABCK_VERIFIER,
   EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
   TenantManagementServiceBindings,
-  WEBHOOK_CONFIG,
-  WEBHOOK_VERIFIER,
 } from './keys';
 import {
   Address,
@@ -66,7 +64,6 @@ import {
   LeadRepository,
   LeadTokenRepository,
   ResourceRepository,
-  SaasTenantRepository,
   TenantMgmtConfigRepository,
   TenantRepository,
   WebhookSecretRepository,
@@ -81,16 +78,6 @@ import {
   ProvisioningService,
 } from './services';
 import {ITenantManagementServiceConfig} from './types';
-import {
-  WebhookVerifierProvider,
-  CallbackVerifierProvider,
-} from './interceptors';
-import {
-  DEFAULT_SIGNATURE_HEADER,
-  DEFAULT_TIMESTAMP_HEADER,
-  DEFAULT_TIMESTAMP_TOLERANCE,
-} from './utils';
-import {ProvisioningWebhookHandler} from './services/webhook';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(
@@ -122,8 +109,17 @@ export class TenantManagementServiceComponent implements Component {
       this.setupSequence();
     }
 
-    this.application.bind('paths.base').to(__dirname);
-    this.booters = [CoreModelBooter, CoreControllerBooter];
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: TenantManagementServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: TenantManagementServiceComponent.name,
+      }),
+    ];
     this.repositories = [
       AddressRepository,
       ContactRepository,
@@ -134,7 +130,6 @@ export class TenantManagementServiceComponent implements Component {
       TenantRepository,
       WebhookSecretRepository,
       TenantMgmtConfigRepository,
-      SaasTenantRepository,
     ];
 
     this.models = [
@@ -163,14 +158,6 @@ export class TenantManagementServiceComponent implements Component {
       createServiceBinding(CryptoHelperService),
       Binding.bind('services.NotificationService').toClass(NotificationService),
       createServiceBinding(InvoicePDFGenerator),
-      Binding.bind(WEBHOOK_VERIFIER).toProvider(WebhookVerifierProvider),
-      Binding.bind(CALLABCK_VERIFIER).toProvider(CallbackVerifierProvider),
-      Binding.bind(WEBHOOK_CONFIG).to({
-        signatureHeaderName: DEFAULT_SIGNATURE_HEADER,
-        timestampHeaderName: DEFAULT_TIMESTAMP_HEADER,
-        timestampTolerance: DEFAULT_TIMESTAMP_TOLERANCE,
-      }),
-      createServiceBinding(ProvisioningWebhookHandler),
     ];
 
     this.addClassBindingIfNotPresent(EventConnectorBinding.key, EventConnector);
