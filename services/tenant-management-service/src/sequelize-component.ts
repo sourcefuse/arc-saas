@@ -21,7 +21,7 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
-  BooterBasePathMixin,
+  booterBasePathMixin,
   CoreComponent,
   CoreControllerBooter,
   CoreModelBooter,
@@ -139,10 +139,10 @@ export class TenantManagementSequelizeServiceComponent implements Component {
     ];
 
     this.booters = [
-      BooterBasePathMixin(CoreModelBooter, __dirname, {
+      booterBasePathMixin(CoreModelBooter, __dirname, {
         interface: TenantManagementSequelizeServiceComponent.name,
       }),
-      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+      booterBasePathMixin(CoreControllerBooter, __dirname, {
         dirs: ['controllers'],
         extensions: ['.controller.js'],
         nested: true,

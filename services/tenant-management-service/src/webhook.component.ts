@@ -20,7 +20,7 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
-  BooterBasePathMixin,
+  booterBasePathMixin,
   CoreComponent,
   CoreControllerBooter,
   CoreModelBooter,
@@ -112,10 +112,10 @@ export class WebhookTenantManagementServiceComponent implements Component {
       this.setupSequence();
     }
     this.booters = [
-      BooterBasePathMixin(CoreModelBooter, __dirname, {
+      booterBasePathMixin(CoreModelBooter, __dirname, {
         interface: WebhookTenantManagementServiceComponent.name,
       }),
-      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+      booterBasePathMixin(CoreControllerBooter, __dirname, {
         dirs: ['controllers/webhook'],
         extensions: ['.controller.js'],
         nested: true,
