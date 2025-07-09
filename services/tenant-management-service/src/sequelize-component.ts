@@ -21,6 +21,7 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
   CoreControllerBooter,
   CoreModelBooter,
@@ -137,9 +138,17 @@ export class TenantManagementSequelizeServiceComponent implements Component {
       TenantMgmtConfig,
     ];
 
-    this.application.bind('paths.base').to(__dirname);
-    this.booters = [CoreModelBooter, CoreControllerBooter];
-
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: TenantManagementSequelizeServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: TenantManagementSequelizeServiceComponent.name,
+      }),
+    ];
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
