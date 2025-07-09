@@ -96,7 +96,7 @@
         "@opentelemetry/sdk-trace-node": "^1.15.0",
         "@sourceloop/core": "^16.2.0",
         "aws-sdk": "^2.1691.0",
-        "axios": "^1.7.7",
+        "axios": "^1.10.0",
         "dotenv": "^16.4.5",
         "dotenv-extended": "^2.9.0",
         "handlebars": "^4.7.8",
@@ -114,10 +114,9 @@
         "tslib": "^2.6.2"
     },
     "optionalDependencies": {
-        "sequelize": "^6.37.7",
-        "@loopback/sequelize": "^0.6.12"
+        "@loopback/sequelize": "^0.6.12",
+        "sequelize": "^6.37.7"
     },
-
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@loopback/build": "^11.0.8",
