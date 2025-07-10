@@ -22,7 +22,7 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
-  booterBasePathMixin,
+  BooterBasePathMixin,
   CoreComponent,
   CoreControllerBooter,
   CoreModelBooter,
@@ -110,10 +110,10 @@ export class TenantManagementServiceComponent implements Component {
     }
 
     this.booters = [
-      booterBasePathMixin(CoreModelBooter, __dirname, {
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
         interface: TenantManagementServiceComponent.name,
       }),
-      booterBasePathMixin(CoreControllerBooter, __dirname, {
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
         dirs: ['controllers'],
         extensions: ['.controller.js'],
         nested: true,
