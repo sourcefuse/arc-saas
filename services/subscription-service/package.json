@@ -79,7 +79,7 @@
         "@opentelemetry/plugin-pg-pool": "^0.15.0",
         "@opentelemetry/sdk-trace-base": "^1.15.0",
         "@opentelemetry/sdk-trace-node": "^1.15.0",
-        "@sourceloop/core": "^15.0.2",
+        "@sourceloop/core": "^16.2.0",
         "@sourceloop/feature-toggle-service": "^4.0.2",
         "@types/jsonwebtoken": "^9.0.5",
         "dotenv": "^16.4.5",
