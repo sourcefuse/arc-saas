@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -21,7 +22,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -31,21 +35,10 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
-  ContactController,
-  HomePageController,
-  LeadController,
-  LeadTenantController,
-  PingController,
-  TenantMgmtConfigController,
-  TenantMgmtConfigTenantController,
-  TenantController,
-} from './controllers';
-import {InvoiceController} from './controllers/invoice.controller';
-import {
-  TenantManagementServiceBindings,
+  EventConnectorBinding,
   LEAD_TOKEN_VERIFIER,
   SYSTEM_USER,
-  EventConnectorBinding,
+  TenantManagementServiceBindings,
 } from './keys';
 import {
   Address,
@@ -115,6 +108,18 @@ export class TenantManagementServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: TenantManagementServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: TenantManagementServiceComponent.name,
+      }),
+    ];
     this.repositories = [
       AddressRepository,
       ContactRepository,
@@ -144,18 +149,6 @@ export class TenantManagementServiceComponent implements Component {
       TenantMgmtConfig,
     ];
 
-    this.controllers = [
-      ContactController,
-      HomePageController,
-      InvoiceController,
-      LeadTenantController,
-      LeadController,
-      PingController,
-      TenantController,
-      TenantMgmtConfigController,
-      TenantMgmtConfigTenantController,
-    ];
-
     this.bindings = [
       Binding.bind(LEAD_TOKEN_VERIFIER).toProvider(LeadTokenVerifierProvider),
       Binding.bind(SYSTEM_USER).toProvider(SystemUserProvider),
@@ -175,6 +168,7 @@ export class TenantManagementServiceComponent implements Component {
   bindings: Binding[] = [];
 
   services?: ServiceOrProviderClass[];
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection
