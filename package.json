@@ -29,7 +29,8 @@
   "overrides": {
     "@commitlint/config-lerna-scopes": {
       "lerna": "^7.3.0"
-    }
+    },
+    "semver":"^7.5.2"
   },
   "config": {
     "commitizen": {
