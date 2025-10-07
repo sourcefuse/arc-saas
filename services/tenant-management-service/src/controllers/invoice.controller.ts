@@ -180,8 +180,10 @@ export class InvoiceController {
   })
   async findById(
     @param.path.string('id') id: string,
+    // sonarignore:start
     @param.filter(Invoice, {exclude: 'where'})
     filter?: Filter<Invoice>,
+    // sonarignore:end
   ): Promise<Invoice> {
     return this.invoiceRepository.findById(id, filter);
   }

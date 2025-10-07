@@ -227,8 +227,10 @@ export class SubscriptionController {
   })
   async findById(
     @param.path.string('id') id: string,
+    // sonarignore:start
     @param.filter(Subscription, {exclude: 'where'})
     filter?: FilterExcludingWhere<Subscription>,
+    // sonarignore:end
   ): Promise<Subscription> {
     return this.subscriptionRepository.findById(id, filter);
   }

@@ -23,7 +23,7 @@ export class IdpController {
 
   @intercept(CALLABCK_VERIFIER)
   @ratelimit(true, {
-    max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
+    max: Number.parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({

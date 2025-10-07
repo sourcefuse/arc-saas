@@ -1,4 +1,4 @@
-import {post, requestBody, getModelSchemaRef} from '@loopback/rest';
+import {post, requestBody} from '@loopback/rest';
 import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -22,7 +22,7 @@ export class WebhookController<T extends WebhookPayload['data']> {
   ) {}
   @intercept(WEBHOOK_VERIFIER)
   @ratelimit(true, {
-    max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
+    max: Number.parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({

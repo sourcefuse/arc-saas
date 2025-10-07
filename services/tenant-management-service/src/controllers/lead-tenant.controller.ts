@@ -1,5 +1,5 @@
 import {inject, service} from '@loopback/core';
-import {post, requestBody, getModelSchemaRef, param} from '@loopback/rest';
+import {post, requestBody, param} from '@loopback/rest';
 import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -30,7 +30,7 @@ export class LeadTenantController {
   ) {}
 
   @ratelimit(true, {
-    max: parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS ?? '10'),
+    max: Number.parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({

@@ -56,7 +56,7 @@ export class LeadController {
   ) {}
 
   @ratelimit(true, {
-    max: parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS ?? '10'),
+    max: Number.parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({
@@ -217,8 +217,10 @@ export class LeadController {
   })
   async findById(
     @param.path.string('id') id: string,
+    // sonarignore:start
     @param.filter(Lead, {exclude: 'where'})
     filter?: Filter<Lead>,
+    // sonarignore:end
   ): Promise<Lead> {
     return this.leadRepository.findById(id, filter);
   }

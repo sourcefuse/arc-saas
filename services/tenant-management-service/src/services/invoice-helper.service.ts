@@ -1,5 +1,5 @@
 import pdfDocument from 'pdfkit';
-import fs from 'fs';
+import fs from 'node:fs';
 import {Invoice} from '../models';
 import {repository} from '@loopback/repository';
 import {InvoiceRepository} from '../repositories';
