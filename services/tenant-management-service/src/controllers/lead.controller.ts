@@ -1,4 +1,4 @@
-import {inject, service} from '@loopback/core';
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -47,8 +47,8 @@ export class LeadController {
   constructor(
     @repository(LeadRepository)
     public leadRepository: LeadRepository,
-    @service(OnboardingService)
-    public onboarding: OnboardingService,
+    @inject('services.OnboardingService')
+    public readonly onboarding: OnboardingService,
     @inject('services.LeadHelperService')
     private readonly leadService: LeadHelperService,
     @inject(RestBindings.Http.REQUEST)
