@@ -17,7 +17,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "engines": {
-        "node": ">=18"
+        "node": ">=20"
     },
     "scripts": {
         "build": "lb-tsc",
@@ -62,22 +62,22 @@
         "tslib": "^2.6.2"
     },
     "peerDependencies": {
-        "@loopback/core": "^6.1.6"
+        "@loopback/core": "^7.0.3"
     },
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@loopback/boot": "^7.0.9",
-        "@loopback/build": "^11.0.8",
-        "@loopback/context": "^7.0.9",
-        "@loopback/core": "^6.1.6",
-        "@loopback/eslint-config": "^15.0.4",
-        "@loopback/logging": "^0.12.9",
-        "@loopback/openapi-v3": "^10.0.9",
-        "@loopback/repository": "^7.0.9",
-        "@loopback/rest": "^14.0.9",
-        "@loopback/rest-explorer": "^7.0.9",
-        "@loopback/service-proxy": "^7.0.9",
-        "@loopback/testlab": "^7.0.8",
+        "@loopback/boot": "^8.0.4",
+        "@loopback/build": "^12.0.3",
+        "@loopback/context": "^8.0.3",
+        "@loopback/core": "^7.0.3",
+        "@loopback/eslint-config": "^16.0.1",
+        "@loopback/logging": "^0.13.5",
+        "@loopback/openapi-v3": "^11.0.4",
+        "@loopback/repository": "^8.0.3",
+        "@loopback/rest": "^15.0.4",
+        "@loopback/rest-explorer": "^8.0.4",
+        "@loopback/service-proxy": "^8.0.3",
+        "@loopback/testlab": "^8.0.3",
         "@types/aws-lambda": "^8.10.110",
         "@types/i18n": "^0.13.6",
         "@types/node": "^20.12.7",
