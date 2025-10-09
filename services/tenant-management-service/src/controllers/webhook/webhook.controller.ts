@@ -1,4 +1,4 @@
-import {post, requestBody, HttpErrors} from '@loopback/rest';
+import {post, requestBody} from '@loopback/rest';
 import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -8,21 +8,21 @@ import {
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {WebhookDTO} from '../../models';
-import {IWebhookHandler, WebhookPayload} from '../../types';
-import {Getter, extensionPoint, extensions, intercept} from '@loopback/core';
-import {WEBHOOK_VERIFIER, WebhookHandlerEP} from '../../keys';
+import {WebhookPayload} from '../../types';
+import {inject, intercept} from '@loopback/core';
+import {WEBHOOK_VERIFIER} from '../../keys';
 import {ratelimit} from 'loopback4-ratelimiter';
+import {WebhookHelperService} from '../../services/webhook-helper.service';
 
 const basePath = '/webhook';
-@extensionPoint(WebhookHandlerEP.key)
 export class WebhookController<T extends WebhookPayload['data']> {
   constructor(
-    @extensions()
-    private readonly getHandlers: Getter<IWebhookHandler[]>,
+    @inject('services.WebhookHelperService')
+    private readonly webhookService: WebhookHelperService<T>,
   ) {}
   @intercept(WEBHOOK_VERIFIER)
   @ratelimit(true, {
-    max: parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
+    max: Number.parseInt(process.env.WEBHOOK_API_MAX_ATTEMPTS ?? '10'),
     keyGenerator: rateLimitKeyGenPublic,
   })
   @authorize({
@@ -48,12 +48,6 @@ export class WebhookController<T extends WebhookPayload['data']> {
     })
     dto: WebhookDTO<T>,
   ): Promise<void> {
-    const handlers = await this.getHandlers();
-    const handler = handlers.find(h => h.type === dto.type);
-    if (handler) {
-      await handler.handle(dto);
-    } else {
-      throw new HttpErrors.UnprocessableEntity('Invalid type of webhook');
-    }
+    return this.webhookService.process(dto);
   }
 }

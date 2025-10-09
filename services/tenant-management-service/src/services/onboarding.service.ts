@@ -93,7 +93,15 @@ export class OnboardingService {
    * @param {LeadUser} lead - The `lead` parameter is an object of type `LeadUser`.
    * It represents a lead user who is going through the onboarding process.
    */
-  async onboardForLead(dto: Omit<TenantOnboardDTO, 'contact'>, lead: LeadUser) {
+  async onboardForLead(
+    dto: Omit<TenantOnboardDTO, 'contact'>,
+    lead: LeadUser,
+    id: string,
+  ) {
+    if (lead.id !== id) {
+      this.logger.error('Lead id does not match with the id in token');
+      throw new HttpErrors.Unauthorized();
+    }
     const existing = await this.leadRepository.findOne({
       where: {
         id: lead.id,
