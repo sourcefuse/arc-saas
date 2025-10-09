@@ -1,30 +1,53 @@
 name: CI
 
+# Trigger workflow on pushes or pull requests to the master branch
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
 
-# This workflow contains a single job called "npm_test"
 jobs:
-  npm_test:
-    # The type of runner that the job will run on
+  node_matrix_tests:
+    # Defines the operating system for the job
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      # The strategy matrix allows running tests across multiple Node.js versions in parallel.
+      # Here, the workflow will execute the same steps for Node.js versions 20, 22, and 24.
+      matrix:
+        node-version: [20, 22, 24]
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
+      # Step 1: Checkout the repository code from GitHub
       - uses: actions/checkout@v3
+
+      # Step 2: Set up the Node.js version based on the current matrix value (20, 22, or 24)
       - uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
+          node-version: ${{ matrix.node-version }}
 
+      # Step 3: Install all dependencies for the monorepo using clean install (ensures reproducible builds)
       - name: Install Monorepo Deps
         run: npm ci
 
+      # Step 4: Run all available test cases across workspaces if present
       - name: Run Test Cases
         run: npm run test --workspaces --if-present
 
+      # Step 5: Run lint checks across all workspaces if the lint script exists
       - name: Run Lint Checks
         run: npm run lint --workspaces --if-present
+
+  npm_test:
+    # This job runs after the matrix tests complete successfully
+    runs-on: ubuntu-latest
+
+    # Ensure this job only executes if the previous (matrix) job succeeded
+    needs: node_matrix_tests
+    if: success()
+
+    steps:
+      # Step 1: Print final success message after all Node.js version tests pass
+      - name: Final status
+        run: echo "✅ All tests passed for Node.js 20, 22, and 24"
