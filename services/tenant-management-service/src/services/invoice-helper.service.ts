@@ -1,11 +1,31 @@
 import pdfDocument from 'pdfkit';
-import fs from 'fs';
+import fs from 'node:fs';
 import {Invoice} from '../models';
+import {repository} from '@loopback/repository';
+import {InvoiceRepository} from '../repositories';
+import {BindingScope, injectable} from '@loopback/context';
 const LARGE_SIZE = 16;
 const MEDIUM_SIZE = 12;
 
-export class InvoicePDFGenerator {
-  constructor() {}
+@injectable({scope: BindingScope.TRANSIENT})
+export class InvoiceHelperService {
+  constructor(
+    @repository(InvoiceRepository)
+    private readonly invoiceRepository: InvoiceRepository,
+  ) {}
+  async createInvoice(invoice: Omit<Invoice, 'id'>): Promise<Invoice> {
+    return this.invoiceRepository.create(invoice);
+  }
+  async downloadInvoice(id: string): Promise<void> {
+    const invoice = await this.invoiceRepository.findById(id);
+    if (!invoice) {
+      throw new Error('Invoice with given id does not exist');
+    }
+
+    const pdfFilePath = await this.generatePDF(invoice);
+    invoice.invoiceFile = pdfFilePath;
+    await this.invoiceRepository.updateById(invoice.id, invoice);
+  }
 
   async generatePDF(invoice: Invoice): Promise<string> {
     const doc = new pdfDocument();

@@ -16,30 +16,23 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import moment, {unitOfTime} from 'moment';
 import {Subscription} from '../models';
-import {
-  BillingCycleRepository,
-  PlanRepository,
-  SubscriptionRepository,
-} from '../repositories';
+import {SubscriptionRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
 import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
-import {SubscriptionStatus} from '../enums';
+import {inject} from '@loopback/core';
+import {SubscriptionService} from '../services/subscription.service';
 
 const basePath = '/subscriptions';
-const DATE_FORMAT = 'YYYY-MM-DD';
 const description = 'Array of Subscription model instances';
 export class SubscriptionController {
   constructor(
     @repository(SubscriptionRepository)
     public subscriptionRepository: SubscriptionRepository,
-    @repository(PlanRepository)
-    public planRepository: PlanRepository,
-    @repository(BillingCycleRepository)
-    public billingCycleRepository: BillingCycleRepository,
+    @inject('services.SubscriptionService')
+    private readonly subscriptionService: SubscriptionService,
   ) {}
 
   @authorize({
@@ -72,33 +65,7 @@ export class SubscriptionController {
     })
     subscription: Omit<Subscription, 'id' | 'startDate' | 'endDate'>,
   ): Promise<Subscription> {
-    const plan = await this.planRepository.findById(subscription.planId);
-    const billingCycle = await this.billingCycleRepository.findById(
-      plan.billingCycleId,
-    );
-
-    const startDate = moment().format(DATE_FORMAT);
-    const endDate = moment()
-      .add(billingCycle.duration, this._unitMap(billingCycle.durationUnit))
-      .format(DATE_FORMAT);
-
-    return this.subscriptionRepository.create({
-      ...subscription,
-      startDate,
-      endDate,
-    });
-  }
-  private _unitMap(durationUnit: string): unitOfTime.DurationConstructor {
-    switch (durationUnit) {
-      case 'month':
-        return 'M';
-      case 'year':
-        return 'y';
-      case 'week':
-        return 'week';
-      default:
-        return 'days';
-    }
+    return this.subscriptionService.createSubscription(subscription);
   }
 
   @authorize({
@@ -177,33 +144,7 @@ export class SubscriptionController {
   ): Promise<
     {id: string; daysRemainingToExpiry: number; subscriberId: string}[]
   > {
-    const daysRemaining = 7;
-    const subscriptions = await this.subscriptionRepository.find({
-      where: {status: SubscriptionStatus.ACTIVE},
-    });
-
-    const expiringSoonSubscriptionObj = [];
-
-    for (const subscription of subscriptions) {
-      // check for if less then 7 days remaining and send notification
-      if (
-        moment(subscription.endDate).isBefore(
-          moment().add(daysRemaining, 'days'),
-        ) &&
-        moment(subscription.endDate).isAfter(moment())
-      ) {
-        const daysRemainingToExpiry = moment(subscription.endDate).diff(
-          moment(),
-          'days',
-        );
-        expiringSoonSubscriptionObj.push({
-          id: subscription.id,
-          daysRemainingToExpiry,
-          subscriberId: subscription.subscriberId,
-        });
-      }
-    }
-    return expiringSoonSubscriptionObj;
+    return this.subscriptionService.getExpireSoonSubscriptions();
   }
 
   @authorize({
@@ -233,38 +174,7 @@ export class SubscriptionController {
     @param.header.number('days') dayCount: number,
     @param.filter(Subscription) filter?: Filter<Subscription>,
   ): Promise<{subscriptionId: string; subscriberId: string}[]> {
-    const subscriptions = await this.subscriptionRepository.find({
-      where: {status: SubscriptionStatus.ACTIVE},
-    });
-
-    const markSubscriptionsAsExpiredPromises = [];
-    for (const subscription of subscriptions) {
-      // check for if subscription is expired
-
-      if (moment(subscription.endDate).isBefore(moment())) {
-        markSubscriptionsAsExpiredPromises.push(
-          this.subscriptionRepository.updateById(subscription.id, {
-            status: SubscriptionStatus.EXPIRED,
-          }),
-        );
-      }
-    }
-    await Promise.all(markSubscriptionsAsExpiredPromises);
-    // calculate date before dayCount number of days from current date
-    const range = moment().subtract(dayCount, 'days').format(DATE_FORMAT);
-    const expiredSubscriptionWithInRange = [];
-    const expiredSubscription = await this.subscriptionRepository.find({
-      where: {status: SubscriptionStatus.EXPIRED},
-    });
-    for (const subscription of expiredSubscription) {
-      if (moment(subscription.endDate).isAfter(range)) {
-        expiredSubscriptionWithInRange.push({
-          subscriptionId: subscription.id,
-          subscriberId: subscription.subscriberId,
-        });
-      }
-    }
-    return expiredSubscriptionWithInRange;
+    return this.subscriptionService.handleExpiredSubscriptions(dayCount);
   }
 
   @authorize({
@@ -317,8 +227,10 @@ export class SubscriptionController {
   })
   async findById(
     @param.path.string('id') id: string,
+    // sonarignore:start
     @param.filter(Subscription, {exclude: 'where'})
     filter?: FilterExcludingWhere<Subscription>,
+    // sonarignore:end
   ): Promise<Subscription> {
     return this.subscriptionRepository.findById(id, filter);
   }
