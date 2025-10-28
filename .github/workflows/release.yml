@@ -52,5 +52,5 @@ jobs:
       # and replicates its logic safely while keeping provenance and trusted publishing.
       - name: Publish all changed packages with provenance
         run: |
-          echo "🚀 Publishing packages from-package with provenance..."
-          npx lerna publish from-package --yes --registry https://registry.npmjs.org/
+          echo "🚀 Publishing packages"
+          npx lerna publish from-package --yes
