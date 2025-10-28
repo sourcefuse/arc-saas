@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0 (2025-10-28)
+
+* fix(all-services): changes to manually update major version for first time (#103) ([970a947](https://github.com/sourcefuse/arc-saas/commit/970a947)), closes [#103](https://github.com/sourcefuse/arc-saas/issues/103) [#00](https://github.com/sourcefuse/arc-saas/issues/00) [#102](https://github.com/sourcefuse/arc-saas/issues/102)
+* fix(tenant-management): dummy commit for major bump (#102) ([7eb15ba](https://github.com/sourcefuse/arc-saas/commit/7eb15ba)), closes [#102](https://github.com/sourcefuse/arc-saas/issues/102) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+### BREAKING CHANGE
+
+* dummy commit for major version bump
+* major bump all services
+
+
+
+
 ## 0.5.0 (2025-10-28)
 
 * fix(all-services): breaking version bump (#101) ([4d428af](https://github.com/sourcefuse/arc-saas/commit/4d428af)), closes [#101](https://github.com/sourcefuse/arc-saas/issues/101)

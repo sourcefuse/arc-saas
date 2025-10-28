@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ctrl-plane-tenant-management-service",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Tenant Management microservice for SaaS control plane.",
   "keywords": [
     "loopback-microservice",
