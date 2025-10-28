@@ -21,6 +21,13 @@ import {PermissionKey} from '../permissions';
 const basePath = '/contacts';
 
 export class ContactController {
+  /**
+   * The constructor function initializes a ContactRepository instance for managing contact data.
+   * @param {ContactRepository} contactRepository - The `contactRepository` parameter is an instance of
+   * the `ContactRepository` class that is being injected into the constructor using dependency
+   * injection. This allows the class to have access to the methods and properties of the
+   * `ContactRepository` class within its own methods.
+   */
   constructor(
     @repository(ContactRepository)
     public contactRepository: ContactRepository,
