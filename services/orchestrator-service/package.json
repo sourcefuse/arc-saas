@@ -1,109 +1,110 @@
 {
-    "name": "@sourceloop/ctrl-plane-orchestrator-service",
-    "version": "0.2.0",
-    "description": "ARC SaaS Orchestrator service.",
-    "keywords": [
-        "loopback-microservice",
-        "loopback",
-        "saas",
-        "tenant",
-        "tenant-management",
-        "tenant-service",
-        "control-plane",
-        "multi-tenant",
-        "multi-tenant-saas",
-        "multi-tenancy"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": ">=20"
-    },
-    "scripts": {
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run rebuild",
-        "posttest": "npm run lint",
-        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-        "symlink-resolver": "symlink-resolver",
-        "resolve-links": "npm run symlink-resolver build ./node_modules/@local",
-        "premigrate": "npm run build",
-        "migrate": "node ./dist/migrate",
-        "preopenapi-spec": "npm run build",
-        "openapi-spec": "node ./dist/openapi-spec",
-        "prestart": "npm run clean && npm run openapi-spec",
-        "start": "node -r source-map-support/register .",
-        "dev": "nodemon --watch src -e ts --exec \"npm run start\"",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "rebuild": "npm run clean && npm run build",
-        "coverage": "nyc npm run test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sourcefuse/arc-saas"
-    },
-    "author": "SourceFuse",
-    "license": "MIT",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "!*/__tests__"
-    ],
-    "dependencies": {
-        "tslib": "^2.6.2"
-    },
-    "peerDependencies": {
-        "@loopback/core": "^7.0.3"
-    },
-    "devDependencies": {
-        "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@loopback/boot": "^8.0.4",
-        "@loopback/build": "^12.0.3",
-        "@loopback/context": "^8.0.3",
-        "@loopback/core": "^7.0.3",
-        "@loopback/eslint-config": "^16.0.1",
-        "@loopback/logging": "^0.13.5",
-        "@loopback/openapi-v3": "^11.0.4",
-        "@loopback/repository": "^8.0.3",
-        "@loopback/rest": "^15.0.4",
-        "@loopback/rest-explorer": "^8.0.4",
-        "@loopback/service-proxy": "^8.0.3",
-        "@loopback/testlab": "^8.0.3",
-        "@types/aws-lambda": "^8.10.110",
-        "@types/i18n": "^0.13.6",
-        "@types/node": "^20.12.7",
-        "@vendia/serverless-express": "^4.10.1",
-        "dotenv": "^16.4.5",
-        "dotenv-extended": "^2.9.0",
-        "nodemon": "^2.0.21",
-        "nyc": "^15.1.0",
-        "source-map-support": "^0.5.21",
-        "swagger-stats": "^0.99.5",
-        "symlink-resolver": "0.2.1",
-        "typescript": "^5.4.5"
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/",
-        "access": "public"
-    },
-    "typedoc": {
-        "config": {
-            "entryPoints": [
-                "src/index.ts"
-            ],
-            "out": "services/tenant-management-service",
-            "plugin": [
-                "typedoc-plugin-markdown"
-            ]
-        }
+  "name": "@sourceloop/ctrl-plane-orchestrator-service",
+  "version": "0.2.0",
+  "description": "ARC SaaS Orchestrator service",
+  "keywords": [
+    "loopback-microservice",
+    "loopback",
+    "saas",
+    "tenant",
+    "tenant-management",
+    "tenant-service",
+    "control-plane",
+    "multi-tenant",
+    "multi-tenant-saas",
+    "multi-tenancy"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "posttest": "npm run lint",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "symlink-resolver": "symlink-resolver",
+    "resolve-links": "npm run symlink-resolver build ./node_modules/@local",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run clean && npm run openapi-spec",
+    "start": "node -r source-map-support/register .",
+    "dev": "nodemon --watch src -e ts --exec \"npm run start\"",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/arc-saas"
+  },
+  "author": "SourceFuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
+  "peerDependencies": {
+    "@loopback/core": "^7.0.3"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@loopback/boot": "^8.0.4",
+    "@loopback/build": "^12.0.3",
+    "@loopback/context": "^8.0.3",
+    "@loopback/core": "^7.0.3",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/logging": "^0.13.5",
+    "@loopback/openapi-v3": "^11.0.4",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@loopback/rest-explorer": "^8.0.4",
+    "@loopback/service-proxy": "^8.0.3",
+    "@loopback/testlab": "^8.0.3",
+    "@types/aws-lambda": "^8.10.110",
+    "@types/i18n": "^0.13.6",
+    "@types/node": "^20.12.7",
+    "@vendia/serverless-express": "^4.10.1",
+    "dotenv": "^16.4.5",
+    "dotenv-extended": "^2.9.0",
+    "nodemon": "^2.0.21",
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.21",
+    "swagger-stats": "^0.99.5",
+    "symlink-resolver": "0.2.1",
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/tenant-management-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
     }
+  }
 }

@@ -4,6 +4,7 @@ name: Release [Manual]
 on: workflow_dispatch
 permissions:
   contents: write
+  id-token: write
 jobs:
   Release:
     runs-on: ubuntu-latest
@@ -27,15 +28,15 @@ jobs:
           GITHUB_PAT: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
           CONFIG_USERNAME: ${{ vars.RELEASE_COMMIT_USERNAME }}
           CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
-      - name: Authenticate with Registry
-        run: |
-          echo "@${NPM_USERNAME}:registry=https://registry.npmjs.org/" > .npmrc
-          echo "registry=https://registry.npmjs.org/" >> .npmrc
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-          npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_USERNAME: ${{ vars.NPM_USERNAME }}
+      # - name: Authenticate with Registry
+      #   run: |
+      #     echo "@${NPM_USERNAME}:registry=https://registry.npmjs.org/" > .npmrc
+      #     echo "registry=https://registry.npmjs.org/" >> .npmrc
+      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+      #     npm whoami
+      #   env:
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #     NPM_USERNAME: ${{ vars.NPM_USERNAME }}
 
       - name: Bootstrap
         run: npm ci
@@ -51,10 +52,13 @@ jobs:
         run: git stash
       - name: Bump Versions
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
-        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
+        # run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
+        # Bumping major version for release will remove once released
+        run: HUSKY=0 npx lerna version major --yes --ci --conventional-commits 
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: npx lerna publish from-package --yes
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # using `--provenance` to generate provenance file for each package published.
+        run: npx lerna publish from-package --yes --provenance
+        # env:
+        #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
