@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.1 (2025-10-28)</small>
+
+* fix(all-services): dummy commit for version bump (#105) ([36eb58f](https://github.com/sourcefuse/arc-saas/commit/36eb58f)), closes [#105](https://github.com/sourcefuse/arc-saas/issues/105) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+
+
+
 ## 1.0.0 (2025-10-28)
 
 * fix(all-services): changes to manually update major version for first time (#103) ([970a947](https://github.com/sourcefuse/arc-saas/commit/970a947)), closes [#103](https://github.com/sourcefuse/arc-saas/issues/103) [#00](https://github.com/sourcefuse/arc-saas/issues/00) [#102](https://github.com/sourcefuse/arc-saas/issues/102)

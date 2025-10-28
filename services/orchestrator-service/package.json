@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ctrl-plane-orchestrator-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ARC SaaS Orchestrator service.",
   "keywords": [
     "loopback-microservice",

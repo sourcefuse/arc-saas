@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ctrl-plane-subscription-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Subscription management microservice for SaaS control plane.",
   "keywords": [
     "loopback-microservice",
