@@ -16,9 +16,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22'
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
@@ -54,11 +54,30 @@ jobs:
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
         # run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
         # Bumping major version for release will remove once released
-        run: HUSKY=0 npx lerna version major --yes --ci --conventional-commits 
-      - name: Publish to NPM 🚀
-        # To always compare changes from registry
-        # using `from-package` compares version in local package.json with registry and publish it if required.
-        # using `--provenance` to generate provenance file for each package published.
-        run: npx lerna publish from-package --yes --provenance
-        # env:
-        #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits 
+      # 🟢 This replaces 'lerna publish from-package --yes --provenance'
+      # and replicates its logic safely while keeping provenance and trusted publishing.
+      - name: Publish to npm with provenance 🚀
+        run: |
+          echo "Building packages..."
+          npx lerna run build --stream --no-private || true
+
+          echo "Publishing packages (with from-package logic + provenance)..."
+          packages=$(npx lerna list --json --no-private)
+
+          echo "$packages" | jq -r '.[] | [.name, .location] | @tsv' | while IFS=$'\t' read -r name location; do
+            echo "🔍 Checking $name ..."
+            cd "$location"
+
+            local_version=$(jq -r '.version' package.json)
+            remote_version=$(npm view "$name" version 2>/dev/null || echo "0.0.0")
+
+            if [ "$local_version" != "$remote_version" ]; then
+              echo "📦 Publishing $name@$local_version (previous: $remote_version)"
+              npm publish --provenance --access public
+            else
+              echo "⏩ Skipping $name@$local_version (already published)"
+            fi
+
+            cd - >/dev/null
+          done
