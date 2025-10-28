@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.2.0 (2025-10-28)
+
+* fix(all-services): breaking version bump (#101) ([4d428af](https://github.com/sourcefuse/arc-saas/commit/4d428af)), closes [#101](https://github.com/sourcefuse/arc-saas/issues/101)
+* refactor(all-services): upgrade node version to >=20 (#98) ([065adb2](https://github.com/sourcefuse/arc-saas/commit/065adb2)), closes [#98](https://github.com/sourcefuse/arc-saas/issues/98) [#75](https://github.com/sourcefuse/arc-saas/issues/75)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+## Description
+
+Node version 18 is no longer supported
+
+Fixes # (issue)
+* YES
+
+## Description
+
+breaking version bump
+
+
+Fixes # (issue)
+
+## Type of change
+
+Please delete options that are not relevant.
+
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing
+functionality to not work as expected)
+- [ ] Intermediate change (work in progress)
+
+## How Has This Been Tested?
+
+Please describe the tests that you ran to verify your changes. Provide
+instructions so we can reproduce. Please also list any relevant details
+for your test configuration
+
+- [ ] Test A
+- [ ] Test B
+
+## Checklist:
+
+- [ ] Performed a self-review of my own code
+- [ ] npm test passes on your machine
+- [ ] New tests added or existing tests modified to cover all changes
+- [ ] Code conforms with the style guide
+- [ ] API Documentation in code was updated
+- [ ] Any dependent changes have been merged and published in downstream
+modules
+
+
+
+
 ## <small>0.1.1 (2025-02-05)</small>
 
 * chore(deps): arc and loopback version update (#67) ([4fae34e](https://github.com/sourcefuse/arc-saas/commit/4fae34e)), closes [#67](https://github.com/sourcefuse/arc-saas/issues/67) [#00](https://github.com/sourcefuse/arc-saas/issues/00)

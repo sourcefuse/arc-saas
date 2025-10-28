@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2025-10-28)
+
+* fix(all-services): breaking version bump (#101) ([4d428af](https://github.com/sourcefuse/arc-saas/commit/4d428af)), closes [#101](https://github.com/sourcefuse/arc-saas/issues/101)
+* fix(subscription-service): missed Export of Sequelize Component in Index file (#83) ([388886c](https://github.com/sourcefuse/arc-saas/commit/388886c)), closes [#83](https://github.com/sourcefuse/arc-saas/issues/83) [#82](https://github.com/sourcefuse/arc-saas/issues/82)
+* fix(subscription-service): refactor the code (#80) ([f4fc54d](https://github.com/sourcefuse/arc-saas/commit/f4fc54d)), closes [#80](https://github.com/sourcefuse/arc-saas/issues/80)
+* fix(subscription-service): standardize repository usage (#85) ([7648ade](https://github.com/sourcefuse/arc-saas/commit/7648ade)), closes [#85](https://github.com/sourcefuse/arc-saas/issues/85) [#84](https://github.com/sourcefuse/arc-saas/issues/84)
+* refactor(all-services): fix sonar issues (#81) ([2da1ac2](https://github.com/sourcefuse/arc-saas/commit/2da1ac2)), closes [#81](https://github.com/sourcefuse/arc-saas/issues/81) [#77](https://github.com/sourcefuse/arc-saas/issues/77)
+* refactor(all-services): remove extra code from controller and used by injecting service (#89) ([27b4636](https://github.com/sourcefuse/arc-saas/commit/27b4636)), closes [#89](https://github.com/sourcefuse/arc-saas/issues/89) [#88](https://github.com/sourcefuse/arc-saas/issues/88)
+* refactor(all-services): upgrade node version to >=20 (#98) ([065adb2](https://github.com/sourcefuse/arc-saas/commit/065adb2)), closes [#98](https://github.com/sourcefuse/arc-saas/issues/98) [#75](https://github.com/sourcefuse/arc-saas/issues/75)
+* feat: add Sequelize ORM (#70) ([ea93116](https://github.com/sourcefuse/arc-saas/commit/ea93116)), closes [#70](https://github.com/sourcefuse/arc-saas/issues/70) [#69](https://github.com/sourcefuse/arc-saas/issues/69)
+* feat(ci-cd): add trivy scan (#91) ([d13966d](https://github.com/sourcefuse/arc-saas/commit/d13966d)), closes [#91](https://github.com/sourcefuse/arc-saas/issues/91) [#90](https://github.com/sourcefuse/arc-saas/issues/90)
+* feat(tenant-management): enable dynamic model schema overrides (#87) ([9e897d7](https://github.com/sourcefuse/arc-saas/commit/9e897d7)), closes [#87](https://github.com/sourcefuse/arc-saas/issues/87) [#86](https://github.com/sourcefuse/arc-saas/issues/86)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+## Description
+
+Node version 18 is no longer supported
+
+Fixes # (issue)
+* YES
+
+## Description
+
+breaking version bump
+
+
+Fixes # (issue)
+
+## Type of change
+
+Please delete options that are not relevant.
+
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing
+functionality to not work as expected)
+- [ ] Intermediate change (work in progress)
+
+## How Has This Been Tested?
+
+Please describe the tests that you ran to verify your changes. Provide
+instructions so we can reproduce. Please also list any relevant details
+for your test configuration
+
+- [ ] Test A
+- [ ] Test B
+
+## Checklist:
+
+- [ ] Performed a self-review of my own code
+- [ ] npm test passes on your machine
+- [ ] New tests added or existing tests modified to cover all changes
+- [ ] Code conforms with the style guide
+- [ ] API Documentation in code was updated
+- [ ] Any dependent changes have been merged and published in downstream
+modules
+
+
+
+
 ## <small>0.4.1 (2025-02-18)</small>
 
 * fix(tenant-management): remove the default provider binding (#68) ([46d0e3d](https://github.com/sourcefuse/arc-saas/commit/46d0e3d)), closes [#68](https://github.com/sourcefuse/arc-saas/issues/68) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
