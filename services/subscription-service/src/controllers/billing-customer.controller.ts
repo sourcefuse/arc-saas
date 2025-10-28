@@ -19,6 +19,14 @@ import {BillingCustomerService} from '../services/billing-customer.service';
 
 const basePath = '/billing-customer';
 export class BillingCustomerController {
+ /**
+  * The constructor function injects the BillingCustomerService dependency using TypeScript's
+  * dependency injection.
+  * @param {BillingCustomerService} billingCustomerService - The parameter `billingCustomerService` is
+  * an instance of the `BillingCustomerService` class that is being injected into the constructor using
+  * dependency injection. This allows the class to have access to the functionality provided by the
+  * `BillingCustomerService` class within its methods.
+  */
   constructor(
     @inject('services.BillingCustomerService')
     private readonly billingCustomerService: BillingCustomerService,
