@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          registry-url: "https://registry.npmjs.org/"
+          provenance: true  # enables trusted publish via OIDC
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
@@ -28,15 +30,6 @@ jobs:
           GITHUB_PAT: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
           CONFIG_USERNAME: ${{ vars.RELEASE_COMMIT_USERNAME }}
           CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
-      # - name: Authenticate with Registry
-      #   run: |
-      #     echo "@${NPM_USERNAME}:registry=https://registry.npmjs.org/" > .npmrc
-      #     echo "registry=https://registry.npmjs.org/" >> .npmrc
-      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-      #     npm whoami
-      #   env:
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #     NPM_USERNAME: ${{ vars.NPM_USERNAME }}
 
       - name: Bootstrap
         run: npm ci
@@ -57,27 +50,7 @@ jobs:
         run: HUSKY=0 npx lerna version --yes --ci --conventional-commits 
       # 🟢 This replaces 'lerna publish from-package --yes --provenance'
       # and replicates its logic safely while keeping provenance and trusted publishing.
-      - name: Publish to npm with provenance 🚀
+      - name: Publish all changed packages with provenance
         run: |
-          echo "Building packages..."
-          npx lerna run build --stream --no-private || true
-
-          echo "Publishing packages (with from-package logic + provenance)..."
-          packages=$(npx lerna list --json --no-private)
-
-          echo "$packages" | jq -r '.[] | [.name, .location] | @tsv' | while IFS=$'\t' read -r name location; do
-            echo "🔍 Checking $name ..."
-            cd "$location"
-
-            local_version=$(jq -r '.version' package.json)
-            remote_version=$(npm view "$name" version 2>/dev/null || echo "0.0.0")
-
-            if [ "$local_version" != "$remote_version" ]; then
-              echo "📦 Publishing $name@$local_version (previous: $remote_version)"
-              npm publish --provenance --access public
-            else
-              echo "⏩ Skipping $name@$local_version (already published)"
-            fi
-
-            cd - >/dev/null
-          done
+          echo "🚀 Publishing packages from-package with provenance..."
+          npx lerna publish from-package --yes --registry https://registry.npmjs.org/
