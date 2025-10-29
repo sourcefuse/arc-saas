@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ctrl-plane-orchestrator-service",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "ARC SaaS Orchestrator service.",
   "keywords": [
     "loopback-microservice",
@@ -93,8 +93,7 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "typedoc": {
     "config": {
