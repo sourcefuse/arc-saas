@@ -53,4 +53,4 @@ jobs:
       - name: Publish all changed packages with provenance
         run: |
           echo "🚀 Publishing packages"
-          npx lerna publish from-package --yes
+          npx lerna publish from-package --yes --loglevel verbose
