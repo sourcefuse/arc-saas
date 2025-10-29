@@ -46,9 +46,7 @@ jobs:
       - name: Bump Versions
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
         # run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
-        # Bumping major version for release will remove once released
-        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits 
-      # 🟢 This replaces 'lerna publish from-package --yes --provenance'
+        run: HUSKY=0 npx lerna version 1.0.0 --yes --ci --no-git-tag-version --force-publish
       # and replicates its logic safely while keeping provenance and trusted publishing.
       - name: Publish all changed packages with provenance
         run: |
