@@ -55,7 +55,41 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - The front end application first calls the `/leads/{id}/verify` which updates the validated status of the lead in the DB and returns a new JWT Token that can be used for subsequent calls
 - If the token is validated in the previous step, the UI should call the `/leads/{id}/tenants` endpoint with the necessary payload(as per swagger documentation).
 - This endpoint would onboard the tenant in the DB, and the facade is then supposed to trigger the relevant events using the `/tenants/{id}/provision` endpoint.
-- The provisioning endpoint will invoke the publish method on the `EventConnector`. This connector's purpose is to provide a place for consumer to write the event publishing logic. And your custom service can be bound to the key `EventConnectorBinding` exported by the service. Refer the example with Amazon EventBridge implementation in the [sandbox](./sandbox).
+- The provisioning endpoint will invoke the publish method on the `EventConnector`. This connector's purpose is to provide a place for consumer to write the event publishing logic. And your custom service can be bound to the key `EventConnectorBinding` exported by the service.
+ ```typescript
+// If you want to use EventBridge, you can do it like this and for any other event bus, you’ll need to follow a similar approach.
+
+import {EventBridgeClient, PutEventsCommand} from '@aws-sdk/client-eventbridge';
+
+// Initialize EventBridge client
+const eventBridgeClient = new EventBridgeClient({
+  region: process.env.EVENT_BUS_REGION,
+});
+
+// Prepare the event payload
+const eventPayload = {
+  Entries: [
+    {
+      Source: 'TenantManagementService',
+      DetailType: 'TENANT_CREATED', // Example event type
+      Detail: JSON.stringify({
+        tenantId: '12345',
+        context: 'SaaS-Tenant-Onboarding',
+      }),
+      EventBusName: process.env.EVENT_BUS_NAME,
+    },
+  ],
+};
+
+// Send the event using PutEventsCommand
+const putEventsCommand = new PutEventsCommand(eventPayload);
+await eventBridgeClient.send(putEventsCommand);
+console.log('Event sent successfully to EventBridge');
+ ```
+ Bind your required EventConnector as below
+ ```typescript
+ this.bind(EventConnectorBinding).toClass(EventConnector);
+ ```
 
 ## IDP - Identity Provider
 
