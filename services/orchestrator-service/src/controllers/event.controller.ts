@@ -12,6 +12,14 @@ export class EventController {
   @inject(LoggingBindings.WINSTON_LOGGER)
   private logger: WinstonLogger;
 
+  /**
+   * The constructor function injects an instance of OrchestratorServiceInterface using dependency
+   * injection.
+   * @param {OrchestratorServiceInterface} orchestratorService - The `orchestratorService` parameter is
+   * an instance of the `OrchestratorServiceInterface` class that is injected using the
+   * `OrchestratorServiceBindings.ORCHESTRATOR_SERVICE` binding. This parameter allows the class to
+   * interact with the Orchestrator service through the defined interface methods
+   */
   constructor(
     @inject(OrchestratorServiceBindings.ORCHESTRATOR_SERVICE)
     protected orchestratorService: OrchestratorServiceInterface,
