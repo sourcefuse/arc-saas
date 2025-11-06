@@ -81,6 +81,7 @@ import {
 import {ITenantManagementServiceConfig} from './types';
 import {IdpHelperService} from './services/idp-helper.service';
 import {LeadHelperService} from './services/lead-helper.service';
+import {EventStreamConnectorComponent} from 'loopback4-message-bus-connector';
 
 export class TenantManagementServiceComponent implements Component {
   constructor(
@@ -93,7 +94,7 @@ export class TenantManagementServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
-
+    this.application.component(EventStreamConnectorComponent);
     this.application.api({
       openapi: '3.0.0',
       info: {

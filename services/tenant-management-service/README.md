@@ -55,7 +55,39 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - The front end application first calls the `/leads/{id}/verify` which updates the validated status of the lead in the DB and returns a new JWT Token that can be used for subsequent calls
 - If the token is validated in the previous step, the UI should call the `/leads/{id}/tenants` endpoint with the necessary payload(as per swagger documentation).
 - This endpoint would onboard the tenant in the DB, and the facade is then supposed to trigger the relevant events using the `/tenants/{id}/provision` endpoint.
-- The provisioning endpoint will invoke the publish method on the `EventConnector`. This connector's purpose is to provide a place for consumer to write the event publishing logic. And your custom service can be bound to the key `EventConnectorBinding` exported by the service. Refer the example with Amazon EventBridge implementation in the [sandbox](./sandbox).
+
+## Event Publishing
+The Orchestrator now supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
+
+You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
+```ts
+import {producer, Producer, QueueType} from 'loopback4-message-bus-connector';
+
+export class TenantEventPublisher {
+  /**
+   * Injects a message bus producer for publishing events.
+   *
+   * The `@producer()` decorator allows selecting which underlying
+   * message bus strategy to use. Supported strategies include:
+   *
+   * - `QueueType.EventBridge` → Publishes events to AWS EventBridge.
+   * - `QueueType.BullMQ` → Publishes events to Redis-based BullMQ queues.
+   * - `QueueType.SQS` → Publishes events to AWS SQS queues.
+   *
+   * If you want to use EventBridge strategy, define your producer as shown below.
+   */
+  @producer(QueueType.EventBridge)
+  private eventBridgeProducer: Producer;
+
+  async publishTenantProvisionedEvent(payload: any) {
+    await this.eventBridgeProducer.send({
+      type: 'tenant.provisioned',
+      data: payload,
+    });
+  }
+}
+
+```
 
 ## IDP - Identity Provider
 
