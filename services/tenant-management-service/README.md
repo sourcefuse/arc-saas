@@ -2,13 +2,13 @@
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
-This is the primary service of the control plane responsible for onboarding a tenant and triggering it's provisioning.
+This is the primary service of the ARC SaaS control plane responsible for onboarding a tenant and managing it's provisioning.
 
 ## Overview
 
 A Microservice for handling tenant management operations. It provides -
 
-- lead creation and verification
+- Lead creation and verification
 - Tenant Onboarding of both pooled and silo tenants
 - Billing and Invoicing
 - Provisioning of resources for silo and pooled tenants
@@ -35,12 +35,23 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Add the `TenantManagementServiceComponent` to your Loopback4 Application (in `application.ts`).
+
   ```typescript
   // import the TenantManagementServiceComponent
   import {TenantManagementServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service';
   // add Component for TenantManagementService
   this.component(TenantManagementServiceComponent);
   ```
+
+  This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override and use symmetric encryption add the following to your `application.ts` file along with other config values.
+
+```typecript
+this.bind(TenantManagementServiceBindings.Config).to({
+	useCustomSequence:true,
+});
+
+```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
 - Bind any of the custom [providers](#providers) you need.
@@ -54,12 +65,15 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - The mail has a link which should direct to a front end application, which in turn would call the upcoming api's using a temporary authorization code included in the mail.
 - The front end application first calls the `/leads/{id}/verify` which updates the validated status of the lead in the DB and returns a new JWT Token that can be used for subsequent calls
 - If the token is validated in the previous step, the UI should call the `/leads/{id}/tenants` endpoint with the necessary payload(as per swagger documentation).
-- This endpoint would onboard the tenant in the DB, and the facade is then supposed to trigger the relevant events using the `/tenants/{id}/provision` endpoint.
+- This endpoint would onboard the tenant in the DB, and its success you should trigger the relevant events using the `/tenants/{id}/provision` endpoint.
+- The provisioning endpoint will invoke the publish method on the `EventConnector`. This connector's purpose is to provide a place for consumer to write the event publishing logic. And your custom service can be bound to the key `EventConnectorBinding` exported by the service.
 
 ## Event Publishing
-This service now supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
+
+The service supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
 
 You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
+
 ```ts
 import {producer, Producer, QueueType} from 'loopback4-message-bus-connector';
 
@@ -86,7 +100,6 @@ export class TenantEventPublisher {
     });
   }
 }
-
 ```
 
 ## IDP - Identity Provider
@@ -350,7 +363,96 @@ The identity provider and its related providers are also a part of the 'WebhookT
         <td>lenght of random key for lead.</td>
         <td></td>
       </tr>
-
+      <tr>
+        <td>AUTH0_DOMAIN</td>
+        <td>Y for Auth0</td>
+        <td>Domain</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AUTH0_CLIENT_ID</td>
+        <td>Y for Auth0</td>
+        <td>Client id of the Auth0 Application</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AUTH0_CLIENT_SECRET</td>
+        <td>Y for Auth0</td>
+        <td>Client secret of the Auth0 Application</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AUTH0_AUDIENCE</td>
+        <td>N</td>
+        <td>Recipient of the token</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_REGION</td>
+        <td>Y for Keycloak</td>
+        <td>AWS region for SSM</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>NAMESPACE</td>
+        <td>Y for Keycloak</td>
+        <td>SSM namespace</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>KEYCLOAK_HOST</td>
+        <td>Y for keycloak</td>
+        <td>Keycloak host URL</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>KEYCLOAK_ADMIN_USERNAME</td>
+        <td>Y for Keycloak</td>
+        <td>Username of Admin</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>KEYCLOAK_ADMIN_PASSWORD</td>
+        <td>Y for Keycloak</td>
+        <td>Password of Admin</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_SES_SMTP_HOST</td>
+        <td>Y for Keycloak</td>
+        <td>SMTP host URL</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_SES_SMTP_USERNAME</td>
+        <td>Y for Keycloak</td>
+        <td>SMTP username</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_SES_SMTP_PASSWORD</td>
+        <td>Y for Keycloak</td>
+        <td>SMTP password</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SMTP_FROM_EMAIL</td>
+        <td>Y for Keycloak</td>
+        <td>Emai Id from which you wish to send email</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SMTP_FROM_DISPLAY_NAME</td>
+        <td>Y for Keycloak</td>
+        <td>Display name</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>DOMAIN_NAME</td>
+        <td>Y for Keycloak</td>
+        <td>Your domain name</td>
+        <td></td>
+      </tr>
   </tbody>
 </table>
 
@@ -376,7 +478,7 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource
+export class TenantManagementDb
   extends juggler.DataSource
   implements LifeCycleObserver
 {
