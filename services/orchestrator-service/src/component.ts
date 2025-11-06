@@ -11,19 +11,10 @@ import {
 } from '@loopback/core';
 import {Binding} from '@loopback/context';
 import {OrchestratorServiceBindings} from './services/types';
-import {
-  BuilderService,
-  OrchestratorService,
-  TenantProvisioningFailureHandlerProvider,
-  TenantProvisioningHandlerProvider,
-  TierDetailsProvider,
-  TenantProvisioningSuccessHandlerProvider,
-  TenantDeprovisioningHandlerProvider,
-  TenantDeploymentHandlerProvider,
-} from './services';
-import {EventController} from './controllers';
+import {BuilderService, TierDetailsProvider} from './services';
 import {RestApplication} from '@loopback/rest';
 import {LoggingBindings, LoggingComponent} from '@loopback/logging';
+import {EventStreamConnectorComponent} from 'loopback4-message-bus-connector';
 
 export class OrchestratorServiceComponent implements Component {
   providers: ProviderMap = {};
@@ -40,31 +31,18 @@ export class OrchestratorServiceComponent implements Component {
       enableHttpAccessLog: true,
     });
     application.component(LoggingComponent);
+    application.component(EventStreamConnectorComponent);
 
     // Bind Providers if not provided by consumer of the component
     this.bindProviders({
       [OrchestratorServiceBindings.TIER_DETAILS_PROVIDER.key]:
         TierDetailsProvider,
-      [OrchestratorServiceBindings.TENANT_PROVISIONING_HANDLER.key]:
-        TenantProvisioningHandlerProvider,
-      [OrchestratorServiceBindings.TENANT_DEPROVISIONING_HANDLER.key]:
-        TenantDeprovisioningHandlerProvider,
-      [OrchestratorServiceBindings.TENANT_PROVISIONING_SUCCESS_HANDLER.key]:
-        TenantProvisioningSuccessHandlerProvider,
-      [OrchestratorServiceBindings.TENANT_PROVISIONING_FAILURE_HANDLER.key]:
-        TenantProvisioningFailureHandlerProvider,
-      [OrchestratorServiceBindings.TENANT_DEPLOYMENT_HANDLER.key]:
-        TenantDeploymentHandlerProvider,
     });
 
     // Bind Service Classes if not provided by consumer of the component
     this.bindServiceClasses({
-      [OrchestratorServiceBindings.ORCHESTRATOR_SERVICE.key]:
-        OrchestratorService,
       [OrchestratorServiceBindings.BUILDER_SERVICE.key]: BuilderService,
     });
-
-    this.controllers = [EventController];
   }
 
   private bindProviders(providersObject: ProviderMap) {
