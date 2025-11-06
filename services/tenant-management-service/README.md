@@ -57,7 +57,7 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - This endpoint would onboard the tenant in the DB, and the facade is then supposed to trigger the relevant events using the `/tenants/{id}/provision` endpoint.
 
 ## Event Publishing
-The Orchestrator now supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
+This service now supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
 
 You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
 ```ts
