@@ -62,6 +62,10 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-subscription-service
   // add Component for subscription-service
   this.component(SubscriptionServiceComponent);
   ```
+- If you uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.  
+  ```ts
+  this.component(SubscriptionSequelizeServiceComponent);
+  ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `SubscriptionDB`. You can see an example datasource [here](#setting-up-a-datasource).
 - This component internally uses [FeatureToggleServiceComponent](https://www.npmjs.com/package/@sourceloop/feature-toggle-service) that requires a datasource binding with the name 'FeatureToggleDB'. Make sure to create a datasource for it.

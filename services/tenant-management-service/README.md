@@ -42,12 +42,15 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
   // add Component for TenantManagementService
   this.component(TenantManagementServiceComponent);
   ```
-
+- If you uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.  
+  ```ts
+  this.component(TenantManagementSequelizeServiceComponent);
+  ```
   This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override and use symmetric encryption add the following to your `application.ts` file along with other config values.
 
 ```typecript
 this.bind(TenantManagementServiceBindings.Config).to({
-	useCustomSequence:true,
+	useSymmetricEncryption:true,
 });
 
 ```
@@ -66,13 +69,28 @@ this.bind(TenantManagementServiceBindings.Config).to({
 - The front end application first calls the `/leads/{id}/verify` which updates the validated status of the lead in the DB and returns a new JWT Token that can be used for subsequent calls
 - If the token is validated in the previous step, the UI should call the `/leads/{id}/tenants` endpoint with the necessary payload(as per swagger documentation).
 - This endpoint would onboard the tenant in the DB, and its success you should trigger the relevant events using the `/tenants/{id}/provision` endpoint.
-- The provisioning endpoint will invoke the publish method on the `EventConnector`. This connector's purpose is to provide a place for consumer to write the event publishing logic. And your custom service can be bound to the key `EventConnectorBinding` exported by the service.
+
+## Direct Tenant Onboarding
+
+In addition to the lead-based onboarding flow, a new tenant can also be onboarded directly without creating a lead first.
+This capability is designed specifically for control plane administrators, who can create and provision tenants directly through the management APIs.
+
+To ensure security and operational control, only users with control plane admin privileges are allowed to perform direct tenant onboarding.
+Regular users or leads cannot bypass the standard lead creation and verification process.
+
+To onboard a tenant directly, you should call the `/tenants` endpoint.
 
 ## Event Publishing
 
 The service supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
 
 You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
+
+To enable these strategies, bind the following component in your application:
+```ts
+this.component(EventStreamConnectorComponent);
+```
+Once configured, you can publish provisioning or deployment events by injecting a Producer for the desired message bus strategy.
 
 ```ts
 import {producer, Producer, QueueType} from 'loopback4-message-bus-connector';
@@ -151,6 +169,47 @@ app
   .bind(TenantManagementServiceBindings.IDP_AUTH0)
   .toProvider(Auth0IdpProvider);
 ```
+### Keycloak IdP Provider
+
+The Keycloak IdP Provider automatically sets up and configures all the required Keycloak resources for a new tenant during onboarding.
+
+It eliminates manual setup and ensures each tenant has a secure, isolated identity environment.
+
+When a new tenant is provisioned, the provider automatically:
+- Creates a Realm in Keycloak for that tenant.
+(Each tenant gets its own isolated authentication space.)
+
+- Configures SMTP (Email) settings in the realm using AWS SES for password reset and notification emails.
+
+- Creates a Client inside the realm for the tenant’s application with the correct redirect URIs and credentials.
+
+- Creates an Admin User for the tenant with a temporary password and triggers a password reset email.
+
+- Returns the admin user’s ID (authId) after successful setup.
+
+This setup ensures that every tenant has a ready-to-use Keycloak environment, complete with its own realm, client, and admin user, enabling secure login and user management from day one.
+
+### Auth0 IdP Provider
+
+The Auth0 IdP Provider automates the Auth0 setup required for a tenant during onboarding. It creates the Auth0 organization, provisions an initial admin user, and adds that user to the organization — all based on tenant details and stored tenant configuration.
+
+When a tenant is provisioned, the provider will:
+
+- Create (or reuse) an Auth0 Organization for the tenant.
+
+  For PREMIUM tenants a dedicated organization is created per tenant. For pooled plans, tenants are grouped under a shared organization named after the plan tier. This ensures correct isolation or pooling based on your plan model.
+
+- Apply branding and connection settings to the organization using the tenant configuration (logo, colors, enabled connections, etc.).
+
+  This makes tenant login pages and connections (social/database) behave and look as configured for that tenant.
+
+- Create an Admin User for the tenant using the tenant contact details and a generated temporary password.
+
+  The password is generated securely and the admin is expected to verify or change it through Auth0 flows (no password is persisted in plain text).
+
+- Add the admin user as a member of the Auth0 Organization so they can manage users, connections, and settings for that tenant.
+
+- Return the Auth0 user ID (authId) on success so the control plane can reference the identity for audits or future operations.
 
 ## Webhook Integration
 
@@ -572,7 +631,7 @@ The migrations required for this service can be copied from the service. You can
 
 ## Database Schema
 
-![alt text](./docs/tenants.png)
+![alt text](./docs/db_schema.png)
 
 The major tables in the schema are briefly described below -
 
@@ -585,3 +644,5 @@ The major tables in the schema are briefly described below -
 **Leads** - this model represents a lead that could eventually be a tenant in the system
 
 **Tenants** - main model of the service that represents a tenant in the system, either pooled or siloed
+
+**TenantMgmtConfig** - to save any tenant specific data related to idP
