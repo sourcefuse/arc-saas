@@ -59,6 +59,7 @@
   "files": [
     "README.md",
     "dist",
+    "migrations",
     "src",
     "!*/__tests__"
   ],
