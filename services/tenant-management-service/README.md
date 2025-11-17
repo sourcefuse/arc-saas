@@ -42,22 +42,47 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
   // add Component for TenantManagementService
   this.component(TenantManagementServiceComponent);
   ```
-- If you uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.  
+
+- If you uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.
+
   ```ts
   this.component(TenantManagementSequelizeServiceComponent);
   ```
-  This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override and use symmetric encryption add the following to your `application.ts` file along with other config values.
+
+  This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override -
+
+- Install following packages
+  `npm install @sourceloop/core loopback4-authorization loopback4-authentication`
+- Add the following to your `application.ts`
 
 ```typecript
 this.bind(TenantManagementServiceBindings.Config).to({
-	useSymmetricEncryption:true,
-});
+      useCustomSequence: true,
+    });
+
+this.component(TenantManagementServiceComponent);
+
+this.component(AuthenticationComponent);
+this.sequence(ServiceSequence);
+
+// Add bearer verifier component
+this.bind(BearerVerifierBindings.Config).to({
+      type: BearerVerifierType.service,
+      useSymmetricEncryption: true,
+  } as BearerVerifierConfig);
+
+this.component(BearerVerifierComponent);
+
+// Add authorization component
+this.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer', '/openapi.json'],
+    });
+this.component(AuthorizationComponent);
 
 ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
-- Bind any of the custom [providers](#providers) you need.
 
 ## Onboarding a tenant
 
@@ -87,9 +112,11 @@ The service supports pluggable event strategies — EventBridge, SQS, and BullMQ
 You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
 
 To enable these strategies, bind the following component in your application:
+
 ```ts
 this.component(EventStreamConnectorComponent);
 ```
+
 Once configured, you can publish provisioning or deployment events by injecting a Producer for the desired message bus strategy.
 
 ```ts
@@ -169,6 +196,7 @@ app
   .bind(TenantManagementServiceBindings.IDP_AUTH0)
   .toProvider(Auth0IdpProvider);
 ```
+
 ### Keycloak IdP Provider
 
 The Keycloak IdP Provider automatically sets up and configures all the required Keycloak resources for a new tenant during onboarding.
@@ -176,8 +204,9 @@ The Keycloak IdP Provider automatically sets up and configures all the required 
 It eliminates manual setup and ensures each tenant has a secure, isolated identity environment.
 
 When a new tenant is provisioned, the provider automatically:
+
 - Creates a Realm in Keycloak for that tenant.
-(Each tenant gets its own isolated authentication space.)
+  (Each tenant gets its own isolated authentication space.)
 
 - Configures SMTP (Email) settings in the realm using AWS SES for password reset and notification emails.
 

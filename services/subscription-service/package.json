@@ -60,7 +60,8 @@
     "README.md",
     "dist",
     "src",
-    "!*/__tests__"
+    "!*/__tests__",
+    "public"
   ],
   "dependencies": {
     "@loopback/boot": "^8.0.4",
