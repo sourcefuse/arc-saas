@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {IServiceConfig} from '@sourceloop/core';
 import {TInvoice} from 'loopback4-billing';
+export {FeatureToggleDbName} from '@sourceloop/feature-toggle-service';
 
 export type BaseUser = {
   id: string;
