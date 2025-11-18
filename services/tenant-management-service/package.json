@@ -24,12 +24,19 @@
     "./idp-provider": {
       "types": "./dist/providers/idp-provider/index.d.ts",
       "default": "./dist/providers/idp-provider/index.js"
+    },
+    "./sequelize": {
+      "types": "./dist/sequelize-component.d.ts",
+      "default": "./dist/sequelize-component.js"
     }
   },
   "typesVersions": {
     "*": {
       "idp-provider": [
         "./dist/providers/idp-provider/index.d.ts"
+      ],
+      "sequelize": [
+        "./dist/sequelize-component.d.ts"
       ]
     }
   },
@@ -75,7 +82,8 @@
     "README.md",
     "dist",
     "src",
-    "!*/__tests__"
+    "!*/__tests__",
+    "public"
   ],
   "dependencies": {
     "@loopback/boot": "^8.0.4",

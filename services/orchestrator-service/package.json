@@ -56,7 +56,8 @@
     "README.md",
     "dist",
     "src",
-    "!*/__tests__"
+    "!*/__tests__",
+    "public"
   ],
   "dependencies": {
     "loopback4-message-bus-connector": "^2.0.0",
