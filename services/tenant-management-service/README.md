@@ -43,9 +43,12 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
   this.component(TenantManagementServiceComponent);
   ```
 
-- If you uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.
+- If you wish to use Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default component.
 
   ```ts
+  //import like this
+  import {TenantManagementSequelizeServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service/sequelize';
+  // bind the component
   this.component(TenantManagementSequelizeServiceComponent);
   ```
 
@@ -107,7 +110,7 @@ To onboard a tenant directly, you should call the `/tenants` endpoint.
 
 ## Event Publishing
 
-The service supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
+The service supports pluggable event strategies through the [loopback4-message-bus-connector](https://www.npmjs.com/package/loopback4-message-bus-connector).
 
 You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
 
