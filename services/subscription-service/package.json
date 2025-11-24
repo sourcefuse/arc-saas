@@ -19,6 +19,20 @@
   "engines": {
     "node": ">=20"
   },
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/sequelize-component.d.ts",
+      "default": "./dist/sequelize-component.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/sequelize-component.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",

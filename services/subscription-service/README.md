@@ -8,17 +8,20 @@ This is the primary service of the control plane responsible for subscription an
 
 A Microservice for handling subscription management operations. It provides -
 
-- plan creations and management - plan includes plan tier - silo/pooled
-- Add or Update Plan Items/Services/Resources to Plans - plan items are the offerings to user with in the selected plan
+- Plan creations and management - plan includes plan tier - silo/pooled
+- Add or Update Plan Items/Services/Resources to Plans - plan items are the offerings to user within the selected plan.
+- Plan and its feature management.
+- Create or Update Subscriptions.
+- Get information about expired or expiring subscriptions.
 - Billing & Invoice Management.
 
 ## Billing & Invoicing
 
-we have created a package [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) that is designed to integrate billing functionality into LoopBack 4 applications. It provides an abstraction layer to work with billing services such as Chargebee, Stripe etc, offering common billing operations like creating and managing customers, invoices, payment sources, and transactions.
+We have created a package [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) that is designed to integrate billing functionality into LoopBack 4 applications. It provides an abstract layer to work with billing services such as Chargebee, Stripe etc, offering common billing operations like creating and managing customers, invoices, payment sources, and transactions. Our subscription service uses this billing package for bill settlement.
 
 ## Customizing Plans with Sizes and Features
 
-This feature allows for the creation and management of plans with different sizes and features. Plans are used to represent various service tiers or options you offer to your customers. Sizes define the overall scope or capacity of a plan, while features are specific functionalities that can be enabled or disabled for each plan.
+This feature allows the creation and management of plans with different sizes and features. Plans are used to represent various service tiers or options you offer to your customers. Sizes define the overall scope or capacity of a plan, while features are specific functionalities that can be enabled or disabled for each plan.
 
 The Plan Customization feature consists of two main aspects:
 
@@ -32,9 +35,13 @@ Plan sizes are defined by the PlanSizes model. Here's a breakdown of PlanSize:
 - size: The name or label of the plan size (string, required)
 - config: An optional object that can hold additional configuration details specific to the plan size
 
+For example, the “Standard” plan may include less database capacity than the “Premium” plan.
+
 #### Plan Features
 
-Plan features are managed through the FeatureValues model and associated with plans using the PlanFeaturesController. Here's a breakdown of the relevant concepts:
+Uses our [@sourceloop/feature-toggle-service](https://www.npmjs.com/package/@sourceloop/feature-toggle-service) to manage the list of features that the application plan will have.
+
+Plan features are saved in the FeatureValues model and associated with plans using the PlanFeaturesController. Here's a breakdown of the relevant concepts:
 
 - Feature: Represents a general capability or functionality offered in your plans.
 - FeatureValues: This model associates features with specific plans and allows configuration of their values.
@@ -56,53 +63,58 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-subscription-service
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Add the `SubscriptionServiceComponent` to your Loopback4 Application (in `application.ts`).
+
   ```typescript
   // import the SubscriptionServiceComponent
   import {SubscriptionServiceComponent} from '@sourceloop/ctrl-plane-subscription-service';
   // add Component for subscription-service
   this.component(SubscriptionServiceComponent);
   ```
-- If you uses Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default components.  
+
+- If you wish to use Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the default component.
+
   ```ts
+  //import like this
+  import {SubscriptionSequelizeServiceComponent} from '@sourceloop/ctrl-plane-subscription-service/sequelize';
+  // bind the component
   this.component(SubscriptionSequelizeServiceComponent);
   ```
+
+This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override -
+
+- Install following packages
+  `npm install @sourceloop/core loopback4-authorization loopback4-authentication`
+- Add the following to your `application.ts`
+
+  ```typecript
+  this.bind(SubscriptionServiceBindings.Config).to({
+      useCustomSequence: true,
+    });
+    this.component(AuthenticationComponent);
+    this.sequence(ServiceSequence);
+    // Add bearer verifier component
+    this.bind(BearerVerifierBindings.Config).to({
+      type: BearerVerifierType.service,
+      useSymmetricEncryption: true,
+    } as BearerVerifierConfig);
+    this.component(BearerVerifierComponent);
+    // Add authorization component
+    this.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer', '/openapi.json'],
+    });
+    this.component(AuthorizationComponent);
+  ```
+
+  comment the following since we are using our custom sequence
+
+  ```typescript
+  // Set up the custom sequence
+  //this.sequence(MySequence);
+  ```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
-  `SubscriptionDB`. You can see an example datasource [here](#setting-up-a-datasource).
-- This component internally uses [FeatureToggleServiceComponent](https://www.npmjs.com/package/@sourceloop/feature-toggle-service) that requires a datasource binding with the name 'FeatureToggleDB'. Make sure to create a datasource for it.
-
-```ts
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-import {FeatureToggleDbName} from '@sourceloop/feature-toggle-service';
-
-const config = {
-  name: FeatureToggleDbName,
-  connector: 'postgresql',
-  url: '',
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  schema: process.env.DB_SCHEMA,
-};
-
-@lifeCycleObserver('datasource')
-export class FeatureToggleDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static dataSourceName = FeatureToggleDbName;
-  static readonly defaultConfig = config;
-
-  constructor(
-    @inject('datasources.config.feature', {optional: true})
-    dsConfig: object = config,
-  ) {
-    super(dsConfig);
-  }
-}
-```
+  `SubscriptionDB`.
+  This component internally uses [FeatureToggleServiceComponent](https://www.npmjs.com/package/@sourceloop/feature-toggle-service) that requires a datasource binding with the name 'FeatureToggleDB'. Make sure to create a datasource for it. You can refer an example datasource [here](#setting-up-a-datasource).
 
 - Bind any of the custom [providers](#providers) you need.
 
@@ -166,9 +178,6 @@ export class YourApplication extends BootMixin(
     this.bind(BillingComponentBindings.SDKProvider).toProvider(
       ChargeBeeServiceProvider,
     );
-
-    this.component(SubscriptionServiceComponent);
-    // Other configurations
   }
 }
 ```
@@ -200,9 +209,6 @@ export class YourApplication extends BootMixin(
     this.bind(BillingComponentBindings.SDKProvider).toProvider(
       StripeServiceProvider,
     );
-
-    this.component(SubscriptionServiceComponent);
-    // Other configurations
   }
 }
 ```
@@ -260,7 +266,43 @@ export class YourApplication extends BootMixin(
         <td></td>
       </tr>
       <tr>
-        <td>DB_SCHEMA</td>
+        <td>FEATURE_DB_SCHEMA</td>
+        <td>Y</td>
+        <td>Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>FEATURE_DB_HOST</td>
+        <td>Y</td>
+        <td>Hostname for the database server.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>FEATURE_DB_PORT</td>
+        <td>Y</td>
+        <td>Port for the database server.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>FEATURE_DB_USER</td>
+        <td>Y</td>
+        <td>User for the database.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>FEATURE_DB_PASSWORD</td>
+        <td>Y</td>
+        <td>Password for the database user.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>FEATURE_DB_DATABASE</td>
+        <td>Y</td>
+        <td>Database to connect to on the database server.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>FEATURE_DB_SCHEMA</td>
         <td>Y</td>
         <td>Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service.</td>
         <td></td>
@@ -307,7 +349,25 @@ export class YourApplication extends BootMixin(
         <td>Issuer of the JWT token.</td>
         <td></td>
       </tr>
-      
+      <tr>
+        <td>STRIPE_SECRET</td>
+        <td>Y if using stripe for payments</td>
+        <td>Stripe secret key.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SITE</td>
+        <td>Y for Chargebee</td>
+        <td>SIte URL of Chargebee.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>API_KEY</td>
+        <td>Y for Chargebee</td>
+        <td>API key of Chargebee.</td>
+        <td></td>
+      </tr>
+
   </tbody>
 </table>
 
@@ -343,6 +403,42 @@ export class AuthenticationDbDataSource
   constructor(
     // You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
     @inject(`datasources.config.${SubscriptionDbSourceName}`, {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
+  }
+}
+```
+
+Below is example of a Feature Toggle datasource.
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {FeatureToggleDbName} from '@sourceloop/feature-toggle-service';
+
+const config = {
+  name: FeatureToggleDbName,
+  connector: 'postgresql',
+  url: '',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
+};
+
+@lifeCycleObserver('datasource')
+export class FeatureToggleDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = FeatureToggleDbName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.feature', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);

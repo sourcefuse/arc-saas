@@ -84,6 +84,13 @@ this.component(AuthorizationComponent);
 
 ```
 
+comment the following since we are using our custom sequence
+
+```typescript
+// Set up the custom sequence
+//this.sequence(MySequence);
+```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
 
