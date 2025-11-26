@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 export * from './component';
-export * from './sequelize-component';
 export * from './types';
 export * from './keys';
 export * from './repositories';

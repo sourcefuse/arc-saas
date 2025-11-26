@@ -22,7 +22,7 @@
 
 ## Overview
 
-The `@sourceloop/ctrl-plane-orchestrator-service` is designed to provide the standard interfaces and endpoint to handle the events sent from / to a SaaS Control Plane. This acts as a orchestrator for the event targets/processors.
+The `@sourceloop/ctrl-plane-orchestrator-service` is designed to provide the standard interfaces and endpoint to handle the events sent to/from a SaaS Control Plane. This acts as a orchestrator for the event targets/processors.
 
 Consider the following example architecture that uses Amazon EventBridge at the center to pass on the events, and this Orchestrator service is used as its initial target, so that the events can then be sent to the expected candidates to process the event.
 
@@ -60,8 +60,13 @@ export class MyApplication extends BootMixin(
 }
 ```
 
+This microservice uses [message-bus-connector](https://github.com/sourcefuse/loopback4-message-bus-connector) component for consuming the events triggered through the [tenant-managenet](https://www.npmjs.com/package/@sourceloop/ctrl-plane-tenant-management-service) microservice. It supports multiple message buses.
+
+#### Usage
+
 Bind the `EventStreamConnectorComponent` to your application constructor as shown below.
 This will load the built-in artifacts provided by the Message Bus Connector, enabling event publishing and consumption across different backends like EventBridge, SQS, or BullMQ.
+
 ```ts
 this.component(EventStreamConnectorComponent);
 ```
@@ -71,12 +76,9 @@ this.component(EventStreamConnectorComponent);
 Each event type can have one or more Consumers, responsible for reacting to specific messages from the message bus.
 Use the @consumer decorator to register them automatically.
 Follow the example as below:
+
 ```ts
-import {
-  consumer,
-  IConsumer,
-  QueueType,
-} from 'loopback4-message-bus-connector';
+import {consumer, IConsumer, QueueType} from 'loopback4-message-bus-connector';
 import {DefaultEventTypes} from '@arc-saas/orchestrator-service';
 import {AnyObject} from '@loopback/repository';
 
@@ -93,6 +95,7 @@ export class TenantDeploymentConsumer implements IConsumer<AnyObject, string> {
 ```
 
 ## Example Implementations
+
 For more detailed implementation examples, environment setup, and message bus usage (EventBridge, BullMQ, SQS),
 please refer to [sandbox](https://github.com/sourcefuse/arc-saas-sandbox) application.
 

@@ -2,13 +2,13 @@
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
-This is the primary service of the control plane responsible for onboarding a tenant and triggering it's provisioning.
+This is the primary service of the ARC SaaS control plane responsible for onboarding a tenant and managing it's provisioning.
 
 ## Overview
 
 A Microservice for handling tenant management operations. It provides -
 
-- lead creation and verification
+- Lead creation and verification
 - Tenant Onboarding of both pooled and silo tenants
 - Billing and Invoicing
 - Provisioning of resources for silo and pooled tenants
@@ -35,15 +35,64 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Add the `TenantManagementServiceComponent` to your Loopback4 Application (in `application.ts`).
+
   ```typescript
   // import the TenantManagementServiceComponent
   import {TenantManagementServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service';
   // add Component for TenantManagementService
   this.component(TenantManagementServiceComponent);
   ```
+
+- If you wish to use Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default component.
+
+  ```ts
+  //import like this
+  import {TenantManagementSequelizeServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service/sequelize';
+  // bind the component
+  this.component(TenantManagementSequelizeServiceComponent);
+  ```
+
+  This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override -
+
+- Install following packages
+  `npm install @sourceloop/core loopback4-authorization loopback4-authentication`
+- Add the following to your `application.ts`
+
+```typecript
+this.bind(TenantManagementServiceBindings.Config).to({
+      useCustomSequence: true,
+    });
+
+this.component(TenantManagementServiceComponent);
+
+this.component(AuthenticationComponent);
+this.sequence(ServiceSequence);
+
+// Add bearer verifier component
+this.bind(BearerVerifierBindings.Config).to({
+      type: BearerVerifierType.service,
+      useSymmetricEncryption: true,
+  } as BearerVerifierConfig);
+
+this.component(BearerVerifierComponent);
+
+// Add authorization component
+this.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer', '/openapi.json'],
+    });
+this.component(AuthorizationComponent);
+
+```
+
+comment the following since we are using our custom sequence
+
+```typescript
+// Set up the custom sequence
+//this.sequence(MySequence);
+```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
-- Bind any of the custom [providers](#providers) you need.
 
 ## Onboarding a tenant
 
@@ -54,12 +103,32 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
 - The mail has a link which should direct to a front end application, which in turn would call the upcoming api's using a temporary authorization code included in the mail.
 - The front end application first calls the `/leads/{id}/verify` which updates the validated status of the lead in the DB and returns a new JWT Token that can be used for subsequent calls
 - If the token is validated in the previous step, the UI should call the `/leads/{id}/tenants` endpoint with the necessary payload(as per swagger documentation).
-- This endpoint would onboard the tenant in the DB, and the facade is then supposed to trigger the relevant events using the `/tenants/{id}/provision` endpoint.
+- This endpoint would onboard the tenant in the DB, and its success you should trigger the relevant events using the `/tenants/{id}/provision` endpoint.
+
+## Direct Tenant Onboarding
+
+In addition to the lead-based onboarding flow, a new tenant can also be onboarded directly without creating a lead first.
+This capability is designed specifically for control plane administrators, who can create and provision tenants directly through the management APIs.
+
+To ensure security and operational control, only users with control plane admin privileges are allowed to perform direct tenant onboarding.
+Regular users or leads cannot bypass the standard lead creation and verification process.
+
+To onboard a tenant directly, you should call the `/tenants` endpoint.
 
 ## Event Publishing
-This service now supports pluggable event strategies — EventBridge, SQS, and BullMQ — through the loopback4-message-bus-connector.
+
+The service supports pluggable event strategies through the [loopback4-message-bus-connector](https://www.npmjs.com/package/loopback4-message-bus-connector).
 
 You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
+
+To enable these strategies, bind the following component in your application:
+
+```ts
+this.component(EventStreamConnectorComponent);
+```
+
+Once configured, you can publish provisioning or deployment events by injecting a Producer for the desired message bus strategy.
+
 ```ts
 import {producer, Producer, QueueType} from 'loopback4-message-bus-connector';
 
@@ -86,7 +155,6 @@ export class TenantEventPublisher {
     });
   }
 }
-
 ```
 
 ## IDP - Identity Provider
@@ -138,6 +206,49 @@ app
   .bind(TenantManagementServiceBindings.IDP_AUTH0)
   .toProvider(Auth0IdpProvider);
 ```
+
+### Keycloak IdP Provider
+
+The Keycloak IdP Provider automatically sets up and configures all the required Keycloak resources for a new tenant during onboarding.
+
+It eliminates manual setup and ensures each tenant has a secure, isolated identity environment.
+
+When a new tenant is provisioned, the provider automatically:
+
+- Creates a Realm in Keycloak for that tenant.
+  (Each tenant gets its own isolated authentication space.)
+
+- Configures SMTP (Email) settings in the realm using AWS SES for password reset and notification emails.
+
+- Creates a Client inside the realm for the tenant’s application with the correct redirect URIs and credentials.
+
+- Creates an Admin User for the tenant with a temporary password and triggers a password reset email.
+
+- Returns the admin user’s ID (authId) after successful setup.
+
+This setup ensures that every tenant has a ready-to-use Keycloak environment, complete with its own realm, client, and admin user, enabling secure login and user management from day one.
+
+### Auth0 IdP Provider
+
+The Auth0 IdP Provider automates the Auth0 setup required for a tenant during onboarding. It creates the Auth0 organization, provisions an initial admin user, and adds that user to the organization — all based on tenant details and stored tenant configuration.
+
+When a tenant is provisioned, the provider will:
+
+- Create (or reuse) an Auth0 Organization for the tenant.
+
+  For PREMIUM tenants a dedicated organization is created per tenant. For pooled plans, tenants are grouped under a shared organization named after the plan tier. This ensures correct isolation or pooling based on your plan model.
+
+- Apply branding and connection settings to the organization using the tenant configuration (logo, colors, enabled connections, etc.).
+
+  This makes tenant login pages and connections (social/database) behave and look as configured for that tenant.
+
+- Create an Admin User for the tenant using the tenant contact details and a generated temporary password.
+
+  The password is generated securely and the admin is expected to verify or change it through Auth0 flows (no password is persisted in plain text).
+
+- Add the admin user as a member of the Auth0 Organization so they can manage users, connections, and settings for that tenant.
+
+- Return the Auth0 user ID (authId) on success so the control plane can reference the identity for audits or future operations.
 
 ## Webhook Integration
 
@@ -350,7 +461,96 @@ The identity provider and its related providers are also a part of the 'WebhookT
         <td>lenght of random key for lead.</td>
         <td></td>
       </tr>
-
+      <tr>
+        <td>AUTH0_DOMAIN</td>
+        <td>Y for Auth0</td>
+        <td>Domain</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AUTH0_CLIENT_ID</td>
+        <td>Y for Auth0</td>
+        <td>Client id of the Auth0 Application</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AUTH0_CLIENT_SECRET</td>
+        <td>Y for Auth0</td>
+        <td>Client secret of the Auth0 Application</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AUTH0_AUDIENCE</td>
+        <td>N</td>
+        <td>Recipient of the token</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_REGION</td>
+        <td>Y for Keycloak</td>
+        <td>AWS region for SSM</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>NAMESPACE</td>
+        <td>Y for Keycloak</td>
+        <td>SSM namespace</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>KEYCLOAK_HOST</td>
+        <td>Y for keycloak</td>
+        <td>Keycloak host URL</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>KEYCLOAK_ADMIN_USERNAME</td>
+        <td>Y for Keycloak</td>
+        <td>Username of Admin</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>KEYCLOAK_ADMIN_PASSWORD</td>
+        <td>Y for Keycloak</td>
+        <td>Password of Admin</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_SES_SMTP_HOST</td>
+        <td>Y for Keycloak</td>
+        <td>SMTP host URL</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_SES_SMTP_USERNAME</td>
+        <td>Y for Keycloak</td>
+        <td>SMTP username</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>AWS_SES_SMTP_PASSWORD</td>
+        <td>Y for Keycloak</td>
+        <td>SMTP password</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SMTP_FROM_EMAIL</td>
+        <td>Y for Keycloak</td>
+        <td>Emai Id from which you wish to send email</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SMTP_FROM_DISPLAY_NAME</td>
+        <td>Y for Keycloak</td>
+        <td>Display name</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>DOMAIN_NAME</td>
+        <td>Y for Keycloak</td>
+        <td>Your domain name</td>
+        <td></td>
+      </tr>
   </tbody>
 </table>
 
@@ -376,7 +576,7 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource
+export class TenantManagementDb
   extends juggler.DataSource
   implements LifeCycleObserver
 {
@@ -470,7 +670,7 @@ The migrations required for this service can be copied from the service. You can
 
 ## Database Schema
 
-![alt text](./docs/tenants.png)
+![alt text](./docs/db_schema.png)
 
 The major tables in the schema are briefly described below -
 
@@ -483,3 +683,5 @@ The major tables in the schema are briefly described below -
 **Leads** - this model represents a lead that could eventually be a tenant in the system
 
 **Tenants** - main model of the service that represents a tenant in the system, either pooled or siloed
+
+**TenantMgmtConfig** - to save any tenant specific data related to idP
