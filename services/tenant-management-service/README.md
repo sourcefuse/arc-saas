@@ -18,6 +18,11 @@ A Microservice for handling tenant management operations. It provides -
 
 ![image](https://github.com/sourcefuse/arc-saas/assets/107617248/25cb5c15-30d6-4e3a-8a43-05cca121eeaf)
 
+## Prerequisite
+Authentication and authorization are implemented on each API endpoint. You can build the authentication service using the [@sourceloop/authentication-service](https://www.npmjs.com/package/@sourceloop/authentication-service).
+
+Note: For a basic setup, you can use symmetric encryption with Cognito. You can also refer to the [sandbox](https://github.com/sourcefuse/arc-saas-sandbox) 
+
 ## Installation
 
 Install Tenant Management Service using `npm`;

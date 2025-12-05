@@ -46,6 +46,11 @@ Plan features are saved in the FeatureValues model and associated with plans usi
 - Feature: Represents a general capability or functionality offered in your plans.
 - FeatureValues: This model associates features with specific plans and allows configuration of their values.
 
+## Prerequisite
+Authentication and authorization are implemented on each API endpoint. You can build the authentication service using the [@sourceloop/authentication-service](https://www.npmjs.com/package/@sourceloop/authentication-service).
+
+Note: For a basic setup, you can use symmetric encryption with Cognito. You can also refer to the [sandbox](https://github.com/sourcefuse/arc-saas-sandbox) 
+
 ## Installation
 
 Install Subscription service using `npm`;
