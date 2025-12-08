@@ -123,6 +123,47 @@ This microservice uses [loopback4-authentication](https://www.npmjs.com/package/
 
 - Bind any of the custom [providers](#providers) you need.
 
+### Usage Via Sourceloop CLI
+You need to have [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli) installed on your system
+```sh
+$ [npm install | yarn add] @sourceloop/cli
+```
+follow the below steps:
+- Run ***sl scaffold myapp*** to scaffold a Lerna monorepo, if you already don't have any monorepo. 
+- select all the required configuration by answering to prompted questions.
+- Navigate into your project using cd myapp.
+- Run ***sl microservice subscription-service***.
+- Through the prompts, you can set up migrations, configure the datasource, bind components in application.ts, and complete other necessary setups.
+- This microservice uses loopback4-authentication and @sourceloop/core and that uses asymmetric token encryption and decryption by default for that setup please refer their documentation but if you wish to override
+
+  ```typescript
+
+  this.bind(SubscriptionServiceBindings.Config).to({
+      useCustomSequence: true,
+    });
+    this.component(AuthenticationComponent);
+    this.sequence(ServiceSequence);
+    // Add bearer verifier component
+    this.bind(BearerVerifierBindings.Config).to({
+      type: BearerVerifierType.service,
+      useSymmetricEncryption: true,
+    } as BearerVerifierConfig);
+    this.component(BearerVerifierComponent);
+    // Add authorization component
+    this.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer', '/openapi.json'],
+    });
+    this.component(AuthorizationComponent);
+
+  ```
+
+  comment the following since we are using our custom sequence
+
+  ```typescript
+  // Set up the custom sequence
+  //this.sequence(MySequence);
+  ```
+
 ## Integrating Billing Functionality into Subscription Service using LoopBack 4
 
 We are leveraging the [loopback4-billing](https://github.com/sourcefuse/loopback4-billing) package to integrate billing capabilities into our Subscription Service.
@@ -454,6 +495,19 @@ export class FeatureToggleDbDataSource
 ### Migrations
 
 The migrations required for this service can be copied from the service. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+ - copy the selected migration according to your need. we have provided the postgresql migration files.
+ - copy them in your application with directory migration/sql at root.
+ - add the below scripts to your applciation package.json
+
+    ```
+        "migrate:up": "db-migrate up --config database.json -m ./migrations",
+        "migrate:down": "db-migrate down --config database.json -m ./migrations",
+        "migrate:create": "db-migrate create --sql-file"
+    ```
+- do npm i db-migrate db-migrate-pg,
+
+if you are generating the application using [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli), then you can skip these configuration and and generate all the migration related configuration by providing the answering the prmpted question on running - sl microservice
 
 ## Database Schema
 
