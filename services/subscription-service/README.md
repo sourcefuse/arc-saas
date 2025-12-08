@@ -122,6 +122,11 @@ This microservice uses [loopback4-authentication](https://www.npmjs.com/package/
   This component internally uses [FeatureToggleServiceComponent](https://www.npmjs.com/package/@sourceloop/feature-toggle-service) that requires a datasource binding with the name 'FeatureToggleDB'. Make sure to create a datasource for it. You can refer an example datasource [here](#setting-up-a-datasource).
 
 - Bind any of the custom [providers](#providers) you need.
+- load env config by adding below code in application.ts.
+  ```typescript
+  import * as dotenv from 'dotenv';
+  dotenv.config();
+  ```
 
 ### Usage Via Sourceloop CLI
 You need to have [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli) installed on your system

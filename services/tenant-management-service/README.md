@@ -63,42 +63,46 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
   `npm install @sourceloop/core loopback4-authorization loopback4-authentication`
 - Add the following to your `application.ts`
 
-```typescript
-this.bind(TenantManagementServiceBindings.Config).to({
-      useCustomSequence: true,
-    });
+  ```typescript
+  this.bind(TenantManagementServiceBindings.Config).to({
+        useCustomSequence: true,
+      });
 
-this.component(TenantManagementServiceComponent);
+  this.component(TenantManagementServiceComponent);
 
-this.component(AuthenticationComponent);
-this.sequence(ServiceSequence);
+  this.component(AuthenticationComponent);
+  this.sequence(ServiceSequence);
 
-// Add bearer verifier component
-this.bind(BearerVerifierBindings.Config).to({
-      type: BearerVerifierType.service,
-      useSymmetricEncryption: true,
-  } as BearerVerifierConfig);
+  // Add bearer verifier component
+  this.bind(BearerVerifierBindings.Config).to({
+        type: BearerVerifierType.service,
+        useSymmetricEncryption: true,
+    } as BearerVerifierConfig);
 
-this.component(BearerVerifierComponent);
+  this.component(BearerVerifierComponent);
 
-// Add authorization component
-this.bind(AuthorizationBindings.CONFIG).to({
-      allowAlwaysPaths: ['/explorer', '/openapi.json'],
-    });
-this.component(AuthorizationComponent);
+  // Add authorization component
+  this.bind(AuthorizationBindings.CONFIG).to({
+        allowAlwaysPaths: ['/explorer', '/openapi.json'],
+      });
+  this.component(AuthorizationComponent);
 
-```
+  ```
 
-comment the following since we are using our custom sequence
+  comment the following since we are using our custom sequence
 
-```typescript
-// Set up the custom sequence
-//this.sequence(MySequence);
-```
+    ```typescript
+    // Set up the custom sequence
+    //this.sequence(MySequence);
+    ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
-- 
+- load env config by adding below code in application.ts.
+  ```typescript
+  import * as dotenv from 'dotenv';
+  dotenv.config();
+  ```
 
 ### Usage Via Sourceloop CLI
 You need to have [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli) installed on your system
