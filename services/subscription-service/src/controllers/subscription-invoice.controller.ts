@@ -1,7 +1,12 @@
 import {repository} from '@loopback/repository';
-import {param, get, getModelSchemaRef} from '@loopback/rest';
+import {param, get} from '@loopback/rest';
 import {Subscription, Invoice} from '../models';
 import {SubscriptionRepository} from '../repositories';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 export class SubscriptionInvoiceController {
   constructor(
@@ -10,12 +15,13 @@ export class SubscriptionInvoiceController {
   ) {}
 
   @get('/subscriptions/{id}/invoice', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Invoice belonging to Subscription',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Invoice),
+            schema: getModelSchemaRefSF(Invoice),
           },
         },
       },

@@ -5,8 +5,12 @@
 
 import {repository} from '@loopback/repository';
 import {SubscriptionRepository} from '../repositories';
-import {get, getModelSchemaRef, param} from '@loopback/openapi-v3';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {get, param} from '@loopback/openapi-v3';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../permissions';
@@ -33,7 +37,7 @@ export class PlanSubscriptionController {
         description: 'Plan model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Subscription, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Subscription, {includeRelations: true}),
           },
         },
       },

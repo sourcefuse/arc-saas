@@ -6,22 +6,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {BillingCycle} from '../models';
 import {BillingCycleRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 const basePath = '/billing-cycles';
 export class BillinCycleController {
@@ -42,7 +37,7 @@ export class BillinCycleController {
       [STATUS_CODE.OK]: {
         description: 'BillingCycle model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(BillingCycle)},
+          'application/json': {schema: getModelSchemaRefSF(BillingCycle)},
         },
       },
     },
@@ -51,7 +46,7 @@ export class BillinCycleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(BillingCycle, {
+          schema: getModelSchemaRefSF(BillingCycle, {
             title: 'NewBillingCycle',
             exclude: ['id'],
           }),
@@ -99,7 +94,9 @@ export class BillinCycleController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(BillingCycle, {includeRelations: true}),
+              items: getModelSchemaRefSF(BillingCycle, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -131,7 +128,7 @@ export class BillinCycleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(BillingCycle, {partial: true}),
+          schema: getModelSchemaRefSF(BillingCycle, {partial: true}),
         },
       },
     })
@@ -154,7 +151,9 @@ export class BillinCycleController {
         description: 'BillingCycle model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(BillingCycle, {includeRelations: true}),
+            schema: getModelSchemaRefSF(BillingCycle, {
+              includeRelations: true,
+            }),
           },
         },
       },
@@ -187,7 +186,7 @@ export class BillinCycleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(BillingCycle, {partial: true}),
+          schema: getModelSchemaRefSF(BillingCycle, {partial: true}),
         },
       },
     })

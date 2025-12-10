@@ -6,22 +6,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {Resource} from '../models';
 import {ResourceRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 const basePath = '/resources';
 export class ResourceController {
@@ -41,7 +36,7 @@ export class ResourceController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Resource model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Resource)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(Resource)}},
       },
     },
   })
@@ -49,7 +44,7 @@ export class ResourceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Resource, {
+          schema: getModelSchemaRefSF(Resource, {
             title: 'NewResource',
             exclude: ['id'],
           }),
@@ -95,7 +90,7 @@ export class ResourceController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Resource, {includeRelations: true}),
+              items: getModelSchemaRefSF(Resource, {includeRelations: true}),
             },
           },
         },
@@ -127,7 +122,7 @@ export class ResourceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Resource, {partial: true}),
+          schema: getModelSchemaRefSF(Resource, {partial: true}),
         },
       },
     })
@@ -150,7 +145,7 @@ export class ResourceController {
         description: 'Resource model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Resource, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Resource, {includeRelations: true}),
           },
         },
       },
@@ -183,7 +178,7 @@ export class ResourceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Resource, {partial: true}),
+          schema: getModelSchemaRefSF(Resource, {partial: true}),
         },
       },
     })
