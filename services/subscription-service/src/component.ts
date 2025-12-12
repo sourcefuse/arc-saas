@@ -37,19 +37,6 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
-  BillinCycleController,
-  HomePageController,
-  PingController,
-  CurrencyController,
-  PlanController,
-  ResourceController,
-  ServiceController,
-  SubscriptionController,
-  PlanSubscriptionController,
-  PlanSizesController,
-  PlanFeaturesController,
-} from './controllers';
-import {
   SubscriptionServiceBindings,
   SYSTEM_USER,
   WEBHOOK_VERIFIER,
@@ -79,10 +66,6 @@ import {
 import {ISubscriptionServiceConfig} from './types';
 import {WebhookVerifierProvider} from './interceptors/webhook-verifier.interceptor';
 import {SystemUserProvider} from './providers';
-import {BillingCustomerController} from './controllers/billing-customer.controller';
-import {BillingInvoiceController} from './controllers/billing-invoice.controller';
-import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
-import {WebhookController} from './controllers/webhook.controller';
 import {
   BillingCustomerService,
   BillingInvoiceService,
