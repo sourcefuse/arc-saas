@@ -1,13 +1,10 @@
 import {inject} from '@loopback/core';
+import {del, get, param, post, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PaymentSourceDto} from '../models/dto/payment-dto.model';
@@ -33,7 +30,7 @@ export class BillingPaymentSourceController {
       [STATUS_CODE.OK]: {
         description: 'Payment model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(PaymentSourceDto)},
+          'application/json': {schema: getModelSchemaRefSF(PaymentSourceDto)},
         },
       },
     },
@@ -42,7 +39,7 @@ export class BillingPaymentSourceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PaymentSourceDto, {
+          schema: getModelSchemaRefSF(PaymentSourceDto, {
             title: 'NewPaymentSource',
             exclude: ['id'],
           }),
@@ -68,7 +65,7 @@ export class BillingPaymentSourceController {
       [STATUS_CODE.OK]: {
         description: 'get payment source',
         content: {
-          'application/json': {schema: getModelSchemaRef(PaymentSourceDto)},
+          'application/json': {schema: getModelSchemaRefSF(PaymentSourceDto)},
         },
       },
     },

@@ -6,22 +6,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {Service} from '../models';
 import {ServiceRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 const basePath = '/services';
 
@@ -43,7 +38,7 @@ export class ServiceController {
       [STATUS_CODE.OK]: {
         description: 'Service model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Service)},
+          'application/json': {schema: getModelSchemaRefSF(Service)},
         },
       },
     },
@@ -52,7 +47,7 @@ export class ServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Service, {
+          schema: getModelSchemaRefSF(Service, {
             title: 'NewService',
             exclude: ['id'],
           }),
@@ -98,7 +93,7 @@ export class ServiceController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Service, {includeRelations: true}),
+              items: getModelSchemaRefSF(Service, {includeRelations: true}),
             },
           },
         },
@@ -130,7 +125,7 @@ export class ServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Service, {partial: true}),
+          schema: getModelSchemaRefSF(Service, {partial: true}),
         },
       },
     })
@@ -153,7 +148,7 @@ export class ServiceController {
         description: 'Service model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Service, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Service, {includeRelations: true}),
           },
         },
       },
@@ -186,7 +181,7 @@ export class ServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Service, {partial: true}),
+          schema: getModelSchemaRefSF(Service, {partial: true}),
         },
       },
     })

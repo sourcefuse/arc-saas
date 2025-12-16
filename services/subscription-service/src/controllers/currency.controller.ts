@@ -6,22 +6,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {Currency} from '../models';
 import {CurrencyRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 const basePath = '/currencies';
 export class CurrencyController {
@@ -42,7 +37,7 @@ export class CurrencyController {
       [STATUS_CODE.OK]: {
         description: 'Currency model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Currency)},
+          'application/json': {schema: getModelSchemaRefSF(Currency)},
         },
       },
     },
@@ -51,7 +46,7 @@ export class CurrencyController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Currency, {
+          schema: getModelSchemaRefSF(Currency, {
             title: 'NewCurrency',
             exclude: ['id'],
           }),
@@ -97,7 +92,7 @@ export class CurrencyController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Currency, {includeRelations: true}),
+              items: getModelSchemaRefSF(Currency, {includeRelations: true}),
             },
           },
         },
@@ -129,7 +124,7 @@ export class CurrencyController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Currency, {partial: true}),
+          schema: getModelSchemaRefSF(Currency, {partial: true}),
         },
       },
     })
@@ -152,7 +147,7 @@ export class CurrencyController {
         description: 'Currency model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Currency, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Currency, {includeRelations: true}),
           },
         },
       },
@@ -185,7 +180,7 @@ export class CurrencyController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Currency, {partial: true}),
+          schema: getModelSchemaRefSF(Currency, {partial: true}),
         },
       },
     })

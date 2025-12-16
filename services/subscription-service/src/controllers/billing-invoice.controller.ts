@@ -1,15 +1,11 @@
 import {BillingComponentBindings, IService} from 'loopback4-billing';
 import {inject} from '@loopback/core';
+import {del, get, param, patch, post, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {InvoiceDto} from '../models/dto/invoice-dto.model';
@@ -37,7 +33,9 @@ export class BillingInvoiceController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'invoice model instance',
-        content: {'application/json': {schema: getModelSchemaRef(InvoiceDto)}},
+        content: {
+          'application/json': {schema: getModelSchemaRefSF(InvoiceDto)},
+        },
       },
     },
   })
@@ -45,7 +43,7 @@ export class BillingInvoiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(InvoiceDto, {
+          schema: getModelSchemaRefSF(InvoiceDto, {
             title: 'newInvoice',
             exclude: ['id', 'status'],
           }),
@@ -68,7 +66,9 @@ export class BillingInvoiceController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'get invoice',
-        content: {'application/json': {schema: getModelSchemaRef(InvoiceDto)}},
+        content: {
+          'application/json': {schema: getModelSchemaRefSF(InvoiceDto)},
+        },
       },
     },
   })
@@ -97,7 +97,7 @@ export class BillingInvoiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(InvoiceDto, {partial: true}),
+          schema: getModelSchemaRefSF(InvoiceDto, {partial: true}),
         },
       },
     })
@@ -125,7 +125,7 @@ export class BillingInvoiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TransactionDto, {partial: true}),
+          schema: getModelSchemaRefSF(TransactionDto, {partial: true}),
         },
       },
     })

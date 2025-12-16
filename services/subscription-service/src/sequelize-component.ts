@@ -22,6 +22,9 @@ import {
   BearerVerifierType,
   BearerVerifierConfig,
   BearerVerifierComponent,
+  BooterBasePathMixin,
+  CoreModelBooter,
+  CoreControllerBooter,
 } from '@sourceloop/core';
 import {
   FeatureToggleBindings,
@@ -33,19 +36,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  BillinCycleController,
-  HomePageController,
-  PingController,
-  CurrencyController,
-  PlanController,
-  ResourceController,
-  ServiceController,
-  SubscriptionController,
-  PlanSubscriptionController,
-  PlanSizesController,
-  PlanFeaturesController,
-} from './controllers';
 import {
   SubscriptionServiceBindings,
   SYSTEM_USER,
@@ -76,10 +66,6 @@ import {
 import {ISubscriptionServiceConfig} from './types';
 import {WebhookVerifierProvider} from './interceptors/webhook-verifier.interceptor';
 import {SystemUserProvider} from './providers';
-import {BillingCustomerController} from './controllers/billing-customer.controller';
-import {BillingInvoiceController} from './controllers/billing-invoice.controller';
-import {BillingPaymentSourceController} from './controllers/billing-payment-source.controller';
-import {WebhookController} from './controllers/webhook.controller';
 import {
   BillingCustomerService,
   BillingInvoiceService,
@@ -87,6 +73,7 @@ import {
   PlanFeaturesService,
   SubscriptionService,
 } from './services';
+import {Booter} from '@loopback/boot';
 
 export class SubscriptionSequelizeServiceComponent implements Component {
   constructor(
@@ -124,6 +111,19 @@ export class SubscriptionSequelizeServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: SubscriptionSequelizeServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: SubscriptionSequelizeServiceComponent.name,
+      }),
+    ];
+
     this.repositories = [
       BillingCustomerRepository,
       BillingCycleRepository,
@@ -157,24 +157,6 @@ export class SubscriptionSequelizeServiceComponent implements Component {
       createServiceBinding(PlanFeaturesService),
       createServiceBinding(BillingCustomerService),
     ];
-
-    this.controllers = [
-      BillinCycleController,
-      HomePageController,
-      PingController,
-      CurrencyController,
-      PlanController,
-      ResourceController,
-      ServiceController,
-      SubscriptionController,
-      PlanSubscriptionController,
-      PlanSizesController,
-      PlanFeaturesController,
-      BillingCustomerController,
-      BillingInvoiceController,
-      BillingPaymentSourceController,
-      WebhookController,
-    ];
   }
 
   providers?: ProviderMap = {};
@@ -182,6 +164,8 @@ export class SubscriptionSequelizeServiceComponent implements Component {
   bindings?: Binding[] = [];
 
   services?: ServiceOrProviderClass[];
+
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection

@@ -6,22 +6,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {PlanSizes} from '../models';
 import {PlanSizesRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../permissions';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 const basePath = '/plan-sizes';
 
@@ -42,7 +37,7 @@ export class PlanSizesController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PlanSizes model instance',
-        content: {'application/json': {schema: getModelSchemaRef(PlanSizes)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(PlanSizes)}},
       },
     },
   })
@@ -50,7 +45,7 @@ export class PlanSizesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PlanSizes, {
+          schema: getModelSchemaRefSF(PlanSizes, {
             title: 'NewPlanSizes',
             exclude: ['id'],
           }),
@@ -98,7 +93,7 @@ export class PlanSizesController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(PlanSizes, {includeRelations: true}),
+              items: getModelSchemaRefSF(PlanSizes, {includeRelations: true}),
             },
           },
         },
@@ -130,7 +125,7 @@ export class PlanSizesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PlanSizes, {partial: true}),
+          schema: getModelSchemaRefSF(PlanSizes, {partial: true}),
         },
       },
     })
@@ -153,7 +148,7 @@ export class PlanSizesController {
         description: 'PlanSizes model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(PlanSizes, {includeRelations: true}),
+            schema: getModelSchemaRefSF(PlanSizes, {includeRelations: true}),
           },
         },
       },
@@ -186,7 +181,7 @@ export class PlanSizesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PlanSizes, {partial: true}),
+          schema: getModelSchemaRefSF(PlanSizes, {partial: true}),
         },
       },
     })

@@ -6,22 +6,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {post, param, get, patch, put, del, requestBody} from '@loopback/rest';
 import {Plan} from '../models';
 import {PlanRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKey} from '../permissions';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 
 const basePath = '/plans';
 export class PlanController {
@@ -42,7 +37,7 @@ export class PlanController {
       [STATUS_CODE.OK]: {
         description: 'Plan model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Plan)},
+          'application/json': {schema: getModelSchemaRefSF(Plan)},
         },
       },
     },
@@ -51,7 +46,7 @@ export class PlanController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Plan, {
+          schema: getModelSchemaRefSF(Plan, {
             title: 'NewPlan',
             exclude: ['id'],
           }),
@@ -97,7 +92,7 @@ export class PlanController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Plan, {includeRelations: true}),
+              items: getModelSchemaRefSF(Plan, {includeRelations: true}),
             },
           },
         },
@@ -127,7 +122,7 @@ export class PlanController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Plan, {partial: true}),
+          schema: getModelSchemaRefSF(Plan, {partial: true}),
         },
       },
     })
@@ -150,7 +145,7 @@ export class PlanController {
         description: 'Plan model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Plan, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Plan, {includeRelations: true}),
           },
         },
       },
@@ -182,7 +177,7 @@ export class PlanController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Plan, {partial: true}),
+          schema: getModelSchemaRefSF(Plan, {partial: true}),
         },
       },
     })

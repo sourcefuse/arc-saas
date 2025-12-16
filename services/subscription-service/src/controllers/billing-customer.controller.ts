@@ -1,15 +1,11 @@
 import {inject} from '@loopback/core';
 import {Filter} from '@loopback/repository';
+import {del, get, param, patch, post, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {BillingCustomer} from '../models/billing-customer.model';
@@ -45,7 +41,7 @@ export class BillingCustomerController {
         description: 'BillingCustomer model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(CustomerDto, {
+            schema: getModelSchemaRefSF(CustomerDto, {
               title: 'NewBillingCustomer',
             }),
           },
@@ -57,7 +53,7 @@ export class BillingCustomerController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(CustomerDto, {
+          schema: getModelSchemaRefSF(CustomerDto, {
             title: 'NewCustomer',
             exclude: ['id'],
           }),
@@ -81,7 +77,9 @@ export class BillingCustomerController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'BillingCustomer model ',
-        content: {'application/json': {schema: getModelSchemaRef(CustomerDto)}},
+        content: {
+          'application/json': {schema: getModelSchemaRefSF(CustomerDto)},
+        },
       },
     },
   })
@@ -110,7 +108,7 @@ export class BillingCustomerController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(CustomerDto, {partial: true}),
+          schema: getModelSchemaRefSF(CustomerDto, {partial: true}),
         },
       },
     })

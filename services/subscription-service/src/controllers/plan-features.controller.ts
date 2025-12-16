@@ -1,15 +1,12 @@
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../permissions';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {param, get, post, requestBody, patch} from '@loopback/rest';
 import {
-  param,
-  get,
-  getModelSchemaRef,
-  post,
-  requestBody,
-  patch,
-} from '@loopback/rest';
-import {OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 import {Plan} from '../models';
 import {
   Feature,
@@ -44,8 +41,8 @@ export class PlanFeaturesController {
         content: {
           'application/json': {
             schema: {
-              ...getModelSchemaRef(Plan),
-              ...getModelSchemaRef(FeatureValues),
+              ...getModelSchemaRefSF(Plan),
+              ...getModelSchemaRefSF(FeatureValues),
             },
           },
         },
@@ -74,7 +71,7 @@ export class PlanFeaturesController {
         content: {
           'application/json': {
             schema: {
-              ...getModelSchemaRef(FeatureValues),
+              ...getModelSchemaRefSF(FeatureValues),
             },
           },
         },
@@ -109,7 +106,7 @@ export class PlanFeaturesController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(FeatureValues),
+              items: getModelSchemaRefSF(FeatureValues),
             },
           },
         },
@@ -123,7 +120,7 @@ export class PlanFeaturesController {
         'application/json': {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(FeatureValues, {partial: true}),
+            items: getModelSchemaRefSF(FeatureValues, {partial: true}),
           },
         },
       },
