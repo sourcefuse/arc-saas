@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.1.0 (2025-12-17)
+
+* chore(ci-cd): remove provenance to publish manually (#106) ([c4cb8ee](https://github.com/sourcefuse/arc-saas/commit/c4cb8ee)), closes [#106](https://github.com/sourcefuse/arc-saas/issues/106) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+* chore(ci-cd): update release yml for provenance (#115) ([eacdc55](https://github.com/sourcefuse/arc-saas/commit/eacdc55)), closes [#115](https://github.com/sourcefuse/arc-saas/issues/115) [#114](https://github.com/sourcefuse/arc-saas/issues/114) [#114](https://github.com/sourcefuse/arc-saas/issues/114)
+* chore(release): publish ([8ff3551](https://github.com/sourcefuse/arc-saas/commit/8ff3551))
+* feat(ci-cd): changes required to add cli support in arc saas (#76) ([4761aa1](https://github.com/sourcefuse/arc-saas/commit/4761aa1)), closes [#76](https://github.com/sourcefuse/arc-saas/issues/76) [#2270](https://github.com/sourcefuse/arc-saas/issues/2270)
+* feat(subscription-service): enable dynamic model overriding (#113) ([bb376d3](https://github.com/sourcefuse/arc-saas/commit/bb376d3)), closes [#113](https://github.com/sourcefuse/arc-saas/issues/113) [#86](https://github.com/sourcefuse/arc-saas/issues/86) [#86](https://github.com/sourcefuse/arc-saas/issues/86)
+* docs(tenant-management): update the readme (#110) ([042728f](https://github.com/sourcefuse/arc-saas/commit/042728f)), closes [#110](https://github.com/sourcefuse/arc-saas/issues/110) [#109](https://github.com/sourcefuse/arc-saas/issues/109) [#109](https://github.com/sourcefuse/arc-saas/issues/109)
+* fix(all-services): dummy commit for version bump (#105) ([36eb58f](https://github.com/sourcefuse/arc-saas/commit/36eb58f)), closes [#105](https://github.com/sourcefuse/arc-saas/issues/105) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+
+
+
 ## <small>1.0.1 (2025-10-28)</small>
 
 * fix(all-services): dummy commit for version bump (#105) ([36eb58f](https://github.com/sourcefuse/arc-saas/commit/36eb58f)), closes [#105](https://github.com/sourcefuse/arc-saas/issues/105) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
