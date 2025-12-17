@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm-release
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # fetch-depth is necessary to get all tags
           # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
@@ -21,17 +21,19 @@ jobs:
         with:
           node-version: '22'
           registry-url: "https://registry.npmjs.org/"
+          scope: '@sourceloop'
           provenance: true  # enables trusted publish via OIDC
-      - name: Force OIDC (disable npm token auth)
-        run: |
-          unset NPM_TOKEN
-          unset NODE_AUTH_TOKEN
-          npm config delete //registry.npmjs.org/:_authToken || true    
+      # - name: Force OIDC (disable npm token auth)
+      #   run: |
+      #     unset NPM_TOKEN
+      #     unset NODE_AUTH_TOKEN
+      #     npm config delete //registry.npmjs.org/:_authToken || true    
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
           git config --global user.email $CONFIG_EMAIL
-          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/sourcefuse/arc-saas
+          git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_PAT}@github.com/sourcefuse/arc-saas
+
         env:
           GITHUB_PAT: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
           CONFIG_USERNAME: ${{ vars.RELEASE_COMMIT_USERNAME }}
