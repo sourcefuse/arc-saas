@@ -1,6 +1,6 @@
 {
   "name": "arc-saas",
-  "private": false,
+  "private": true,
   "scripts": {
     "prepare": "husky install",
     "build": "npm run build --workspaces --if-present",
@@ -30,7 +30,7 @@
     "@commitlint/config-lerna-scopes": {
       "lerna": "^7.3.0"
     },
-    "semver":"^7.5.2"
+    "semver": "^7.5.2"
   },
   "config": {
     "commitizen": {

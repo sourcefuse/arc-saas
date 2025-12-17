@@ -19,8 +19,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          #registry-url: "https://registry.npmjs.org/"
-          #provenance: true  # enables trusted publish via OIDC
+          registry-url: "https://registry.npmjs.org/"
+          provenance: true  # enables trusted publish via OIDC
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
@@ -45,10 +45,10 @@ jobs:
         run: git stash
       - name: Bump Versions
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
-        # run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
-        run: HUSKY=0 npx lerna version 1.0.0 --yes --ci --no-git-tag-version --force-publish
+        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
+        # run: HUSKY=0 npx lerna version --yes --ci --no-git-tag-version --force-publish
       # and replicates its logic safely while keeping provenance and trusted publishing.
       - name: Publish all changed packages with provenance
         run: |
           echo "🚀 Publishing packages"
-          npx lerna exec --no-private -- npm publish --provenance --access public
+          npm publish -ws --provenance
