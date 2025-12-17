@@ -61,6 +61,7 @@
   ],
   "dependencies": {
     "loopback4-message-bus-connector": "^2.0.0",
+    "@sourceloop/core": "^20.0.0",
     "tslib": "^2.6.2"
   },
   "peerDependencies": {
