@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.1 (2026-01-30)</small>
+
+* fix(tenant-management): test fix (#117) ([1166739](https://github.com/sourcefuse/arc-saas/commit/1166739)), closes [#117](https://github.com/sourcefuse/arc-saas/issues/117) [#0](https://github.com/sourcefuse/arc-saas/issues/0)
+
+
+
+
+
 ## 1.1.0 (2025-12-17)
 
 * chore(ci-cd): remove provenance to publish manually (#106) ([c4cb8ee](https://github.com/sourcefuse/arc-saas/commit/c4cb8ee)), closes [#106](https://github.com/sourcefuse/arc-saas/issues/106) [#00](https://github.com/sourcefuse/arc-saas/issues/00)

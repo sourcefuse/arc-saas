@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ctrl-plane-subscription-service",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Subscription management microservice for SaaS control plane.",
   "keywords": [
     "loopback-microservice",
@@ -114,7 +114,6 @@
     "@loopback/build": "^12.0.3",
     "@loopback/eslint-config": "^16.0.1",
     "@loopback/sequelize": "^0.8.0",
-    "sequelize": "^6.37.7",
     "@loopback/testlab": "^8.0.3",
     "@types/node": "^20.12.7",
     "@types/sequelize": "^4.28.20",
@@ -122,6 +121,7 @@
     "mochawesome": "^7.1.3",
     "nodemon": "^2.0.21",
     "nyc": "^15.1.0",
+    "sequelize": "^6.37.7",
     "source-map-support": "^0.5.21",
     "typescript": "^5.4.5"
   },

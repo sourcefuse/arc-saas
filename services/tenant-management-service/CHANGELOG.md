@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.1 (2026-01-30)</small>
+
+* fix(tenant-management): add missing binding in component (#116) ([65f1a57](https://github.com/sourcefuse/arc-saas/commit/65f1a57)), closes [#116](https://github.com/sourcefuse/arc-saas/issues/116) [/#diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR41](https://github.com///issues/diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR41) [/#diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eL75-R85](https://github.com///issues/diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eL75-R85) [/#diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR168-R173](https://github.com///issues/diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR168-R173) [#0](https://github.com/sourcefuse/arc-saas/issues/0)
+* fix(tenant-management): test fix (#117) ([1166739](https://github.com/sourcefuse/arc-saas/commit/1166739)), closes [#117](https://github.com/sourcefuse/arc-saas/issues/117) [#0](https://github.com/sourcefuse/arc-saas/issues/0)
+
+
+
+
+
 ## 1.2.0 (2025-12-17)
 
 * chore(all-services): manual version bump (#111) ([10db513](https://github.com/sourcefuse/arc-saas/commit/10db513)), closes [#111](https://github.com/sourcefuse/arc-saas/issues/111) [#00](https://github.com/sourcefuse/arc-saas/issues/00)
