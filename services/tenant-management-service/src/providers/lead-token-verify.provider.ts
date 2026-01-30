@@ -5,9 +5,9 @@ import {LeadUser, LeadUserWithToken} from '../types';
 import {repository} from '@loopback/repository';
 import {LeadTokenRepository} from '../repositories';
 import {HttpErrors} from '@loopback/rest';
-export class LeadTokenVerifierProvider
-  implements Provider<VerifyFunction.BearerFn<LeadUser>>
-{
+export class LeadTokenVerifierProvider implements Provider<
+  VerifyFunction.BearerFn<LeadUser>
+> {
   constructor(
     @repository(LeadTokenRepository)
     public leadTokenRepository: LeadTokenRepository,

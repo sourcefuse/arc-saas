@@ -124,10 +124,6 @@
     "symlink-resolver": "0.2.1",
     "tslib": "^2.6.2"
   },
-  "optionalDependencies": {
-    "@loopback/sequelize": "^0.8.5",
-    "sequelize": "^6.37.7"
-  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@loopback/build": "^12.0.3",
@@ -138,6 +134,8 @@
     "@types/moment": "^2.13.0",
     "@types/node": "^20.12.7",
     "@types/pdfkit": "^0.13.4",
+    "@loopback/sequelize": "^0.8.5",
+    "sequelize": "^6.37.7",
     "auth0": "^4.10.0",
     "eslint": "^8.57.0",
     "nodemon": "^2.0.21",

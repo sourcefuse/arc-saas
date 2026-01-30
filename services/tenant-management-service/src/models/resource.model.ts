@@ -8,8 +8,8 @@ import {UserModifiableEntity} from '@sourceloop/core';
   description: 'model for resources that are provisioned for a tenant',
 })
 export class Resource<
-    T extends ResourceData['metadata'] = ResourceData['metadata'],
-  >
+  T extends ResourceData['metadata'] = ResourceData['metadata'],
+>
   extends UserModifiableEntity
   implements ResourceData
 {

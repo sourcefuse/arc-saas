@@ -109,14 +109,12 @@
     "symlink-resolver": "0.2.1",
     "tslib": "^2.6.2"
   },
-  "optionalDependencies": {
-    "@loopback/sequelize": "^0.8.0",
-    "sequelize": "^6.37.7"
-  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@loopback/build": "^12.0.3",
     "@loopback/eslint-config": "^16.0.1",
+    "@loopback/sequelize": "^0.8.0",
+    "sequelize": "^6.37.7",
     "@loopback/testlab": "^8.0.3",
     "@types/node": "^20.12.7",
     "@types/sequelize": "^4.28.20",
