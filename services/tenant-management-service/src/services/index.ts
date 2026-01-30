@@ -8,3 +8,4 @@ export * from './event-connector';
 export * from './idp-helper.service';
 export * from './lead-helper.service';
 export * from './webhook-helper.service';
+export * from './post-webhook.handler';

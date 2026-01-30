@@ -38,6 +38,7 @@ import {
 } from './interceptors';
 import {
   CALLABCK_VERIFIER,
+  PostWebhookHandlerServiceKey,
   SYSTEM_USER,
   TenantManagementServiceBindings,
   WEBHOOK_CONFIG,
@@ -72,7 +73,13 @@ import {
   TenantRepository,
   WebhookSecretRepository,
 } from './repositories';
-import {CryptoHelperService, NotificationService} from './services';
+import {
+  CryptoHelperService,
+  IdpHelperService,
+  NotificationService,
+  PostWebhookHandlerService,
+  WebhookHelperService,
+} from './services';
 import {ProvisioningWebhookHandler} from './services/webhook';
 import {ITenantManagementServiceConfig} from './types';
 import {
@@ -162,7 +169,12 @@ export class WebhookTenantManagementServiceComponent implements Component {
       }),
       Binding.bind('services.NotificationService').toClass(NotificationService),
       createServiceBinding(ProvisioningWebhookHandler),
+      createServiceBinding(WebhookHelperService),
       createServiceBinding(CryptoHelperService),
+      createServiceBinding(IdpHelperService),
+      Binding.bind(PostWebhookHandlerServiceKey.key).toClass(
+        PostWebhookHandlerService,
+      ),
     ];
   }
 
