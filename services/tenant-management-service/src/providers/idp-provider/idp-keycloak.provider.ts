@@ -16,9 +16,9 @@ interface TokenResponse {
   access_token: string;
 }
 
-export class KeycloakIdpProvider
-  implements Provider<ConfigureIdpFunc<IdpResp>>
-{
+export class KeycloakIdpProvider implements Provider<
+  ConfigureIdpFunc<IdpResp>
+> {
   ssm: AWS.SSM;
 
   constructor() {

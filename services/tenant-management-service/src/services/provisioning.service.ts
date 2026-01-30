@@ -13,9 +13,9 @@ import {randomUUID} from 'crypto';
 /**
  * Service for provisioning tenants.
  */
-export class ProvisioningService<T extends SubscriptionDTO>
-  implements IProvisioningService<T>
-{
+export class ProvisioningService<
+  T extends SubscriptionDTO,
+> implements IProvisioningService<T> {
   /**
    * Constructs a new instance of the ProvisioningService.
    * @param cryptoHelperService - Service for cryptographic operations.

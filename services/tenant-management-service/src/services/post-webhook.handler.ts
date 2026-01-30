@@ -5,8 +5,7 @@ import {
 
 export class PostWebhookHandlerService<
   T extends ResourceProvisionedWebhookPayload,
-> implements IPostWebhookHandlerService<T>
-{
+> implements IPostWebhookHandlerService<T> {
   async postWebhookHandler(dto: T): Promise<void> {
     return;
   }

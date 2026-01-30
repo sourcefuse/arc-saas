@@ -76,6 +76,21 @@ describe('WebhookController', () => {
   });
 
   describe('Common', () => {
+    it('should return 401 status for a webhook call with an expired timestamp', async () => {
+      const TIMESTAMP_TOLERANCE_MS = 20000; // 20 seconds
+      // generate token that was set 6 seconds ago
+      const headers = await buildHeaders(
+        webhookPayload,
+        Date.now() - TIMESTAMP_TOLERANCE_MS,
+      );
+      await client
+        .post('/webhook')
+        .set(webhookConfig.signatureHeaderName, headers.signature)
+        .set(webhookConfig.timestampHeaderName, headers.timestamp)
+        .send(webhookPayload)
+        .expect(STATUS_CODE.UNAUTHORISED);
+      sinon.assert.calledWith(loggerSpy.error, 'Timestamp out of tolerance');
+    });
     it('should call postWebhookHandler on successful webhook processing', async () => {
       const headers = await buildHeaders(webhookPayload);
       await client
@@ -112,22 +127,6 @@ describe('WebhookController', () => {
         .send(webhookPayload)
         .expect(STATUS_CODE.UNAUTHORISED);
       sinon.assert.calledWith(loggerSpy.error, 'Invalid signature');
-    });
-
-    it('should return 401 status for a webhook call with an expired timestamp', async () => {
-      const TIMESTAMP_TOLERANCE_MS = 20000; // 20 seconds
-      // generate token that was set 6 seconds ago
-      const headers = await buildHeaders(
-        webhookPayload,
-        Date.now() - TIMESTAMP_TOLERANCE_MS,
-      );
-      await client
-        .post('/webhook')
-        .set(webhookConfig.signatureHeaderName, headers.signature)
-        .set(webhookConfig.timestampHeaderName, headers.timestamp)
-        .send(webhookPayload)
-        .expect(STATUS_CODE.UNAUTHORISED);
-      sinon.assert.calledWith(loggerSpy.error, 'Timestamp out of tolerance');
     });
 
     it('should return 401 status for a webhook call with an invalid timestamp', async () => {
