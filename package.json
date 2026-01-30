@@ -14,9 +14,9 @@
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@commitlint/config-lerna-scopes": "^16.0.0",
-    "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "commitizen": "^4.2.4",
     "concurrently": "^8.2.2",
+    "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
     "husky": "^7.0.4",
@@ -30,7 +30,8 @@
     "@commitlint/config-lerna-scopes": {
       "lerna": "^7.3.0"
     },
-    "semver": "^7.5.2"
+    "semver": "^7.5.2",
+    "qs": "^6.14.1"
   },
   "config": {
     "commitizen": {

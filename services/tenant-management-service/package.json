@@ -125,7 +125,7 @@
     "tslib": "^2.6.2"
   },
   "optionalDependencies": {
-    "@loopback/sequelize": "^0.8.0",
+    "@loopback/sequelize": "^0.8.5",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
