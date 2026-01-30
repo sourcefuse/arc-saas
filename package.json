@@ -13,7 +13,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
-    "@commitlint/config-lerna-scopes": "^16.0.0",
+    "@commitlint/config-lerna-scopes": "^20.2.0",
     "commitizen": "^4.2.4",
     "concurrently": "^8.2.2",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
@@ -27,9 +27,6 @@
     "packages/custom-sf-changelog/"
   ],
   "overrides": {
-    "@commitlint/config-lerna-scopes": {
-      "lerna": "^7.3.0"
-    },
     "semver": "^7.5.2",
     "qs": "^6.14.1"
   },
