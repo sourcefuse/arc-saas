@@ -37,6 +37,13 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  BillingComponentBindings,
+  StripeServiceProvider,
+  StripeBindings,
+} from 'loopback4-billing';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
+import {
   SubscriptionServiceBindings,
   SYSTEM_USER,
   WEBHOOK_VERIFIER,
@@ -87,12 +94,28 @@ export class SubscriptionServiceComponent implements Component {
     // Mount core component
     this.application.component(CoreComponent);
 
+    // Load environment variables
+    dotenv.config();
+    dotenvExt.load({
+      schema: '.env.example',
+      errorOnMissing: true,
+      includeProcessEnv: true,
+    });
+
     /**Bind the feature toggle service to main the list of features */
     this.application
       .bind(FeatureToggleBindings.Config)
       .to({bindControllers: true, useCustomSequence: true});
     this.application.component(FeatureToggleServiceComponent);
     this.application.component(BillingComponent);
+
+    // Configure Stripe billing provider
+    this.application.bind(StripeBindings.config).to({
+      secretKey: process.env.STRIPE_SECRET ?? '',
+    });
+    this.application
+      .bind(BillingComponentBindings.SDKProvider)
+      .toProvider(StripeServiceProvider);
 
     this.application.api({
       openapi: '3.0.0',
@@ -202,7 +225,7 @@ export class SubscriptionServiceComponent implements Component {
 
     // Mount authorization component for default sequence
     this.application.bind(AuthorizationBindings.CONFIG).to({
-      allowAlwaysPaths: ['/explorer'],
+      allowAlwaysPaths: ['/explorer', '/billing', '/webhooks'],
     });
     this.application.component(AuthorizationComponent);
   }
