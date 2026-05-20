@@ -20,9 +20,17 @@ import {
   TInvoice,
   Transaction,
 } from 'loopback4-billing';
+import {getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
+import {
+  BillingCustomerBody,
+  BillingPaymentSourceBody,
+  BillingPaymentMethodBody,
+  BillingInvoiceBody,
+  BillingUpdateInvoiceBody,
+  BillingPaymentStatusResponse,
+} from '../models';
 
 const BASE = '/billing';
-const OK = 200;
 
 /**
  * Sandbox controller that exercises the full IService interface from
@@ -57,7 +65,7 @@ export class BillingServiceController {
   @post(`${BASE}/customers`, {
     summary: 'Create a new customer',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Created customer object',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -67,33 +75,13 @@ export class BillingServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['firstName', 'lastName', 'email'],
-            properties: {
-              firstName: {type: 'string', example: 'John'},
-              lastName: {type: 'string', example: 'Doe'},
-              email: {type: 'string', example: 'john.doe@example.com'},
-              company: {type: 'string', example: 'Acme Inc.'},
-              phone: {type: 'string', example: '+1234567890'},
-              billingAddress: {
-                type: 'object',
-                properties: {
-                  line1: {type: 'string'},
-                  city: {type: 'string'},
-                  state: {type: 'string'},
-                  zip: {type: 'string'},
-                  country: {type: 'string', example: 'US'},
-                },
-              },
-            },
-          },
+          schema: {...getModelSchemaRefSF(BillingCustomerBody)},
         },
       },
     })
-    customerDto: TCustomer,
+    customerDto: BillingCustomerBody,
   ): Promise<TCustomer> {
-    return this.billingService.createCustomer(customerDto);
+    return this.billingService.createCustomer(customerDto as TCustomer);
   }
 
   /**
@@ -103,7 +91,7 @@ export class BillingServiceController {
   @get(`${BASE}/customers/{customerId}`, {
     summary: 'Get a customer by ID',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Customer object',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -130,7 +118,7 @@ export class BillingServiceController {
   @put(`${BASE}/customers/{customerId}`, {
     summary: 'Update a customer',
     responses: {
-      '204': {description: 'Customer updated'},
+      [STATUS_CODE.NO_CONTENT]: {description: 'Customer updated'},
     },
   })
   async updateCustomer(
@@ -138,32 +126,16 @@ export class BillingServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              firstName: {type: 'string'},
-              lastName: {type: 'string'},
-              email: {type: 'string'},
-              company: {type: 'string'},
-              phone: {type: 'string'},
-              billingAddress: {
-                type: 'object',
-                properties: {
-                  line1: {type: 'string'},
-                  city: {type: 'string'},
-                  state: {type: 'string'},
-                  zip: {type: 'string'},
-                  country: {type: 'string'},
-                },
-              },
-            },
-          },
+          schema: {...getModelSchemaRefSF(BillingCustomerBody)},
         },
       },
     })
-    customerDto: Partial<TCustomer>,
+    customerDto: Partial<BillingCustomerBody>,
   ): Promise<void> {
-    await this.billingService.updateCustomerById(customerId, customerDto);
+    await this.billingService.updateCustomerById(
+      customerId,
+      customerDto as Partial<TCustomer>,
+    );
   }
 
   /**
@@ -173,7 +145,7 @@ export class BillingServiceController {
   @del(`${BASE}/customers/{customerId}`, {
     summary: 'Delete a customer',
     responses: {
-      '204': {description: 'Customer deleted'},
+      [STATUS_CODE.NO_CONTENT]: {description: 'Customer deleted'},
     },
   })
   async deleteCustomer(
@@ -201,7 +173,7 @@ export class BillingServiceController {
   @post(`${BASE}/payment-sources`, {
     summary: 'Create (attach) a payment source to a customer',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Payment source created',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -211,30 +183,15 @@ export class BillingServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['customerId'],
-            properties: {
-              customerId: {type: 'string', example: 'cus_UCXfGdNijvXTDf'},
-              options: {
-                type: 'object',
-                properties: {
-                  token: {
-                    type: 'string',
-                    example: 'tok_visa',
-                    description:
-                      'Stripe test token (tok_visa, tok_mastercard etc.)',
-                  },
-                },
-              },
-            },
-          },
+          schema: {...getModelSchemaRefSF(BillingPaymentSourceBody)},
         },
       },
     })
-    paymentDto: TPaymentSource,
+    paymentDto: BillingPaymentSourceBody,
   ): Promise<TPaymentSource> {
-    return this.billingService.createPaymentSource(paymentDto);
+    return this.billingService.createPaymentSource(
+      paymentDto as TPaymentSource,
+    );
   }
 
   /**
@@ -244,7 +201,7 @@ export class BillingServiceController {
   @get(`${BASE}/payment-sources/{paymentSourceId}`, {
     summary: 'Retrieve a payment source by ID',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Payment source object',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -263,7 +220,7 @@ export class BillingServiceController {
   @del(`${BASE}/payment-sources/{paymentSourceId}`, {
     summary: 'Delete (detach) a payment source',
     responses: {
-      '204': {description: 'Payment source deleted'},
+      [STATUS_CODE.NO_CONTENT]: {description: 'Payment source deleted'},
     },
   })
   async deletePaymentSource(
@@ -295,7 +252,7 @@ export class BillingServiceController {
   @post(`${BASE}/invoices/{invoiceId}/apply-payment`, {
     summary: 'Apply a payment to an invoice',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Invoice after payment applied',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -306,42 +263,15 @@ export class BillingServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['paymentMethod'],
-            properties: {
-              paymentMethod: {
-                type: 'string',
-                enum: [
-                  'cash',
-                  'check',
-                  'bank_transfer',
-                  'other',
-                  'custom',
-                  'payment_source',
-                ],
-                example: 'bank_transfer',
-              },
-              paymentSourceId: {
-                type: 'string',
-                description: 'Required when paymentMethod is payment_source',
-              },
-              amount: {type: 'number', example: 4999},
-              referenceNumber: {type: 'string', example: 'REF-001'},
-              comment: {
-                type: 'string',
-                example: 'Paid via wire transfer',
-              },
-            },
-          },
+          schema: {...getModelSchemaRefSF(BillingPaymentMethodBody)},
         },
       },
     })
-    transaction: Transaction,
+    transaction: BillingPaymentMethodBody,
   ): Promise<TInvoice> {
     return this.billingService.applyPaymentSourceForInvoice(
       invoiceId,
-      transaction,
+      transaction as Transaction,
     );
   }
 
@@ -368,7 +298,7 @@ export class BillingServiceController {
   @post(`${BASE}/invoices`, {
     summary: 'Create a one-time invoice with custom line items',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Created invoice object',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -378,45 +308,13 @@ export class BillingServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['customerId', 'currencyCode', 'charges'],
-            properties: {
-              customerId: {type: 'string', example: 'cus_UCXfGdNijvXTDf'},
-              currencyCode: {type: 'string', example: 'usd'},
-              charges: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  required: ['amount', 'description'],
-                  properties: {
-                    amount: {
-                      type: 'number',
-                      example: 5000,
-                      description: 'Amount in minor unit (cents)',
-                    },
-                    description: {type: 'string', example: 'Setup fee'},
-                  },
-                },
-              },
-              shippingAddress: {
-                type: 'object',
-                properties: {
-                  line1: {type: 'string'},
-                  city: {type: 'string'},
-                  state: {type: 'string'},
-                  zip: {type: 'string'},
-                  country: {type: 'string'},
-                },
-              },
-            },
-          },
+          schema: {...getModelSchemaRefSF(BillingInvoiceBody)},
         },
       },
     })
-    invoice: TInvoice,
+    invoice: BillingInvoiceBody,
   ): Promise<TInvoice> {
-    return this.billingService.createInvoice(invoice);
+    return this.billingService.createInvoice(invoice as TInvoice);
   }
 
   /**
@@ -426,7 +324,7 @@ export class BillingServiceController {
   @get(`${BASE}/invoices/{invoiceId}`, {
     summary: 'Retrieve an invoice by ID',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Invoice object',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -462,7 +360,7 @@ export class BillingServiceController {
   @put(`${BASE}/invoices/{invoiceId}`, {
     summary: 'Update an invoice (shipping address)',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Updated invoice object',
         content: {'application/json': {schema: {type: 'object'}}},
       },
@@ -473,32 +371,16 @@ export class BillingServiceController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['customerId', 'currencyCode'],
-            properties: {
-              customerId: {type: 'string'},
-              currencyCode: {type: 'string'},
-              shippingAddress: {
-                type: 'object',
-                properties: {
-                  firstName: {type: 'string'},
-                  lastName: {type: 'string'},
-                  line1: {type: 'string'},
-                  city: {type: 'string'},
-                  state: {type: 'string'},
-                  zip: {type: 'string'},
-                  country: {type: 'string'},
-                },
-              },
-            },
-          },
+          schema: {...getModelSchemaRefSF(BillingUpdateInvoiceBody)},
         },
       },
     })
-    invoice: Partial<TInvoice>,
+    invoice: BillingUpdateInvoiceBody,
   ): Promise<TInvoice> {
-    return this.billingService.updateInvoice(invoiceId, invoice);
+    return this.billingService.updateInvoice(
+      invoiceId,
+      invoice as Partial<TInvoice>,
+    );
   }
 
   /**
@@ -509,7 +391,7 @@ export class BillingServiceController {
   @del(`${BASE}/invoices/{invoiceId}`, {
     summary: 'Delete a draft invoice',
     responses: {
-      '204': {description: 'Invoice deleted'},
+      [STATUS_CODE.NO_CONTENT]: {description: 'Invoice deleted'},
     },
   })
   async deleteInvoice(
@@ -525,16 +407,11 @@ export class BillingServiceController {
   @get(`${BASE}/invoices/{invoiceId}/payment-status`, {
     summary: 'Check if an invoice is paid',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Payment status',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                paid: {type: 'boolean', example: true},
-              },
-            },
+            schema: {...getModelSchemaRefSF(BillingPaymentStatusResponse)},
           },
         },
       },
@@ -542,7 +419,7 @@ export class BillingServiceController {
   })
   async getPaymentStatus(
     @param.path.string('invoiceId') invoiceId: string,
-  ): Promise<{paid: boolean}> {
+  ): Promise<BillingPaymentStatusResponse> {
     const paid = await this.billingService.getPaymentStatus(invoiceId);
     return {paid};
   }
@@ -581,7 +458,7 @@ export class BillingServiceController {
       'For Stripe, only finalized invoices have PDF URLs available. ' +
       'For ChargeBee, most invoice states support PDF generation.',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'PDF information retrieved successfully',
         content: {
           'application/json': {
@@ -619,7 +496,7 @@ export class BillingServiceController {
           },
         },
       },
-      '404': {
+      [STATUS_CODE.NOT_FOUND]: {
         description: 'Invoice not found',
         content: {
           'application/json': {
@@ -629,7 +506,10 @@ export class BillingServiceController {
                 error: {
                   type: 'object',
                   properties: {
-                    statusCode: {type: 'number', example: 404},
+                    statusCode: {
+                      type: 'number',
+                      example: STATUS_CODE.NOT_FOUND,
+                    },
                     message: {
                       type: 'string',
                       example: 'Invoice not found: in_1234567890',
@@ -641,7 +521,7 @@ export class BillingServiceController {
           },
         },
       },
-      '400': {
+      [STATUS_CODE.BAD_REQUEST]: {
         description: 'PDF URL not available',
         content: {
           'application/json': {
@@ -651,7 +531,10 @@ export class BillingServiceController {
                 error: {
                   type: 'object',
                   properties: {
-                    statusCode: {type: 'number', example: 400},
+                    statusCode: {
+                      type: 'number',
+                      example: STATUS_CODE.BAD_REQUEST,
+                    },
                     message: {
                       type: 'string',
                       example:
@@ -666,7 +549,7 @@ export class BillingServiceController {
       },
     },
   })
-  @response(OK, {
+  @response(STATUS_CODE.OK, {
     description: 'PDF information retrieved successfully',
   })
   async getInvoicePdf(
@@ -714,7 +597,7 @@ export class BillingServiceController {
       'Retrieves payment method details, payment amount, status, and ' +
       'transaction information for a specific invoice.',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Payment details retrieved successfully',
         content: {
           'application/json': {
@@ -748,7 +631,7 @@ export class BillingServiceController {
           },
         },
       },
-      '404': {
+      [STATUS_CODE.NOT_FOUND]: {
         description: 'Invoice not found',
         content: {
           'application/json': {
@@ -758,7 +641,10 @@ export class BillingServiceController {
                 error: {
                   type: 'object',
                   properties: {
-                    statusCode: {type: 'number', example: 404},
+                    statusCode: {
+                      type: 'number',
+                      example: STATUS_CODE.NOT_FOUND,
+                    },
                     message: {
                       type: 'string',
                       example: 'Invoice not found: in_1234567890',
@@ -770,7 +656,7 @@ export class BillingServiceController {
           },
         },
       },
-      '400': {
+      [STATUS_CODE.BAD_REQUEST]: {
         description: 'No payment details available',
         content: {
           'application/json': {
@@ -780,7 +666,10 @@ export class BillingServiceController {
                 error: {
                   type: 'object',
                   properties: {
-                    statusCode: {type: 'number', example: 400},
+                    statusCode: {
+                      type: 'number',
+                      example: STATUS_CODE.BAD_REQUEST,
+                    },
                     message: {
                       type: 'string',
                       example:
@@ -795,7 +684,9 @@ export class BillingServiceController {
       },
     },
   })
-  @response(OK, {description: 'Payment details retrieved successfully'})
+  @response(STATUS_CODE.OK, {
+    description: 'Payment details retrieved successfully',
+  })
   async getInvoicePaymentDetails(
     @param.path.string('invoiceId') invoiceId: string,
   ): Promise<TInvoicePaymentDetails> {
@@ -840,7 +731,7 @@ export class BillingServiceController {
       'status, payment method, amount, and transaction metadata. ' +
       'Useful for payment tracking and webhook handling.',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Payment intent retrieved successfully',
         content: {
           'application/json': {
@@ -880,7 +771,7 @@ export class BillingServiceController {
           },
         },
       },
-      '404': {
+      [STATUS_CODE.NOT_FOUND]: {
         description: 'Payment intent not found',
         content: {
           'application/json': {
@@ -890,7 +781,10 @@ export class BillingServiceController {
                 error: {
                   type: 'object',
                   properties: {
-                    statusCode: {type: 'number', example: 404},
+                    statusCode: {
+                      type: 'number',
+                      example: STATUS_CODE.NOT_FOUND,
+                    },
                     message: {
                       type: 'string',
                       example: 'Payment intent not found: pi_1234567890',
@@ -904,7 +798,9 @@ export class BillingServiceController {
       },
     },
   })
-  @response(OK, {description: 'Payment intent retrieved successfully'})
+  @response(STATUS_CODE.OK, {
+    description: 'Payment intent retrieved successfully',
+  })
   async getPaymentIntent(
     @param.path.string('paymentIntentId') paymentIntentId: string,
   ): Promise<TPaymentIntent> {

@@ -30,6 +30,14 @@ export type InvoiceStatus =
   | 'voided'
   | 'pending';
 
+export type PaymentMethodType =
+  | 'cash'
+  | 'check'
+  | 'bank_transfer'
+  | 'other'
+  | 'custom'
+  | 'payment_source';
+
 export interface IPayload {
   id: string;
   // eslint-disable-next-line @typescript-eslint/naming-convention

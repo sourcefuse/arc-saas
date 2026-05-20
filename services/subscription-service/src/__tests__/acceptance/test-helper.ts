@@ -72,19 +72,6 @@ function setUpEnv() {
   process.env.ENABLE_OBF = '0';
   process.env.JWT_ISSUER = 'test';
   process.env.JWT_SECRET = 'test';
-  // Feature toggle database config
-  process.env.FEATURE_DB_HOST = 'localhost';
-  process.env.FEATURE_DB_PORT = '5432';
-  process.env.FEATURE_DB_USER = 'test';
-  process.env.FEATURE_DB_PASSWORD = 'test';
-  process.env.FEATURE_DB_DATABASE = 'test';
-  process.env.FEATURE_DB_SCHEMA = 'public';
-  // Billing config
-  process.env.SITE = 'test';
-  process.env.API_KEY = 'test';
-  process.env.STRIPE_SECRET = 'test';
-  process.env.CHARGEBEE_ITEM_FAMILY_ID = 'default';
-  process.env.BILLING_PROVIDER = 'stripe';
 }
 
 export interface AppWithClient {

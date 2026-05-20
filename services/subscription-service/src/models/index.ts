@@ -8,3 +8,4 @@ export * from './plan-sizes.model';
 export * from './dto';
 export * from './billing-customer.model';
 export * from './invoice.model';
+export * from './billing-request.model';
