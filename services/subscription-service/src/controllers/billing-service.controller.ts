@@ -22,6 +22,7 @@ import {
 } from 'loopback4-billing';
 
 const BASE = '/billing';
+const OK = 200;
 
 /**
  * Sandbox controller that exercises the full IService interface from
@@ -665,7 +666,7 @@ export class BillingServiceController {
       },
     },
   })
-  @response(200, {
+  @response(OK, {
     description: 'PDF information retrieved successfully',
   })
   async getInvoicePdf(
@@ -794,7 +795,7 @@ export class BillingServiceController {
       },
     },
   })
-  @response(200, {description: 'Payment details retrieved successfully'})
+  @response(OK, {description: 'Payment details retrieved successfully'})
   async getInvoicePaymentDetails(
     @param.path.string('invoiceId') invoiceId: string,
   ): Promise<TInvoicePaymentDetails> {
@@ -903,7 +904,7 @@ export class BillingServiceController {
       },
     },
   })
-  @response(200, {description: 'Payment intent retrieved successfully'})
+  @response(OK, {description: 'Payment intent retrieved successfully'})
   async getPaymentIntent(
     @param.path.string('paymentIntentId') paymentIntentId: string,
   ): Promise<TPaymentIntent> {

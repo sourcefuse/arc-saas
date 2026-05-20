@@ -1,4 +1,4 @@
-import {inject} from '@loopback/core';
+import {inject, intercept} from '@loopback/core';
 import {post, requestBody, HttpErrors} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {
@@ -6,7 +6,7 @@ import {
   ISubscriptionService,
   TSubscriptionResult,
 } from 'loopback4-billing';
-import {intercept} from '@loopback/core';
+import {} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {WEBHOOK_VERIFIER} from '../keys';
 import {InvoiceRepository} from '../repositories';

@@ -30,7 +30,6 @@ import {
   FeatureToggleBindings,
   FeatureToggleServiceComponent,
 } from '@sourceloop/feature-toggle-service';
-import {BillingComponent} from 'loopback4-billing';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -39,6 +38,7 @@ import {
 import {
   BillingComponentBindings,
   StripeServiceProvider,
+  BillingComponent,
   StripeBindings,
 } from 'loopback4-billing';
 import * as dotenv from 'dotenv';
