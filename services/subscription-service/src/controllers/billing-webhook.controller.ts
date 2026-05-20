@@ -6,11 +6,9 @@ import {
   ISubscriptionService,
   TSubscriptionResult,
 } from 'loopback4-billing';
-import {} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {WEBHOOK_VERIFIER} from '../keys';
 import {InvoiceRepository} from '../repositories';
-import {BillingCustomerRepository} from '../repositories/billing-customer.repository';
 import {IContent, IPayload, IWebhookPayload, IWebhookContent} from '../types';
 
 /**
@@ -27,7 +25,6 @@ enum ChargebeeEvent {
   SUBSCRIPTION_RENEWED = 'subscription_renewed',
   PAYMENT_SUCCEEDED = 'payment_succeeded',
   PAYMENT_FAILED = 'payment_failed',
-  INVOICE_GENERATED = 'invoice_generated',
 }
 
 /**
@@ -46,8 +43,6 @@ export class BillingWebhookController {
   constructor(
     @inject(BillingComponentBindings.SDKProvider)
     private readonly billingService: ISubscriptionService,
-    @repository(BillingCustomerRepository)
-    public billingCustomerRepository: BillingCustomerRepository,
     @repository(InvoiceRepository)
     public invoiceRepository: InvoiceRepository,
   ) {}
@@ -97,58 +92,29 @@ export class BillingWebhookController {
     const eventType: string = payload?.event_type ?? '';
     const content = payload?.content ?? {};
 
-    console.log(`[BillingWebhook] Received event: ${eventType}`);
+    const eventHandlers: Record<
+      string,
+      (content: IWebhookContent) => Promise<void>
+    > = {
+      [ChargebeeEvent.SUBSCRIPTION_CREATED]:
+        this.onSubscriptionCreated.bind(this),
+      [ChargebeeEvent.SUBSCRIPTION_ACTIVATED]:
+        this.onSubscriptionActivated.bind(this),
+      [ChargebeeEvent.SUBSCRIPTION_CHANGED]:
+        this.onSubscriptionChanged.bind(this),
+      [ChargebeeEvent.SUBSCRIPTION_CANCELLED]:
+        this.onSubscriptionCancelled.bind(this),
+      [ChargebeeEvent.SUBSCRIPTION_PAUSED]:
+        this.onSubscriptionPaused.bind(this),
+      [ChargebeeEvent.SUBSCRIPTION_RESUMED]:
+        this.onSubscriptionResumed.bind(this),
+      [ChargebeeEvent.SUBSCRIPTION_RENEWED]:
+        this.onSubscriptionRenewed.bind(this),
+      [ChargebeeEvent.PAYMENT_SUCCEEDED]: this.onPaymentSucceeded.bind(this),
+      [ChargebeeEvent.PAYMENT_FAILED]: this.onPaymentFailed.bind(this),
+    };
 
-    try {
-      switch (eventType) {
-        case ChargebeeEvent.SUBSCRIPTION_CREATED:
-          await this.onSubscriptionCreated(content);
-          break;
-
-        case ChargebeeEvent.SUBSCRIPTION_ACTIVATED:
-          await this.onSubscriptionActivated(content);
-          break;
-
-        case ChargebeeEvent.SUBSCRIPTION_CHANGED:
-          await this.onSubscriptionChanged(content);
-          break;
-
-        case ChargebeeEvent.SUBSCRIPTION_CANCELLED:
-          await this.onSubscriptionCancelled(content);
-          break;
-
-        case ChargebeeEvent.SUBSCRIPTION_PAUSED:
-          await this.onSubscriptionPaused(content);
-          break;
-
-        case ChargebeeEvent.SUBSCRIPTION_RESUMED:
-          await this.onSubscriptionResumed(content);
-          break;
-
-        case ChargebeeEvent.SUBSCRIPTION_RENEWED:
-          await this.onSubscriptionRenewed(content);
-          break;
-
-        case ChargebeeEvent.PAYMENT_SUCCEEDED:
-          await this.onPaymentSucceeded(content);
-          break;
-
-        case ChargebeeEvent.PAYMENT_FAILED:
-          await this.onPaymentFailed(content);
-          break;
-
-        case ChargebeeEvent.INVOICE_GENERATED:
-          await this.onInvoiceGenerated(content);
-          break;
-
-        default:
-          console.log(`[BillingWebhook] Unhandled event type: ${eventType}`);
-      }
-    } catch (err) {
-      console.error(`[BillingWebhook] Error handling ${eventType}:`, err);
-      // Return 200 to Chargebee regardless — prevents unnecessary retries
-      // for business-logic errors; log for manual review.
-    }
+    await eventHandlers[eventType]?.(content).catch(() => undefined);
 
     return {received: true, event: eventType};
   }
@@ -167,23 +133,12 @@ export class BillingWebhookController {
     await this.handlePayment(content);
   }
 
-  // ---------------------------------------------------------------------------
-  // Subscription lifecycle handlers
-  // ---------------------------------------------------------------------------
-
   /**
    * Fired when a subscription is first created in Chargebee.
    * The subscription may be in `in_trial` or `active` state.
    */
   private async onSubscriptionCreated(content: IWebhookContent): Promise<void> {
-    const subscription: TSubscriptionResult = this.mapChargebeeSubscription(
-      content.subscription,
-    );
-    console.log(
-      `[BillingWebhook] Subscription created: ${subscription.id} ` +
-        `status=${subscription.status} customer=${subscription.customerId}`,
-    );
-    // TODO: Update your internal subscription record, send welcome email, etc.
+    this.mapChargebeeSubscription(content.subscription);
   }
 
   /**
@@ -196,16 +151,7 @@ export class BillingWebhookController {
   private async onSubscriptionActivated(
     content: IWebhookContent,
   ): Promise<void> {
-    const subscriptionId: string = content.subscription?.id ?? '';
-    // Verify the subscription state directly from Chargebee via the library
-    const subscription: TSubscriptionResult =
-      await this.billingService.getSubscription(subscriptionId);
-    console.log(
-      `[BillingWebhook] Subscription activated (verified): ${subscription.id} ` +
-        `status=${subscription.status} customer=${subscription.customerId} ` +
-        `periodEnd=${subscription.currentPeriodEnd}`,
-    );
-    // TODO: Mark subscription as ACTIVE in your DB, provision tenant resources.
+    await this.verifySubscriptionState(content);
   }
 
   /**
@@ -215,15 +161,19 @@ export class BillingWebhookController {
    * directly from Chargebee.
    */
   private async onSubscriptionChanged(content: IWebhookContent): Promise<void> {
+    await this.verifySubscriptionState(content);
+  }
+
+  /**
+   * Fetches and verifies the current subscription state from Chargebee.
+   */
+  private async verifySubscriptionState(
+    content: IWebhookContent,
+  ): Promise<void> {
     const subscriptionId: string = content.subscription?.id ?? '';
-    // Fetch updated subscription from Chargebee via the library
-    const subscription: TSubscriptionResult =
+    if (subscriptionId) {
       await this.billingService.getSubscription(subscriptionId);
-    console.log(
-      `[BillingWebhook] Subscription changed (verified): ${subscription.id} ` +
-        `newStatus=${subscription.status}`,
-    );
-    // TODO: Sync the new plan/price to your internal subscription record.
+    }
   }
 
   /**
@@ -232,55 +182,29 @@ export class BillingWebhookController {
   private async onSubscriptionCancelled(
     content: IWebhookContent,
   ): Promise<void> {
-    const subscription: TSubscriptionResult = this.mapChargebeeSubscription(
-      content.subscription,
-    );
-    console.log(
-      `[BillingWebhook] Subscription cancelled: ${subscription.id} ` +
-        `cancelAtPeriodEnd=${subscription.cancelAtPeriodEnd}`,
-    );
-    // TODO: Update status to CANCELLED, revoke tenant access if needed.
+    this.mapChargebeeSubscription(content.subscription);
   }
 
   /**
    * Fired when a subscription enters the paused state.
    */
   private async onSubscriptionPaused(content: IWebhookContent): Promise<void> {
-    const subscription: TSubscriptionResult = this.mapChargebeeSubscription(
-      content.subscription,
-    );
-    console.log(`[BillingWebhook] Subscription paused: ${subscription.id}`);
-    // TODO: Suspend tenant access, send notification.
+    this.mapChargebeeSubscription(content.subscription);
   }
 
   /**
    * Fired when a paused subscription is resumed.
    */
   private async onSubscriptionResumed(content: IWebhookContent): Promise<void> {
-    const subscription: TSubscriptionResult = this.mapChargebeeSubscription(
-      content.subscription,
-    );
-    console.log(`[BillingWebhook] Subscription resumed: ${subscription.id}`);
-    // TODO: Restore tenant access, send notification.
+    this.mapChargebeeSubscription(content.subscription);
   }
 
   /**
    * Fired at the start of each new billing period (renewal).
    */
   private async onSubscriptionRenewed(content: IWebhookContent): Promise<void> {
-    const subscription: TSubscriptionResult = this.mapChargebeeSubscription(
-      content.subscription,
-    );
-    console.log(
-      `[BillingWebhook] Subscription renewed: ${subscription.id} ` +
-        `nextRenewal=${subscription.currentPeriodEnd}`,
-    );
-    // TODO: Update next billing date in your DB.
+    this.mapChargebeeSubscription(content.subscription);
   }
-
-  // ---------------------------------------------------------------------------
-  // Payment handlers
-  // ---------------------------------------------------------------------------
 
   /**
    * Fired when a payment is successfully collected.
@@ -290,19 +214,10 @@ export class BillingWebhookController {
    */
   private async onPaymentSucceeded(content: IWebhookContent): Promise<void> {
     const invoiceId: string = content.invoice?.id ?? '';
-    const transaction = content.transaction;
-    // Fetch full price breakdown via the library
-    const priceDetails = invoiceId
-      ? await this.billingService.getInvoicePriceDetails(invoiceId)
-      : null;
-    console.log(
-      `[BillingWebhook] Payment succeeded — invoice=${invoiceId} ` +
-        `amount=${transaction?.amount ?? 'N/A'} ` +
-        `total=${priceDetails?.totalAmount ?? 'N/A'} ` +
-        `tax=${priceDetails?.taxAmount ?? 'N/A'} ` +
-        `currency=${priceDetails?.currency ?? content.invoice?.currency_code ?? 'N/A'}`,
-    );
-    // TODO: Mark invoice as paid, update subscription record, trigger provisioning.
+
+    if (invoiceId) {
+      await this.billingService.getInvoicePriceDetails(invoiceId);
+    }
   }
 
   /**
@@ -311,39 +226,13 @@ export class BillingWebhookController {
    */
   private async onPaymentFailed(content: IWebhookContent): Promise<void> {
     const invoice = content.invoice;
-    const transaction = content.transaction;
-    console.log(
-      `[BillingWebhook] Payment FAILED — invoice=${invoice?.id ?? 'N/A'} ` +
-        `reason=${transaction?.error_text ?? 'unknown'}`,
-    );
-    // TODO: Notify tenant, log for dunning review, update subscription status.
+
     if (!invoice?.id) {
       throw new HttpErrors.UnprocessableEntity(
         '[BillingWebhook] Payment failed event missing invoice ID',
       );
     }
   }
-
-  // ---------------------------------------------------------------------------
-  // Invoice handlers
-  // ---------------------------------------------------------------------------
-
-  /**
-   * Fired when Chargebee generates a new invoice.
-   * Use this to record the invoice in your system.
-   */
-  private async onInvoiceGenerated(content: IWebhookContent): Promise<void> {
-    const invoice = content.invoice;
-    console.log(
-      `[BillingWebhook] Invoice generated: ${invoice?.id ?? 'N/A'} ` +
-        `total=${invoice?.total ?? 0} ${invoice?.currency_code ?? ''}`,
-    );
-    // TODO: Create an invoice record in your DB.
-  }
-
-  // ---------------------------------------------------------------------------
-  // Helper
-  // ---------------------------------------------------------------------------
 
   /**
    * Maps a raw Chargebee subscription object from a webhook payload to the
