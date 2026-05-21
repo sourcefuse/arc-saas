@@ -12,7 +12,6 @@ export * from './plan-features.controller';
 export * from './subscription-invoice.controller';
 export * from './billing-service.controller';
 export * from './billing-subscription.controller';
-export * from './billing-webhook.controller';
 export * from './webhook.controller';
 export * from './billing-customer.controller';
 export * from './billing-invoice.controller';
