@@ -1,12 +1,10 @@
 import {inject} from '@loopback/core';
 import {del, get, param, post, put, requestBody} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {
   BillingComponentBindings,
-  CollectionMethod,
   ISubscriptionService,
-  ProrationBehavior,
-  RecurringInterval,
   TInvoicePrice,
   TPrice,
   TProduct,
@@ -14,55 +12,42 @@ import {
   TSubscriptionResult,
   TSubscriptionUpdate,
 } from 'loopback4-billing';
+import {
+  getModelSchemaRefSF,
+  STATUS_CODE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
+import {PermissionKey} from '../permissions';
+import {
+  PriceDto,
+  ProductDto,
+  SubscriptionCreateDto,
+  SubscriptionUpdateDto,
+  SubscriptionResultDto,
+  SubscriptionCreateResponseDto,
+  SuccessDto,
+  InvoicePriceDto,
+} from '../models/dto';
 
 const BASE = '/billing';
 
-/**
- * Sandbox controller that exercises the full subscription lifecycle
- * implemented in loopback4-billing.
- *
- * Every endpoint injects {@link ISubscriptionService} via
- * {@link BillingComponentBindings.SubscriptionProvider} — the new
- * provider-agnostic binding.  Swap the provider in application.ts
- * (ChargeBee ↔ Stripe) without touching this controller.
- */
 export class BillingSubscriptionController {
   constructor(
     @inject(BillingComponentBindings.SDKProvider)
     private readonly billingService: ISubscriptionService,
   ) {}
 
-  // -------------------------------------------------------------------------
-  // PRODUCT
-  // -------------------------------------------------------------------------
-
-  /**
-   * Create a new product (Chargebee: Item / Stripe: Product).
-   *
-   * Example body:
-   * ```json
-   * {
-   *   "name": "Enterprise Plan",
-   *   "description": "Full-featured tier",
-   *   "metadata": { "item_family_id": "default" }
-   * }
-   * ```
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreatePlan]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @post(`${BASE}/products`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Create a billing product (Item / Product)',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'External product ID',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                productId: {type: 'string', example: 'cbdemo_enterprise'},
-              },
-              required: ['productId'],
-            },
+            schema: getModelSchemaRefSF(ProductDto),
           },
         },
       },
@@ -72,15 +57,10 @@ export class BillingSubscriptionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['name'],
-            properties: {
-              name: {type: 'string'},
-              description: {type: 'string'},
-              metadata: {type: 'object'},
-            },
-          },
+          schema: getModelSchemaRefSF(ProductDto, {
+            title: 'NewProduct',
+            exclude: ['id'],
+          }),
         },
       },
     })
@@ -90,24 +70,17 @@ export class BillingSubscriptionController {
     return {productId};
   }
 
-  /**
-   * Check whether a product/item exists and is still active.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewPlan]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @get(`${BASE}/products/{productId}/exists`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Check if a billing product is active',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Existence flag',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                exists: {type: 'boolean', example: true},
-              },
-              required: ['exists'],
-            },
+            schema: getModelSchemaRefSF(SuccessDto),
           },
         },
       },
@@ -120,48 +93,17 @@ export class BillingSubscriptionController {
     return {exists};
   }
 
-  // -------------------------------------------------------------------------
-  // PRICE / PLAN
-  // -------------------------------------------------------------------------
-
-  /**
-   * Create a recurring price (Chargebee: ItemPrice / Stripe: Price).
-   *
-   * Example body:
-   * ```json
-   * {
-   *   "currency": "usd",
-   *   "unitAmount": 4999,
-   *   "product": "<productId>",
-   *   "recurring": { "interval": "month", "intervalCount": 1 }
-   * }
-   * ```
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreatePlan]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @post(`${BASE}/prices`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Create a recurring price (ItemPrice / Price)',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Created price / item-price object',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                id: {type: 'string', example: 'cbdemo_enterprise-USD-monthly'},
-                currency: {type: 'string', example: 'usd'},
-                unitAmount: {type: 'number', example: 4999},
-                product: {type: 'string', example: 'cbdemo_enterprise'},
-                active: {type: 'boolean', example: true},
-                recurring: {
-                  type: 'object',
-                  properties: {
-                    interval: {type: 'string', example: 'month'},
-                    intervalCount: {type: 'number', example: 1},
-                  },
-                },
-              },
-            },
+            schema: getModelSchemaRefSF(PriceDto),
           },
         },
       },
@@ -171,28 +113,10 @@ export class BillingSubscriptionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['currency', 'unitAmount', 'product'],
-            properties: {
-              id: {type: 'string'},
-              currency: {type: 'string', example: 'usd'},
-              unitAmount: {type: 'number', example: 4999},
-              product: {type: 'string'},
-              recurring: {
-                type: 'object',
-                properties: {
-                  interval: {
-                    type: 'string',
-                    enum: Object.values(RecurringInterval),
-                    example: RecurringInterval.MONTH,
-                  },
-                  intervalCount: {type: 'number', example: 1},
-                },
-              },
-              metadata: {type: 'object'},
-            },
-          },
+          schema: getModelSchemaRefSF(PriceDto, {
+            title: 'NewPrice',
+            exclude: ['id'],
+          }),
         },
       },
     })
@@ -201,37 +125,17 @@ export class BillingSubscriptionController {
     return this.billingService.createPrice(price);
   }
 
-  // -------------------------------------------------------------------------
-  // SUBSCRIPTION
-  // -------------------------------------------------------------------------
-
-  /**
-   * Create a new recurring subscription.
-   *
-   * Example body:
-   * ```json
-   * {
-   *   "customerId": "<chargebee-customer-id>",
-   *   "priceRefId": "<item-price-id>",
-   *   "collectionMethod": "charge_automatically"
-   * }
-   * ```
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @post(`${BASE}/subscriptions`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Create a new subscription',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Newly created subscription ID',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                subscriptionId: {type: 'string', example: 'AzZlGKSfBGHDPJkp'},
-              },
-              required: ['subscriptionId'],
-            },
+            schema: getModelSchemaRefSF(SubscriptionCreateResponseDto),
           },
         },
       },
@@ -241,20 +145,10 @@ export class BillingSubscriptionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            required: ['customerId', 'priceRefId', 'collectionMethod'],
-            properties: {
-              customerId: {type: 'string'},
-              priceRefId: {type: 'string'},
-              collectionMethod: {
-                type: 'string',
-                enum: Object.values(CollectionMethod),
-                example: CollectionMethod.CHARGE_AUTOMATICALLY,
-              },
-              daysUntilDue: {type: 'number', example: 30},
-            },
-          },
+          schema: getModelSchemaRefSF(SubscriptionCreateDto, {
+            title: 'NewSubscription',
+            exclude: [],
+          }),
         },
       },
     })
@@ -265,29 +159,17 @@ export class BillingSubscriptionController {
     return {subscriptionId};
   }
 
-  /**
-   * Get the current state of an existing subscription.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @get(`${BASE}/subscriptions/{subscriptionId}`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Get a subscription by ID',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription object',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                id: {type: 'string', example: 'AzZlGKSfBGHDPJkp'},
-                status: {type: 'string', example: 'active'},
-                customerId: {type: 'string', example: 'cust_001'},
-                currentPeriodStart: {type: 'number', example: 1700000000},
-                currentPeriodEnd: {type: 'number', example: 1702678400},
-                cancelAtPeriodEnd: {type: 'boolean', example: false},
-              },
-              required: ['id', 'status', 'customerId'],
-            },
+            schema: getModelSchemaRefSF(SubscriptionResultDto),
           },
         },
       },
@@ -299,37 +181,17 @@ export class BillingSubscriptionController {
     return this.billingService.getSubscription(subscriptionId);
   }
 
-  /**
-   * Upgrade or downgrade an existing subscription.
-   *
-   * Example body:
-   * ```json
-   * {
-   *   "priceRefId": "<new-item-price-id>",
-   *   "prorationBehavior": "create_prorations"
-   * }
-   * ```
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @put(`${BASE}/subscriptions/{subscriptionId}`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Upgrade / downgrade a subscription (plan change)',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Updated subscription object',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                id: {type: 'string', example: 'AzZlGKSfBGHDPJkp'},
-                status: {type: 'string', example: 'active'},
-                customerId: {type: 'string', example: 'cust_001'},
-                currentPeriodStart: {type: 'number', example: 1700000000},
-                currentPeriodEnd: {type: 'number', example: 1702678400},
-                cancelAtPeriodEnd: {type: 'boolean', example: false},
-              },
-              required: ['id', 'status', 'customerId'],
-            },
+            schema: getModelSchemaRefSF(SubscriptionResultDto),
           },
         },
       },
@@ -340,17 +202,10 @@ export class BillingSubscriptionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              priceRefId: {type: 'string'},
-              prorationBehavior: {
-                type: 'string',
-                enum: Object.values(ProrationBehavior),
-                example: ProrationBehavior.CREATE_PRORATIONS,
-              },
-            },
-          },
+          schema: getModelSchemaRefSF(SubscriptionUpdateDto, {
+            title: 'SubscriptionUpdate',
+            partial: true,
+          }),
         },
       },
     })
@@ -359,14 +214,13 @@ export class BillingSubscriptionController {
     return this.billingService.updateSubscription(subscriptionId, updates);
   }
 
-  /**
-   * Cancel a subscription immediately with proration.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.DeleteSubscription]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @del(`${BASE}/subscriptions/{subscriptionId}`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Cancel a subscription immediately',
     responses: {
-      '204': {description: 'Subscription cancelled'},
+      [STATUS_CODE.NO_CONTENT]: {description: 'Subscription cancelled'},
     },
   })
   async cancelSubscription(
@@ -375,24 +229,17 @@ export class BillingSubscriptionController {
     await this.billingService.cancelSubscription(subscriptionId);
   }
 
-  /**
-   * Pause an active subscription.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @post(`${BASE}/subscriptions/{subscriptionId}/pause`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Pause a subscription',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription paused',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                success: {type: 'boolean', example: true},
-              },
-              required: ['success'],
-            },
+            schema: getModelSchemaRefSF(SuccessDto),
           },
         },
       },
@@ -405,24 +252,17 @@ export class BillingSubscriptionController {
     return {success: true};
   }
 
-  /**
-   * Resume a paused subscription.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @post(`${BASE}/subscriptions/{subscriptionId}/resume`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Resume a paused subscription',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription resumed',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                success: {type: 'boolean', example: true},
-              },
-              required: ['success'],
-            },
+            schema: getModelSchemaRefSF(SuccessDto),
           },
         },
       },
@@ -435,36 +275,17 @@ export class BillingSubscriptionController {
     return {success: true};
   }
 
-  // -------------------------------------------------------------------------
-  // INVOICE
-  // -------------------------------------------------------------------------
-
-  /**
-   * Get detailed price breakdown (total, tax, amount excluding tax) for an invoice.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewInvoice]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @get(`${BASE}/invoices/{invoiceId}/price-details`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Get invoice price details (total, tax, subtotal)',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Invoice price breakdown',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                currency: {type: 'string', example: 'usd'},
-                totalAmount: {type: 'number', example: 5499},
-                taxAmount: {type: 'number', example: 500},
-                amountExcludingTax: {type: 'number', example: 4999},
-              },
-              required: [
-                'currency',
-                'totalAmount',
-                'taxAmount',
-                'amountExcludingTax',
-              ],
-            },
+            schema: getModelSchemaRefSF(InvoicePriceDto),
           },
         },
       },
@@ -476,24 +297,17 @@ export class BillingSubscriptionController {
     return this.billingService.getInvoicePriceDetails(invoiceId);
   }
 
-  /**
-   * Send the payment link for a given invoice to the customer.
-   */
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreateInvoice]})
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @post(`${BASE}/invoices/{invoiceId}/send-payment-link`, {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Send hosted payment link for an invoice',
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Payment link sent',
         content: {
           'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                success: {type: 'boolean', example: true},
-              },
-              required: ['success'],
-            },
+            schema: getModelSchemaRefSF(SuccessDto),
           },
         },
       },
