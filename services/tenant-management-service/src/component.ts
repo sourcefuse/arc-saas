@@ -98,7 +98,7 @@ export class TenantManagementServiceComponent implements Component {
     this.application.api({
       openapi: '3.0.0',
       info: {
-        title: 'Audit Service',
+        title: 'Tenant Management Service',
         version: '1.0.0',
       },
       paths: {},
