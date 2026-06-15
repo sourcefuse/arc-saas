@@ -4271,93 +4271,9 @@
         "additionalProperties": false,
         "x-typescript-type": "Omit<Subscription, 'id' | 'startDate' | 'endDate'>"
       },
-      "BillingCycleWithRelations": {
-        "title": "BillingCycleWithRelations",
+      "Plan": {
+        "title": "Plan",
         "type": "object",
-        "description": "(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "cycleName": {
-            "type": "string"
-          },
-          "duration": {
-            "type": "number"
-          },
-          "durationUnit": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "cycleName",
-          "duration",
-          "durationUnit"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "BillingCycleWithRelations"
-      },
-      "CurrencyWithRelations": {
-        "title": "CurrencyWithRelations",
-        "type": "object",
-        "description": "(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "currencyCode": {
-            "type": "string"
-          },
-          "currencyName": {
-            "type": "string"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "currencyCode",
-          "currencyName"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "CurrencyWithRelations"
-      },
-      "PlanWithRelations": {
-        "title": "PlanWithRelations",
-        "type": "object",
-        "description": "(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -4416,13 +4332,6 @@
           },
           "currencyId": {
             "type": "string"
-          },
-          "billingCycle": {
-            "$ref": "#/components/schemas/BillingCycleWithRelations"
-          },
-          "foreignKey": {},
-          "currency": {
-            "$ref": "#/components/schemas/CurrencyWithRelations"
           }
         },
         "required": [
@@ -4430,13 +4339,12 @@
           "tier",
           "price"
         ],
-        "additionalProperties": false,
-        "x-typescript-type": "PlanWithRelations"
+        "additionalProperties": false
       },
-      "InvoiceWithRelations": {
-        "title": "InvoiceWithRelations",
+      "Invoice": {
+        "title": "Invoice",
         "type": "object",
-        "description": "invoice for a customer (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "invoice for a customer",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -4547,11 +4455,11 @@
             "description": "invoice id of the subscription"
           },
           "plan": {
-            "$ref": "#/components/schemas/PlanWithRelations"
+            "$ref": "#/components/schemas/Plan"
           },
           "foreignKey": {},
           "invoice": {
-            "$ref": "#/components/schemas/InvoiceWithRelations"
+            "$ref": "#/components/schemas/Invoice"
           }
         },
         "required": [
@@ -4628,57 +4536,6 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<Subscription>"
-      },
-      "Invoice": {
-        "title": "Invoice",
-        "type": "object",
-        "description": "invoice for a customer",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "invoiceId": {
-            "type": "string"
-          },
-          "invoiceStatus": {
-            "type": "string",
-            "description": "payment or invoice status"
-          },
-          "billingCustomerId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "invoiceId",
-          "billingCustomerId"
-        ],
-        "additionalProperties": false
       },
       "Service": {
         "title": "Service",
@@ -5043,76 +4900,6 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<Resource>"
       },
-      "Plan": {
-        "title": "Plan",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "name of the plan"
-          },
-          "description": {
-            "type": "string",
-            "description": "description of the plan"
-          },
-          "tier": {
-            "type": "string",
-            "description": "Tier of the plan."
-          },
-          "size": {
-            "type": "string",
-            "description": "Size of the plan."
-          },
-          "price": {
-            "type": "number"
-          },
-          "metaData": {
-            "type": "object",
-            "description": "Meta data of the plan"
-          },
-          "billingCycleId": {
-            "type": "string"
-          },
-          "currencyId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "tier",
-          "price"
-        ],
-        "additionalProperties": false
-      },
       "NewPlan": {
         "title": "NewPlan",
         "type": "object",
@@ -5181,6 +4968,164 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Plan, 'id'>"
+      },
+      "BillingCycle": {
+        "title": "BillingCycle",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "cycleName": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "durationUnit": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cycleName",
+          "duration",
+          "durationUnit"
+        ],
+        "additionalProperties": false
+      },
+      "Currency": {
+        "title": "Currency",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "currencyName"
+        ],
+        "additionalProperties": false
+      },
+      "PlanWithRelations": {
+        "title": "PlanWithRelations",
+        "type": "object",
+        "description": "(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the plan"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the plan"
+          },
+          "tier": {
+            "type": "string",
+            "description": "Tier of the plan."
+          },
+          "size": {
+            "type": "string",
+            "description": "Size of the plan."
+          },
+          "price": {
+            "type": "number"
+          },
+          "metaData": {
+            "type": "object",
+            "description": "Meta data of the plan"
+          },
+          "billingCycleId": {
+            "type": "string"
+          },
+          "currencyId": {
+            "type": "string"
+          },
+          "billingCycle": {
+            "$ref": "#/components/schemas/BillingCycle"
+          },
+          "foreignKey": {},
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        },
+        "required": [
+          "name",
+          "tier",
+          "price"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "PlanWithRelations"
       },
       "PlanPartial": {
         "title": "PlanPartial",
@@ -5533,32 +5478,6 @@
         },
         "additionalProperties": false
       },
-      "Currency": {
-        "title": "Currency",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "currencyCode": {
-            "type": "string"
-          },
-          "currencyName": {
-            "type": "string"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "currencyCode",
-          "currencyName"
-        ],
-        "additionalProperties": false
-      },
       "NewCurrency": {
         "title": "NewCurrency",
         "type": "object",
@@ -5583,6 +5502,34 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Currency, 'id'>"
+      },
+      "CurrencyWithRelations": {
+        "title": "CurrencyWithRelations",
+        "type": "object",
+        "description": "(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "currencyName"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "CurrencyWithRelations"
       },
       "CurrencyPartial": {
         "title": "CurrencyPartial",
@@ -5970,59 +5917,6 @@
         ],
         "additionalProperties": false
       },
-      "BillingCycle": {
-        "title": "BillingCycle",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "cycleName": {
-            "type": "string"
-          },
-          "duration": {
-            "type": "number"
-          },
-          "durationUnit": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "cycleName",
-          "duration",
-          "durationUnit"
-        ],
-        "additionalProperties": false
-      },
       "NewBillingCycle": {
         "title": "NewBillingCycle",
         "type": "object",
@@ -6074,6 +5968,61 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<BillingCycle, 'id'>"
+      },
+      "BillingCycleWithRelations": {
+        "title": "BillingCycleWithRelations",
+        "type": "object",
+        "description": "(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "cycleName": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "durationUnit": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cycleName",
+          "duration",
+          "durationUnit"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "BillingCycleWithRelations"
       },
       "BillingCyclePartial": {
         "title": "BillingCyclePartial",

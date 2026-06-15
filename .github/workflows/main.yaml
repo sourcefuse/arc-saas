@@ -14,15 +14,15 @@ jobs:
 
     strategy:
       # The strategy matrix allows running tests across multiple Node.js versions in parallel.
-      # Here, the workflow will execute the same steps for Node.js versions 20, 22, and 24.
+      # Here, the workflow will execute the same steps for Node.js versions 22 and 24.
       matrix:
-        node-version: [20, 22, 24]
+        node-version: [22, 24]
 
     steps:
       # Step 1: Checkout the repository code from GitHub
       - uses: actions/checkout@v3
 
-      # Step 2: Set up the Node.js version based on the current matrix value (20, 22, or 24)
+      # Step 2: Set up the Node.js version based on the current matrix value (22 or 24)
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -50,4 +50,4 @@ jobs:
     steps:
       # Step 1: Print final success message after all Node.js version tests pass
       - name: Final status
-        run: echo "✅ All tests passed for Node.js 20, 22, and 24"
+        run: echo "✅ All tests passed for Node.js 22 and 24"

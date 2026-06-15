@@ -6727,7 +6727,7 @@ Status Code **200**
 |»» metaData|object|false|none|Meta data of the plan|
 |»» billingCycleId|string|false|none|none|
 |»» currencyId|string|false|none|none|
-|»» billingCycle|[BillingCycleWithRelations](#schemabillingcyclewithrelations)|false|none|(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })|
+|»» billingCycle|[BillingCycle](#schemabillingcycle)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -6741,7 +6741,7 @@ Status Code **200**
 |»»» durationUnit|string|true|none|none|
 |»»» description|string|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» currency|[CurrencyWithRelations](#schemacurrencywithrelations)|false|none|(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })|
+|»» currency|[Currency](#schemacurrency)|false|none|none|
 |»»» id|string|false|none|none|
 |»»» currencyCode|string|true|none|none|
 |»»» currencyName|string|true|none|none|
@@ -7227,29 +7227,7 @@ fetch('/plans/{id}/subscriptions',
     "price": 0,
     "metaData": {},
     "billingCycleId": "string",
-    "currencyId": "string",
-    "billingCycle": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "cycleName": "string",
-      "duration": 0,
-      "durationUnit": "string",
-      "description": "string"
-    },
-    "foreignKey": null,
-    "currency": {
-      "id": "string",
-      "currencyCode": "string",
-      "currencyName": "string",
-      "symbol": "string",
-      "country": "string"
-    }
+    "currencyId": "string"
   },
   "foreignKey": null,
   "invoice": {
@@ -9977,29 +9955,7 @@ fetch('/subscriptions/expire-soon',
       "price": 0,
       "metaData": {},
       "billingCycleId": "string",
-      "currencyId": "string",
-      "billingCycle": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "cycleName": "string",
-        "duration": 0,
-        "durationUnit": "string",
-        "description": "string"
-      },
-      "foreignKey": null,
-      "currency": {
-        "id": "string",
-        "currencyCode": "string",
-        "currencyName": "string",
-        "symbol": "string",
-        "country": "string"
-      }
+      "currencyId": "string"
     },
     "foreignKey": null,
     "invoice": {
@@ -10047,7 +10003,7 @@ Status Code **200**
 |»» status|number|true|none|status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)|
 |»» planId|string|false|none|plan id of the subscription|
 |»» invoiceId|string|false|none|invoice id of the subscription|
-|»» plan|[PlanWithRelations](#schemaplanwithrelations)|false|none|(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })|
+|»» plan|[Plan](#schemaplan)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -10064,28 +10020,8 @@ Status Code **200**
 |»»» metaData|object|false|none|Meta data of the plan|
 |»»» billingCycleId|string|false|none|none|
 |»»» currencyId|string|false|none|none|
-|»»» billingCycle|[BillingCycleWithRelations](#schemabillingcyclewithrelations)|false|none|(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» cycleName|string|true|none|none|
-|»»»» duration|number|true|none|none|
-|»»»» durationUnit|string|true|none|none|
-|»»»» description|string|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» currency|[CurrencyWithRelations](#schemacurrencywithrelations)|false|none|(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» id|string|false|none|none|
-|»»»» currencyCode|string|true|none|none|
-|»»»» currencyName|string|true|none|none|
-|»»»» symbol|string|false|none|none|
-|»»»» country|string|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» invoice|[InvoiceWithRelations](#schemainvoicewithrelations)|false|none|invoice for a customer (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })|
+|»» invoice|[Invoice](#schemainvoice)|false|none|invoice for a customer|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -10216,29 +10152,7 @@ api that will return newly expired subscription
       "price": 0,
       "metaData": {},
       "billingCycleId": "string",
-      "currencyId": "string",
-      "billingCycle": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "cycleName": "string",
-        "duration": 0,
-        "durationUnit": "string",
-        "description": "string"
-      },
-      "foreignKey": null,
-      "currency": {
-        "id": "string",
-        "currencyCode": "string",
-        "currencyName": "string",
-        "symbol": "string",
-        "country": "string"
-      }
+      "currencyId": "string"
     },
     "foreignKey": null,
     "invoice": {
@@ -10286,7 +10200,7 @@ Status Code **200**
 |»» status|number|true|none|status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)|
 |»» planId|string|false|none|plan id of the subscription|
 |»» invoiceId|string|false|none|invoice id of the subscription|
-|»» plan|[PlanWithRelations](#schemaplanwithrelations)|false|none|(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })|
+|»» plan|[Plan](#schemaplan)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -10303,28 +10217,8 @@ Status Code **200**
 |»»» metaData|object|false|none|Meta data of the plan|
 |»»» billingCycleId|string|false|none|none|
 |»»» currencyId|string|false|none|none|
-|»»» billingCycle|[BillingCycleWithRelations](#schemabillingcyclewithrelations)|false|none|(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» cycleName|string|true|none|none|
-|»»»» duration|number|true|none|none|
-|»»»» durationUnit|string|true|none|none|
-|»»»» description|string|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» currency|[CurrencyWithRelations](#schemacurrencywithrelations)|false|none|(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» id|string|false|none|none|
-|»»»» currencyCode|string|true|none|none|
-|»»»» currencyName|string|true|none|none|
-|»»»» symbol|string|false|none|none|
-|»»»» country|string|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» invoice|[InvoiceWithRelations](#schemainvoicewithrelations)|false|none|invoice for a customer (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })|
+|»» invoice|[Invoice](#schemainvoice)|false|none|invoice for a customer|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -10698,29 +10592,7 @@ fetch('/subscriptions/{id}',
     "price": 0,
     "metaData": {},
     "billingCycleId": "string",
-    "currencyId": "string",
-    "billingCycle": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "cycleName": "string",
-      "duration": 0,
-      "durationUnit": "string",
-      "description": "string"
-    },
-    "foreignKey": null,
-    "currency": {
-      "id": "string",
-      "currencyCode": "string",
-      "currencyName": "string",
-      "symbol": "string",
-      "country": "string"
-    }
+    "currencyId": "string"
   },
   "foreignKey": null,
   "invoice": {
@@ -11193,29 +11065,7 @@ fetch('/subscriptions',
       "price": 0,
       "metaData": {},
       "billingCycleId": "string",
-      "currencyId": "string",
-      "billingCycle": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "cycleName": "string",
-        "duration": 0,
-        "durationUnit": "string",
-        "description": "string"
-      },
-      "foreignKey": null,
-      "currency": {
-        "id": "string",
-        "currencyCode": "string",
-        "currencyName": "string",
-        "symbol": "string",
-        "country": "string"
-      }
+      "currencyId": "string"
     },
     "foreignKey": null,
     "invoice": {
@@ -11263,7 +11113,7 @@ Status Code **200**
 |»» status|number|true|none|status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)|
 |»» planId|string|false|none|plan id of the subscription|
 |»» invoiceId|string|false|none|invoice id of the subscription|
-|»» plan|[PlanWithRelations](#schemaplanwithrelations)|false|none|(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })|
+|»» plan|[Plan](#schemaplan)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -11280,28 +11130,8 @@ Status Code **200**
 |»»» metaData|object|false|none|Meta data of the plan|
 |»»» billingCycleId|string|false|none|none|
 |»»» currencyId|string|false|none|none|
-|»»» billingCycle|[BillingCycleWithRelations](#schemabillingcyclewithrelations)|false|none|(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» cycleName|string|true|none|none|
-|»»»» duration|number|true|none|none|
-|»»»» durationUnit|string|true|none|none|
-|»»»» description|string|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» currency|[CurrencyWithRelations](#schemacurrencywithrelations)|false|none|(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» id|string|false|none|none|
-|»»»» currencyCode|string|true|none|none|
-|»»»» currencyName|string|true|none|none|
-|»»»» symbol|string|false|none|none|
-|»»»» country|string|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» invoice|[InvoiceWithRelations](#schemainvoicewithrelations)|false|none|invoice for a customer (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })|
+|»» invoice|[Invoice](#schemainvoice)|false|none|invoice for a customer|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -11677,86 +11507,12 @@ NewSubscription
 |status|3|
 |status|4|
 
-<h2 id="tocS_BillingCycleWithRelations">BillingCycleWithRelations</h2>
+<h2 id="tocS_Plan">Plan</h2>
 <!-- backwards compatibility -->
-<a id="schemabillingcyclewithrelations"></a>
-<a id="schema_BillingCycleWithRelations"></a>
-<a id="tocSbillingcyclewithrelations"></a>
-<a id="tocsbillingcyclewithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "cycleName": "string",
-  "duration": 0,
-  "durationUnit": "string",
-  "description": "string"
-}
-
-```
-
-BillingCycleWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|cycleName|string|true|none|none|
-|duration|number|true|none|none|
-|durationUnit|string|true|none|none|
-|description|string|false|none|none|
-
-<h2 id="tocS_CurrencyWithRelations">CurrencyWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemacurrencywithrelations"></a>
-<a id="schema_CurrencyWithRelations"></a>
-<a id="tocScurrencywithrelations"></a>
-<a id="tocscurrencywithrelations"></a>
-
-```json
-{
-  "id": "string",
-  "currencyCode": "string",
-  "currencyName": "string",
-  "symbol": "string",
-  "country": "string"
-}
-
-```
-
-CurrencyWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|currencyCode|string|true|none|none|
-|currencyName|string|true|none|none|
-|symbol|string|false|none|none|
-|country|string|false|none|none|
-
-<h2 id="tocS_PlanWithRelations">PlanWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaplanwithrelations"></a>
-<a id="schema_PlanWithRelations"></a>
-<a id="tocSplanwithrelations"></a>
-<a id="tocsplanwithrelations"></a>
+<a id="schemaplan"></a>
+<a id="schema_Plan"></a>
+<a id="tocSplan"></a>
+<a id="tocsplan"></a>
 
 ```json
 {
@@ -11775,34 +11531,12 @@ CurrencyWithRelations
   "price": 0,
   "metaData": {},
   "billingCycleId": "string",
-  "currencyId": "string",
-  "billingCycle": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "cycleName": "string",
-    "duration": 0,
-    "durationUnit": "string",
-    "description": "string"
-  },
-  "foreignKey": null,
-  "currency": {
-    "id": "string",
-    "currencyCode": "string",
-    "currencyName": "string",
-    "symbol": "string",
-    "country": "string"
-  }
+  "currencyId": "string"
 }
 
 ```
 
-PlanWithRelations
+Plan
 
 ### Properties
 
@@ -11824,16 +11558,13 @@ PlanWithRelations
 |metaData|object|false|none|Meta data of the plan|
 |billingCycleId|string|false|none|none|
 |currencyId|string|false|none|none|
-|billingCycle|[BillingCycleWithRelations](#schemabillingcyclewithrelations)|false|none|(tsType: BillingCycleWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-|currency|[CurrencyWithRelations](#schemacurrencywithrelations)|false|none|(tsType: CurrencyWithRelations, schemaOptions: { includeRelations: true })|
 
-<h2 id="tocS_InvoiceWithRelations">InvoiceWithRelations</h2>
+<h2 id="tocS_Invoice">Invoice</h2>
 <!-- backwards compatibility -->
-<a id="schemainvoicewithrelations"></a>
-<a id="schema_InvoiceWithRelations"></a>
-<a id="tocSinvoicewithrelations"></a>
-<a id="tocsinvoicewithrelations"></a>
+<a id="schemainvoice"></a>
+<a id="schema_Invoice"></a>
+<a id="tocSinvoice"></a>
+<a id="tocsinvoice"></a>
 
 ```json
 {
@@ -11852,7 +11583,7 @@ PlanWithRelations
 
 ```
 
-InvoiceWithRelations
+Invoice
 
 ### Properties
 
@@ -11909,29 +11640,7 @@ InvoiceWithRelations
     "price": 0,
     "metaData": {},
     "billingCycleId": "string",
-    "currencyId": "string",
-    "billingCycle": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "cycleName": "string",
-      "duration": 0,
-      "durationUnit": "string",
-      "description": "string"
-    },
-    "foreignKey": null,
-    "currency": {
-      "id": "string",
-      "currencyCode": "string",
-      "currencyName": "string",
-      "symbol": "string",
-      "country": "string"
-    }
+    "currencyId": "string"
   },
   "foreignKey": null,
   "invoice": {
@@ -11971,9 +11680,9 @@ SubscriptionWithRelations
 |status|number|true|none|status of the subscription, it can be - 0(pending), 1(active), 2(inactive), 3(cancelled) and 4(expired)|
 |planId|string|false|none|plan id of the subscription|
 |invoiceId|string|false|none|invoice id of the subscription|
-|plan|[PlanWithRelations](#schemaplanwithrelations)|false|none|(tsType: PlanWithRelations, schemaOptions: { includeRelations: true })|
+|plan|[Plan](#schemaplan)|false|none|none|
 |foreignKey|any|false|none|none|
-|invoice|[InvoiceWithRelations](#schemainvoicewithrelations)|false|none|invoice for a customer (tsType: InvoiceWithRelations, schemaOptions: { includeRelations: true })|
+|invoice|[Invoice](#schemainvoice)|false|none|invoice for a customer|
 
 #### Enumerated Values
 
@@ -12042,48 +11751,6 @@ SubscriptionPartial
 |status|2|
 |status|3|
 |status|4|
-
-<h2 id="tocS_Invoice">Invoice</h2>
-<!-- backwards compatibility -->
-<a id="schemainvoice"></a>
-<a id="schema_Invoice"></a>
-<a id="tocSinvoice"></a>
-<a id="tocsinvoice"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "invoiceId": "string",
-  "invoiceStatus": "string",
-  "billingCustomerId": "string"
-}
-
-```
-
-Invoice
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|invoiceId|string|true|none|none|
-|invoiceStatus|string|false|none|payment or invoice status|
-|billingCustomerId|string|true|none|none|
 
 <h2 id="tocS_Service">Service</h2>
 <!-- backwards compatibility -->
@@ -12393,58 +12060,6 @@ ResourcePartial
 |name|string|false|none|name of the resource|
 |config|object|false|none|config of the resource|
 
-<h2 id="tocS_Plan">Plan</h2>
-<!-- backwards compatibility -->
-<a id="schemaplan"></a>
-<a id="schema_Plan"></a>
-<a id="tocSplan"></a>
-<a id="tocsplan"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "tier": "string",
-  "size": "string",
-  "price": 0,
-  "metaData": {},
-  "billingCycleId": "string",
-  "currencyId": "string"
-}
-
-```
-
-Plan
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|name of the plan|
-|description|string|false|none|description of the plan|
-|tier|string|true|none|Tier of the plan.|
-|size|string|false|none|Size of the plan.|
-|price|number|true|none|none|
-|metaData|object|false|none|Meta data of the plan|
-|billingCycleId|string|false|none|none|
-|currencyId|string|false|none|none|
-
 <h2 id="tocS_NewPlan">NewPlan</h2>
 <!-- backwards compatibility -->
 <a id="schemanewplan"></a>
@@ -12494,6 +12109,157 @@ NewPlan
 |metaData|object|false|none|Meta data of the plan|
 |billingCycleId|string|false|none|none|
 |currencyId|string|false|none|none|
+
+<h2 id="tocS_BillingCycle">BillingCycle</h2>
+<!-- backwards compatibility -->
+<a id="schemabillingcycle"></a>
+<a id="schema_BillingCycle"></a>
+<a id="tocSbillingcycle"></a>
+<a id="tocsbillingcycle"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "cycleName": "string",
+  "duration": 0,
+  "durationUnit": "string",
+  "description": "string"
+}
+
+```
+
+BillingCycle
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|cycleName|string|true|none|none|
+|duration|number|true|none|none|
+|durationUnit|string|true|none|none|
+|description|string|false|none|none|
+
+<h2 id="tocS_Currency">Currency</h2>
+<!-- backwards compatibility -->
+<a id="schemacurrency"></a>
+<a id="schema_Currency"></a>
+<a id="tocScurrency"></a>
+<a id="tocscurrency"></a>
+
+```json
+{
+  "id": "string",
+  "currencyCode": "string",
+  "currencyName": "string",
+  "symbol": "string",
+  "country": "string"
+}
+
+```
+
+Currency
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|currencyCode|string|true|none|none|
+|currencyName|string|true|none|none|
+|symbol|string|false|none|none|
+|country|string|false|none|none|
+
+<h2 id="tocS_PlanWithRelations">PlanWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaplanwithrelations"></a>
+<a id="schema_PlanWithRelations"></a>
+<a id="tocSplanwithrelations"></a>
+<a id="tocsplanwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "tier": "string",
+  "size": "string",
+  "price": 0,
+  "metaData": {},
+  "billingCycleId": "string",
+  "currencyId": "string",
+  "billingCycle": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "cycleName": "string",
+    "duration": 0,
+    "durationUnit": "string",
+    "description": "string"
+  },
+  "foreignKey": null,
+  "currency": {
+    "id": "string",
+    "currencyCode": "string",
+    "currencyName": "string",
+    "symbol": "string",
+    "country": "string"
+  }
+}
+
+```
+
+PlanWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|name of the plan|
+|description|string|false|none|description of the plan|
+|tier|string|true|none|Tier of the plan.|
+|size|string|false|none|Size of the plan.|
+|price|number|true|none|none|
+|metaData|object|false|none|Meta data of the plan|
+|billingCycleId|string|false|none|none|
+|currencyId|string|false|none|none|
+|billingCycle|[BillingCycle](#schemabillingcycle)|false|none|none|
+|foreignKey|any|false|none|none|
+|currency|[Currency](#schemacurrency)|false|none|none|
 
 <h2 id="tocS_PlanPartial">PlanPartial</h2>
 <!-- backwards compatibility -->
@@ -12797,36 +12563,6 @@ FeatureValuesPartial
 |status|boolean|false|none|none|
 |value|string|false|none|none|
 
-<h2 id="tocS_Currency">Currency</h2>
-<!-- backwards compatibility -->
-<a id="schemacurrency"></a>
-<a id="schema_Currency"></a>
-<a id="tocScurrency"></a>
-<a id="tocscurrency"></a>
-
-```json
-{
-  "id": "string",
-  "currencyCode": "string",
-  "currencyName": "string",
-  "symbol": "string",
-  "country": "string"
-}
-
-```
-
-Currency
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|currencyCode|string|true|none|none|
-|currencyName|string|true|none|none|
-|symbol|string|false|none|none|
-|country|string|false|none|none|
-
 <h2 id="tocS_NewCurrency">NewCurrency</h2>
 <!-- backwards compatibility -->
 <a id="schemanewcurrency"></a>
@@ -12850,6 +12586,36 @@ NewCurrency
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|currencyCode|string|true|none|none|
+|currencyName|string|true|none|none|
+|symbol|string|false|none|none|
+|country|string|false|none|none|
+
+<h2 id="tocS_CurrencyWithRelations">CurrencyWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemacurrencywithrelations"></a>
+<a id="schema_CurrencyWithRelations"></a>
+<a id="tocScurrencywithrelations"></a>
+<a id="tocscurrencywithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "currencyCode": "string",
+  "currencyName": "string",
+  "symbol": "string",
+  "country": "string"
+}
+
+```
+
+CurrencyWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
 |currencyCode|string|true|none|none|
 |currencyName|string|true|none|none|
 |symbol|string|false|none|none|
@@ -13281,50 +13047,6 @@ TransactionDto
 |status|success|
 |status|failure|
 
-<h2 id="tocS_BillingCycle">BillingCycle</h2>
-<!-- backwards compatibility -->
-<a id="schemabillingcycle"></a>
-<a id="schema_BillingCycle"></a>
-<a id="tocSbillingcycle"></a>
-<a id="tocsbillingcycle"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "cycleName": "string",
-  "duration": 0,
-  "durationUnit": "string",
-  "description": "string"
-}
-
-```
-
-BillingCycle
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|cycleName|string|true|none|none|
-|duration|number|true|none|none|
-|durationUnit|string|true|none|none|
-|description|string|false|none|none|
-
 <h2 id="tocS_NewBillingCycle">NewBillingCycle</h2>
 <!-- backwards compatibility -->
 <a id="schemanewbillingcycle"></a>
@@ -13362,6 +13084,50 @@ NewBillingCycle
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
+|cycleName|string|true|none|none|
+|duration|number|true|none|none|
+|durationUnit|string|true|none|none|
+|description|string|false|none|none|
+
+<h2 id="tocS_BillingCycleWithRelations">BillingCycleWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemabillingcyclewithrelations"></a>
+<a id="schema_BillingCycleWithRelations"></a>
+<a id="tocSbillingcyclewithrelations"></a>
+<a id="tocsbillingcyclewithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "cycleName": "string",
+  "duration": 0,
+  "durationUnit": "string",
+  "description": "string"
+}
+
+```
+
+BillingCycleWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
 |cycleName|string|true|none|none|
 |duration|number|true|none|none|
 |durationUnit|string|true|none|none|

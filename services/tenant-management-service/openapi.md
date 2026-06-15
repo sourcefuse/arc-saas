@@ -946,77 +946,7 @@ fetch('/contacts',
         "string"
       ],
       "leadId": "string",
-      "addressId": "string",
-      "contacts": [
-        {}
-      ],
-      "resources": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "externalIdentifier": "string",
-          "type": "string",
-          "metadata": {},
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "lead": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "companyName": "string",
-        "email": "string",
-        "isValidated": true,
-        "addressId": "string",
-        "tenant": {},
-        "address": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string"
-        },
-        "foreignKey": null
-      },
-      "foreignKey": null,
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      }
+      "addressId": "string"
     },
     "foreignKey": null
   }
@@ -1051,7 +981,7 @@ Status Code **200**
 |»» isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
 |»» type|string|false|none|type of the contact|
 |»» tenantId|string|false|none|tenant id this contact belongs to|
-|»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»» tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -1067,57 +997,6 @@ Status Code **200**
 |»»» domains|[string]|true|none|none|
 |»»» leadId|string|false|none|id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead.|
 |»»» addressId|string|false|none|id of the address of the tenant|
-|»»» contacts|[[ContactWithRelations](#schemacontactwithrelations)]|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ContactWithRelations|[ContactWithRelations](#schemacontactwithrelations)|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»» resources|[[ResourceWithRelations](#schemaresourcewithrelations)]|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ResourceWithRelations|[ResourceWithRelations](#schemaresourcewithrelations)|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» externalIdentifier|string|true|none|identifier for the resource in the external system it was provisioned|
-|»»»»» type|string|true|none|type of the resource like storage, compute, etc|
-|»»»»» metadata|object|true|none|any type specific metadata of the resource like connection info, size, etc|
-|»»»»» tenantId|string|false|none|id of the tenant for which this resource is provisioned|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» lead|[LeadWithRelations](#schemaleadwithrelations)|false|none|this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» firstName|string|true|none|first name of the lead|
-|»»»» lastName|string|true|none|last name of the lead|
-|»»»» companyName|string|true|none|name of the lead's company|
-|»»»» email|string|true|none|email of the lead|
-|»»»» isValidated|boolean|true|none|whether the lead`s email has been validated or not|
-|»»»» addressId|string|false|none|id of the address of the lead|
-|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» address|string|false|none|address of the company|
-|»»»»» city|string|false|none|city of the company|
-|»»»»» state|string|false|none|state of the company|
-|»»»»» zip|string|false|none|zip code of the company|
-|»»»»» country|string|true|none|country of the company|
-|»»»» foreignKey|any|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -2156,94 +2035,7 @@ fetch('/invoices',
         "string"
       ],
       "leadId": "string",
-      "addressId": "string",
-      "contacts": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "isPrimary": true,
-          "type": "string",
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "resources": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "externalIdentifier": "string",
-          "type": "string",
-          "metadata": {},
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "lead": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "companyName": "string",
-        "email": "string",
-        "isValidated": true,
-        "addressId": "string",
-        "tenant": {},
-        "address": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string"
-        },
-        "foreignKey": null
-      },
-      "foreignKey": null,
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      }
+      "addressId": "string"
     },
     "foreignKey": null
   }
@@ -2280,7 +2072,7 @@ Status Code **200**
 |»» dueDate|string|true|none|due date for the invoice|
 |»» status|number|true|none|status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)|
 |»» tenantId|string|true|none|id of the tenant this invoice is generated for|
-|»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»» tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -2296,73 +2088,6 @@ Status Code **200**
 |»»» domains|[string]|true|none|none|
 |»»» leadId|string|false|none|id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead.|
 |»»» addressId|string|false|none|id of the address of the tenant|
-|»»» contacts|[[ContactWithRelations](#schemacontactwithrelations)]|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ContactWithRelations|[ContactWithRelations](#schemacontactwithrelations)|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» firstName|string|true|none|first name of the lead|
-|»»»»» lastName|string|true|none|last name of the lead|
-|»»»»» email|string|true|none|email id of the contact|
-|»»»»» isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
-|»»»»» type|string|false|none|type of the contact|
-|»»»»» tenantId|string|false|none|tenant id this contact belongs to|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» resources|[[ResourceWithRelations](#schemaresourcewithrelations)]|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ResourceWithRelations|[ResourceWithRelations](#schemaresourcewithrelations)|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» externalIdentifier|string|true|none|identifier for the resource in the external system it was provisioned|
-|»»»»» type|string|true|none|type of the resource like storage, compute, etc|
-|»»»»» metadata|object|true|none|any type specific metadata of the resource like connection info, size, etc|
-|»»»»» tenantId|string|false|none|id of the tenant for which this resource is provisioned|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» lead|[LeadWithRelations](#schemaleadwithrelations)|false|none|this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» firstName|string|true|none|first name of the lead|
-|»»»» lastName|string|true|none|last name of the lead|
-|»»»» companyName|string|true|none|name of the lead's company|
-|»»»» email|string|true|none|email of the lead|
-|»»»» isValidated|boolean|true|none|whether the lead`s email has been validated or not|
-|»»»» addressId|string|false|none|id of the address of the lead|
-|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» address|string|false|none|address of the company|
-|»»»»» city|string|false|none|city of the company|
-|»»»»» state|string|false|none|state of the company|
-|»»»»» zip|string|false|none|zip code of the company|
-|»»»»» country|string|true|none|country of the company|
-|»»»» foreignKey|any|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -3411,62 +3136,7 @@ fetch('/leads',
         "string"
       ],
       "leadId": "string",
-      "addressId": "string",
-      "contacts": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "isPrimary": true,
-          "type": "string",
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "resources": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "externalIdentifier": "string",
-          "type": "string",
-          "metadata": {},
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "lead": {},
-      "foreignKey": null,
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      }
+      "addressId": "string"
     },
     "address": {
       "deleted": true,
@@ -3516,7 +3186,7 @@ Status Code **200**
 |»» email|string|true|none|email of the lead|
 |»» isValidated|boolean|true|none|whether the lead`s email has been validated or not|
 |»» addressId|string|false|none|id of the address of the lead|
-|»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»» tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -3532,57 +3202,20 @@ Status Code **200**
 |»»» domains|[string]|true|none|none|
 |»»» leadId|string|false|none|id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead.|
 |»»» addressId|string|false|none|id of the address of the tenant|
-|»»» contacts|[[ContactWithRelations](#schemacontactwithrelations)]|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ContactWithRelations|[ContactWithRelations](#schemacontactwithrelations)|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» firstName|string|true|none|first name of the lead|
-|»»»»» lastName|string|true|none|last name of the lead|
-|»»»»» email|string|true|none|email id of the contact|
-|»»»»» isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
-|»»»»» type|string|false|none|type of the contact|
-|»»»»» tenantId|string|false|none|tenant id this contact belongs to|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» resources|[[ResourceWithRelations](#schemaresourcewithrelations)]|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ResourceWithRelations|[ResourceWithRelations](#schemaresourcewithrelations)|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» externalIdentifier|string|true|none|identifier for the resource in the external system it was provisioned|
-|»»»»» type|string|true|none|type of the resource like storage, compute, etc|
-|»»»»» metadata|object|true|none|any type specific metadata of the resource like connection info, size, etc|
-|»»»»» tenantId|string|false|none|id of the tenant for which this resource is provisioned|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» lead|[LeadWithRelations](#schemaleadwithrelations)|false|none|this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })|
-|»»» foreignKey|any|false|none|none|
-|»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» address|string|false|none|address of the company|
-|»»»» city|string|false|none|city of the company|
-|»»»» state|string|false|none|state of the company|
-|»»»» zip|string|false|none|zip code of the company|
-|»»»» country|string|true|none|country of the company|
-|»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
+|»» address|[Address](#schemaaddress)|false|none|this model represents the address of a company or lead|
+|»»» deleted|boolean|false|none|none|
+|»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»» deletedBy|string¦null|false|none|none|
+|»»» createdOn|string(date-time)|false|none|none|
+|»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
+|»»» id|string|false|none|none|
+|»»» address|string|false|none|address of the company|
+|»»» city|string|false|none|city of the company|
+|»»» state|string|false|none|state of the company|
+|»»» zip|string|false|none|zip code of the company|
+|»»» country|string|true|none|country of the company|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -4765,94 +4398,7 @@ fetch('/tenant-configs',
         "string"
       ],
       "leadId": "string",
-      "addressId": "string",
-      "contacts": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "isPrimary": true,
-          "type": "string",
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "resources": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "externalIdentifier": "string",
-          "type": "string",
-          "metadata": {},
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "lead": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "companyName": "string",
-        "email": "string",
-        "isValidated": true,
-        "addressId": "string",
-        "tenant": {},
-        "address": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string"
-        },
-        "foreignKey": null
-      },
-      "foreignKey": null,
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      }
+      "addressId": "string"
     },
     "foreignKey": null
   }
@@ -4884,7 +4430,7 @@ Status Code **200**
 |»» configKey|string|true|none|none|
 |»» configValue|object|true|none|none|
 |»» tenantId|string|true|none|id of the tenant this invoice is generated for|
-|»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»» tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -4900,73 +4446,6 @@ Status Code **200**
 |»»» domains|[string]|true|none|none|
 |»»» leadId|string|false|none|id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead.|
 |»»» addressId|string|false|none|id of the address of the tenant|
-|»»» contacts|[[ContactWithRelations](#schemacontactwithrelations)]|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ContactWithRelations|[ContactWithRelations](#schemacontactwithrelations)|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» firstName|string|true|none|first name of the lead|
-|»»»»» lastName|string|true|none|last name of the lead|
-|»»»»» email|string|true|none|email id of the contact|
-|»»»»» isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
-|»»»»» type|string|false|none|type of the contact|
-|»»»»» tenantId|string|false|none|tenant id this contact belongs to|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» resources|[[ResourceWithRelations](#schemaresourcewithrelations)]|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» ResourceWithRelations|[ResourceWithRelations](#schemaresourcewithrelations)|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» externalIdentifier|string|true|none|identifier for the resource in the external system it was provisioned|
-|»»»»» type|string|true|none|type of the resource like storage, compute, etc|
-|»»»»» metadata|object|true|none|any type specific metadata of the resource like connection info, size, etc|
-|»»»»» tenantId|string|false|none|id of the tenant for which this resource is provisioned|
-|»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» lead|[LeadWithRelations](#schemaleadwithrelations)|false|none|this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» firstName|string|true|none|first name of the lead|
-|»»»» lastName|string|true|none|last name of the lead|
-|»»»» companyName|string|true|none|name of the lead's company|
-|»»»» email|string|true|none|email of the lead|
-|»»»» isValidated|boolean|true|none|whether the lead`s email has been validated or not|
-|»»»» addressId|string|false|none|id of the address of the lead|
-|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» address|string|false|none|address of the company|
-|»»»»» city|string|false|none|city of the company|
-|»»»»» state|string|false|none|state of the company|
-|»»»»» zip|string|false|none|zip code of the company|
-|»»»»» country|string|true|none|country of the company|
-|»»»» foreignKey|any|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -6201,9 +5680,7 @@ fetch('/tenants',
         "email": "string",
         "isPrimary": true,
         "type": "string",
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
+        "tenantId": "string"
       }
     ],
     "resources": [
@@ -6219,9 +5696,7 @@ fetch('/tenants',
         "externalIdentifier": "string",
         "type": "string",
         "metadata": {},
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
+        "tenantId": "string"
       }
     ],
     "lead": {
@@ -6238,24 +5713,7 @@ fetch('/tenants',
       "companyName": "string",
       "email": "string",
       "isValidated": true,
-      "addressId": "string",
-      "tenant": {},
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      },
-      "foreignKey": null
+      "addressId": "string"
     },
     "foreignKey": null,
     "address": {
@@ -6306,8 +5764,8 @@ Status Code **200**
 |»» domains|[string]|true|none|none|
 |»» leadId|string|false|none|id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead.|
 |»» addressId|string|false|none|id of the address of the tenant|
-|»» contacts|[[ContactWithRelations](#schemacontactwithrelations)]|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
-|»»» ContactWithRelations|[ContactWithRelations](#schemacontactwithrelations)|false|none|contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })|
+|»» contacts|[[Contact](#schemacontact)]|false|none|[contacts belonging to a tenant]|
+|»»» Contact|[Contact](#schemacontact)|false|none|contacts belonging to a tenant|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -6322,10 +5780,8 @@ Status Code **200**
 |»»»» isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
 |»»»» type|string|false|none|type of the contact|
 |»»»» tenantId|string|false|none|tenant id this contact belongs to|
-|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»» resources|[[ResourceWithRelations](#schemaresourcewithrelations)]|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
-|»»» ResourceWithRelations|[ResourceWithRelations](#schemaresourcewithrelations)|false|none|model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })|
+|»» resources|[[Resource](#schemaresource)]|false|none|[model for resources that are provisioned for a tenant]|
+|»»» Resource|[Resource](#schemaresource)|false|none|model for resources that are provisioned for a tenant|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -6338,9 +5794,7 @@ Status Code **200**
 |»»»» type|string|true|none|type of the resource like storage, compute, etc|
 |»»»» metadata|object|true|none|any type specific metadata of the resource like connection info, size, etc|
 |»»»» tenantId|string|false|none|id of the tenant for which this resource is provisioned|
-|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»» lead|[LeadWithRelations](#schemaleadwithrelations)|false|none|this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })|
+|»» lead|[Lead](#schemalead)|false|none|this model represents a lead that could eventually be a tenant in the system|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -6355,24 +5809,21 @@ Status Code **200**
 |»»» email|string|true|none|email of the lead|
 |»»» isValidated|boolean|true|none|whether the lead`s email has been validated or not|
 |»»» addressId|string|false|none|id of the address of the lead|
-|»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» address|string|false|none|address of the company|
-|»»»» city|string|false|none|city of the company|
-|»»»» state|string|false|none|state of the company|
-|»»»» zip|string|false|none|zip code of the company|
-|»»»» country|string|true|none|country of the company|
-|»»» foreignKey|any|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
+|»» address|[Address](#schemaaddress)|false|none|this model represents the address of a company or lead|
+|»»» deleted|boolean|false|none|none|
+|»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»» deletedBy|string¦null|false|none|none|
+|»»» createdOn|string(date-time)|false|none|none|
+|»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
+|»»» id|string|false|none|none|
+|»»» address|string|false|none|address of the company|
+|»»» city|string|false|none|city of the company|
+|»»» state|string|false|none|state of the company|
+|»»» zip|string|false|none|zip code of the company|
+|»»» country|string|true|none|country of the company|
 
 #### Enumerated Values
 
@@ -6792,12 +6243,12 @@ SubscriptionDTO
 |invoiceId|string|false|none|none|
 |plan|object|false|none|none|
 
-<h2 id="tocS_ContactWithRelations">ContactWithRelations</h2>
+<h2 id="tocS_Contact">Contact</h2>
 <!-- backwards compatibility -->
-<a id="schemacontactwithrelations"></a>
-<a id="schema_ContactWithRelations"></a>
-<a id="tocScontactwithrelations"></a>
-<a id="tocscontactwithrelations"></a>
+<a id="schemacontact"></a>
+<a id="schema_Contact"></a>
+<a id="tocScontact"></a>
+<a id="tocscontact"></a>
 
 ```json
 {
@@ -6814,119 +6265,12 @@ SubscriptionDTO
   "email": "string",
   "isPrimary": true,
   "type": "string",
-  "tenantId": "string",
-  "tenant": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "status": 0,
-    "key": "string",
-    "spocUserId": "string",
-    "domains": [
-      "string"
-    ],
-    "leadId": "string",
-    "addressId": "string",
-    "contacts": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isPrimary": true,
-        "type": "string",
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "resources": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "externalIdentifier": "string",
-        "type": "string",
-        "metadata": {},
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "lead": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "companyName": "string",
-      "email": "string",
-      "isValidated": true,
-      "addressId": "string",
-      "tenant": {},
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      },
-      "foreignKey": null
-    },
-    "foreignKey": null,
-    "address": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string"
-    }
-  },
-  "foreignKey": null
+  "tenantId": "string"
 }
 
 ```
 
-ContactWithRelations
+Contact
 
 ### Properties
 
@@ -6946,15 +6290,13 @@ ContactWithRelations
 |isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
 |type|string|false|none|type of the contact|
 |tenantId|string|false|none|tenant id this contact belongs to|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
-<h2 id="tocS_ResourceWithRelations">ResourceWithRelations</h2>
+<h2 id="tocS_Resource">Resource</h2>
 <!-- backwards compatibility -->
-<a id="schemaresourcewithrelations"></a>
-<a id="schema_ResourceWithRelations"></a>
-<a id="tocSresourcewithrelations"></a>
-<a id="tocsresourcewithrelations"></a>
+<a id="schemaresource"></a>
+<a id="schema_Resource"></a>
+<a id="tocSresource"></a>
+<a id="tocsresource"></a>
 
 ```json
 {
@@ -6969,119 +6311,12 @@ ContactWithRelations
   "externalIdentifier": "string",
   "type": "string",
   "metadata": {},
-  "tenantId": "string",
-  "tenant": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "status": 0,
-    "key": "string",
-    "spocUserId": "string",
-    "domains": [
-      "string"
-    ],
-    "leadId": "string",
-    "addressId": "string",
-    "contacts": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isPrimary": true,
-        "type": "string",
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "resources": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "externalIdentifier": "string",
-        "type": "string",
-        "metadata": {},
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "lead": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "companyName": "string",
-      "email": "string",
-      "isValidated": true,
-      "addressId": "string",
-      "tenant": {},
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      },
-      "foreignKey": null
-    },
-    "foreignKey": null,
-    "address": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string"
-    }
-  },
-  "foreignKey": null
+  "tenantId": "string"
 }
 
 ```
 
-ResourceWithRelations
+Resource
 
 ### Properties
 
@@ -7099,15 +6334,61 @@ ResourceWithRelations
 |type|string|true|none|type of the resource like storage, compute, etc|
 |metadata|object|true|none|any type specific metadata of the resource like connection info, size, etc|
 |tenantId|string|false|none|id of the tenant for which this resource is provisioned|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
-<h2 id="tocS_AddressWithRelations">AddressWithRelations</h2>
+<h2 id="tocS_Lead">Lead</h2>
 <!-- backwards compatibility -->
-<a id="schemaaddresswithrelations"></a>
-<a id="schema_AddressWithRelations"></a>
-<a id="tocSaddresswithrelations"></a>
-<a id="tocsaddresswithrelations"></a>
+<a id="schemalead"></a>
+<a id="schema_Lead"></a>
+<a id="tocSlead"></a>
+<a id="tocslead"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "companyName": "string",
+  "email": "string",
+  "isValidated": true,
+  "addressId": "string"
+}
+
+```
+
+Lead
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|first name of the lead|
+|lastName|string|true|none|last name of the lead|
+|companyName|string|true|none|name of the lead's company|
+|email|string|true|none|email of the lead|
+|isValidated|boolean|true|none|whether the lead`s email has been validated or not|
+|addressId|string|false|none|id of the address of the lead|
+
+<h2 id="tocS_Address">Address</h2>
+<!-- backwards compatibility -->
+<a id="schemaaddress"></a>
+<a id="schema_Address"></a>
+<a id="tocSaddress"></a>
+<a id="tocsaddress"></a>
 
 ```json
 {
@@ -7128,7 +6409,7 @@ ResourceWithRelations
 
 ```
 
-AddressWithRelations
+Address
 
 ### Properties
 
@@ -7147,179 +6428,6 @@ AddressWithRelations
 |state|string|false|none|state of the company|
 |zip|string|false|none|zip code of the company|
 |country|string|true|none|country of the company|
-
-<h2 id="tocS_LeadWithRelations">LeadWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaleadwithrelations"></a>
-<a id="schema_LeadWithRelations"></a>
-<a id="tocSleadwithrelations"></a>
-<a id="tocsleadwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "companyName": "string",
-  "email": "string",
-  "isValidated": true,
-  "addressId": "string",
-  "tenant": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "status": 0,
-    "key": "string",
-    "spocUserId": "string",
-    "domains": [
-      "string"
-    ],
-    "leadId": "string",
-    "addressId": "string",
-    "contacts": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isPrimary": true,
-        "type": "string",
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "resources": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "externalIdentifier": "string",
-        "type": "string",
-        "metadata": {},
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "lead": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "companyName": "string",
-      "email": "string",
-      "isValidated": true,
-      "addressId": "string",
-      "tenant": {},
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      },
-      "foreignKey": null
-    },
-    "foreignKey": null,
-    "address": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string"
-    }
-  },
-  "address": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "address": "string",
-    "city": "string",
-    "state": "string",
-    "zip": "string",
-    "country": "string"
-  },
-  "foreignKey": null
-}
-
-```
-
-LeadWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|firstName|string|true|none|first name of the lead|
-|lastName|string|true|none|last name of the lead|
-|companyName|string|true|none|name of the lead's company|
-|email|string|true|none|email of the lead|
-|isValidated|boolean|true|none|whether the lead`s email has been validated or not|
-|addressId|string|false|none|id of the address of the lead|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
 <h2 id="tocS_TenantWithRelations">TenantWithRelations</h2>
 <!-- backwards compatibility -->
@@ -7362,95 +6470,7 @@ LeadWithRelations
       "email": "string",
       "isPrimary": true,
       "type": "string",
-      "tenantId": "string",
-      "tenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "status": 0,
-        "key": "string",
-        "spocUserId": "string",
-        "domains": [
-          "string"
-        ],
-        "leadId": "string",
-        "addressId": "string",
-        "contacts": [],
-        "resources": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "externalIdentifier": "string",
-            "type": "string",
-            "metadata": {},
-            "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
-          }
-        ],
-        "lead": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "companyName": "string",
-          "email": "string",
-          "isValidated": true,
-          "addressId": "string",
-          "tenant": {},
-          "address": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string"
-          },
-          "foreignKey": null
-        },
-        "foreignKey": null,
-        "address": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string"
-        }
-      },
-      "foreignKey": null
+      "tenantId": "string"
     }
   ],
   "resources": [
@@ -7466,97 +6486,7 @@ LeadWithRelations
       "externalIdentifier": "string",
       "type": "string",
       "metadata": {},
-      "tenantId": "string",
-      "tenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "status": 0,
-        "key": "string",
-        "spocUserId": "string",
-        "domains": [
-          "string"
-        ],
-        "leadId": "string",
-        "addressId": "string",
-        "contacts": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "isPrimary": true,
-            "type": "string",
-            "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
-          }
-        ],
-        "resources": [],
-        "lead": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "companyName": "string",
-          "email": "string",
-          "isValidated": true,
-          "addressId": "string",
-          "tenant": {},
-          "address": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string"
-          },
-          "foreignKey": null
-        },
-        "foreignKey": null,
-        "address": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string"
-        }
-      },
-      "foreignKey": null
+      "tenantId": "string"
     }
   ],
   "lead": {
@@ -7573,97 +6503,7 @@ LeadWithRelations
     "companyName": "string",
     "email": "string",
     "isValidated": true,
-    "addressId": "string",
-    "tenant": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "name": "string",
-      "status": 0,
-      "key": "string",
-      "spocUserId": "string",
-      "domains": [
-        "string"
-      ],
-      "leadId": "string",
-      "addressId": "string",
-      "contacts": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "isPrimary": true,
-          "type": "string",
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "resources": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "externalIdentifier": "string",
-          "type": "string",
-          "metadata": {},
-          "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
-        }
-      ],
-      "lead": {},
-      "foreignKey": null,
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      }
-    },
-    "address": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string"
-    },
-    "foreignKey": null
+    "addressId": "string"
   },
   "foreignKey": null,
   "address": {
@@ -7706,11 +6546,11 @@ TenantWithRelations
 |domains|[string]|true|none|none|
 |leadId|string|false|none|id of the lead from which this tenant was generated. this is optional as a tenant can be created without this lead.|
 |addressId|string|false|none|id of the address of the tenant|
-|contacts|[[ContactWithRelations](#schemacontactwithrelations)]|false|none|[contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })]|
-|resources|[[ResourceWithRelations](#schemaresourcewithrelations)]|false|none|[model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })]|
-|lead|[LeadWithRelations](#schemaleadwithrelations)|false|none|this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })|
+|contacts|[[Contact](#schemacontact)]|false|none|[contacts belonging to a tenant]|
+|resources|[[Resource](#schemaresource)]|false|none|[model for resources that are provisioned for a tenant]|
+|lead|[Lead](#schemalead)|false|none|this model represents a lead that could eventually be a tenant in the system|
 |foreignKey|any|false|none|none|
-|address|[AddressWithRelations](#schemaaddresswithrelations)|false|none|this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })|
+|address|[Address](#schemaaddress)|false|none|this model represents the address of a company or lead|
 
 #### Enumerated Values
 
@@ -7785,54 +6625,6 @@ TenantPartial
 |status|3|
 |status|4|
 |status|5|
-
-<h2 id="tocS_Lead">Lead</h2>
-<!-- backwards compatibility -->
-<a id="schemalead"></a>
-<a id="schema_Lead"></a>
-<a id="tocSlead"></a>
-<a id="tocslead"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "companyName": "string",
-  "email": "string",
-  "isValidated": true,
-  "addressId": "string"
-}
-
-```
-
-Lead
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|firstName|string|true|none|first name of the lead|
-|lastName|string|true|none|last name of the lead|
-|companyName|string|true|none|name of the lead's company|
-|email|string|true|none|email of the lead|
-|isValidated|boolean|true|none|whether the lead`s email has been validated or not|
-|addressId|string|false|none|id of the address of the lead|
 
 <h2 id="tocS_CreateLeadDTO">CreateLeadDTO</h2>
 <!-- backwards compatibility -->
@@ -7926,6 +6718,92 @@ VerifyLeadResponseDTO
 |---|---|---|---|---|
 |id|string|true|none|none|
 |token|string|true|none|none|
+
+<h2 id="tocS_LeadWithRelations">LeadWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaleadwithrelations"></a>
+<a id="schema_LeadWithRelations"></a>
+<a id="tocSleadwithrelations"></a>
+<a id="tocsleadwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "companyName": "string",
+  "email": "string",
+  "isValidated": true,
+  "addressId": "string",
+  "tenant": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "status": 0,
+    "key": "string",
+    "spocUserId": "string",
+    "domains": [
+      "string"
+    ],
+    "leadId": "string",
+    "addressId": "string"
+  },
+  "address": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string"
+  },
+  "foreignKey": null
+}
+
+```
+
+LeadWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|first name of the lead|
+|lastName|string|true|none|last name of the lead|
+|companyName|string|true|none|name of the lead's company|
+|email|string|true|none|email of the lead|
+|isValidated|boolean|true|none|whether the lead`s email has been validated or not|
+|addressId|string|false|none|id of the address of the lead|
+|tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
+|address|[Address](#schemaaddress)|false|none|this model represents the address of a company or lead|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_LeadPartial">LeadPartial</h2>
 <!-- backwards compatibility -->
@@ -8179,94 +7057,7 @@ NewInvoice
       "string"
     ],
     "leadId": "string",
-    "addressId": "string",
-    "contacts": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isPrimary": true,
-        "type": "string",
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "resources": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "externalIdentifier": "string",
-        "type": "string",
-        "metadata": {},
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "lead": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "companyName": "string",
-      "email": "string",
-      "isValidated": true,
-      "addressId": "string",
-      "tenant": {},
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      },
-      "foreignKey": null
-    },
-    "foreignKey": null,
-    "address": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string"
-    }
+    "addressId": "string"
   },
   "foreignKey": null
 }
@@ -8295,7 +7086,7 @@ InvoiceWithRelations
 |dueDate|string|true|none|due date for the invoice|
 |status|number|true|none|status of the invoice - 0(PENDING), 1(PAID), 2(CANCELLED)|
 |tenantId|string|true|none|id of the tenant this invoice is generated for|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
 |foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -8372,54 +7163,6 @@ InvoicePartial
 |status|1|
 |status|2|
 
-<h2 id="tocS_Contact">Contact</h2>
-<!-- backwards compatibility -->
-<a id="schemacontact"></a>
-<a id="schema_Contact"></a>
-<a id="tocScontact"></a>
-<a id="tocscontact"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "isPrimary": true,
-  "type": "string",
-  "tenantId": "string"
-}
-
-```
-
-Contact
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|firstName|string|true|none|first name of the lead|
-|lastName|string|true|none|last name of the lead|
-|email|string|true|none|email id of the contact|
-|isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
-|type|string|false|none|type of the contact|
-|tenantId|string|false|none|tenant id this contact belongs to|
-
 <h2 id="tocS_NewContact">NewContact</h2>
 <!-- backwards compatibility -->
 <a id="schemanewcontact"></a>
@@ -8465,6 +7208,76 @@ NewContact
 |isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
 |type|string|false|none|type of the contact|
 |tenantId|string|false|none|tenant id this contact belongs to|
+
+<h2 id="tocS_ContactWithRelations">ContactWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemacontactwithrelations"></a>
+<a id="schema_ContactWithRelations"></a>
+<a id="tocScontactwithrelations"></a>
+<a id="tocscontactwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "isPrimary": true,
+  "type": "string",
+  "tenantId": "string",
+  "tenant": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "status": 0,
+    "key": "string",
+    "spocUserId": "string",
+    "domains": [
+      "string"
+    ],
+    "leadId": "string",
+    "addressId": "string"
+  },
+  "foreignKey": null
+}
+
+```
+
+ContactWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|first name of the lead|
+|lastName|string|true|none|last name of the lead|
+|email|string|true|none|email id of the contact|
+|isPrimary|boolean|true|none|boolean value denoting if the contact is a primary contact for it's tenant.|
+|type|string|false|none|type of the contact|
+|tenantId|string|false|none|tenant id this contact belongs to|
+|tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_ContactPartial">ContactPartial</h2>
 <!-- backwards compatibility -->
@@ -8659,94 +7472,7 @@ NewTenantConfig
       "string"
     ],
     "leadId": "string",
-    "addressId": "string",
-    "contacts": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "isPrimary": true,
-        "type": "string",
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "resources": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "externalIdentifier": "string",
-        "type": "string",
-        "metadata": {},
-        "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
-      }
-    ],
-    "lead": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "companyName": "string",
-      "email": "string",
-      "isValidated": true,
-      "addressId": "string",
-      "tenant": {},
-      "address": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string"
-      },
-      "foreignKey": null
-    },
-    "foreignKey": null,
-    "address": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string"
-    }
+    "addressId": "string"
   },
   "foreignKey": null
 }
@@ -8770,7 +7496,7 @@ TenantMgmtConfigWithRelations
 |configKey|string|true|none|none|
 |configValue|object|true|none|none|
 |tenantId|string|true|none|id of the tenant this invoice is generated for|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|tenant|[Tenant](#schematenant)|false|none|main model of the service that represents a tenant in the system, either pooled or siloed|
 |foreignKey|any|false|none|none|
 
 <h2 id="tocS_TenantMgmtConfigPartial">TenantMgmtConfigPartial</h2>

@@ -2358,10 +2358,10 @@
         "additionalProperties": false,
         "x-typescript-type": "SubscriptionDTO"
       },
-      "ContactWithRelations": {
-        "title": "ContactWithRelations",
+      "Contact": {
+        "title": "Contact",
         "type": "object",
-        "description": "contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "contacts belonging to a tenant",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -2415,11 +2415,7 @@
           "tenantId": {
             "type": "string",
             "description": "tenant id this contact belongs to"
-          },
-          "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
-          },
-          "foreignKey": {}
+          }
         },
         "required": [
           "firstName",
@@ -2429,10 +2425,10 @@
         ],
         "additionalProperties": false
       },
-      "ResourceWithRelations": {
-        "title": "ResourceWithRelations",
+      "Resource": {
+        "title": "Resource",
         "type": "object",
-        "description": "model for resources that are provisioned for a tenant (tsType: ResourceWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "model for resources that are provisioned for a tenant",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -2478,11 +2474,7 @@
           "tenantId": {
             "type": "string",
             "description": "id of the tenant for which this resource is provisioned"
-          },
-          "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
-          },
-          "foreignKey": {}
+          }
         },
         "required": [
           "externalIdentifier",
@@ -2491,70 +2483,10 @@
         ],
         "additionalProperties": false
       },
-      "AddressWithRelations": {
-        "title": "AddressWithRelations",
+      "Lead": {
+        "title": "Lead",
         "type": "object",
-        "description": "this model represents the address of a company or lead (tsType: AddressWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string",
-            "description": "address of the company"
-          },
-          "city": {
-            "type": "string",
-            "description": "city of the company"
-          },
-          "state": {
-            "type": "string",
-            "description": "state of the company"
-          },
-          "zip": {
-            "type": "string",
-            "description": "zip code of the company"
-          },
-          "country": {
-            "type": "string",
-            "description": "country of the company"
-          }
-        },
-        "required": [
-          "country"
-        ],
-        "additionalProperties": false
-      },
-      "LeadWithRelations": {
-        "title": "LeadWithRelations",
-        "type": "object",
-        "description": "this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "this model represents a lead that could eventually be a tenant in the system",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -2608,14 +2540,7 @@
           "addressId": {
             "type": "string",
             "description": "id of the address of the lead"
-          },
-          "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
-          },
-          "address": {
-            "$ref": "#/components/schemas/AddressWithRelations"
-          },
-          "foreignKey": {}
+          }
         },
         "required": [
           "firstName",
@@ -2623,6 +2548,66 @@
           "companyName",
           "email",
           "isValidated"
+        ],
+        "additionalProperties": false
+      },
+      "Address": {
+        "title": "Address",
+        "type": "object",
+        "description": "this model represents the address of a company or lead",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "description": "address of the company"
+          },
+          "city": {
+            "type": "string",
+            "description": "city of the company"
+          },
+          "state": {
+            "type": "string",
+            "description": "state of the company"
+          },
+          "zip": {
+            "type": "string",
+            "description": "zip code of the company"
+          },
+          "country": {
+            "type": "string",
+            "description": "country of the company"
+          }
+        },
+        "required": [
+          "country"
         ],
         "additionalProperties": false
       },
@@ -2704,21 +2689,21 @@
           "contacts": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ContactWithRelations"
+              "$ref": "#/components/schemas/Contact"
             }
           },
           "resources": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ResourceWithRelations"
+              "$ref": "#/components/schemas/Resource"
             }
           },
           "lead": {
-            "$ref": "#/components/schemas/LeadWithRelations"
+            "$ref": "#/components/schemas/Lead"
           },
           "foreignKey": {},
           "address": {
-            "$ref": "#/components/schemas/AddressWithRelations"
+            "$ref": "#/components/schemas/Address"
           }
         },
         "required": [
@@ -2805,74 +2790,6 @@
             "description": "id of the address of the tenant"
           }
         },
-        "additionalProperties": false
-      },
-      "Lead": {
-        "title": "Lead",
-        "type": "object",
-        "description": "this model represents a lead that could eventually be a tenant in the system",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string",
-            "description": "first name of the lead"
-          },
-          "lastName": {
-            "type": "string",
-            "description": "last name of the lead"
-          },
-          "companyName": {
-            "type": "string",
-            "description": "name of the lead's company"
-          },
-          "email": {
-            "type": "string",
-            "description": "email of the lead"
-          },
-          "isValidated": {
-            "type": "boolean",
-            "description": "whether the lead`s email has been validated or not"
-          },
-          "addressId": {
-            "type": "string",
-            "description": "id of the address of the lead"
-          }
-        },
-        "required": [
-          "firstName",
-          "lastName",
-          "companyName",
-          "email",
-          "isValidated"
-        ],
         "additionalProperties": false
       },
       "CreateLeadDTO": {
@@ -2999,6 +2916,81 @@
         "required": [
           "id",
           "token"
+        ],
+        "additionalProperties": false
+      },
+      "LeadWithRelations": {
+        "title": "LeadWithRelations",
+        "type": "object",
+        "description": "this model represents a lead that could eventually be a tenant in the system (tsType: LeadWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "first name of the lead"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "last name of the lead"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "name of the lead's company"
+          },
+          "email": {
+            "type": "string",
+            "description": "email of the lead"
+          },
+          "isValidated": {
+            "type": "boolean",
+            "description": "whether the lead`s email has been validated or not"
+          },
+          "addressId": {
+            "type": "string",
+            "description": "id of the address of the lead"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/Tenant"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "companyName",
+          "email",
+          "isValidated"
         ],
         "additionalProperties": false
       },
@@ -3355,7 +3347,7 @@
             "description": "id of the tenant this invoice is generated for"
           },
           "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
+            "$ref": "#/components/schemas/Tenant"
           },
           "foreignKey": {}
         },
@@ -3447,73 +3439,6 @@
         },
         "additionalProperties": false
       },
-      "Contact": {
-        "title": "Contact",
-        "type": "object",
-        "description": "contacts belonging to a tenant",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string",
-            "description": "first name of the lead"
-          },
-          "lastName": {
-            "type": "string",
-            "description": "last name of the lead"
-          },
-          "email": {
-            "type": "string",
-            "description": "email id of the contact"
-          },
-          "isPrimary": {
-            "type": "boolean",
-            "description": "boolean value denoting if the contact is a primary contact for it's tenant."
-          },
-          "type": {
-            "type": "string",
-            "description": "type of the contact"
-          },
-          "tenantId": {
-            "type": "string",
-            "description": "tenant id this contact belongs to"
-          }
-        },
-        "required": [
-          "firstName",
-          "lastName",
-          "email",
-          "isPrimary"
-        ],
-        "additionalProperties": false
-      },
       "NewContact": {
         "title": "NewContact",
         "type": "object",
@@ -3569,6 +3494,77 @@
             "type": "string",
             "description": "tenant id this contact belongs to"
           }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "isPrimary"
+        ],
+        "additionalProperties": false
+      },
+      "ContactWithRelations": {
+        "title": "ContactWithRelations",
+        "type": "object",
+        "description": "contacts belonging to a tenant (tsType: ContactWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "first name of the lead"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "last name of the lead"
+          },
+          "email": {
+            "type": "string",
+            "description": "email id of the contact"
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "description": "boolean value denoting if the contact is a primary contact for it's tenant."
+          },
+          "type": {
+            "type": "string",
+            "description": "type of the contact"
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "tenant id this contact belongs to"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/Tenant"
+          },
+          "foreignKey": {}
         },
         "required": [
           "firstName",
@@ -3808,7 +3804,7 @@
             "description": "id of the tenant this invoice is generated for"
           },
           "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
+            "$ref": "#/components/schemas/Tenant"
           },
           "foreignKey": {}
         },
