@@ -13,7 +13,7 @@ async function exportOpenApiSpec(): Promise<void> {
       host: process.env.HOST ?? 'localhost',
     },
   };
-  const outFile = process.argv[ARGV_INDEX] ?? './src/openapi.json';
+  const outFile = process.argv[ARGV_INDEX] ?? './openapi.json';
   const app = new TenantMgmtServiceApplication(config);
   await app.boot();
   await app.exportOpenApiSpec(outFile);
