@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.2.0 (2026-06-16)
+
+* feat(all-services): add openapi documentation files to arc-saas services (#123) ([9c0296e](https://github.com/sourcefuse/arc-saas/commit/9c0296e)), closes [#123](https://github.com/sourcefuse/arc-saas/issues/123) [#122](https://github.com/sourcefuse/arc-saas/issues/122)
+
+
+
+
+
 ## <small>1.1.1 (2026-01-30)</small>
 
 * fix(tenant-management): test fix (#117) ([1166739](https://github.com/sourcefuse/arc-saas/commit/1166739)), closes [#117](https://github.com/sourcefuse/arc-saas/issues/117) [#0](https://github.com/sourcefuse/arc-saas/issues/0)

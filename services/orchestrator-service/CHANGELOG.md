@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.3.0 (2026-06-16)
+
+* feat(all-services): add openapi documentation files to arc-saas services (#123) ([9c0296e](https://github.com/sourcefuse/arc-saas/commit/9c0296e)), closes [#123](https://github.com/sourcefuse/arc-saas/issues/123) [#122](https://github.com/sourcefuse/arc-saas/issues/122)
+
+
+
+
+
 ## 1.2.0 (2025-12-17)
 
 * chore(all-services): manual version bump (#111) ([10db513](https://github.com/sourcefuse/arc-saas/commit/10db513)), closes [#111](https://github.com/sourcefuse/arc-saas/issues/111) [#00](https://github.com/sourcefuse/arc-saas/issues/00)

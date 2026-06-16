@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.3.0 (2026-06-16)
+
+* feat(all-services): add openapi documentation files to arc-saas services (#123) ([9c0296e](https://github.com/sourcefuse/arc-saas/commit/9c0296e)), closes [#123](https://github.com/sourcefuse/arc-saas/issues/123) [#122](https://github.com/sourcefuse/arc-saas/issues/122)
+
+
+
+
+
 ## <small>1.2.1 (2026-01-30)</small>
 
 * fix(tenant-management): add missing binding in component (#116) ([65f1a57](https://github.com/sourcefuse/arc-saas/commit/65f1a57)), closes [#116](https://github.com/sourcefuse/arc-saas/issues/116) [/#diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR41](https://github.com///issues/diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR41) [/#diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eL75-R85](https://github.com///issues/diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eL75-R85) [/#diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR168-R173](https://github.com///issues/diff-a899c2cf2db6cc85f4e1446c1a556430a485a1664c67be022a4c640a8257af0eR168-R173) [#0](https://github.com/sourcefuse/arc-saas/issues/0)
