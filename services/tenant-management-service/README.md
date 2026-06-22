@@ -18,6 +18,11 @@ A Microservice for handling tenant management operations. It provides -
 
 ![image](https://github.com/sourcefuse/arc-saas/assets/107617248/25cb5c15-30d6-4e3a-8a43-05cca121eeaf)
 
+## Prerequisite
+Authentication and authorization are implemented on each API endpoint. You can build the authentication service using the [@sourceloop/authentication-service](https://www.npmjs.com/package/@sourceloop/authentication-service).
+
+Note: For a basic setup, you can use symmetric encryption with Cognito. You can also refer to the [sandbox](https://github.com/sourcefuse/arc-saas-sandbox) 
+
 ## Installation
 
 Install Tenant Management Service using `npm`;
@@ -58,42 +63,86 @@ $ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
   `npm install @sourceloop/core loopback4-authorization loopback4-authentication`
 - Add the following to your `application.ts`
 
-```typecript
-this.bind(TenantManagementServiceBindings.Config).to({
-      useCustomSequence: true,
-    });
+  ```typescript
+  this.bind(TenantManagementServiceBindings.Config).to({
+        useCustomSequence: true,
+      });
 
-this.component(TenantManagementServiceComponent);
+  this.component(TenantManagementServiceComponent);
 
-this.component(AuthenticationComponent);
-this.sequence(ServiceSequence);
+  this.component(AuthenticationComponent);
+  this.sequence(ServiceSequence);
 
-// Add bearer verifier component
-this.bind(BearerVerifierBindings.Config).to({
-      type: BearerVerifierType.service,
-      useSymmetricEncryption: true,
-  } as BearerVerifierConfig);
+  // Add bearer verifier component
+  this.bind(BearerVerifierBindings.Config).to({
+        type: BearerVerifierType.service,
+        useSymmetricEncryption: true,
+    } as BearerVerifierConfig);
 
-this.component(BearerVerifierComponent);
+  this.component(BearerVerifierComponent);
 
-// Add authorization component
-this.bind(AuthorizationBindings.CONFIG).to({
-      allowAlwaysPaths: ['/explorer', '/openapi.json'],
-    });
-this.component(AuthorizationComponent);
+  // Add authorization component
+  this.bind(AuthorizationBindings.CONFIG).to({
+        allowAlwaysPaths: ['/explorer', '/openapi.json'],
+      });
+  this.component(AuthorizationComponent);
 
-```
+  ```
 
-comment the following since we are using our custom sequence
+  comment the following since we are using our custom sequence
 
-```typescript
-// Set up the custom sequence
-//this.sequence(MySequence);
-```
+    ```typescript
+    // Set up the custom sequence
+    //this.sequence(MySequence);
+    ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
+- load env config by adding below code in application.ts.
+  ```typescript
+  import * as dotenv from 'dotenv';
+  dotenv.config();
+  ```
 
+### Usage Via Sourceloop CLI
+You need to have [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli) installed on your system
+```sh
+$ [npm install | yarn add] @sourceloop/cli
+```
+follow the below steps:
+- Run ***sl scaffold myapp*** to scaffold a Lerna monorepo.
+- select all the required configuration by answering to prompted questions.
+- Navigate into your project using cd myapp.
+- Run ***sl microservice tenant-mgmt-service***.
+- Through the prompts, you can set up migrations, configure the datasource, bind components in application.ts, and complete other necessary setups.
+- This microservice uses loopback4-authentication and @sourceloop/core and that uses asymmetric token encryption and decryption by default for that setup please refer their documentation but if you wish to override
+
+  ```typescript
+  this.bind(TenantManagementServiceBindings.Config).to({
+        useCustomSequence: true,
+      });
+
+  this.component(TenantManagementServiceComponent);
+
+  this.component(AuthenticationComponent);
+  this.sequence(ServiceSequence);
+
+  // Add bearer verifier component
+  this.bind(BearerVerifierBindings.Config).to({
+        type: BearerVerifierType.service,
+        useSymmetricEncryption: true,
+    } as BearerVerifierConfig);
+
+  this.component(BearerVerifierComponent);
+
+  // Add authorization component
+  this.bind(AuthorizationBindings.CONFIG).to({
+        allowAlwaysPaths: ['/explorer', '/openapi.json'],
+      });
+  this.component(AuthorizationComponent);
+
+  ```
+- Bind the Event publisher as mentioned below.
 ## Onboarding a tenant
 
 - The onboarding process starts through a concept of a `Lead`. A `Lead` is a prospective client who may or may not end being a tenant in our system.
@@ -156,6 +205,17 @@ export class TenantEventPublisher {
   }
 }
 ```
+
+### Configure EventBridge for publishing events
+bind the below binding to the application.ts
+
+```typescript
+this.bind(EventBridgeStreamBindings.Config).to({
+      source: 'tenant-management',
+    });
+this.component(EventBridgeConnector);
+```
+
 
 ## IDP - Identity Provider
 
@@ -667,6 +727,20 @@ export class RedisDataSource
 ### Migrations
 
 The migrations required for this service can be copied from the service. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+ - copy the selected migration according to your need. we have provided the postgresql migration files.
+ - copy them in your application with directory migration/sql at root.
+ - add the below scripts to your applciation package.json
+
+    ```
+        "migrate:up": "db-migrate up --config database.json -m ./migrations",
+        "migrate:down": "db-migrate down --config database.json -m ./migrations",
+        "migrate:create": "db-migrate create --sql-file"
+    ```
+- do npm i db-migrate db-migrate-pg,
+
+if you are generating the application using [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli), then you can skip these configuration and and generate all the migration related configuration by providing the answering the prmpted question on running - sl microservice
+
 
 ## Database Schema
 
