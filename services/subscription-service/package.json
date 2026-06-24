@@ -55,7 +55,7 @@
     "migrate": "node ./dist/migrate",
     "preopenapi-spec": "lb-tsc",
     "openapi-spec": "node ./dist/openapi-spec",
-    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+    "apidocs": "widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "prestart": "npm run clean && npm run openapi-spec",
     "start": "node -r ./dist/opentelemetry-registry.js -r source-map-support/register .",
     "dev": "nodemon --watch src -e ts --exec \"npm run start\"",
@@ -124,7 +124,8 @@
     "nyc": "^15.1.0",
     "sequelize": "^6.37.7",
     "source-map-support": "^0.5.21",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "widdershins": "4.0.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
