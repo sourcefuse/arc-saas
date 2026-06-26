@@ -18,17 +18,30 @@
 <a href="https://loopback.io/" target="_blank">
 <img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
 </a>
+<a href="https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V22.md" target="_blank">
+<img alt="Node version" src="https://img.shields.io/badge/node-%3E%3D22%20%7C%7C%2024-brightgreen" />
+</a>
 </p>
 
 ## Overview
 
-The `@sourceloop/ctrl-plane-orchestrator-service` is designed to provide the standard interfaces and endpoint to handle the events sent to/from a SaaS Control Plane. This acts as a orchestrator for the event targets/processors.
+The `@sourceloop/ctrl-plane-orchestrator-service` is designed to provide standard interfaces and endpoints to handle events sent to/from a SaaS Control Plane. This service acts as an orchestrator for event targets/processors, enabling event-driven architecture patterns for multi-tenant SaaS applications.
 
-Consider the following example architecture that uses Amazon EventBridge at the center to pass on the events, and this Orchestrator service is used as its initial target, so that the events can then be sent to the expected candidates to process the event.
+### Key Features
+
+- **Event Orchestration**: Central hub for processing events from various SaaS control plane services
+- **Message Bus Integration**: Built-in support for multiple message buses (AWS EventBridge, SQS, BullMQ) via [loopback4-message-bus-connector](https://github.com/sourcefuse/loopback4-message-bus-connector)
+- **Extensible Provider Pattern**: Override default providers for custom business logic
+- **Standard Event Types**: Pre-defined event types for tenant provisioning and deployment workflows
+- **OpenAPI Documentation**: Comprehensive API documentation for easy integration
+
+### Architecture
+
+Consider the following example architecture that uses Amazon EventBridge at the center to pass events, with the Orchestrator service as the initial target. Events can be sent to expected candidates for processing:
 
 ![Example Architecture with Orchestrator Service in Use](./docs/orchestrator.png)
 
-Above example is of a tenant provisioning event flow, as shown it originates from a control plane service called tenant management service and then when it's received to the Amazon EventBridge, it passes it to the orchestrator service which can run any bussiness logic before it's sent for processing (the example illustrates starting the codebuild or jenkins job conditionally based on the event). Further code examples in this README will take this same reference.
+The above example shows a tenant provisioning event flow. It originates from a control plane service called tenant management service, is received by Amazon EventBridge, and then passed to the orchestrator service which can run business logic before sending it for processing (e.g., starting CodeBuild or Jenkins jobs conditionally based on the event).
 
 ## Installation
 
@@ -38,14 +51,14 @@ npm i @sourceloop/ctrl-plane-orchestrator-service
 
 ## Getting Started
 
-You can start using `@sourceloop/ctrl-plane-orchestrator-service` in just 4 steps:
+You can start using `@sourceloop/ctrl-plane-orchestrator-service` in just 2 steps:
 
 1. [Bind Component](#bind-component)
 2. [Implement Consumers](#implement-consumers)
 
 ### Bind Component
 
-Bind the `OrchestratorServiceComponent` to your application constructor as shown below, this will load the built-in artifacts provided by the service in your application to use.
+Bind the `OrchestratorServiceComponent` to your application constructor as shown below. This will load the built-in artifacts provided by the service in your application to use.
 
 ```ts
 import {OrchestratorServiceComponent} from '@sourceloop/ctrl-plane-orchestrator-service';
@@ -60,26 +73,29 @@ export class MyApplication extends BootMixin(
 }
 ```
 
-This microservice uses [message-bus-connector](https://github.com/sourcefuse/loopback4-message-bus-connector) component for consuming the events triggered through the [tenant-managenet](https://www.npmjs.com/package/@sourceloop/ctrl-plane-tenant-management-service) microservice. It supports multiple message buses.
+This microservice uses [loopback4-message-bus-connector](https://github.com/sourcefuse/loopback4-message-bus-connector) for consuming events triggered through services like [tenant-management-service](https://www.npmjs.com/package/@sourceloop/ctrl-plane-tenant-management-service). It supports multiple message buses including AWS EventBridge, SQS, and BullMQ.
 
-#### Usage
+### Default Event Types
 
-Bind the `EventStreamConnectorComponent` to your application constructor as shown below.
-This will load the built-in artifacts provided by the Message Bus Connector, enabling event publishing and consumption across different backends like EventBridge, SQS, or BullMQ.
+The service provides the following default event types that can be consumed:
 
-```ts
-this.component(EventStreamConnectorComponent);
-```
+| Event Type | Description |
+|------------|-------------|
+| `TENANT_PROVISIONING` | Triggered when a new tenant is being provisioned |
+| `TENANT_DEPROVISIONING` | Triggered when a tenant is being deprovisioned |
+| `TENANT_PROVISIONING_SUCCESS` | Triggered when tenant provisioning succeeds |
+| `TENANT_PROVISIONING_FAILURE` | Triggered when tenant provisioning fails |
+| `TENANT_DEPLOYMENT` | Triggered when tenant deployment starts |
+| `TENANT_DEPLOYMENT_SUCCESS` | Triggered when tenant deployment succeeds |
+| `TENANT_DEPLOYMENT_FAILURE` | Triggered when tenant deployment fails |
 
 ### Implement Consumers
 
-Each event type can have one or more Consumers, responsible for reacting to specific messages from the message bus.
-Use the @consumer decorator to register them automatically.
-Follow the example as below:
+Each event type can have one or more Consumers, responsible for reacting to specific messages from the message bus. Use the `@consumer` decorator to register them automatically.
 
 ```ts
 import {consumer, IConsumer, QueueType} from 'loopback4-message-bus-connector';
-import {DefaultEventTypes} from '@arc-saas/orchestrator-service';
+import {DefaultEventTypes} from '@sourceloop/ctrl-plane-orchestrator-service';
 import {AnyObject} from '@loopback/repository';
 
 @consumer
@@ -94,20 +110,76 @@ export class TenantDeploymentConsumer implements IConsumer<AnyObject, string> {
 }
 ```
 
+### Service Providers
+
+The component includes the following providers that can be overridden:
+
+- **`OrchestratorServiceBindings.TIER_DETAILS_PROVIDER`**: Provider for fetching tier-specific details. Override this to supply custom logic for retrieving tier configuration.
+
+```ts
+import {OrchestratorServiceBindings} from '@sourceloop/ctrl-plane-orchestrator-service';
+
+export class CustomTierDetailsProvider implements Provider<TierDetailsFn> {
+  value() {
+    return async (tier: string) => {
+      // Your custom implementation
+      return {
+        jobIdentifier: `${tier}-custom-job`,
+        // Additional tier details
+      };
+    };
+  }
+}
+
+// In your application constructor:
+this.bind(OrchestratorServiceBindings.TIER_DETAILS_PROVIDER).toProvider(CustomTierDetailsProvider);
+```
+
+- **`OrchestratorServiceBindings.BUILDER_SERVICE`**: Service for starting CI/CD jobs. Override this to integrate with your build system.
+
+```ts
+export class CustomBuilderService implements BuilderServiceInterface {
+  async startJob(jobIdentifier: string, params: AnyObject): Promise<void> {
+    // Your custom implementation for starting jobs
+    // e.g., trigger Jenkins, AWS CodeBuild, etc.
+  }
+}
+
+// In your application constructor:
+this.bind(OrchestratorServiceBindings.BUILDER_SERVICE).toClass(CustomBuilderService);
+```
+
+## Configuration
+
+The service supports the following environment variables (see `.env.example`):
+
+```bash
+NODE_ENV=development
+LOG_LEVEL=info
+```
+
+Additional configuration for the message bus connector should be set up according to the [loopback4-message-bus-connector documentation](https://github.com/sourcefuse/loopback4-message-bus-connector).
+
 ## Example Implementations
 
-For more detailed implementation examples, environment setup, and message bus usage (EventBridge, BullMQ, SQS),
-please refer to [sandbox](https://github.com/sourcefuse/arc-saas-sandbox) application.
+For more detailed implementation examples, environment setup, and message bus usage (EventBridge, BullMQ, SQS), please refer to the [sandbox](https://github.com/sourcefuse/arc-saas-sandbox) application.
+
+## API Documentation
+
+The service provides comprehensive API documentation via OpenAPI specification:
+
+- **OpenAPI Spec**: See [openapi.md](./openapi.md) for detailed API documentation
+- **Available Endpoints**:
+  - `GET /` - Home page with service information
+  - `GET /ping` - Health check endpoint
 
 ## Deployment
 
-The @sourceloop/ctrl-plane-orchestrator-service can be deployed in various ways, including as a serverless application. Here's how you can set it up for serverless deployment, specifically for AWS Lambda.
+The `@sourceloop/ctrl-plane-orchestrator-service` can be deployed in various ways, including as a serverless application. Here's how you can set it up for serverless deployment on AWS Lambda.
 
 ### Serverless Deployment
 
-To deploy this service as a serverless application on AWS Lambda, follow these steps:
-
-1. Add a `lambda.ts` file in your `src` directory. This file will serve as the Lambda entry point:
+1. Add a `lambda.ts` file in your `src` directory as the Lambda entry point:
 
 ```typescript
 import {APIGatewayEvent, APIGatewayProxyEvent, Context} from 'aws-lambda';
@@ -173,14 +245,7 @@ docker build -t orchestrator-service .
 
 6. Configure an API Gateway to trigger your Lambda function.
 
-This setup allows you to run your Orchestrator Service as a serverless application, leveraging AWS Lambda's scalability and cost-efficiency.
-Remember to adjust your Lambda function's configuration (memory, timeout, etc.) based on your specific needs.
-
-### API Documentation
-
-#### API Details
-
-Visit the [OpenAPI spec docs](./openapi.md) for more details on the APIs provided in this service.
+This setup allows you to run your Orchestrator Service as a serverless application, leveraging AWS Lambda's scalability and cost-efficiency. Adjust your Lambda function's configuration (memory, timeout, etc.) based on your specific needs.
 
 ## License
 

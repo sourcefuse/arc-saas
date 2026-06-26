@@ -1,150 +1,286 @@
-# tenant-management-service
+<a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/arc-saas/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+# [@sourceloop/ctrl-plane-tenant-management-service](https://github.com/sourcefuse/arc-saas/tree/master/services/tenant-management-service)
 
-This is the primary service of the ARC SaaS control plane responsible for onboarding a tenant and managing it's provisioning.
+<p align="left">
+<a href="https://www.npmjs.org/package/@sourceloop/ctrl-plane-tenant-management-service">
+<img src="https://img.shields.io/npm/v/@sourceloop/ctrl-plane-tenant-management-service.svg" alt="npm version" />
+</a>
+<a href="https://github.com/sourcefuse/arc-saas/graphs/contributors" target="_blank">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/arc-saas">
+</a>
+<a href="https://www.npmjs.com/@sourceloop/ctrl-plane-tenant-management-service" target="_blank">
+<img alt="sourceloop tenant-management-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/ctrl-plane-tenant-management-service">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/arc-saas" alt="License" />
+</a>
+<a href="https://loopback.io/" target="_blank">
+<img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
+</a>
+<a href="https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V22.md" target="_blank">
+<img alt="Node version" src="https://img.shields.io/badge/node-%3E%3D22%20%7C%7C%2024-brightgreen" />
+</a>
+</p>
 
 ## Overview
 
-A Microservice for handling tenant management operations. It provides -
+The Tenant Management Service is the primary service of the ARC SaaS control plane, responsible for onboarding tenants and managing their provisioning lifecycle.
 
-- Lead creation and verification
-- Tenant Onboarding of both pooled and silo tenants
-- Billing and Invoicing
-- Provisioning of resources for silo and pooled tenants
-- IDP - confgure identity provider
+### Key Features
 
-### work flow
+- **Lead Management**: Create and verify prospective tenant leads
+- **Tenant Onboarding**: Support for both pooled (shared) and siloed (dedicated) tenant models
+- **Event Publishing**: Integrated message bus connector for event-driven provisioning
+- **Identity Provider Integration**: Built-in support for Keycloak and Auth0 IDPs
+- **Webhook Support**: Receive provisioning status updates from external systems
+- **Multi-ORM Support**: Default LoopBack CRUD + Sequelize component option
+- **Invoice Generation**: Built-in billing and invoicing capabilities
+- **OpenTelemetry**: Distributed tracing support with Jaeger exporter
 
-![image](https://github.com/sourcefuse/arc-saas/assets/107617248/25cb5c15-30d6-4e3a-8a43-05cca121eeaf)
+### Architecture
+
+![Workflow](https://github.com/sourcefuse/arc-saas/assets/107617248/25cb5c15-30d6-4e3a-8a43-05cca121eeaf)
+
+The tenant onboarding workflow involves lead creation, verification, tenant provisioning, and identity provider setup.
 
 ## Installation
 
-Install Tenant Management Service using `npm`;
-
-```sh
-$ [npm install | yarn add] @sourceloop/ctrl-plane-tenant-management-service
+```bash
+npm i @sourceloop/ctrl-plane-tenant-management-service
 ```
 
-## Usage
+## Getting Started
 
-- Create a new Loopback4 Application (If you don't have one already)
-  `lb4 testapp`
-- Install the tenant management service
-  `npm i @sourceloop/ctrl-plane-tenant-management-service`
-- Set the [environment variables](#environment-variables).
-- Run the [migrations](#migrations).
-- Add the `TenantManagementServiceComponent` to your Loopback4 Application (in `application.ts`).
+### Basic Setup
 
-  ```typescript
-  // import the TenantManagementServiceComponent
-  import {TenantManagementServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service';
-  // add Component for TenantManagementService
-  this.component(TenantManagementServiceComponent);
-  ```
+1. **Create a LoopBack 4 Application** (if you don't have one already):
 
-- If you wish to use Sequelize as the ORM, make sure to use the Sequelize-compatible components,else use the respective default component.
+```bash
+lb4 testapp
+```
 
-  ```ts
-  //import like this
-  import {TenantManagementSequelizeServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service/sequelize';
-  // bind the component
-  this.component(TenantManagementSequelizeServiceComponent);
-  ```
+2. **Install the service**:
 
-  This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core) and that uses asymmetric token encryption and decryption by default for that setup please refer [their](https://www.npmjs.com/package/@sourceloop/authentication-service) documentation but if you wish to override -
+```bash
+npm i @sourceloop/ctrl-plane-tenant-management-service
+```
 
-- Install following packages
-  `npm install @sourceloop/core loopback4-authorization loopback4-authentication`
-- Add the following to your `application.ts`
+3. **Set the environment variables** (see [Environment Variables](#environment-variables))
 
-```typecript
+4. **Run the migrations** (see [Migrations](#migrations))
+
+5. **Add the component to your application** (`application.ts`):
+
+```typescript
+import {TenantManagementServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service';
+
+export class MyApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    super(options);
+    this.component(TenantManagementServiceComponent);
+  }
+}
+```
+
+### Sequelize ORM Support
+
+If you prefer to use Sequelize as your ORM:
+
+```typescript
+import {TenantManagementSequelizeServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service/sequelize';
+
+// In your application constructor
+this.component(TenantManagementSequelizeServiceComponent);
+```
+
+### Custom Authentication Sequence
+
+This microservice uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [@sourceloop/core](https://www.npmjs.com/package/@sourceloop/core). By default, it uses asymmetric token encryption. To override with custom sequence:
+
+1. Install required packages:
+
+```bash
+npm install @sourceloop/core loopback4-authorization loopback4-authentication
+```
+
+2. Configure in `application.ts`:
+
+```typescript
+import {
+  AuthenticationComponent,
+  BearerVerifierComponent,
+  BearerVerifierBindings,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  ServiceSequence,
+} from '@sourceloop/core';
+import {AuthorizationBindings, AuthorizationComponent} from 'loopback4-authorization';
+
+// Use custom sequence
 this.bind(TenantManagementServiceBindings.Config).to({
-      useCustomSequence: true,
-    });
+  useCustomSequence: true,
+});
 
 this.component(TenantManagementServiceComponent);
-
 this.component(AuthenticationComponent);
 this.sequence(ServiceSequence);
 
 // Add bearer verifier component
 this.bind(BearerVerifierBindings.Config).to({
-      type: BearerVerifierType.service,
-      useSymmetricEncryption: true,
-  } as BearerVerifierConfig);
-
+  type: BearerVerifierType.service,
+  useSymmetricEncryption: true,
+} as BearerVerifierConfig);
 this.component(BearerVerifierComponent);
 
 // Add authorization component
 this.bind(AuthorizationBindings.CONFIG).to({
-      allowAlwaysPaths: ['/explorer', '/openapi.json'],
-    });
+  allowAlwaysPaths: ['/explorer', '/openapi.json'],
+});
 this.component(AuthorizationComponent);
 
+// Comment out default sequence since we're using custom sequence
+// this.sequence(MySequence);
 ```
 
-comment the following since we are using our custom sequence
+### Data Source Configuration
+
+Set up a LoopBack 4 DataSource with `dataSourceName` set to `TenantManagementDB`:
+
+**PostgreSQL Example:**
 
 ```typescript
-// Set up the custom sequence
-//this.sequence(MySequence);
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {TenantManagementDbSourceName} from '@sourceloop/ctrl-plane-tenant-management-service';
+
+const config = {
+  name: TenantManagementDbSourceName,
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
+};
+
+@lifeCycleObserver('datasource')
+export class TenantManagementDb extends juggler.DataSource implements LifeCycleObserver {
+  static dataSourceName = TenantManagementDbSourceName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject(`datasources.config.${TenantManagementDbSourceName}`, {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
+  }
+}
 ```
 
-- Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
-  `TenantManagementDB`. You can see an example datasource [here](#setting-up-a-datasource).
+**Redis Cache Example:**
 
-## Onboarding a tenant
+```typescript
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {readFileSync} from 'fs';
 
-- The onboarding process starts through a concept of a `Lead`. A `Lead` is a prospective client who may or may not end being a tenant in our system.
-- The overall flow could be something like this -
-  ![flow](./docs/tenant-onboarding.png)
-- The `Lead` is created through POST `/leads` endpoint, which creates a Lead and sends an email to verify the email address of the lead
-- The mail has a link which should direct to a front end application, which in turn would call the upcoming api's using a temporary authorization code included in the mail.
-- The front end application first calls the `/leads/{id}/verify` which updates the validated status of the lead in the DB and returns a new JWT Token that can be used for subsequent calls
-- If the token is validated in the previous step, the UI should call the `/leads/{id}/tenants` endpoint with the necessary payload(as per swagger documentation).
-- This endpoint would onboard the tenant in the DB, and its success you should trigger the relevant events using the `/tenants/{id}/provision` endpoint.
+const config = {
+  name: 'TenantManagementCacheDB',
+  connector: 'kv-redis',
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+  db: process.env.REDIS_DATABASE,
+  url: process.env.REDIS_URL,
+  tls: process.env.REDIS_TLS_CERT ? {ca: readFileSync(process.env.REDIS_TLS_CERT)} : undefined,
+};
 
-## Direct Tenant Onboarding
+@lifeCycleObserver('datasource')
+export class RedisDataSource extends juggler.DataSource implements LifeCycleObserver {
+  static readonly dataSourceName = 'TenantManagementCacheDB';
+  static readonly defaultConfig = config;
 
-In addition to the lead-based onboarding flow, a new tenant can also be onboarded directly without creating a lead first.
-This capability is designed specifically for control plane administrators, who can create and provision tenants directly through the management APIs.
+  constructor(
+    @inject('datasources.config.TenantManagementCacheDB', {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
+  }
+}
+```
 
-To ensure security and operational control, only users with control plane admin privileges are allowed to perform direct tenant onboarding.
-Regular users or leads cannot bypass the standard lead creation and verification process.
+## Usage
 
-To onboard a tenant directly, you should call the `/tenants` endpoint.
+### Onboarding a Tenant
 
-## Event Publishing
+The onboarding process starts through a **Lead** - a prospective client who may or may not become a tenant.
 
-The service supports pluggable event strategies through the [loopback4-message-bus-connector](https://www.npmjs.com/package/loopback4-message-bus-connector).
+![Tenant Onboarding Flow](./docs/tenant-onboarding.png)
 
-You can publish provisioning or deployment events by injecting a Producer for your desired message bus strategy.
+**Step 1: Create a Lead**
 
-To enable these strategies, bind the following component in your application:
+```bash
+POST /leads
+```
 
-```ts
+This creates a Lead and sends an email with a verification link.
+
+**Step 2: Verify the Lead**
+
+```bash
+GET /leads/{id}/verify
+```
+
+Call this with the temporary authorization code from the email. It validates the lead and returns a JWT token for subsequent calls.
+
+**Step 3: Create Tenant from Lead**
+
+```bash
+POST /leads/{id}/tenants
+```
+
+With the validated token, create the tenant in the database.
+
+**Step 4: Provision the Tenant**
+
+```bash
+POST /tenants/{id}/provision
+```
+
+Trigger the provisioning process for the tenant resources.
+
+### Direct Tenant Onboarding
+
+For control plane administrators, tenants can be onboarded directly without the lead flow:
+
+```bash
+POST /tenants
+```
+
+> **Note**: Only users with control plane admin privileges can perform direct onboarding. Regular users must use the lead-based flow.
+
+### Event Publishing
+
+The service supports event publishing through [loopback4-message-bus-connector](https://www.npmjs.com/package/loopback4-message-bus-connector).
+
+**Enable the component:**
+
+```typescript
+import {EventStreamConnectorComponent} from 'loopback4-message-bus-connector';
+
 this.component(EventStreamConnectorComponent);
 ```
 
-Once configured, you can publish provisioning or deployment events by injecting a Producer for the desired message bus strategy.
+**Publish events:**
 
-```ts
+```typescript
 import {producer, Producer, QueueType} from 'loopback4-message-bus-connector';
 
 export class TenantEventPublisher {
-  /**
-   * Injects a message bus producer for publishing events.
-   *
-   * The `@producer()` decorator allows selecting which underlying
-   * message bus strategy to use. Supported strategies include:
-   *
-   * - `QueueType.EventBridge` → Publishes events to AWS EventBridge.
-   * - `QueueType.BullMQ` → Publishes events to Redis-based BullMQ queues.
-   * - `QueueType.SQS` → Publishes events to AWS SQS queues.
-   *
-   * If you want to use EventBridge strategy, define your producer as shown below.
-   */
   @producer(QueueType.EventBridge)
   private eventBridgeProducer: Producer;
 
@@ -157,114 +293,99 @@ export class TenantEventPublisher {
 }
 ```
 
-## IDP - Identity Provider
+**Supported Queue Types:**
+- `QueueType.EventBridge` → AWS EventBridge
+- `QueueType.BullMQ` → Redis-based BullMQ queues
+- `QueueType.SQS` → AWS SQS queues
 
-The IDP (Identity Provider) Controller provides an endpoint to manage identity provider configurations for tenants. It supports multiple identity providers, such as Keycloak and Auth0, and ensures secure handling of identity provider setup requests through rate-limiting, authorization, and input validation.
+## Identity Provider Integration
 
-### Features
+The service supports automatic identity provider setup during tenant provisioning.
 
-##### Multi-IDP Support:
+### Keycloak
 
-- Supports Keycloak and Auth0 as identity providers.
-- Extensible for additional providers like Cognito.
+**Environment Variables:**
 
-##### Bindings:
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `KEYCLOAK_HOST` | Y | Keycloak host URL |
+| `KEYCLOAK_ADMIN_USERNAME` | Y | Admin username |
+| `KEYCLOAK_ADMIN_PASSWORD` | Y | Admin password |
+| `NAMESPACE` | Y | SSM namespace for config storage |
+| `AWS_REGION` | Y | AWS region for SSM |
+| `AWS_SES_SMTP_HOST` | Y | SMTP host for email |
+| `AWS_SES_SMTP_USERNAME` | Y | SMTP username |
+| `AWS_SES_SMTP_PASSWORD` | Y | SMTP password |
+| `SMTP_FROM_EMAIL` | Y | From email address |
+| `SMTP_FROM_DISPLAY_NAME` | Y | Email display name |
+| `DOMAIN_NAME` | Y | Your domain name |
 
-**TenantManagementServiceBindings.IDP_KEYCLOAK** - Provides Keycloak configuration handler.
+**What it does:**
+- Creates a dedicated Realm for the tenant
+- Configures SMTP settings for password reset emails
+- Creates a Client with correct redirect URIs
+- Creates an Admin User with temporary password
+- Triggers password reset email
+- Returns the admin user's `authId`
 
-**TenantManagementServiceBindings.IDP_AUTH0** - Provides Auth0 configuration handler.
-
-This switch statement selects the appropriate identity provider (IDP) configuration based on the identityProvider value in the request payload.
-
-- AUTH0: Calls idpAuth0Provider to configure Auth0.
-- KEYCLOAK: Calls idpKeycloakProvider to configure Keycloak.
-
-Finally, it returns the response (res) from the selected provider.
+**Bind the provider:**
 
 ```typescript
-export interface IdpResp {
-  authId: string;
-}
+import {TenantManagementServiceBindings} from '@sourceloop/ctrl-plane-tenant-management-service';
+import {KeycloakIdpProvider} from '@sourceloop/ctrl-plane-tenant-management-service/idp-provider';
+
+app.bind(TenantManagementServiceBindings.IDP_KEYCLOAK).toProvider(KeycloakIdpProvider);
 ```
 
-authId is the id of the user created over identity provider.
+### Auth0
 
-Bind your required provider as below
+**Environment Variables:**
 
-- For Keycloak
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `AUTH0_DOMAIN` | Y | Auth0 domain |
+| `AUTH0_CLIENT_ID` | Y | Application client ID |
+| `AUTH0_CLIENT_SECRET` | Y | Application client secret |
+| `AUTH0_AUDIENCE` | N | Token audience |
 
-```ts
-app
-  .bind(TenantManagementServiceBindings.IDP_KEYCLOAK)
-  .toProvider(KeycloakIdpProvider);
+**What it does:**
+- Creates an Auth0 Organization (dedicated for PREMIUM, shared for pooled)
+- Applies branding and connection settings
+- Creates an Admin User with temporary password
+- Adds admin to the organization
+- Returns the Auth0 user ID (`authId`)
+
+**Bind the provider:**
+
+```typescript
+import {TenantManagementServiceBindings} from '@sourceloop/ctrl-plane-tenant-management-service';
+import {Auth0IdpProvider} from '@sourceloop/ctrl-plane-tenant-management-service/idp-provider';
+
+app.bind(TenantManagementServiceBindings.IDP_AUTH0).toProvider(Auth0IdpProvider);
 ```
-
-- For Auth0
-
-```ts
-app
-  .bind(TenantManagementServiceBindings.IDP_AUTH0)
-  .toProvider(Auth0IdpProvider);
-```
-
-### Keycloak IdP Provider
-
-The Keycloak IdP Provider automatically sets up and configures all the required Keycloak resources for a new tenant during onboarding.
-
-It eliminates manual setup and ensures each tenant has a secure, isolated identity environment.
-
-When a new tenant is provisioned, the provider automatically:
-
-- Creates a Realm in Keycloak for that tenant.
-  (Each tenant gets its own isolated authentication space.)
-
-- Configures SMTP (Email) settings in the realm using AWS SES for password reset and notification emails.
-
-- Creates a Client inside the realm for the tenant’s application with the correct redirect URIs and credentials.
-
-- Creates an Admin User for the tenant with a temporary password and triggers a password reset email.
-
-- Returns the admin user’s ID (authId) after successful setup.
-
-This setup ensures that every tenant has a ready-to-use Keycloak environment, complete with its own realm, client, and admin user, enabling secure login and user management from day one.
-
-### Auth0 IdP Provider
-
-The Auth0 IdP Provider automates the Auth0 setup required for a tenant during onboarding. It creates the Auth0 organization, provisions an initial admin user, and adds that user to the organization — all based on tenant details and stored tenant configuration.
-
-When a tenant is provisioned, the provider will:
-
-- Create (or reuse) an Auth0 Organization for the tenant.
-
-  For PREMIUM tenants a dedicated organization is created per tenant. For pooled plans, tenants are grouped under a shared organization named after the plan tier. This ensures correct isolation or pooling based on your plan model.
-
-- Apply branding and connection settings to the organization using the tenant configuration (logo, colors, enabled connections, etc.).
-
-  This makes tenant login pages and connections (social/database) behave and look as configured for that tenant.
-
-- Create an Admin User for the tenant using the tenant contact details and a generated temporary password.
-
-  The password is generated securely and the admin is expected to verify or change it through Auth0 flows (no password is persisted in plain text).
-
-- Add the admin user as a member of the Auth0 Organization so they can manage users, connections, and settings for that tenant.
-
-- Return the Auth0 user ID (authId) on success so the control plane can reference the identity for audits or future operations.
 
 ## Webhook Integration
 
-- A webhook endpoint is available in the service that is supposed to update the status of a tenant based on the updates from the third-party responsible for actual provisioning of resources
-- To add Webhook configuration in your application, add the `WebhookTenantManagementServiceComponent` to your Loopback4 Application (in `application.ts`).
-  ```typescript
-  // import the UserTenantServiceComponent
-  import {WebhookTenantManagementServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service';
-  // add the component here
-  this.component(WebhookTenantManagementServiceComponent);
-  ```
-- To test this from local, ensure that your local service is exposed through a tool like [ngrok](https://ngrok.com/) or [localtunne](https://github.com/localtunnel/localtunnel)
-- Your third-party tool is responsible for hitting this endpoint with the expected payload and a signature and timestamp in headers `x-signature` and `x-timestamp` respectively.
-- The signature is derived using the following logic (written in Node.js but could be implemented in any other language) -
+Receive provisioning status updates from external systems via webhooks.
 
-```js
+**Enable the webhook component:**
+
+```typescript
+import {WebhookTenantManagementServiceComponent} from '@sourceloop/ctrl-plane-tenant-management-service';
+
+this.component(WebhookTenantManagementServiceComponent);
+```
+
+**Testing locally:** Use a tunneling tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel).
+
+**Webhook Headers:**
+- `x-signature`: HMAC-SHA256 signature
+- `x-timestamp`: Request timestamp
+
+**Signature Generation:**
+
+```javascript
+const crypto = require('crypto');
 const timestamp = Date.now();
 const secret = process.env.SECRET;
 const context = process.env.CONTEXT_ID;
@@ -275,413 +396,234 @@ const signature = crypto
   .digest('hex');
 ```
 
-The identity provider and its related providers are also a part of the 'WebhookTenantManagementServiceComponent' since we expect it to be invoked separately once the tenant provisioning is completed via the orchestrator or any other medium preferred.
+## API Documentation
 
-### Environment Variables
+Visit the [OpenAPI spec docs](./openapi.md) for complete API documentation including all endpoints, request/response schemas, and authentication requirements.
 
-<table>
-  <thead>
-    <th>Name</th>
-    <th>Required</th>
-    <th>Description</th>
-    <th>Default Value</th>
-  </thead>
-  <tbody>
-      <tr>
-        <td>NODE_ENV</td>
-        <td>Y</td>
-        <td>Node environment value, i.e. `dev`, `test`, `prod</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>LOG_LEVEL</td>
-        <td>Y</td>
-        <td>Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DB_HOST</td>
-        <td>Y</td>
-        <td>Hostname for the database server.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DB_PORT</td>
-        <td>Y</td>
-        <td>Port for the database server.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DB_USER</td>
-        <td>Y</td>
-        <td>User for the database.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DB_PASSWORD</td>
-        <td>Y</td>
-        <td>Password for the database user.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DB_DATABASE</td>
-        <td>Y</td>
-        <td>Database to connect to on the database server.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DB_SCHEMA</td>
-        <td>Y</td>
-        <td>Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>REDIS_HOST</td>
-        <td>Y</td>
-        <td>Hostname of the Redis server.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>REDIS_PORT</td>
-        <td>Y</td>
-        <td>Port to connect to the Redis server over.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>REDIS_URL</td>
-        <td>Y</td>
-      <td>Fully composed URL for Redis connection. Used instead of other settings if set.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>REDIS_PASSWORD</td>
-        <td>Y</td>
-        <td>Password for Redis if authentication is enabled.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>REDIS_DATABASE</td>
-        <td>Y</td>
-        <td>Database within Redis to connect to.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>JWT_SECRET</td>
-        <td>Y</td>
-        <td>Symmetric signing key of the JWT token.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>JWT_ISSUER</td>
-        <td>Y</td>
-        <td>Issuer of the JWT token.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>SYSTEM_USER_ID</td>
-        <td>Y</td>
-        <td>system user id.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>FROM_EMAIL</td>
-        <td>Y</td>
-        <td>email to send notification.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>APP_NAME</td>
-        <td>Y</td>
-        <td>app name.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>APP_VALIDATE_URL</td>
-        <td>Y</td>
-        <td>frontend url to validate.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>APP_LOGIN_URL</td>
-        <td>Y</td>
-        <td>control plane url.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>VALIDATION_TOKEN_EXPIRY</td>
-        <td>Y</td>
-        <td>expiry time for token.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AWS_REGION</td>
-        <td>Y</td>
-        <td>aws region.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>PUBLIC_API_MAX_ATTEMPTS</td>
-        <td>Y</td>
-        <td>number of attempts for public api.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>WEBHOOK_API_MAX_ATTEMPTS</td>
-        <td>Y</td>
-        <td>number of attempts for webhook api.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>WEBHOOK_SECRET_EXPIRY</td>
-        <td>Y</td>
-        <td>expiry time for webhook secret.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>LEAD_TOKEN_EXPIRY</td>
-        <td>Y</td>
-        <td>expiry time for lead token.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>SILOED_PIPELINE</td>
-        <td>Y</td>
-        <td>pipeline key for soloed.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>POOLED_PIPELINE</td>
-        <td>Y</td>
-        <td>pipeline key for pooled.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>LEAD_KEY_LENGTH</td>
-        <td>Y</td>
-        <td>lenght of random key for lead.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AUTH0_DOMAIN</td>
-        <td>Y for Auth0</td>
-        <td>Domain</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AUTH0_CLIENT_ID</td>
-        <td>Y for Auth0</td>
-        <td>Client id of the Auth0 Application</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AUTH0_CLIENT_SECRET</td>
-        <td>Y for Auth0</td>
-        <td>Client secret of the Auth0 Application</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AUTH0_AUDIENCE</td>
-        <td>N</td>
-        <td>Recipient of the token</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AWS_REGION</td>
-        <td>Y for Keycloak</td>
-        <td>AWS region for SSM</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>NAMESPACE</td>
-        <td>Y for Keycloak</td>
-        <td>SSM namespace</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>KEYCLOAK_HOST</td>
-        <td>Y for keycloak</td>
-        <td>Keycloak host URL</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>KEYCLOAK_ADMIN_USERNAME</td>
-        <td>Y for Keycloak</td>
-        <td>Username of Admin</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>KEYCLOAK_ADMIN_PASSWORD</td>
-        <td>Y for Keycloak</td>
-        <td>Password of Admin</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AWS_SES_SMTP_HOST</td>
-        <td>Y for Keycloak</td>
-        <td>SMTP host URL</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AWS_SES_SMTP_USERNAME</td>
-        <td>Y for Keycloak</td>
-        <td>SMTP username</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>AWS_SES_SMTP_PASSWORD</td>
-        <td>Y for Keycloak</td>
-        <td>SMTP password</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>SMTP_FROM_EMAIL</td>
-        <td>Y for Keycloak</td>
-        <td>Emai Id from which you wish to send email</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>SMTP_FROM_DISPLAY_NAME</td>
-        <td>Y for Keycloak</td>
-        <td>Display name</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>DOMAIN_NAME</td>
-        <td>Y for Keycloak</td>
-        <td>Your domain name</td>
-        <td></td>
-      </tr>
-  </tbody>
-</table>
-
-### Setting up a `DataSource`
-
-Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
-
-```typescript
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-import {TenantManagementDbSourceName} from '@sourceloop/ctrl-plane-tenant-management-service';
-
-const config = {
-  name: TenantManagementDbSourceName,
-  connector: 'postgresql',
-  url: '',
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  schema: process.env.DB_SCHEMA,
-};
-
-@lifeCycleObserver('datasource')
-export class TenantManagementDb
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static dataSourceName = TenantManagementDbSourceName;
-  static readonly defaultConfig = config;
-
-  constructor(
-    // You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
-    @inject(`datasources.config.${TenantManagementDbSourceName}`, {
-      optional: true,
-    })
-    dsConfig: object = config,
-  ) {
-    super(dsConfig);
-  }
-}
-```
-
-create one more datasource with redis as connector and db name 'TenantManagementCacheDB' that is used for cache
-
-```typescript
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {AnyObject, juggler} from '@loopback/repository';
-import {readFileSync} from 'fs';
-
-const config = {
-  name: 'TenantManagementCacheDB',
-  connector: 'kv-redis',
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD,
-  db: process.env.REDIS_DATABASE,
-  url: process.env.REDIS_URL,
-  tls:
-    +process.env.REDIS_TLS_ENABLED! ||
-    (process.env.REDIS_TLS_CERT
-      ? {
-          ca: readFileSync(process.env.REDIS_TLS_CERT),
-        }
-      : undefined),
-  sentinels:
-    +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINELS
-      ? JSON.parse(process.env.REDIS_SENTINELS)
-      : undefined,
-  sentinelPassword:
-    +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINEL_PASSWORD
-      ? process.env.REDIS_SENTINEL_PASSWORD
-      : undefined,
-  role:
-    +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINEL_ROLE
-      ? process.env.REDIS_SENTINEL_ROLE
-      : undefined,
-};
-
-// Observe application's life cycle to disconnect the datasource when
-// application is stopped. This allows the application to be shut down
-// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
-// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
-@lifeCycleObserver('datasource')
-export class RedisDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static readonly dataSourceName = 'TenantManagementCacheDB';
-  static readonly defaultConfig = config;
-
-  constructor(
-    @inject(`datasources.config.TenantManagementCacheDB`, {optional: true})
-    dsConfig: AnyObject = config,
-  ) {
-    if (
-      +process.env.REDIS_HAS_SENTINELS! &&
-      !!process.env.REDIS_SENTINEL_HOST &&
-      !!process.env.REDIS_SENTINEL_PORT
-    ) {
-      dsConfig.sentinels = [
-        {
-          host: process.env.REDIS_SENTINEL_HOST,
-          port: +process.env.REDIS_SENTINEL_PORT,
-        },
-      ];
-    }
-    super(dsConfig);
-  }
-}
-```
-
-### Migrations
-
-The migrations required for this service can be copied from the service. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+**Main Controllers:**
+- **LeadController** - Lead management and tenant creation
+- **TenantController** - Tenant CRUD and provisioning
+- **ContactController** - Contact information management
+- **InvoiceController** - Invoice generation and management
+- **IdpController** - Identity provider configuration
 
 ## Database Schema
 
-![alt text](./docs/db_schema.png)
+![Database Schema](./docs/db_schema.png)
 
-The major tables in the schema are briefly described below -
+**Main Tables:**
 
-**Address** - this model represents the address of a company or lead
+| Table | Description |
+|-------|-------------|
+| **Address** | Company/lead address information |
+| **Contact** | Tenant contact details |
+| **Invoice** | Billing invoices with amount and period |
+| **Lead** | Prospective tenant leads |
+| **Tenant** | Main tenant entity (pooled or siloed) |
+| **TenantMgmtConfig** | Tenant-specific IDP configuration |
 
-**Contact** - this model represents contacts belonging to a tenant
+## Environment Variables
 
-**Invoice** - this model represents an invoice with the amount and period generated for a tenant in the system
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="4"><strong>General</strong></td>
+    </tr>
+    <tr>
+      <td>NODE_ENV</td>
+      <td>Y</td>
+      <td>Node environment (dev, test, prod)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LOG_LEVEL</td>
+      <td>Y</td>
+      <td>Log level (error, warn, info, debug)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>Database</strong></td>
+    </tr>
+    <tr>
+      <td>DB_HOST</td>
+      <td>Y</td>
+      <td>Database hostname</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>DB_PORT</td>
+      <td>Y</td>
+      <td>Database port</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>DB_USER</td>
+      <td>Y</td>
+      <td>Database user</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>DB_PASSWORD</td>
+      <td>Y</td>
+      <td>Database password</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>DB_DATABASE</td>
+      <td>Y</td>
+      <td>Database name</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>DB_SCHEMA</td>
+      <td>Y</td>
+      <td>Database schema (PostgreSQL)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>Redis Cache</strong></td>
+    </tr>
+    <tr>
+      <td>REDIS_HOST</td>
+      <td>Y</td>
+      <td>Redis hostname</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>REDIS_PORT</td>
+      <td>Y</td>
+      <td>Redis port</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>REDIS_URL</td>
+      <td>Y</td>
+      <td>Redis connection URL</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>REDIS_PASSWORD</td>
+      <td>Y</td>
+      <td>Redis password</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>REDIS_DATABASE</td>
+      <td>Y</td>
+      <td>Redis database number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>JWT</strong></td>
+    </tr>
+    <tr>
+      <td>JWT_SECRET</td>
+      <td>Y</td>
+      <td>Symmetric signing key</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>JWT_ISSUER</td>
+      <td>Y</td>
+      <td>JWT issuer</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>Application</strong></td>
+    </tr>
+    <tr>
+      <td>SYSTEM_USER_ID</td>
+      <td>Y</td>
+      <td>System user ID</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>FROM_EMAIL</td>
+      <td>Y</td>
+      <td>Notification email sender</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>APP_NAME</td>
+      <td>Y</td>
+      <td>Application name</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>APP_VALIDATE_URL</td>
+      <td>Y</td>
+      <td>Frontend validation URL</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>APP_LOGIN_URL</td>
+      <td>Y</td>
+      <td>Control plane URL</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>VALIDATION_TOKEN_EXPIRY</td>
+      <td>Y</td>
+      <td>Validation token expiry time</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>Rate Limiting</strong></td>
+    </tr>
+    <tr>
+      <td>PUBLIC_API_MAX_ATTEMPTS</td>
+      <td>Y</td>
+      <td>Max attempts for public APIs</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>WEBHOOK_API_MAX_ATTEMPTS</td>
+      <td>Y</td>
+      <td>Max attempts for webhook API</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>Pipeline Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>SILOED_PIPELINE</td>
+      <td>Y</td>
+      <td>Pipeline key for siloed tenants</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>POOLED_PIPELINE</td>
+      <td>Y</td>
+      <td>Pipeline key for pooled tenants</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>LEAD_KEY_LENGTH</td>
+      <td>Y</td>
+      <td>Length of lead random key</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-**Leads** - this model represents a lead that could eventually be a tenant in the system
+## Migrations
 
-**Tenants** - main model of the service that represents a tenant in the system, either pooled or siloed
+Copy the migrations from the service and customize as needed:
 
-**TenantMgmtConfig** - to save any tenant specific data related to idP
+```bash
+cp -r node_modules/@sourceloop/ctrl-plane-tenant-management-service/migrations ./migrations
+```
+
+Then apply them to your database.
+
+## License
+
+ARC SaaS is [MIT licensed](./LICENSE).
