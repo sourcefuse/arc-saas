@@ -30,12 +30,12 @@ import {
   FeatureToggleBindings,
   FeatureToggleServiceComponent,
 } from '@sourceloop/feature-toggle-service';
-import {BillingComponent} from 'loopback4-billing';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+import {BillingComponent} from 'loopback4-billing';
 import {
   SubscriptionServiceBindings,
   SYSTEM_USER,
@@ -202,7 +202,7 @@ export class SubscriptionServiceComponent implements Component {
 
     // Mount authorization component for default sequence
     this.application.bind(AuthorizationBindings.CONFIG).to({
-      allowAlwaysPaths: ['/explorer'],
+      allowAlwaysPaths: ['/explorer', '/billing', '/webhooks'],
     });
     this.application.component(AuthorizationComponent);
   }
