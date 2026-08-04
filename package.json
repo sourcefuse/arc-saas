@@ -29,9 +29,10 @@
   "overrides": {
     "semver": "^7.5.2",
     "qs": "^6.14.1",
-    "form-data":"4.0.4",
-    "underscore":"1.13.8",
-    "undici":"7.24.0"
+    "form-data": "^4.0.6",
+    "underscore": "^1.13.8",
+    "undici": "^7.29.0",
+    "@opentelemetry/propagator-jaeger": "^2.9.0"
   },
   "config": {
     "commitizen": {
