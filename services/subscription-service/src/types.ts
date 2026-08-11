@@ -23,12 +23,7 @@ export const SubscriptionDbSourceName = 'SubscriptionDB';
 // sonarignore:end
 
 export type InvoiceStatus =
-  | 'paid'
-  | 'posted'
-  | 'payment_due'
-  | 'not_paid'
-  | 'voided'
-  | 'pending';
+  'paid' | 'posted' | 'payment_due' | 'not_paid' | 'voided' | 'pending';
 
 export interface IPayload {
   id: string;
