@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.1 (2026-08-11)</small>
+
+* refactor(all-services): pin widdershins as a devDependency instead of npx in the three services (#12 ([2738418](https://github.com/sourcefuse/arc-saas/commit/2738418)), closes [#125](https://github.com/sourcefuse/arc-saas/issues/125) [#124](https://github.com/sourcefuse/arc-saas/issues/124)
+* docs(all-services): update the readme ([8e30d9f](https://github.com/sourcefuse/arc-saas/commit/8e30d9f)), closes [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+
+
+
 ## 1.3.0 (2026-06-16)
 
 * feat(all-services): add openapi documentation files to arc-saas services (#123) ([9c0296e](https://github.com/sourcefuse/arc-saas/commit/9c0296e)), closes [#123](https://github.com/sourcefuse/arc-saas/issues/123) [#122](https://github.com/sourcefuse/arc-saas/issues/122)

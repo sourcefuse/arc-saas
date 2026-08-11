@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.1 (2026-08-11)</small>
+
+* chore(deps): upgrade undici and other dependencies fixing five securities (#127) ([9ac25fc](https://github.com/sourcefuse/arc-saas/commit/9ac25fc)), closes [#127](https://github.com/sourcefuse/arc-saas/issues/127) [#126](https://github.com/sourcefuse/arc-saas/issues/126)
+* refactor(all-services): pin widdershins as a devDependency instead of npx in the three services (#12 ([2738418](https://github.com/sourcefuse/arc-saas/commit/2738418)), closes [#125](https://github.com/sourcefuse/arc-saas/issues/125) [#124](https://github.com/sourcefuse/arc-saas/issues/124)
+* docs(all-services): update the readme ([8e30d9f](https://github.com/sourcefuse/arc-saas/commit/8e30d9f)), closes [#00](https://github.com/sourcefuse/arc-saas/issues/00)
+
+
+
+
+
 ## 1.2.0 (2026-06-16)
 
 * feat(all-services): add openapi documentation files to arc-saas services (#123) ([9c0296e](https://github.com/sourcefuse/arc-saas/commit/9c0296e)), closes [#123](https://github.com/sourcefuse/arc-saas/issues/123) [#122](https://github.com/sourcefuse/arc-saas/issues/122)
