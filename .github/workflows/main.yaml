@@ -20,10 +20,10 @@ jobs:
 
     steps:
       # Step 1: Checkout the repository code from GitHub
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       # Step 2: Set up the Node.js version based on the current matrix value (22 or 24)
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
 
