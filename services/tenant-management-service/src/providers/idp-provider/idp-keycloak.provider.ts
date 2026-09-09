@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 import {ConfigureIdpFunc, IdpDetails, IdpResp} from '../../types';
 import AWS from 'aws-sdk';
-import {randomBytes} from 'crypto';
+import {randomBytes} from 'node:crypto';
 import {AnyObject} from '@loopback/repository';
 import {Plan} from '../../enums/plan-tier.enum';
 import {Status} from '../../enums/status.enum';
@@ -12,7 +12,7 @@ const DEFAULT_PASSWORD_LENGTH = 20;
 const ASCII_PRINTABLE_START = 32;
 const ASCII_PRINTABLE_END = 126;
 interface TokenResponse {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   access_token: string;
 }
 
@@ -160,7 +160,7 @@ export class KeycloakIdpProvider implements Provider<
       // If the realm exists, a successful response is returned (status code 200)
       return response.status === Status.OK;
     } catch (error) {
-      if (error.response && error.response.status === Status.NOT_FOUND) {
+      if (error.response?.status === Status.NOT_FOUND) {
         // If a 404 is returned, it means the realm doesn't exist
         return false;
       }
@@ -176,9 +176,9 @@ export class KeycloakIdpProvider implements Provider<
       qs.stringify({
         username: process.env.KEYCLOAK_ADMIN_USERNAME,
         password: process.env.KEYCLOAK_ADMIN_PASSWORD,
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         grant_type: 'password',
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         client_id: 'admin-cli',
       }),
       {
@@ -383,7 +383,7 @@ export class KeycloakIdpProvider implements Provider<
     const validChars: string[] = [];
 
     for (let i = ASCII_PRINTABLE_START; i <= ASCII_PRINTABLE_END; i++) {
-      const char = String.fromCharCode(i);
+      const char = String.fromCodePoint(i);
       if (regex.test(char)) {
         validChars.push(char);
       }

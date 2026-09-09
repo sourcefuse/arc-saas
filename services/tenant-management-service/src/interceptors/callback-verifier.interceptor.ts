@@ -9,7 +9,7 @@ import {
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors, RequestContext} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {createHmac, timingSafeEqual} from 'crypto';
+import {createHmac, timingSafeEqual} from 'node:crypto';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 import {SYSTEM_USER} from '../keys';
 import {WebhookSecretRepository} from '../repositories';
@@ -40,7 +40,7 @@ export class CallbackVerifierProvider implements Provider<Interceptor> {
     const value: AnyObject = request.body;
     const TIMESTAMP_TOLERANCE = +DEFAULT_TIME_TOLERANCE;
     const timestamp = Number(request.headers['x-timestamp']);
-    if (isNaN(timestamp)) {
+    if (Number.isNaN(timestamp)) {
       this.logger.error('Invalid timestamp');
       throw new HttpErrors.Unauthorized();
     }

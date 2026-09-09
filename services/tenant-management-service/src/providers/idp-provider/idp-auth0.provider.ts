@@ -2,7 +2,7 @@ import {Provider} from '@loopback/context';
 import {ConfigureIdpFunc, IdpDetails, IdPKey, IdpResp} from '../../types';
 import {ManagementClient, PostOrganizationsRequest, UserCreate} from 'auth0';
 import {repository} from '@loopback/repository';
-import {randomBytes} from 'crypto';
+import {randomBytes} from 'node:crypto';
 import {HttpErrors} from '@loopback/rest';
 import {TenantMgmtConfigRepository} from '../../repositories';
 import {Plan} from '../../enums/plan-tier.enum';
@@ -51,18 +51,18 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
       planTier === Plan.PREMIUM ? tenant.key : planTier.toLowerCase();
     const organizationData: PostOrganizationsRequest = {
       name: orgName,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       display_name: orgName,
       branding: {
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         logo_url: configValue.logo_url,
         colors: {
           primary: configValue.primary_color,
-          // eslint-disable-next-line
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           page_background: configValue.page_background,
         },
       },
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       enabled_connections: configValue.enabled_connections,
     };
 
@@ -79,24 +79,24 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
        ** need to check actions in auth0 to see how we can achieve this
        **/
       password: password,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       verify_email: configValue.verify_email,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       phone_number: configValue.phone_number,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       user_metadata: configValue.user_metadata,
       blocked: configValue.blocked,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       email_verified: configValue.email_verified,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       app_metadata: configValue.app_metadata,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       given_name: configValue.given_name,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       family_name: configValue.family_name,
       nickname: configValue.nickname,
       picture: configValue.picture,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       user_id: configValue.user_id,
     };
 
@@ -133,7 +133,7 @@ export class Auth0IdpProvider implements Provider<ConfigureIdpFunc<IdpResp>> {
     const validChars: string[] = [];
 
     for (let i = ASCII_PRINTABLE_START; i <= ASCII_PRINTABLE_END; i++) {
-      const char = String.fromCharCode(i);
+      const char = String.fromCodePoint(i);
       if (regex.test(char)) {
         validChars.push(char);
       }

@@ -153,16 +153,7 @@ export class OnboardingService {
       let address: Address | null = null;
       if (lead?.addressId) {
         address = await this.addressRepository.findById(lead.addressId);
-        if (
-          hasAnyOf(dto, ['address', 'city', 'state', 'country', 'zip']) &&
-          (!weakEqual(address.address, dto.address) ||
-            !weakEqual(address.city, dto.city) ||
-            !weakEqual(address.state, dto.state) ||
-            !weakEqual(address.country, dto.country) ||
-            !weakEqual(address.zip, dto.zip))
-        ) {
-          throw new HttpErrors.BadRequest('Address mismatch with Lead');
-        }
+        this._assertAddressMatchesLead(address, dto);
       } else if (dto.country) {
         address = await this.addressRepository.create(
           {
@@ -222,6 +213,28 @@ export class OnboardingService {
     } catch (error) {
       await transaction.rollback();
       throw error;
+    }
+  }
+
+  /**
+   * Rejects the onboarding request when it carries address fields that conflict
+   * with the address already recorded against the lead.
+   * @param address - The address currently linked to the lead.
+   * @param dto - The onboarding payload being validated.
+   */
+  private _assertAddressMatchesLead(
+    address: Address,
+    dto: TenantOnboardDTO,
+  ): void {
+    const conflicts =
+      hasAnyOf(dto, ['address', 'city', 'state', 'country', 'zip']) &&
+      (!weakEqual(address.address, dto.address) ||
+        !weakEqual(address.city, dto.city) ||
+        !weakEqual(address.state, dto.state) ||
+        !weakEqual(address.country, dto.country) ||
+        !weakEqual(address.zip, dto.zip));
+    if (conflicts) {
+      throw new HttpErrors.BadRequest('Address mismatch with Lead');
     }
   }
 }
