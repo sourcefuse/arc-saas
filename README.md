@@ -29,21 +29,29 @@
 
 </p>
 
-# ARC SAAS
+# ARC SaaS - Accelerating SaaS Application Development
 
-## What is ARC SaaS
+ARC SaaS is an open source control plane accelerator that provides a solid foundation for building and managing multi-tenant SaaS applications. It implements the patterns, principles, and best practices laid out by the AWS SaaS Builder Toolkit, empowering SaaS providers to focus on their core business while leaving the heavy lifting of the technological foundation to ARC SaaS.
 
-We are thrilled to introduce our cutting-edge control plane, meticulously designed to simplify tenant onboarding, tenant subscription management and tenant provisioning based upon isolation levels, vis-a-vis, Silo, Pooled and Bridge. It also comes up with a configurable SaaS license tiers and plans, along with a streamlined billing processes. From seamless tenant management to robust monitoring and analytics, fortified security and compliance measures, and versatile API management, ARC SaaS will be your one stop solution for building a SaaS product faster than ever.
+![ARC SaaS Toolkit Diagram](./docs/assets/arc-saas-toolkit.png)
+
+## Features
+
+- **Tenant Onboarding and Provisioning**: Streamline the tenant onboarding process with guided setup, personalized support, and seamless rollout of new tenants.
+- **Tenant Isolation**: Ensure secure separation of each tenant's data, workflows, and configurations with robust access controls and data isolation.
+- **Tenant Management**: Centrally manage all tenants, including new releases, feature flagging, plan upgrades, and more.
+- **Customizable Plans**: Manage and configure tailored licensing plans based on isolation models, sizing, and feature parity.
+- **Tenant Observability and Analytics**: Monitor resource health, utilization, and performance at the tenant level for data-driven decision making.
 
 ## Why ARC SaaS
 
-Our control plane, akin to our catalog of application plane services, provides a range of advantages. ARC SaaS not only accelerates SaaS application development but also offers customization tailored to your needs, granting you the flexibility to harness the full spectrum of ARC benefits. This includes time-saving measures, adherence to best practices, seamless plug-and-play integration, and a standardized approach based off AWS SaaS factory reference architecture principles. All of this following the SaaS standards and architecture that accommodates your unique requirements.
+Our control plane, akin to [our catalog of application plane services](https://github.com/sourcefuse/loopback4-microservice-catalog), provides a range of advantages. ARC SaaS not only accelerates SaaS application development but also offers customization tailored to your needs, granting you the flexibility to harness the full spectrum of ARC benefits. This includes time-saving measures, adherence to best practices, seamless plug-and-play integration, and a standardized approach based off AWS SaaS factory reference architecture principles. All of this following the SaaS standards and architecture that accommodates your unique requirements.
 
 ARC SaaS architecture consists of two major layers at a high level
 
-- Control Plane - The control plane is foundational to any multi-tenant SaaS model. ARC SaaS control plane will include those services that give consumers the ability to manage and operate their tenants through a single, unified experience. Within the control plane, we have 3-tier architecture supporting UI (or some CLI), API and data separately. The core services here represent the collection of services that are used to orchestrate multi-tenant experience. We’ve included some of the common examples of services that are typically part of the core. However, these core services could vary for each SaaS solution depending on the requirements. In the architecture diagram above, we have also shown a separate administration application UI. This represents the application (a web application, a command line interface, or an API) that might be used by a SaaS provider to manage their multi-tenant environment. Please note that the control plane and its services are not actually multi-tenant. These services are global to all tenants and are basically used to operate and manage tenants.
+- Control Plane - The control plane is foundational to any multi-tenant SaaS model. ARC SaaS control plane include the services that give consumers the ability to manage and operate their tenants through a single, unified experience. Within the control plane, we have 3-tier architecture supporting UI (or some CLI), API and data separately. The core services here represent the collection of services that are used to orchestrate multi-tenant experience. We’ve included some of the common examples of services that are typically part of the core. However, these core services could vary for each SaaS solution depending on the requirements. In the architecture diagram above, we have also shown a separate administration application UI. This represents the application (a web application, a command line interface, or an API) that might be used by a SaaS provider to manage their multi-tenant environment. Please note that the control plane and its services are not actually multi-tenant. These services are global to all tenants and are basically used to operate and manage tenants.
 
-- Application Plane - At the bottom of the diagram, we have represented the application plane of a SaaS environment. This is where the multi-tenant functionality of the actual application will reside.
+- Application Plane - This plane of a SaaS environment is your actual Application that the end-users will consume. This is where the multi-tenant functionality of the actual application will reside.
 
 This repo covers the control plane of Saas model.
 
@@ -65,6 +73,23 @@ There are currently 2 Microservices provided and actively maintained:
 
 1. [Tenant Management Service](services/tenant-management-service)
 2. [Subscription Service](services/subscription-service)
+3. [Orchestrator Service](services/orchestrator-service/README.md)
+
+## Architecture Overview
+
+ARC SaaS provides a control plane that manages and orchestrates the overall operation of the SaaS product on AWS EKS. The control plane includes components and services for configuration, monitoring, scaling, security, and IaC modules written in Terraform.
+
+The core services represent the collection of services used to orchestrate the multi-tenant experience, while the application plane is where the actual business logic and product services reside.
+
+## Customization and Support
+
+Each SaaS application is unique, and you may need to customize ARC SaaS to fit your specific requirements. SourceFuse's SaaS and AWS cloud experts can help you tailor ARC SaaS for your needs and extend it to your application and deployment architecture.
+
+## About SourceFuse
+
+SourceFuse is a AWS Premier Partner leading provider of SaaS solutions and services. With over a decade of experience in building SaaS apps and platforms, SourceFuse is committed to empowering SaaS companies and traditional ISVs to focus on their core business while providing a solid technological foundation.
+
+For more information about how SourceFuse can help you on your SaaS journey, please visit our website or contact us directly.
 
 ## Sequelize Support
 
@@ -87,4 +112,4 @@ Code of conduct guidelines [here](https://github.com/sourcefuse/arc-saas/blob/ma
 
 ## License
 
-[MIT](https://github.com/sourcefuse/arc-saas/blob/master/LICENSE)
+ARC SaaS is released under the [MIT](https://github.com/sourcefuse/arc-saas/blob/master/LICENSE) License.
