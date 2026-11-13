@@ -33,7 +33,12 @@
     "form-data": "^4.0.6",
     "underscore": "^1.13.8",
     "undici": "^7.29.0",
-    "@opentelemetry/propagator-jaeger": "^2.9.0"
+    "@opentelemetry/propagator-jaeger": "^2.9.0",
+    "follow-redirects": "^1.16.2",
+    "node-forge": "^1.4.3",
+    "loopback-connector-kv-redis": {
+      "msgpack5": "^6.1.0"
+    }
   },
   "config": {
     "commitizen": {
