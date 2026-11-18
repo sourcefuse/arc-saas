@@ -38,7 +38,96 @@
     "node-forge": "^1.4.3",
     "loopback-connector-kv-redis": {
       "msgpack5": "^6.1.0"
-    }
+    },
+    "@opentelemetry/plugin-dns": {
+      "@opentelemetry/core": "^2.8.0"
+    },
+    "@opentelemetry/plugin-http": {
+      "@opentelemetry/core": "^2.8.0"
+    },
+    "@opentelemetry/plugin-https": {
+      "@opentelemetry/core": "^2.8.0"
+    },
+    "@opentelemetry/plugin-pg": {
+      "@opentelemetry/core": "^2.8.0"
+    },
+    "@opentelemetry/plugin-pg-pool": {
+      "@opentelemetry/core": "^2.8.0"
+    },
+    "casbin": {
+      "minimatch": "^11.0.1"
+    },
+    "@commitlint/config-workspace-scopes": {
+      "glob": "^14.0.2"
+    },
+    "@loopback/boot": {
+      "glob": "^14.0.2"
+    },
+    "@loopback/build": {
+      "glob": "^14.0.2"
+    },
+    "@npmcli/map-workspaces": {
+      "glob": "^14.0.2"
+    },
+    "@npmcli/package-json": {
+      "glob": "^14.0.2"
+    },
+    "@sourceloop/core": {
+      "glob": "^14.0.2"
+    },
+    "cacache": {
+      "glob": "^14.0.2"
+    },
+    "loopback-datasource-juggler": {
+      "minimatch": "^11.0.1"
+    },
+    "@tufjs/models": {
+      "minimatch": "^11.0.1"
+    },
+    "@npmcli/arborist": {
+      "minimatch": "^11.0.1"
+    },
+    "ignore-walk": {
+      "minimatch": "^11.0.1"
+    },
+    "hyperid": {
+      "uuid": "^11.1.1"
+    },
+    "istanbul-lib-processinfo": {
+      "uuid": "^11.1.1"
+    },
+    "jaeger-client": {
+      "uuid": "^11.1.1"
+    },
+    "mochawesome": {
+      "uuid": "^11.1.1"
+    },
+    "postman-request": {
+      "uuid": "^11.1.1"
+    },
+    "sequelize": {
+      "uuid": "^11.1.1"
+    },
+    "node-jose": {
+      "uuid": "^11.1.1"
+    },
+    "swagger-stats": {
+      "uuid": "^11.1.1"
+    },
+    "swagger-stats-sf": {
+      "uuid": "^11.1.1"
+    },
+    "aws-sdk": {
+      "uuid": "^11.1.1"
+    },
+    "loopback-connector": {
+      "uuid": "^11.1.1"
+    },
+    "mocha": {
+      "glob": "^14.0.2",
+      "minimatch": "^11.0.1"
+    },
+    "csv-parse": "^7.0.2"
   },
   "config": {
     "commitizen": {
