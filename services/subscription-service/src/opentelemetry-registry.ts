@@ -15,7 +15,6 @@ dotenvExt.load({
 });
 
 if (!!+(process.env.ENABLE_TRACING ?? 0)) {
-  const provider = new NodeTracerProvider();
   const option = {
     serviceName: process.env.SERVICE_NAME ?? '',
     tags: [],
@@ -25,7 +24,11 @@ if (!!+(process.env.ENABLE_TRACING ?? 0)) {
   };
   // Configure span processor to send spans to the exporter
   const exporter = new JaegerExporter(option);
-  provider.addSpanProcessor(new BatchSpanProcessor(exporter));
-  provider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
+  const provider = new NodeTracerProvider({
+    spanProcessors: [
+      new BatchSpanProcessor(exporter),
+      new BatchSpanProcessor(new ConsoleSpanExporter()),
+    ],
+  });
   provider.register();
 }
